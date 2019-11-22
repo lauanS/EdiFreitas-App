@@ -7,9 +7,9 @@ import CadPessoa from '../../components/CadastroResponsavel/index';
 export default class Administrar extends React.Component{
     render(){
         return (
-          <form>
-            <CadPessoa />   
-          </form>  
+          
+          <CadPessoa />   
+          
         );
       }
 
