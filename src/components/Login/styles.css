@@ -1,0 +1,42 @@
+.forms{
+  border-radius: 8px 8px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #dadce0;
+  padding: 30px;
+}
+
+.form-control {
+  border-radius: 4px;
+    color: #202124;
+    font-size: 16px;
+
+}
+
+.desc{
+  text-align: center;
+}
+.form-control:focus {
+  border-width: 2px;
+  border-style: solid;
+  border-color: #1a73e8;
+  box-shadow: 0 0 0 0;
+
+}
+.titulo{
+  text-align: center;
+  color: #202124;
+  font-size: 24px;
+    font-weight: 400;
+    margin: 1vh 0;
+}
+
+.botao{
+  width: 100%;
+  background-color: #1a73e8;
+  font-weight: 700;
+}
+
+body{
+  font-family: 'Google Sans','Noto Sans Myanmar UI',arial,sans-serif;
+}

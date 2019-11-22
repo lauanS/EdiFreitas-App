@@ -1,0 +1,61 @@
+.carousel-indicators li.active{
+  background-color: #bc2018;
+}
+
+.carousel-indicators li{
+  background-color: #ffffff;
+}
+
+.carousel-control-prev-icon {
+    background-image: #bc2018;
+}
+
+.carousel-control-prev {
+    opacity: .4;
+    background-color: #000000
+}
+
+.carousel-control-prev:hover{
+    opacity: .7;
+    background-color: #000000
+}
+
+.carousel-control-prev:focus {
+  opacity: .75;
+  background-color: #000000
+}
+
+.carousel-control-next {
+    opacity: .4;
+    background-color: #000000
+}
+
+.carousel-control-next:hover{
+    opacity: .7;
+    background-color: #000000
+}
+
+.carousel-control-next:focus {
+    opacity: .7;
+    background-color: #000000
+}
+
+
+.carousel-small {
+  min-width: 350px;
+  width: 65vw;
+}
+
+.text-border-light{
+  color: #ffffff;
+}
+
+.background-opacity{
+  background-color: rgba(0,0,0,.4);
+}
+
+.text-border-dark{
+  -webkit-text-stroke-width: 0.1px;
+  -webkit-text-stroke-color: #ffffff;
+  color: #262626;
+}

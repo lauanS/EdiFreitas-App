@@ -1,0 +1,30 @@
+.link-active{
+    color: #bc2018;
+    font-weight: bold;
+    padding-right: .5rem;
+    padding-left: .5rem;
+    display: block;
+    padding: .5rem 1rem;
+    font-size: 20px;
+}
+
+.link-active:hover {
+    color: #bc2018;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.link {
+    color: black;
+    padding-right: .5rem;
+    padding-left: .5rem;
+    display: block;
+    padding: .5rem 1rem;
+    font-size: 20px;
+}
+
+.link:hover {
+    color: black;
+    text-decoration: none;
+    font-size: 20px;
+}
