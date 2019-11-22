@@ -2,69 +2,67 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
 
-import InputGroup from 'react-bootstrap/InputGroup';
-import FormControl from 'react-bootstrap/FormControl'
-import ButtonGroup from 'react-bootstrap/ButtonGroup'
+import {Form, Row, Col, Button} from 'react-bootstrap';
 
 export default class Administrar extends React.Component{
     render(){
         return (
-          <div>
-            <label>Nome do Responsável: </label>
-            <InputGroup className="mb-3">
-              <InputGroup.Prepend>
-                <InputGroup.Text id="basic-addon3">
-                  Nome:
-                </InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl
-                placeholder="Insira o nome completo aqui"
-                aria-label="Nome"
-                aria-describedby="basic-addon1"
-              />
-            </InputGroup>
+          <Form>
+            <Form.Group as={Row} controlId="formGroupName">
+              <Form.Label column sm={2}>
+                Nome completo do responsável:
+              </Form.Label>
+              <Col sm={10}>
+                <Form.Control type="text" placeholder="Ex: Leonardo dos Santos Sampaio  " />
+              </Col>
+            </Form.Group>
 
-            
-            <InputGroup className="mb-3">
-              <InputGroup.Prepend>
-                <InputGroup.Text id="basic-addon3">
-                  RG:
-                </InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl
-                placeholder="Ex: 954.214.555-8"
-                aria-label="RG"
-                aria-describedby="basic-addon1"
-              />
-            </InputGroup>
+            <Form.Group as={Row} controlId="formGroupDate">
+              <Form.Label column sm={2}>
+                Data de nascimento:
+              </Form.Label>
+              <Col sm="2">
+                <Form.Control type="date" />
+              </Col>
+            </Form.Group>
 
-            Data de Nascimento <input type="date" name="dataNasc"/><br /><br />
+            <Form.Group as={Row} controlId="formGroup">
+              <Form.Label column sm={2}>
+                CPF:
+              </Form.Label>
+              <Col sm={10}>
+                <Form.Control type="text" placeholder="(apenas números)" />
+              </Col>
+            </Form.Group>
 
-            <label htmlFor="basic-url">Sexo: </label><br />
-            <InputGroup className="mb-3">            
-              <label htmlFor="basic-url">Masculino: </label>  
-              <InputGroup.Radio aria-label="Radio button for following text input" />
-              <label htmlFor="basic-url">Feminino: </label>
-              <InputGroup.Radio aria-label="Radio button for following text input" />
-            </InputGroup>
+            <fieldset>
+            <Form.Group as={Row}>
+              <Form.Label as="legend" column sm={2}>
+                Sexo
+              </Form.Label>
+              <Col sm={10}>
+                <Form.Check
+                  type="radio"
+                  label="Masculino"
+                  name="rdMasc"
+                  id="rdMasc"
+                />
+                <Form.Check
+                  type="radio"
+                  label="Feminino"
+                  name="rdFem"
+                  id="rdMasc"
+                />
+              </Col>
+            </Form.Group>
+            </fieldset>
 
-            <textarea type="text-area" name="Comentario"/> Comentario
-
-            <InputGroup className="mb-3">
-              <InputGroup.Prepend>
-                <InputGroup.Text id="basic-addon3">
-                  Nome:
-                </InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl
-                placeholder="Insira o nome completo aqui"
-                aria-label="Nome"
-                aria-describedby="basic-addon1"
-              />
-            </InputGroup>
-
-
-          </div>
+            <Form.Group as={Row}>
+              <Col sm={{ span: 10, offset: 2 }}>
+                <Button type="submit">Sign in</Button>
+              </Col>
+            </Form.Group>
+          </Form>
          
         );
       }
