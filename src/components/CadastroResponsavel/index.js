@@ -2,7 +2,9 @@ import React,  { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
 
-import {Form, Row, Col, Button} from 'react-bootstrap';
+import {Form, Row, Col, Button, InputGroup} from 'react-bootstrap';
+
+import Contato from '../../components/ContatoForm/index';
 
 export default function CadastroResponsavel(){
 
@@ -22,7 +24,6 @@ export default function CadastroResponsavel(){
 
   };
 
-      
   return (
     <Form onSubmit={handleSubmit} noValidate validated={validated}>
       <Form.Group as={Row} controlId="formGroupName">
@@ -107,8 +108,6 @@ export default function CadastroResponsavel(){
           <Button type="submit">Cadastrar</Button>
         </Col>
       </Form.Group>
-
-      
     </Form>
     
   );
