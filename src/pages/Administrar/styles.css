@@ -1,0 +1,11 @@
+@media (min-width: 600px) {
+    .cad{
+        margin-left: 240px;
+    }
+}
+
+.cad{
+    padding: 30px;
+    display: block;
+    margin-top: 60px;
+}
