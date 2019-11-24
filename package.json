@@ -6,6 +6,8 @@
   },
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.7.0",
+    "@material-ui/icons": "^4.5.1",
     "bootstrap": "^4.3.1",
     "express": "^4.17.1",
     "express-favicon": "^2.0.1",
@@ -37,7 +39,5 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "react-social-icons": "^4.1.0"
-  }
+  "devDependencies": {}
 }
