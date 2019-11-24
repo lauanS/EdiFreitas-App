@@ -13,7 +13,7 @@ export default class MyCarousel extends React.Component{
               <img
                 src={ongImg1}
                 alt="First slide"
-                width="100%" height="500"
+                className="carousel-img"
               />
               <Carousel.Caption className="background-opacity">
                 <h3 className="text-border-light">Dia das crianças</h3>
@@ -24,7 +24,7 @@ export default class MyCarousel extends React.Component{
               <img
                 src={ongImg2}
                 alt="First slide"
-                width="100%" height="500"
+                className="carousel-img"
               />
               <Carousel.Caption className="background-opacity">
                 <h3 className="text-border-light">Olha o algodão doce!!</h3>
@@ -35,7 +35,7 @@ export default class MyCarousel extends React.Component{
               <img
                 src={ongImg3}
                 alt="First slide"
-                width="100%" height="500"
+                className="carousel-img"
               />
               <Carousel.Caption className="background-opacity">
                 <h3 className="text-border-light">The winter is coming!</h3>
