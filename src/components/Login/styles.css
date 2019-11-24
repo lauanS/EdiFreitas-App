@@ -1,9 +1,35 @@
+.formsContainer{
+  height: 100vh;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
 .forms{
   border-radius: 8px 8px;
   border-width: 1px;
   border-style: solid;
   border-color: #dadce0;
   padding: 30px;
+  display: block;
+}
+
+.justify-center{
+  justify-content: center;
+}
+
+@media (max-width: 500px) {
+  .forms{
+    width: 100%;
+  }
+}
+
+@media (min-width: 501px) {
+  .forms{
+    min-width: 380px!important;
+    flex-grow: 0;
+  }
 }
 
 .form-control {
