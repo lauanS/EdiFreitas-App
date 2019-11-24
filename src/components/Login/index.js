@@ -28,20 +28,20 @@ export default function Login() {
 
   return (
     <>
-    {toRedirect ? <Redirect to="/sobre"/> : null }
-    <Container className="forms1">
-      <Row className="justify-content-md-center">
-        <Col md={4} className="forms">
+    {toRedirect ? <Redirect to="/admin"/> : null }
+    <Container className="formsContainer">
+      <Row className="justify-center">
+        <Col className="forms">
           <Form  noValidate validated={validated} onSubmit={handleSubmit}>
             <Container>
-              <Row className="justify-content-md-center">
+              <Row className="justify-center">
                 <img src={ongLogo} alt="First slide" width="100" height="100"/>
               </Row>
-              <Row className="justify-content-md-center">
-                <span className="titulo justify-content-md-center">Login do Administrador</span>
+              <Row className="justify-center">
+                <span className="titulo justify-center">Login do Administrador</span>
               </Row>
-              <Row className="justify-content-md-center">
-                <span className="desc justify-content-md-center">Parte reservada para o administrador do sistema.</span>
+              <Row className="justify-center">
+                <span className="desc justify-center">Parte reservada para o administrador do sistema.</span>
               </Row>
             </Container>
             <br/>
@@ -54,9 +54,9 @@ export default function Login() {
               <Form.Control required type="password" placeholder="Senha de usuário" />
             </Form.Group>
             <br/>
-            <Row className="justify-content-md-center">
-              <Button type="submit" className="botao">Entrar</Button>
-            </Row>
+            
+            <Button type="submit" className="botao">Entrar</Button>
+           
 
           </Form>
         </Col>
