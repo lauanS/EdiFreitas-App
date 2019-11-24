@@ -12,15 +12,20 @@ export default class Inicio extends React.Component{
         <div className="nav">
           <MyNavbar initActive={0}/>
         </div>
+
         <br />
         <br />
+
         <div className="carousel">
           <MyCarousel />
         </div>
+
         <br/>
 
-
-        <Footer />
+        <div>
+          <Footer />
+        </div>
+        
       </div>
     );
   }
