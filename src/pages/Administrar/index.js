@@ -8,7 +8,7 @@ export default class Administrar extends React.Component{
     render(){
         return (
           <>
-          <Sidebar titulo="Edi Freitas" />
+          <Sidebar titulo="Edi Freitas" ativo={0}/>
           
           <div className="cad">
             <CadPessoa />   
