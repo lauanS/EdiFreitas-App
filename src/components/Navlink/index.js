@@ -6,10 +6,10 @@ export default class Navlink extends React.Component{
     render(){
         let className;
         if (this.props.isActive) {
-            className = ' link-active';
+            className = 'link-active';
         }
         else{
-            className = ' link';
+            className = 'link';
         }
         return <Link className={className} to={this.props.link}>{this.props.value}</Link>
             
