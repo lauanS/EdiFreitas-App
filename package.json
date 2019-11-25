@@ -12,6 +12,7 @@
     "express": "^4.17.1",
     "express-favicon": "^2.0.1",
     "path": "^0.12.7",
+    "node-sass": "^4.13.0",
     "react": "^16.10.2",
     "react-bootstrap": "^1.0.0-beta.14",
     "react-dom": "^16.10.2",
