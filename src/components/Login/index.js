@@ -20,6 +20,7 @@ export default function Login() {
     }
     else{
       setToRedirect(true);
+      localStorage.setItem("authToken", true);
     }
     setValidated(true);
 
