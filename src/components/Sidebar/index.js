@@ -7,12 +7,17 @@ import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import './styles.css';
+import './styles.scss';
+import { Link } from 'react-router-dom'
+
+import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
+import EventIcon from '@material-ui/icons/Event';
+import PeopleIcon from '@material-ui/icons/People';
+import NewsIcon from '@material-ui/icons/ImportContacts';
 
 const drawerWidth = 240;
 
@@ -58,50 +63,71 @@ function ResponsiveDrawer(props) {
     setMobileOpen(!mobileOpen);
   };
 
+  var arrayLink = ['/cadastrarResponsavel',
+                  '/cadastrarCriança',
+                  '/consultarPessoas',
+                  '/criarEvento',
+                  '/consultarEventos',
+                  '/controlePresenca',
+                  '/criarNoticia',
+                  '/consultarNoticias',
+                  '/adicionarFotos',
+                  '/consultarGaleria'
+                ];
+
   const drawer = (
-    <div>
+    <>
       <div className={classes.toolbar} />
-      <Divider className="divider-list"/>
+      <Divider className="sidebar__divider"/>
+
       <List>
-        <h6 className="list-titulo">Pessoas</h6>  
-        {['Cadastrar pessoa', 'Consultar pessoas'].map((text, index) => (
-          <ListItem button className="list-item">
-          <span className={index === ativo ? "active-item" : "item"}>{text}</span>
-          </ListItem>
+        <div className="sidebar__sectionDiv">
+          <PeopleIcon className="sidebar__icons"/>
+          <h6 className="sidebar__sectionTitulo">Pessoas</h6>  
+        </div>
+        {['Cadastrar responsável', 'Cadastrar criança', 'Consultar pessoas'].map((text, index) => (
+          <Link to={arrayLink[index]} className={index === ativo ? "sidebar__activeItem" : "sidebar__item"}>{text}</Link>
         ))}
       </List>
-      <Divider className="divider-list"/>
-      
+
+      <Divider className="sidebar__divider"/>
+          
       <List>
-        <h6 className="list-titulo">Eventos</h6>  
+        <div className="sidebar__sectionDiv">
+          <EventIcon className="sidebar__icons"/>
+          <h6 className="sidebar__sectionTitulo">Eventos</h6>  
+        </div>
         {['Criar evento', 'Consultar eventos', 'Controle de presença'].map((text, index) => (
-          <ListItem button className="list-item">
-          <span className={index+2 === ativo ? "active-item" : "item"}>{text}</span>
-          </ListItem>
+          <Link to={arrayLink[index+3]} className={index+3 === ativo ? "sidebar__activeItem" : "sidebar__item"}>{text}</Link>
         ))}
       </List>
-      <Divider className="divider-list"/>
+
+      <Divider className="sidebar__divider"/>
 
       <List>
-        <h6 className="list-titulo">Notícias</h6>  
+        <div className="sidebar__sectionDiv">
+          <NewsIcon className="sidebar__icons"/>
+          <h6 className="sidebar__sectionTitulo">Notícias</h6>  
+        </div>
         {['Criar notícia', 'Consultar notícias'].map((text, index) => (
-          <ListItem button className="list-item">
-          <span className={index+5 === ativo ? "active-item" : "item"}>{text}</span>
-          </ListItem>
+          <Link to={arrayLink[index+6]} className={index+6 === ativo ? "sidebar__activeItem" : "sidebar__item"}>{text}</Link>
         ))}
       </List>
-      <Divider className="divider-list"/>
+
+      <Divider className="sidebar__divider"/>
 
       <List>
-        <h6 className="list-titulo">Galeria</h6>  
+        <div className="sidebar__sectionDiv">
+          <PhotoLibraryIcon className="sidebar__icons"/> 
+          <h6 className="sidebar__sectionTitulo">Galeria</h6>
+        </div>
         {['Adicionar fotos', 'Consultar galeria'].map((text, index) => (
-          <ListItem button className="list-item">
-          <span className={index+7 === ativo ? "active-item" : "item"}>{text}</span>
-          </ListItem>
+          <Link to={arrayLink[index+8]} className={index+8 === ativo ? "sidebar__activeItem" : "sidebar__item"}>{text}</Link>
         ))}
       </List>
-      <Divider className="divider-list"/>
-    </div>
+
+      <Divider className="sidebar__divider"/>
+    </>
   );
   
   return (
