@@ -1,8 +1,7 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import MyNavbar from '../../components/Navbar/index';
-import Footer from '../../components/Footer/index'
-import MyCarousel from '../../components/MyCarrousel/index';
+import MyNavbar from '../../../components/Navbar/index';
+import Footer from '../../../components/Footer/index'
+import MyCarousel from '../../../components/MyCarrousel/index';
 import './styles.css';
 
 export default class Inicio extends React.Component{
