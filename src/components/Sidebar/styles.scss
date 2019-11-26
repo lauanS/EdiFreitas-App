@@ -54,13 +54,31 @@
         outline: 0;
         background-color: #E8EAED;
     }
-}
 
+    &__exit{
+        color: #30333C;
+        margin: 0px!important;
+        display: flex;
+        width: 100%;
+        outline: 0;
+        padding: 5px 5px;
+        text-align: left;
+        background-color: #ffffff;
+        border: 0;
+        font-weight: 700!important;
+        align-items: center;
+        font-size: 1rem;
+    }
 
+    &__exit:hover{
+        color: #30333C;
+        outline: 0;
+        background-color: #E8EAED;
+    }
 
-
-
-
-.list-item{
-    padding: 5px 10px!important;
+    &__iconExit{
+        color: #30333C;
+        padding-right: 5px;
+        font-size: 1.9em !important;
+    }
 }

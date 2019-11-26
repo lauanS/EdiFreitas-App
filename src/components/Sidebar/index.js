@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,14 +12,15 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import './styles.scss';
-import { Link } from 'react-router-dom'
+import { Link , Redirect} from 'react-router-dom'
 
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import EventIcon from '@material-ui/icons/Event';
 import PeopleIcon from '@material-ui/icons/People';
 import NewsIcon from '@material-ui/icons/ImportContacts';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
-const drawerWidth = 240;
+const drawerWidth = 220;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -58,9 +59,16 @@ function ResponsiveDrawer(props) {
   const { container, titulo, ativo } = props;
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
+  const [toRedirect, setToRedirect] = useState(false);
+  
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const handleExit = () => {
+    localStorage.clear();
+    localStorage.setItem("authToken", false);
+    setToRedirect(true);
   };
 
   var arrayLink = ['/cadastrarResponsavel',
@@ -127,10 +135,17 @@ function ResponsiveDrawer(props) {
       </List>
 
       <Divider className="sidebar__divider"/>
+ 
+      <button onClick={handleExit} className="sidebar__exit"><ExitToAppIcon className="sidebar__iconExit"/>  Sair</button>
+
+      <Divider className="sidebar__divider"/>
+
     </>
   );
   
   return (
+    <>
+    {toRedirect ? <Redirect to="/"/> : null }
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
@@ -144,8 +159,7 @@ function ResponsiveDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>{titulo}
-          </Typography>
+          <Typography variant="h6" noWrap>{titulo} </Typography>
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
@@ -179,6 +193,7 @@ function ResponsiveDrawer(props) {
         </Hidden>
       </nav>
     </div>
+    </>
   );
 }
 
