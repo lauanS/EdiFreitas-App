@@ -11,6 +11,8 @@ import { Redirect } from 'react-router-dom';
 export default function Login() {
   const [validated, setValidated] = useState(false);
   const [toRedirect, setToRedirect] = useState(false);
+  localStorage.clear();
+  localStorage.setItem("authToken", false);
 
   const handleSubmit = event => {
     const form = event.currentTarget;
