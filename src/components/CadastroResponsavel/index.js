@@ -2,9 +2,11 @@ import React,  { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
 
-import {Form, Row, Col, Button, InputGroup} from 'react-bootstrap';
+import {Form, Row, Col, Button} from 'react-bootstrap';
 
-import Contato from '../../components/ContatoForm/index';
+import Contato from '../CampoContato/index';
+import CamposPessoa from '../CamposPessoa/index';
+import Comentario from '../CampoComentario/index';
 
 export default function CadastroResponsavel(){
 
@@ -26,39 +28,10 @@ export default function CadastroResponsavel(){
 
   return (
     <Form onSubmit={handleSubmit} noValidate validated={validated}>
-      <Form.Group as={Row} controlId="formGroupName">
-        <Form.Label column sm={2}>
-          Nome completo do responsável:
-        </Form.Label>
-        <Col sm={10}>
-          <Form.Control 
-            required 
-            type="text" 
-            placeholder="Ex: Leonardo dos Santos Sampaio" />
-          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-          <Form.Control.Feedback type="invalid">
-              Preencha seu nome completo.
-          </Form.Control.Feedback>
-        </Col>
-      </Form.Group>
-
-      <Form.Group as={Row} controlId="formGroupDate">
-        <Form.Label column sm={2}>
-          Data de nascimento:
-        </Form.Label>
-        <Col sm="2">
-          <Form.Control 
-            required
-            type="date" />
-          <Form.Control.Feedback type="invalid">
-            Campo obrigatório.
-          </Form.Control.Feedback>
-        </Col>
-      </Form.Group>
-
+      <CamposPessoa />
       <Form.Group as={Row} controlId="formGroup">
         <Form.Label column sm={2}>
-          CPF:
+          CPF *
         </Form.Label>
         <Col sm={10}>
           <Form.Control 
@@ -71,43 +44,16 @@ export default function CadastroResponsavel(){
         </Col>
       </Form.Group>
 
-      <fieldset>
-      <Form.Group as={Row}>
-        <Form.Label as="legend" column sm={2}>
-          Sexo
-        </Form.Label>
-        <Col sm={10}>
-          <Form.Check
-            type="radio"
-            label="Masculino"
-            name="rdMasc"
-            id="rdMasc"
-          />
-          <Form.Check
-            type="radio"
-            label="Feminino"
-            name="rdFem"
-            id="rdMasc"
-          />
-        </Col>
-      </Form.Group>
-      </fieldset>
-
-
-      <Form.Group as={Row} controlId="formGroupComment">
-        <Form.Label column sm={2}>
-          Comentário:
-        </Form.Label>
-        <Col>
-          <Form.Control as="textarea" rows="3"/>
-        </Col>
-      </Form.Group>
+      <Comentario />
+      <Contato />
 
       <Form.Group as={Row}>
         <Col sm={{ span: 10, offset: 2 }}>
           <Button type="submit">Cadastrar</Button>
         </Col>
       </Form.Group>
+
+      
     </Form>
     
   );
