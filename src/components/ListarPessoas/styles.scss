@@ -1,0 +1,97 @@
+.resultadosPessoas{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 500px) {
+  .resultadosPessoas{
+    justify-content: center;
+  }
+}
+
+.cardPessoa{
+  width: 330px;
+  height: 100px;
+  align-items: center;
+  border: 1px solid rgba(#000, .2);
+  border-radius: 5px;
+  display: flex;
+  background-color: #f8f9fa;
+  padding: 5px 0px 5px 0px;
+  color: #30333C;
+  pointer-events: visible;
+  cursor: pointer;
+
+  &__img {
+    height: 100px;
+    width: 100px;
+    padding: 2px;
+    border-radius: 5px;
+  }
+
+  &__info{
+    width: 230px;
+  }
+}
+
+@media (max-width: 350px){
+  .cardPessoa{
+    margin: 5px 0px 5px 0px;
+  }
+}
+
+@media (min-width: 351px){
+  .cardPessoa{
+    margin: 5px 10px 5px 10px;
+  }
+}
+
+.modalPessoa{
+  &__img{
+    min-width: 200px;
+    width: 200px;
+    height: auto;
+    border-radius: 5px;
+    border: 1px solid #30333C;
+  }
+
+  &__title{
+    margin: 5px 0px 5px 0px;
+    color: #30333C;
+  }
+
+  &__info{
+    display: block;
+    min-width: 200px;
+  }
+
+  &__link{
+		color: #30333C!important;
+		text-decoration: none;
+		padding: 4px 2px;
+		margin-top: 2px;
+    margin-right: 5px;
+    cursor: pointer;
+    display: flex;
+	}
+
+  &__link-remover{
+		color: #BC2018!important;
+		text-decoration: none;
+		padding: 4px 2px;
+		margin-top: 2px;
+    margin-right: 5px;
+    cursor: pointer;
+    display: flex;
+  }
+  
+  &__header{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__buttonCancelar{
+    border: 0;
+    background-color: #f8f9fa;
+  }
+}
