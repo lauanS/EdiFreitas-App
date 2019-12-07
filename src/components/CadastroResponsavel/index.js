@@ -11,7 +11,7 @@ import Comentario from '../CampoComentario/index';
 export default function CadastroResponsavel(){
 
   const [validated, setValidated] = useState(false);
-  const [toRedirect, setToRedirect] = useState(false);
+  //const [toRedirect, setToRedirect] = useState(false);
 
   const handleSubmit = e => {
     const form = e.currentTarget;
@@ -20,7 +20,7 @@ export default function CadastroResponsavel(){
       e.stopPropagation();
     }
     else{
-      setToRedirect(true);
+     // setToRedirect(true);
     }
     setValidated(true);
 

@@ -1,4 +1,4 @@
-import React,  { useState } from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
 
@@ -49,12 +49,14 @@ export default function CamposPessoa(){
           label="Masculino"
           name="rdMasc"
           id="rdMasc"
+          className="radio-buttom"
         />
         <Form.Check
           type="radio"
           label="Feminino"
           name="rdMasc"
           id="rdMasc"
+          className="radio-buttom"
         />
       </Col>
     </Form.Group>

@@ -31,7 +31,7 @@ export default class EditorDeTexto extends React.Component{
             here we add custom filepicker only to Image dialog
           */
           file_picker_types: 'image',
-          file_picker_types: 'image',
+          //file_picker_types: 'image', (repetido)
           file_picker_callback: function (cb, value, meta) {
             var input = document.createElement('input');
             input.setAttribute('type', 'file');

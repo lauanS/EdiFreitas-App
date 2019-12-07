@@ -13,12 +13,12 @@ export default function CampoContato(){
   const [typeContact, setType] = useState('E-mail');
 
   const handleChange = e => {
-    let {name, value} = e.target;
+    let {value} = e.target;
     setType(value);
   }
 
   const displayContactField = type => {
-    if(typeContact == "Telefone"){
+    if(typeContact === "Telefone"){
       return contactFieldPhone();
     }
     return contactFieldEmail();
@@ -27,19 +27,19 @@ export default function CampoContato(){
   const contactFieldEmail = () => {
     return (
       <InputGroup>
-          <InputGroup.Prepend>
-            <InputGroup.Text id="inputGroupPrepend"> 
-            <EmailIcon />
-            </InputGroup.Text>
-          </InputGroup.Prepend>
-          <Form.Control 
-            required 
-            type="email" 
-            placeholder="Ex: seu.email@exemplo.com" />
-          <Form.Control.Feedback type="invalid">
-            E-mail inválido.
-          </Form.Control.Feedback>    
-        </InputGroup>
+        <InputGroup.Prepend>
+          <InputGroup.Text id="inputGroupPrepend"> 
+          <EmailIcon />
+          </InputGroup.Text>
+        </InputGroup.Prepend>
+        <Form.Control 
+          required 
+          type="email" 
+          placeholder="Ex: seu.email@exemplo.com" />
+        <Form.Control.Feedback type="invalid">
+          E-mail inválido.
+        </Form.Control.Feedback>    
+      </InputGroup>
     )
   }
 
