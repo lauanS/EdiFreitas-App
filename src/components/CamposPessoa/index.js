@@ -47,15 +47,22 @@ export default function CamposPessoa(){
         <Form.Check
           type="radio"
           label="Masculino"
-          name="rdMasc"
-          id="rdMasc"
+          name="formSexo"
+          id="formSexo"
           className="radio-buttom"
         />
         <Form.Check
           type="radio"
           label="Feminino"
-          name="rdMasc"
-          id="rdMasc"
+          name="formSexo"
+          id="formSexo"
+          className="radio-buttom"
+        />
+        <Form.Check
+          type="radio"
+          label="Outro"
+          name="formSexo"
+          id="formSexo"
           className="radio-buttom"
         />
       </Col>
