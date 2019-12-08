@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
 
 import {Form, Row, Col} from 'react-bootstrap';
 
 export default function CamposPessoa(){
-  const [validated, setValidated] = useState(false);
   return (
     <>
     <Form.Group as={Row} controlId="formGroupName">
