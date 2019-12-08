@@ -1,15 +1,28 @@
 import React,  { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
-import {Form, Row, Col, Button} from 'react-bootstrap';
 
+import {Form, Row, Col, Button} from 'react-bootstrap';
 import CamposPessoa from '../CamposPessoa/index';
 import Comentario from '../CampoComentario/index';
 
-export default function CadastroCrianca(){
+import { checkText, checkNumber } from '../../validated';
 
+import SweetAlert from 'react-bootstrap-sweetalert';
+
+export default function CadastroCrianca(){
   const [validated, setValidated] = useState(false);
-  //const [toRedirect, setToRedirect] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+
+  const [nomeResponsavel, setNomeResponsavel] = useState("");
+  const [validatedNomeResponsavel, setValidatedNomeResponsavel] = useState(false);
+  const [InvalidatedNomeResponsavel, setInvalidatedNomeResponsavel] = useState(false);
+  
+  const [numCalcado, setNumCalcado] = useState(1);
+  const [validatedNumCalcado, setValidatedNumCalcado] = useState(false);
+  const [InvalidatedNumCalcado, setInvalidatedNumCalcado] = useState(false);
+
+  const [tamCamiseta, setTamCamiseta] = useState("");
 
   const handleSubmit = e => {
     const form = e.currentTarget;
@@ -19,7 +32,10 @@ export default function CadastroCrianca(){
       e.stopPropagation();
     }
     else{
-      //setToRedirect(true);
+      setNumCalcado("");
+      setTamCamiseta("");
+      setShowAlert(true);
+      e.preventDefault();
     }
     setValidated(true);
   };
@@ -28,12 +44,21 @@ export default function CadastroCrianca(){
     return true;
   }
 
+  const handleConfirm = e => {
+    setShowAlert(false);
+    window.location.reload();
+  }
+
   return (
-    <Form onSubmit={handleSubmit} noValidate validated={validated}>
-    
+    <>
+    <SweetAlert title="Criança cadastrada com sucesso!" show={showAlert} 
+      type='success' onConfirm={handleConfirm}
+      btnSize='sm' confirmBtnText="Entendido"
+      />
+    <Form onSubmit={handleSubmit} noValidate validated={validated} >
       <CamposPessoa />
 
-      <Form.Group as={Row} controlId="formGroupName">
+      <Form.Group as={Row} controlId="formGroupName" >
         <Form.Label column sm={2}>
           Nome do responsável *
         </Form.Label>
@@ -41,10 +66,14 @@ export default function CadastroCrianca(){
           <Form.Control 
             required 
             type="text" 
+            onChange={e => checkText(e.target, nomeResponsavel, setNomeResponsavel, setValidatedNomeResponsavel, 
+              setInvalidatedNomeResponsavel)}
+            value={nomeResponsavel}
+            isValid={validatedNomeResponsavel}
+            isInvalid={InvalidatedNomeResponsavel}
           />
-          <Form.Control.Feedback>Parece bom!</Form.Control.Feedback>
           <Form.Control.Feedback type="invalid">
-              Preencha seu nome completo.
+            Preencha o nome completo do responsável.
           </Form.Control.Feedback>
         </Col>
       </Form.Group>
@@ -57,11 +86,15 @@ export default function CadastroCrianca(){
           <Form.Control 
             type="number"
             placeholder="Ex: 33"
+            onChange={e => checkNumber(e.target, numCalcado, setNumCalcado, setValidatedNumCalcado, 
+              setInvalidatedNumCalcado)}
+            value={numCalcado}
+            isValid={validatedNumCalcado}
+            isInvalid={InvalidatedNumCalcado}
             sm={2}
           />
-          <Form.Control.Feedback>Parecem bom!</Form.Control.Feedback>
           <Form.Control.Feedback type="invalid">
-            Insira apenas números.
+            Insira um número maior que zero.
           </Form.Control.Feedback>
         </Col>
       </Form.Group>
@@ -74,7 +107,10 @@ export default function CadastroCrianca(){
           <Form.Control 
             type="text"
             placeholder="Ex: GG"
+            onChange={e => setTamCamiseta(e.target.value)}
+            value={tamCamiseta}
             sm={2}
+            isInvalid={false}
           />
           <Form.Control.Feedback>Parecem bom!</Form.Control.Feedback>
           <Form.Control.Feedback type="invalid">
@@ -91,5 +127,6 @@ export default function CadastroCrianca(){
         </Col>
       </Form.Group>
     </Form>
+    </>
   );
 }

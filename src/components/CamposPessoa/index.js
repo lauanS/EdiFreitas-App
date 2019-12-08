@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
 
 import {Form, Row, Col} from 'react-bootstrap';
 
 export default function CamposPessoa(){
-
+  const [validated, setValidated] = useState(false);
   return (
     <>
     <Form.Group as={Row} controlId="formGroupName">
@@ -38,7 +38,6 @@ export default function CamposPessoa(){
       </Col>
     </Form.Group>
 
-    <fieldset>
     <Form.Group as={Row}>
       <Form.Label as="legend" column sm={2}>
         Sexo *
@@ -47,27 +46,24 @@ export default function CamposPessoa(){
         <Form.Check
           type="radio"
           label="Masculino"
-          name="formSexo"
           id="formSexo"
           className="radio-buttom"
         />
         <Form.Check
           type="radio"
           label="Feminino"
-          name="formSexo"
           id="formSexo"
           className="radio-buttom"
         />
         <Form.Check
           type="radio"
           label="Outro"
-          name="formSexo"
           id="formSexo"
           className="radio-buttom"
         />
       </Col>
     </Form.Group>
-    </fieldset>
+    
     </>
   );
 }
