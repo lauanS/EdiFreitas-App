@@ -3,13 +3,20 @@ export function checkText(e, text, setText, setVali, setInva){
   let flag = false;
   for(let i = 0; i < e.value.length; i++){
     let char = e.value.charAt(i);
-    if( (char >= '0' && char <= '9') || char == '#' || char == '@' || char == '!' || char == '$' || char == '%' || char == '?'){
+    if( !(char >= 'a' && char <= 'z') && !(char >= 'A' && char <= 'Z') && char !== ' '
+        && char !== 'ã' && char !== 'á' && char !== 'â' && char !=='à' 
+        && char !== 'ẽ' && char !== 'é' && char !== 'ê' 
+        && char !== 'ĩ' && char !== 'í' && char !== 'î'
+        && char !== 'õ' && char !== 'ó' && char !== 'ô'
+        && char !== 'ũ' && char !== 'ú' && char !== 'û' && char !== 'ç'){
       flag = true;
     }
+    
   }
 
   if(text.length > e.value.length){
     setText(e.value);
+    nome = e.value;
   } else if(flag){
     setText(text);
     nome = text;
@@ -41,6 +48,7 @@ export function checkNumber(e, number, setNumber, setVali, setInva){
 
   if(number.length > e.value.length){
     setNumber(e.value);
+    valor = e.value;
   } else if(flag){
     setNumber(number);
     valor = number;
