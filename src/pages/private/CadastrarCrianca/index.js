@@ -8,7 +8,7 @@ export default class CadastrarCrianca extends React.Component{
           <>
           <Sidebar titulo="Cadastrar criança" ativo={1}/>
 
-          <div className="cad">
+          <div className="FormsCadastrarCrianca">
             <CadCrianca />   
           </div>
           </>
