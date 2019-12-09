@@ -1,3 +1,40 @@
-.form-check-input{
-    outline: 0;
+.label-radio{
+    margin: 0!important;
+}
+
+.MuiTypography-body1{
+    font-size: 14px!important;
+}
+
+.MuiInput-underline::before{
+    border-radius: 4px;
+    border: 1px solid red !important;
+    height: 100%!important;
+}
+
+.MuiInput-underline::after{
+    border: 0!important;
+}
+
+.date-input{
+    color: #202124;
+    
+}
+
+button:focus{
+    outline: none!important;
+}
+
+.search-input{
+    border-radius: 4px;
+    color: #202124;
+    font-size: 16px;
+		display: block;
+    width: calc(100% - 83px);
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-weight: 400;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+		outline: none;
 }
