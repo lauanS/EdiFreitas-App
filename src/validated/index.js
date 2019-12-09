@@ -1,5 +1,4 @@
-export function checkText(e, text, setText, setVali, setInva){
-  let nome = "";
+export function checkText(e, setText, setVali, setInva){
   let flag = false;
   for(let i = 0; i < e.value.length; i++){
     let char = e.value.charAt(i);
@@ -11,21 +10,11 @@ export function checkText(e, text, setText, setVali, setInva){
         && char !== 'ũ' && char !== 'ú' && char !== 'û' && char !== 'ç'){
       flag = true;
     }
-    
   }
 
-  if(text.length > e.value.length){
-    setText(e.value);
-    nome = e.value;
-  } else if(flag){
-    setText(text);
-    nome = text;
-  } else{
-    setText(e.value);
-    nome = e.value;
-  }
+  setText(e.value);
 
-  if(nome.length > 0){
+  if(flag === false && e.value.length > 0){
     setVali(true);
     setInva(false);
   }
@@ -35,9 +24,9 @@ export function checkText(e, text, setText, setVali, setInva){
   }
 }
 
-export function checkNumber(e, number, setNumber, setVali, setInva){
-  let flag = false;
+export function checkNumber(e, setNum, setVali, setInva){
   let valor = 0;
+  let flag = false
 
   for(let i = 0; i < e.value.length; i++){
     let char = e.value.charAt(i);
@@ -46,18 +35,43 @@ export function checkNumber(e, number, setNumber, setVali, setInva){
     }
   }
 
-  if(number.length > e.value.length){
-    setNumber(e.value);
-    valor = e.value;
-  } else if(flag){
-    setNumber(number);
-    valor = number;
-  } else{
-    setNumber(e.value);
-    valor = e.value;
+  setNum(e.value);
+  valor = e.value;
+  
+  if(e.value.length === 0){
+    setVali(false);
+    setInva(false);
   }
+  else if(flag === false && valor > 0){
+    setVali(true);
+    setInva(false);
+  }
+  else{
+    setInva(true);
+    setVali(false);
+  }
+}
 
-  if(valor > 0){
+export function checkCamiseta(e, setTam, setVali, setInva){
+  setTam(e.value);
+  let valor = e.value;
+  let flag = false;
+
+  for(let i = 0; i < e.value.length; i++){
+    let char = e.value.charAt(i);
+    if(!(char >= '0' && char <= '9')){
+      flag = true;
+    }
+  }
+  if(e.value.length === 0){
+    setVali(false);
+    setInva(false);
+  }
+  else if(flag === false && valor > 0){
+    setVali(true);
+    setInva(false);
+  }
+  else if(e.value === "PP" || e.value === "P" || e.value === "M" || e.value === "G" || e.value === "GG" || e.value === "GGG"){
     setVali(true);
     setInva(false);
   }
