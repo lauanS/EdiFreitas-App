@@ -38,3 +38,22 @@ button:focus{
     border: 1px solid #ced4da;
 		outline: none;
 }
+
+
+.CampoPessoa-label{
+    min-width: 170px;
+    padding-right: 0px;
+}
+
+.CampoPessoa-inputText{
+    max-width: 500px;
+}
+
+.CampoPessoa-inputNumber{
+    min-width: 180px;
+    max-width: 200px;
+}
+
+.CampoPessoa-inputSexo{
+    max-width: 150px;
+}

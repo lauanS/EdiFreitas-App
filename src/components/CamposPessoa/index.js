@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
 
 import {Form, Row, Col} from 'react-bootstrap';
-
 
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -69,19 +68,15 @@ function StyledRadio(props) {
 }
 
 export default function CamposPessoa(props){
-  const { onChangeNome, valNome, invNome, onChangeSexo } = props;
-  const [selectedDate, setSelectedDate] = useState(new Date('2019-08-18T21:11:54'));
+  const { onChangeNome, valNome, invNome, data, onChangeData, valData, invData, onChangeSexo } = props;
 
-  const handleDateChange = date => {
-    setSelectedDate(date);
-  };
   return (
     <>
     <Form.Group as={Row} controlId="formGroupName">
-      <Form.Label column sm={2}>
+      <Form.Label column sm={2} className="CampoPessoa-label">
         Nome completo *
       </Form.Label>
-      <Col sm={10}>
+      <Col sm={8} className="CampoPessoa-inputText">
         <Form.Control 
           required 
           type="text" 
@@ -91,35 +86,36 @@ export default function CamposPessoa(props){
           isInvalid={invNome}
           />
         <Form.Control.Feedback type="invalid">
-            Preencha o nome completo.
+          Preencha o nome completo (Apenas letras).
         </Form.Control.Feedback>
       </Col>
     </Form.Group>
 
     <Form.Group as={Row} controlId="formGroupDate">
-      <Form.Label column sm={2}>
+      <Form.Label column sm={2} className="CampoPessoa-label">
         Data de nascimento *
       </Form.Label>
-      <Col sm="3">
-        <Form.Control 
-          required
-          type="text"
-          className="search-input"
-          placeholder="dd/mm/aaaa"
-          isInvalid={true}
-          onChange={e => onChangeNome(e.target)}
-           />
+      <Col sm={3} className="CampoPessoa-inputNumber">
+      <Form.Control 
+          required 
+          type="text" 
+          placeholder="dd/MM/aaaa" 
+          onChange={e => onChangeData(e.target)}
+          value={data}
+          isValid={valData}
+          isInvalid={invData}
+          />
         <Form.Control.Feedback type="invalid">
-          Campo obrigatório.
+          Preencha uma data de nascimento válida (Apenas números)
         </Form.Control.Feedback>
       </Col>
     </Form.Group>
 
     <Form.Group as={Row} controlId="formGroupDate">
-      <Form.Label column sm={2}>
+      <Form.Label column sm={2} className="CampoPessoa-label">
         Sexo *
       </Form.Label>
-      <Col sm="3">
+      <Col sm={3} className="CampoPessoa-inputSexo">
         <RadioGroup defaultValue="Masculino" name="customized-radios" onChange={onChangeSexo}>
           <FormControlLabel className="label-radio" value="Masculino" control={<StyledRadio />} label="Masculino" />
           <FormControlLabel className="label-radio" value="Feminino" control={<StyledRadio />} label="Feminino" />

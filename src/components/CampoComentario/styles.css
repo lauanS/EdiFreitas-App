@@ -1,3 +1,9 @@
-.div-input{
-    min-width: 180px;
+
+.Comentario-label{
+    min-width: 170px;
+    padding-right: 0px;
+}
+
+.Comentario-inputText{
+    max-width: 500px;
 }

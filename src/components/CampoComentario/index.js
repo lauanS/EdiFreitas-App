@@ -21,10 +21,10 @@ export default function CampoComentario(props){
 
   return (
     <Form.Group as={Row} controlId="formGroupComment">
-      <Form.Label column sm={3}>
+      <Form.Label column sm={2} className="Comentario-label">
         Comentário
       </Form.Label>
-      <Col sm={9}>
+      <Col sm={8} className="Comentario-inputText">
         <Form.Control 
           onChange={e => onChange(e.target)}
           as="textarea" 
