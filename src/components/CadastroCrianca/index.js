@@ -6,7 +6,7 @@ import {Form, Row, Col, Button} from 'react-bootstrap';
 import CamposPessoa from '../CamposPessoa/index';
 import Comentario from '../CampoComentario/index';
 
-import { checkText, checkNumber, checkCamiseta } from '../../validated';
+import { checkText, checkNumber, checkCamiseta, checkData } from '../../validated';
 
 import SweetAlert from 'react-bootstrap-sweetalert';
 
@@ -45,6 +45,10 @@ export default function CadastroCrianca(){
       setInvalidatedNomeCompleto(true);
       flag = true;
     }
+    if(validatedDataNascimento === false){
+      setInvalidatedDataNascimento(true);
+      flag = true;
+    }
     if(validatedNomeResponsavel === false){
       setInvalidatedNomeResponsavel(true);
       flag = true;
@@ -58,17 +62,17 @@ export default function CadastroCrianca(){
    
     if(flag === false){
       console.log(nomeCompleto);
-      console.log(nomeResponsavel);
+      console.log(dataNascimento);
       console.log(sexoPessoa);
+      console.log(nomeResponsavel);
       console.log(numCalcado);
       console.log(tamCamiseta);
       console.log(comentario);
 
-      //setShowAlert(true);
+      setShowAlert(true);
     }
     e.preventDefault();
     e.stopPropagation();
-
   };
 
   const handleConfirm = e => {
@@ -80,12 +84,12 @@ export default function CadastroCrianca(){
     checkText(e, setNomeCompleto, setValidatedNomeCompleto, setInvalidatedNomeCompleto);
   }
 
-  const onChangeData = e => {
-    console.log("data");
-  }
-
   const onChangeSexo = e => {
     setSexoPessoa(e.target.value);
+  }
+
+  const onChangeData = e => {
+    checkData(e, dataNascimento, setDataNascimento, setValidatedDataNascimento, setInvalidatedDataNascimento)
   }
 
   return (
@@ -96,15 +100,15 @@ export default function CadastroCrianca(){
       />
     <Form onSubmit={handleSubmit} noValidate  >
       <CamposPessoa onChangeNome={onChangeNome} valNome={validatedNomeCompleto} invNome={invalidatedNomeCompleto}
-          onChangeData={onChangeData} valData={validatedDataNascimento} invData={invalidatedDataNascimento}
+          data={dataNascimento} onChangeData={onChangeData} valData={validatedDataNascimento} invData={invalidatedDataNascimento}
           onChangeSexo={onChangeSexo}
       />
 
       <Form.Group as={Row} controlId="formGroupName" >
-        <Form.Label column sm={3}>
+        <Form.Label column sm={2} className="CadastroCrianca-label">
           Nome do responsável *
         </Form.Label>
-        <Col sm={9} className="div2-input">
+        <Col sm={8} className="CadastroCrianca-inputText">
           <Form.Control 
             required 
             type="text" 
@@ -119,10 +123,10 @@ export default function CadastroCrianca(){
       </Form.Group>
 
       <Form.Group as={Row} controlId="formGroupCalcado">
-        <Form.Label column sm={3}>
+        <Form.Label column sm={2} className="CadastroCrianca-label">
           Número do calçado
         </Form.Label>
-        <Col sm={3} className="div-input">
+        <Col sm={3} className="CadastroCrianca-inputNumber">
           <Form.Control 
             type="text"
             placeholder="Ex: 33"
@@ -137,10 +141,10 @@ export default function CadastroCrianca(){
       </Form.Group>
 
       <Form.Group as={Row} controlId="formGroupTamanho">
-        <Form.Label column sm={3}>
+        <Form.Label column sm={2} className="CadastroCrianca-label">
           Tamanho de camiseta
         </Form.Label>
-        <Col sm={3} className="div-input">
+        <Col sm={3} className="CadastroCrianca-inputNumber">
           <Form.Control 
             type="text"
             placeholder="Ex: 10, 12, GG ..."
