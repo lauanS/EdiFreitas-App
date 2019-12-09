@@ -11,3 +11,9 @@
     display: block;
     margin-top: 60px;
 }
+
+@media (max-width: 599px){
+    .cad{
+        width: 95vw;
+    }
+}
