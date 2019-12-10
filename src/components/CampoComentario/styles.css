@@ -7,3 +7,9 @@
 .Comentario-inputText{
     max-width: 500px;
 }
+
+@media (min-width: 600px){
+    .Comentario-inputText{
+        min-width: 340px;
+    }
+}
