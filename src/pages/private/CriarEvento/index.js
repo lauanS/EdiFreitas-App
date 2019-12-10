@@ -6,7 +6,7 @@ export default class CriarEvento extends React.Component{
     render(){
         return (
           <>
-          <Sidebar titulo="Criar evento" ativo={3}/>
+          <Sidebar titulo="Criar evento" ativo={3} key={"sidebar"}/>
           </>
         );
       }

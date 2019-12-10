@@ -6,7 +6,7 @@ export default class ControlePresenca extends React.Component{
     render(){
         return (
           <>
-          <Sidebar titulo="Controle de presença" ativo={5}/>
+          <Sidebar titulo="Controle de presença" ativo={5} key={"sidebar"}/>
           </>
         );
       }

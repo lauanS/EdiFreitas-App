@@ -7,7 +7,7 @@ export default class CadastrarResponsavel extends React.Component{
     render(){
         return (
           <>
-          <Sidebar titulo="Cadastrar responsável" ativo={0}/>
+          <Sidebar titulo="Cadastrar responsável" ativo={0} key={"sidebar"}/>
 
                     
           <div className="FormsCadastrarResponsavel">

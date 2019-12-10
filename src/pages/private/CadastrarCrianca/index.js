@@ -6,7 +6,7 @@ export default class CadastrarCrianca extends React.Component{
     render(){
         return (
           <>
-          <Sidebar titulo="Cadastrar criança" ativo={1}/>
+          <Sidebar titulo="Cadastrar criança" ativo={1} key={"sidebar"}/>
 
           <div className="FormsCadastrarCrianca">
             <CadCrianca />   

@@ -9,7 +9,7 @@ export default class CriarNoticia extends React.Component{
     render(){
         return (
           <>
-          <Sidebar titulo="Criar notícia" ativo={6}/>
+          <Sidebar titulo="Criar notícia" ativo={6} key={"sidebar"}/>
           <div className='newsContent'>
             <Form>
               <DadosNoticia />
