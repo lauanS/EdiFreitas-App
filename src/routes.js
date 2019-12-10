@@ -12,7 +12,7 @@ import Noticias from "./pages/public/Noticias/index";
 
 import LoginAdmin from "./pages/private/LoginAdmin/index";
 import Administrar from "./pages/private/Administrar/index";
-import CadastrarCrianca from "./pages/private/CadastrarCriança/index";
+import CadastrarCrianca from "./pages/private/CadastrarCrianca/index";
 import CadastrarResponsavel from "./pages/private/CadastrarResponsavel/index";
 import ConsultarPessoas from "./pages/private/ConsultarPessoas/index";
 import ConsultarEventos from "./pages/private/ConsultarEventos/index";
