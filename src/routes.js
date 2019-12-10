@@ -24,30 +24,30 @@ import AdicionarFotos from "./pages/private/AdicionarFotos/index";
 import ConsultarGaleria from "./pages/private/ConsultarGaleria/index";
 
 const Routes = () => (
-  <BrowserRouter>
-    <Switch>
-      <Route exact path="/" component={Inicio} />
-      <Route path="/sobre" component={Sobre} />
-      <Route path="/contato" component={Contato} />
-      <Route path="/eventos" component={Eventos} />
-      <Route path="/galeria" component={Galeria} />
-      <Route path="/noticias" component={Noticias} />
+  <BrowserRouter key={"browserRouter"}>
+    <Switch key={"SwitcherRouter"}>
+      <Route key={"pub1"} exact path="/" component={Inicio} />
+      <Route key={"pub2"} path="/sobre" component={Sobre} />
+      <Route key={"pub3"} path="/contato" component={Contato} />
+      <Route key={"pub4"} path="/eventos" component={Eventos} />
+      <Route key={"pub5"} path="/galeria" component={Galeria} />
+      <Route key={"pub6"} path="/noticias" component={Noticias} />
 
-      <RestrictedRoute exact path="/login" component={LoginAdmin} />
+      <RestrictedRoute key={"res1"} exact path="/login" component={LoginAdmin} />
 
-      <PrivateRoute exact path="/admin" component={Administrar} />
-      <PrivateRoute exact path="/cadastrarResponsavel" component={CadastrarResponsavel} />
-      <PrivateRoute exact path="/cadastrarCriança" component={CadastrarCrianca} />
-      <PrivateRoute exact path="/consultarPessoas" component={ConsultarPessoas} />
-      <PrivateRoute exact path="/criarEvento" component={CriarEvento} />
-      <PrivateRoute exact path="/consultarEventos" component={ConsultarEventos} />
-      <PrivateRoute exact path="/controlePresenca" component={ControlePresenca} />
-      <PrivateRoute exact path="/criarNoticia" component={CriarNoticia} />
-      <PrivateRoute exact path="/consultarNoticias" component={ConsultarNoticias} />
-      <PrivateRoute exact path="/adicionarFotos" component={AdicionarFotos} />
-      <PrivateRoute exact path="/consultarGaleria" component={ConsultarGaleria} />           ,
+      <PrivateRoute key={"pri1"} exact path="/admin" component={Administrar} />
+      <PrivateRoute key={"pri2"} exact path="/cadastrarResponsavel" component={CadastrarResponsavel} />
+      <PrivateRoute key={"pri3"} exact path="/cadastrarCriança" component={CadastrarCrianca} />
+      <PrivateRoute key={"pri4"} exact path="/consultarPessoas" component={ConsultarPessoas} />
+      <PrivateRoute key={"pri5"} exact path="/criarEvento" component={CriarEvento} />
+      <PrivateRoute key={"pri6"} exact path="/consultarEventos" component={ConsultarEventos} />
+      <PrivateRoute key={"pri7"} exact path="/controlePresenca" component={ControlePresenca} />
+      <PrivateRoute key={"pri8"} exact path="/criarNoticia" component={CriarNoticia} />
+      <PrivateRoute key={"pri9"} exact path="/consultarNoticias" component={ConsultarNoticias} />
+      <PrivateRoute key={"pri10"} exact path="/adicionarFotos" component={AdicionarFotos} />
+      <PrivateRoute key={"pri11"} exact path="/consultarGaleria" component={ConsultarGaleria} />           ,
 
-      <Route path="*" component={() => <h1>Page not found</h1>} />
+      <Route key={"RDefault"} path="*" component={() => <h1>Page not found</h1>} />
     </Switch>
   </BrowserRouter>
 );

@@ -86,59 +86,59 @@ function ResponsiveDrawer(props) {
   const drawer = (
     <>
       <div className={classes.toolbar} />
-      <Divider className="sidebar__divider"/>
+      <Divider className="sidebar__divider" key={"d1"}/>
 
-      <List>
+      <List key={"list1"}>
         <div className="sidebar__sectionDiv">
           <PeopleIcon className="sidebar__icons"/>
           <h6 className="sidebar__sectionTitulo">Pessoas</h6>  
         </div>
         {['Cadastrar responsável', 'Cadastrar criança', 'Consultar pessoas'].map((text, index) => (
-          <Link to={arrayLink[index]} className={index === ativo ? "sidebar__activeItem" : "sidebar__item"}>{text}</Link>
+          <Link key={text} to={arrayLink[index]} className={index === ativo ? "sidebar__activeItem" : "sidebar__item"}>{text}</Link>
         ))}
       </List>
 
-      <Divider className="sidebar__divider"/>
+      <Divider className="sidebar__divider" key={"d2"}/>
           
-      <List>
+      <List key={"list2"}>
         <div className="sidebar__sectionDiv">
           <EventIcon className="sidebar__icons"/>
           <h6 className="sidebar__sectionTitulo">Eventos</h6>  
         </div>
         {['Criar evento', 'Consultar eventos', 'Controle de presença'].map((text, index) => (
-          <Link to={arrayLink[index+3]} className={index+3 === ativo ? "sidebar__activeItem" : "sidebar__item"}>{text}</Link>
+          <Link key={text} to={arrayLink[index+3]} className={index+3 === ativo ? "sidebar__activeItem" : "sidebar__item"}>{text}</Link>
         ))}
       </List>
 
-      <Divider className="sidebar__divider"/>
+      <Divider className="sidebar__divider" key={"d3"}/>
 
-      <List>
+      <List key={"list3"}>
         <div className="sidebar__sectionDiv">
           <NewsIcon className="sidebar__icons"/>
           <h6 className="sidebar__sectionTitulo">Notícias</h6>  
         </div>
         {['Criar notícia', 'Consultar notícias'].map((text, index) => (
-          <Link to={arrayLink[index+6]} className={index+6 === ativo ? "sidebar__activeItem" : "sidebar__item"}>{text}</Link>
+          <Link key={text} to={arrayLink[index+6]} className={index+6 === ativo ? "sidebar__activeItem" : "sidebar__item"}>{text}</Link>
         ))}
       </List>
 
-      <Divider className="sidebar__divider"/>
+      <Divider className="sidebar__divider" key={"d4"}/>
 
-      <List>
+      <List key={"list4"}>
         <div className="sidebar__sectionDiv">
           <PhotoLibraryIcon className="sidebar__icons"/> 
           <h6 className="sidebar__sectionTitulo">Galeria</h6>
         </div>
         {['Adicionar fotos', 'Consultar galeria'].map((text, index) => (
-          <Link to={arrayLink[index+8]} className={index+8 === ativo ? "sidebar__activeItem" : "sidebar__item"}>{text}</Link>
+          <Link key={text} to={arrayLink[index+8]} className={index+8 === ativo ? "sidebar__activeItem" : "sidebar__item"}>{text}</Link>
         ))}
       </List>
 
-      <Divider className="sidebar__divider"/>
+      <Divider className="sidebar__divider" key={"d5"}/>
  
       <button onClick={handleExit} className="sidebar__exit"><ExitToAppIcon className="sidebar__iconExit"/>  Sair</button>
 
-      <Divider className="sidebar__divider"/>
+      <Divider className="sidebar__divider" key={"d6"}/>
 
     </>
   );
