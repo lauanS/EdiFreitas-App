@@ -30,7 +30,7 @@ export default function CampoComentario(props){
           as="textarea" 
           isValid={valited}
           rows="3" 
-          placeholder="Algum comentário sobre a criança"/>
+          placeholder="Algum comentário sobre a pessoa"/>
       </Col>
     </Form.Group>
   );
