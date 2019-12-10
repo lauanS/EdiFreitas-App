@@ -1,8 +1,22 @@
 .CadastroResponsavel-inputCpf{
-    min-width: 230px;
-    max-width: 230px;
+    min-width: 215px;
+    max-width: 215px;
 }
 
 .CadastroResponsavel-label{
     min-width: 170px;
+}
+
+.CadastroResponsavel-Descricao{
+    margin-bottom: 20px;
+}
+
+.CadastroResponsavel-inputText{
+    max-width: 500px;
+}
+
+@media (min-width: 600px){
+    .CadastroResponsavel-inputText{
+        min-width: 340px;
+    }
 }

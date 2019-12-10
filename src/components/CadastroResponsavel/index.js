@@ -87,7 +87,10 @@ export default function CadastroResponsavel(){
     <SweetAlert title="Criança cadastrada com sucesso!" show={showAlert} 
       type='success' onConfirm={handleConfirm}
       btnSize='sm' confirmBtnText="Entendido"
-      />
+    />
+
+    <label className="CadastroResponsavel-Descricao">É obrigatório o preenchimento de campos com * (Asterisco) no título, é opcional quando não possuem o asterisco</label>
+
     <Form onSubmit={handleSubmit} noValidate>
       <CamposPessoa onChangeNome={onChangeNome} valNome={validatedNomeCompleto} invNome={invalidatedNomeCompleto}
           data={dataNascimento} onChangeData={onChangeData} valData={validatedDataNascimento} invData={invalidatedDataNascimento}
@@ -98,8 +101,9 @@ export default function CadastroResponsavel(){
         <Form.Label column sm={2} className="CadastroResponsavel-label">
           CPF *
         </Form.Label>
-        <Col sm={4} className="CadastroResponsavel-inputCpf">
+        <Col sm={8} className="CadastroResponsavel-inputText">
           <Form.Control 
+            className="CadastroResponsavel-inputCpf"
             required
             type="text" 
             placeholder="Digite apenas números"
@@ -108,7 +112,7 @@ export default function CadastroResponsavel(){
             isInvalid={invalidatedCpf}
           />
           <Form.Control.Feedback type="invalid">
-            Digite um CPF válido/correto (Apenas números)
+            Campo obrigatório, digite um CPF válido/correto (Apenas números)
           </Form.Control.Feedback>
         </Col>
       </Form.Group>
