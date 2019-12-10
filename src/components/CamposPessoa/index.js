@@ -86,7 +86,7 @@ export default function CamposPessoa(props){
           isInvalid={invNome}
           />
         <Form.Control.Feedback type="invalid">
-          Preencha o nome completo (Apenas letras).
+          Campo obrigatório, preencha o nome completo (Apenas letras).
         </Form.Control.Feedback>
       </Col>
     </Form.Group>
@@ -95,8 +95,9 @@ export default function CamposPessoa(props){
       <Form.Label column sm={2} className="CampoPessoa-label">
         Data de nascimento *
       </Form.Label>
-      <Col sm={3} className="CampoPessoa-inputNumber">
-      <Form.Control 
+      <Col sm={8} className="CampoPessoa-inputText">
+        <Form.Control 
+          className="CampoPessoa-inputNumber"
           required 
           type="text" 
           placeholder="dd/MM/aaaa" 
@@ -104,9 +105,9 @@ export default function CamposPessoa(props){
           value={data}
           isValid={valData}
           isInvalid={invData}
-          />
+        />
         <Form.Control.Feedback type="invalid">
-          Preencha uma data de nascimento válida (Apenas números)
+          Campo obrigatório, preencha uma data de nascimento válida (Apenas números)
         </Form.Control.Feedback>
       </Col>
     </Form.Group>
@@ -115,8 +116,8 @@ export default function CamposPessoa(props){
       <Form.Label column sm={2} className="CampoPessoa-label">
         Sexo *
       </Form.Label>
-      <Col sm={3} className="CampoPessoa-inputSexo">
-        <RadioGroup defaultValue="Masculino" name="customized-radios" onChange={onChangeSexo}>
+      <Col sm={8} className="CampoPessoa-inputText" >
+        <RadioGroup className="CampoPessoa-inputSexo" defaultValue="Masculino" name="customized-radios" onChange={onChangeSexo}>
           <FormControlLabel className="label-radio" value="Masculino" control={<StyledRadio />} label="Masculino" />
           <FormControlLabel className="label-radio" value="Feminino" control={<StyledRadio />} label="Feminino" />
           <FormControlLabel className="label-radio" value="Outro" control={<StyledRadio />} label="Outro" />

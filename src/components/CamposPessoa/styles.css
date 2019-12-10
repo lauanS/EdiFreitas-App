@@ -49,11 +49,17 @@ button:focus{
     max-width: 500px;
 }
 
+@media (min-width: 600px){
+    .CampoPessoa-inputText{
+        min-width: 340px;
+    }
+}
+
 .CampoPessoa-inputNumber{
-    min-width: 180px;
-    max-width: 200px;
+    width: 150px;
+    max-width: 150px;
 }
 
 .CampoPessoa-inputSexo{
-    max-width: 150px;
+    max-width: 100px;
 }
