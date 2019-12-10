@@ -2,21 +2,8 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.scss';
 import Sidebar from '../../../components/Sidebar/index';
-import { getPeople } from '../../../services';
 
 export default class Administrar extends React.Component{
-  componentDidMount() {
-    setTimeout(() => {
-      getPeople()
-        .then(res => {
-          console.log("bb")
-        })
-        .catch(() =>
-          console.log("oii")
-        );
-    }, 2000);
-  }
-
   render(){
     return (
       <>
