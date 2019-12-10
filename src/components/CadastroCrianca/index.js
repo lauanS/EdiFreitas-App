@@ -97,7 +97,10 @@ export default function CadastroCrianca(){
     <SweetAlert title="Criança cadastrada com sucesso!" show={showAlert} 
       type='success' onConfirm={handleConfirm}
       btnSize='sm' confirmBtnText="Entendido"
-      />
+    />
+
+    <label className="CadastroCriaca-Descricao">É obrigatório o preenchimento de campos com * (Asterisco) no título, é opcional quando não possuem o asterisco</label>
+    
     <Form onSubmit={handleSubmit} noValidate  >
       <CamposPessoa onChangeNome={onChangeNome} valNome={validatedNomeCompleto} invNome={invalidatedNomeCompleto}
           data={dataNascimento} onChangeData={onChangeData} valData={validatedDataNascimento} invData={invalidatedDataNascimento}
@@ -126,8 +129,9 @@ export default function CadastroCrianca(){
         <Form.Label column sm={2} className="CadastroCrianca-label">
           Número do calçado
         </Form.Label>
-        <Col sm={3} className="CadastroCrianca-inputNumber">
+        <Col sm={8} className="CadastroCrianca-inputText">
           <Form.Control 
+            className="CadastroCrianca-inputNumber"
             type="text"
             placeholder="Ex: 33"
             onChange={e => checkNumber(e.target, setNumCalcado, setValidatedNumCalcado, setInvalidatedNumCalcado)}
@@ -144,8 +148,9 @@ export default function CadastroCrianca(){
         <Form.Label column sm={2} className="CadastroCrianca-label">
           Tamanho de camiseta
         </Form.Label>
-        <Col sm={3} className="CadastroCrianca-inputNumber">
+        <Col sm={8} className="CadastroCrianca-inputText">
           <Form.Control 
+            className="CadastroCrianca-inputNumber"
             type="text"
             placeholder="Ex: 10, 12, GG ..."
             onChange={e => checkCamiseta(e.target, setTamCamiseta, setValidatedTamCamiseta, setInvalidatedTamCamiseta)}

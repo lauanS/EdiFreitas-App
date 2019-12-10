@@ -9,6 +9,10 @@
 }
 
 .CadastroCrianca-inputNumber{
-    min-width: 180px;
-    max-width: 200px;
+    width: 150px;
+    max-width: 150px;
+}
+
+.CadastroCriaca-Descricao{
+    margin-bottom: 20px;
 }
