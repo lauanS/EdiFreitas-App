@@ -2,11 +2,6 @@ import React from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 
 export default function EditorDeTexto(props){
-
-  const handleEditorChange = e => {
-    console.log('Content was updated in react function:', e.target.getContent());
-    props.handleChange(e);
-  }
  
   return (
     <Editor
@@ -74,7 +69,7 @@ export default function EditorDeTexto(props){
           input.click();
         }
       }}
-      onChange={handleEditorChange}
+      onChange={props.handleChange}
       />
   );
   

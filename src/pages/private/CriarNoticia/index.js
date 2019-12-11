@@ -1,28 +1,29 @@
 import React, {useState} from 'react';
 import './styles.scss';
-import { Form, Row, Col, Button } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import Sidebar from '../../../components/Sidebar/index';
 import TextEditor from '../../../components/EditorDeTexto/index'
 import DadosNoticia from '../../../components/DadosNoticia/index'
 
 export default function CriarNoticia(){
   
-  const [text, setText] = useState("");
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
+  const [text, setText] = useState("");
 
   const handleSubmit = e => {
-    console.log('Text: ', text);
     console.log('Title: ', title);
     console.log('Subtitle: ', subtitle);
+    console.log('Text: ', text);
 
     e.preventDefault();
     e.stopPropagation();
   }
 
+  // Function that will be called by your child when he changed
   const handleChildChange = e => {
-    console.log('Text will be modify');
     setText(e.target.getContent());
+    console.log('New text: ' + text);
   }
 
 
@@ -36,11 +37,8 @@ export default function CriarNoticia(){
           <TextEditor handleChange={handleChildChange}/>   
         </div>
 
-        <Form.Group as={Row}>
-          <Col sm={{ span: 10, offset: 2 }}>
-            <Button type="submit">Cadastrar</Button>
-          </Col>
-        </Form.Group>
+        <Button type="submit" block>Cadastrar</Button>
+
       </Form>
 
     </div>
