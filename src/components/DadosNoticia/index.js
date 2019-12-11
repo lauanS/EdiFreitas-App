@@ -5,7 +5,17 @@ import './styles.scss';
 import {Form, Row, Col} from 'react-bootstrap';
 
 
-export default function DadosNoticia(){
+export default function DadosNoticia(props){
+
+  const handleTitleChange = e => {
+    console.log("New title: ", e.target.value);
+    props.setTitle(e.target.value);
+  }
+
+  const handleSubtitleChange = e => {
+    console.log("New subtitle: ", e.target.value);
+    props.setSubtitle(e.target.value);
+  }
 
   return (
     <>
@@ -14,7 +24,8 @@ export default function DadosNoticia(){
           Título da notícia
         </Form.Label>
         <Col sm={5}>
-          <Form.Control  
+          <Form.Control 
+            onChange={handleTitleChange} 
             type="text" 
           />
         </Col>
@@ -25,7 +36,11 @@ export default function DadosNoticia(){
           Subtítulo
         </Form.Label>
         <Col>
-          <Form.Control as="textarea" rows="2"/>
+          <Form.Control 
+            as="textarea" 
+            rows="2" 
+            onChange={handleSubtitleChange}
+          />
         </Col>
       </Form.Group>
     </>
