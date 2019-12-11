@@ -3,90 +3,167 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
 
 import {Form, Row, Col, Button} from 'react-bootstrap';
-
 import CamposPessoa from '../CamposPessoa/index';
 import Comentario from '../CampoComentario/index';
 
-export default function CadastroCrianca(){
+import { checkText, checkNumber, checkCamiseta, checkData } from '../../validated';
 
-  const [validated, setValidated] = useState(false);
-  const [toRedirect, setToRedirect] = useState(false);
+import SweetAlert from 'react-bootstrap-sweetalert';
+
+export default function CadastroCrianca(){
+  const [showAlert, setShowAlert] = useState(false);
+
+  const [nomeCompleto, setNomeCompleto] = useState("");
+  const [validatedNomeCompleto, setValidatedNomeCompleto] = useState(false);
+  const [invalidatedNomeCompleto, setInvalidatedNomeCompleto] = useState(false);
+
+  const [dataNascimento, setDataNascimento] = useState('');
+  const [validatedDataNascimento, setValidatedDataNascimento] = useState(false);
+  const [invalidatedDataNascimento, setInvalidatedDataNascimento] = useState(false);
+
+  const [sexoPessoa, setSexoPessoa] = useState("Masculino");
+
+  const [nomeResponsavel, setNomeResponsavel] = useState("");
+  const [validatedNomeResponsavel, setValidatedNomeResponsavel] = useState(false);
+  const [invalidatedNomeResponsavel, setInvalidatedNomeResponsavel] = useState(false);
+  
+  const [numCalcado, setNumCalcado] = useState(0);
+  const [validatedNumCalcado, setValidatedNumCalcado] = useState(false);
+  const [invalidatedNumCalcado, setInvalidatedNumCalcado] = useState(false);
+
+  const [tamCamiseta, setTamCamiseta] = useState("");
+  const [validatedTamCamiseta, setValidatedTamCamiseta] = useState(false);
+  const [invalidatedTamCamiseta, setInvalidatedTamCamiseta] = useState(false);
+
+  const [comentario, setComentario] = useState("");
 
   const handleSubmit = e => {
-    const form = e.currentTarget;
 
+    let flag = false;
 
-    if (form.checkValidity() === false || !fieldValidation(form)) {
-      e.preventDefault();
-      e.stopPropagation();
+    if(validatedNomeCompleto === false){
+      setInvalidatedNomeCompleto(true);
+      flag = true;
     }
-    else{
-      setToRedirect(true);
+    if(validatedDataNascimento === false){
+      setInvalidatedDataNascimento(true);
+      flag = true;
     }
-    setValidated(true);
+    if(validatedNomeResponsavel === false){
+      setInvalidatedNomeResponsavel(true);
+      flag = true;
+    }
+    if(invalidatedNumCalcado === true){
+      flag = true;
+    }
+    if(invalidatedTamCamiseta === true){
+      flag = true;
+    }
+   
+    if(flag === false){
+      console.log(nomeCompleto);
+      console.log(dataNascimento);
+      console.log(sexoPessoa);
+      console.log(nomeResponsavel);
+      console.log(numCalcado);
+      console.log(tamCamiseta);
+      console.log(comentario);
 
+      setShowAlert(true);
+    }
+    e.preventDefault();
+    e.stopPropagation();
   };
 
-  const fieldValidation = form =>{
-    return true;
+  const handleConfirm = e => {
+    setShowAlert(false);
+    window.location.reload();
+  }
+
+  const onChangeNome = e => {
+    checkText(e, setNomeCompleto, setValidatedNomeCompleto, setInvalidatedNomeCompleto);
+  }
+
+  const onChangeSexo = e => {
+    setSexoPessoa(e.target.value);
+  }
+
+  const onChangeData = e => {
+    checkData(e, dataNascimento, setDataNascimento, setValidatedDataNascimento, setInvalidatedDataNascimento)
   }
 
   return (
-    <Form onSubmit={handleSubmit} noValidate validated={validated}>
-      <CamposPessoa />
+    <>
+    <SweetAlert title="Criança cadastrada com sucesso!" show={showAlert} 
+      type='success' onConfirm={handleConfirm}
+      btnSize='sm' confirmBtnText="Entendido"
+    />
 
-      <Form.Group as={Row} controlId="formGroupName">
-        <Form.Label column sm={2}>
+    <label className="CadastroCriaca-Descricao">É obrigatório o preenchimento de campos com * (Asterisco) no título, é opcional quando não possuem o asterisco</label>
+    
+    <Form onSubmit={handleSubmit} noValidate  >
+      <CamposPessoa onChangeNome={onChangeNome} valNome={validatedNomeCompleto} invNome={invalidatedNomeCompleto}
+          data={dataNascimento} onChangeData={onChangeData} valData={validatedDataNascimento} invData={invalidatedDataNascimento}
+          onChangeSexo={onChangeSexo}
+      />
+
+      <Form.Group as={Row} controlId="formGroupName" >
+        <Form.Label column sm={2} className="CadastroCrianca-label">
           Nome do responsável *
         </Form.Label>
-        <Col sm={10}>
+        <Col sm={8} className="CadastroCrianca-inputText">
           <Form.Control 
             required 
             type="text" 
+            onChange={e => checkText(e.target, setNomeResponsavel, setValidatedNomeResponsavel, setInvalidatedNomeResponsavel)}
+            isValid={validatedNomeResponsavel}
+            isInvalid={invalidatedNomeResponsavel}
           />
-          <Form.Control.Feedback>Parece bom!</Form.Control.Feedback>
           <Form.Control.Feedback type="invalid">
-              Preencha seu nome completo.
+            Preencha o nome completo do responsável (Apenas letras).
           </Form.Control.Feedback>
         </Col>
       </Form.Group>
 
-        <Form.Group as={Row} controlId="formGroupCalcado">
-          <Form.Label column sm={2}>
-            Número do calçado
-          </Form.Label>
-          <Col>
-            <Form.Control 
-              type="number"
-              placeholder="Ex: 33"
-              sm={2}
-            />
-            <Form.Control.Feedback>Parecem bom!</Form.Control.Feedback>
-            <Form.Control.Feedback type="invalid">
-              Insira apenas números.
-            </Form.Control.Feedback>
-          </Col>
-        </Form.Group>
+      <Form.Group as={Row} controlId="formGroupCalcado">
+        <Form.Label column sm={2} className="CadastroCrianca-label">
+          Número do calçado
+        </Form.Label>
+        <Col sm={8} className="CadastroCrianca-inputText">
+          <Form.Control 
+            className="CadastroCrianca-inputNumber"
+            type="text"
+            placeholder="Ex: 33"
+            onChange={e => checkNumber(e.target, setNumCalcado, setValidatedNumCalcado, setInvalidatedNumCalcado)}
+            isValid={validatedNumCalcado}
+            isInvalid={invalidatedNumCalcado}
+          />
+          <Form.Control.Feedback type="invalid">
+            Insira um número maior que zero (Apenas números).
+          </Form.Control.Feedback>
+        </Col>
+      </Form.Group>
 
-        <Form.Group as={Row} controlId="formGroupTamanho">
-          <Form.Label column sm={2}>
-            Tamanho de camiseta
-          </Form.Label>
-          <Col>
-            <Form.Control 
-              type="text"
-              placeholder="Ex: GG"
-              sm={2}
-            />
-            <Form.Control.Feedback>Parecem bom!</Form.Control.Feedback>
-            <Form.Control.Feedback type="invalid">
-              Insira uma desses valores [PP, P, M, G, GG, GGG].
-            </Form.Control.Feedback>
-          </Col>
-        </Form.Group>
+      <Form.Group as={Row} controlId="formGroupTamanho">
+        <Form.Label column sm={2} className="CadastroCrianca-label">
+          Tamanho de camiseta
+        </Form.Label>
+        <Col sm={8} className="CadastroCrianca-inputText">
+          <Form.Control 
+            className="CadastroCrianca-inputNumber"
+            type="text"
+            placeholder="Ex: 10, 12, GG ..."
+            onChange={e => checkCamiseta(e.target, setTamCamiseta, setValidatedTamCamiseta, setInvalidatedTamCamiseta)}
+            isValid={validatedTamCamiseta}
+            isInvalid={invalidatedTamCamiseta}
+          />
+          <Form.Control.Feedback type="invalid">
+            Insira um número ou um tamanho (PP, P, M, G, GG, GGG).
+          </Form.Control.Feedback>
+        </Col>
+      </Form.Group>
 
-
-      <Comentario />
+      <Comentario setComentario={setComentario}/>
 
       <Form.Group as={Row}>
         <Col sm={{ span: 10, offset: 2 }}>
@@ -94,6 +171,6 @@ export default function CadastroCrianca(){
         </Col>
       </Form.Group>
     </Form>
-    
+    </>
   );
 }

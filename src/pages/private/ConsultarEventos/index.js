@@ -6,7 +6,7 @@ export default class ConsultarEventos extends React.Component{
     render(){
         return (
           <>
-          <Sidebar titulo="Consultar eventos" ativo={4}/>
+          <Sidebar titulo="Consultar eventos" ativo={4} key={"sidebar"}/>
           </>
         );
       }

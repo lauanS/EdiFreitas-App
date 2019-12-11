@@ -4,48 +4,167 @@ import './styles.css';
 
 import {Form, Row, Col, Button} from 'react-bootstrap';
 
-import Contato from '../CampoContato/index';
+import { checkText, checkData, checkCpf, checkTelefone } from '../../validated';
+
 import CamposPessoa from '../CamposPessoa/index';
 import Comentario from '../CampoComentario/index';
 
-export default function CadastroResponsavel(){
+import SweetAlert from 'react-bootstrap-sweetalert';
+import {postResponsavel} from '../../services'
 
-  const [validated, setValidated] = useState(false);
-  const [toRedirect, setToRedirect] = useState(false);
+export default function CadastroResponsavel(){
+  const [showAlert, setShowAlert] = useState(false);
+
+  const [nomeCompleto, setNomeCompleto] = useState("");
+  const [validatedNomeCompleto, setValidatedNomeCompleto] = useState(false);
+  const [invalidatedNomeCompleto, setInvalidatedNomeCompleto] = useState(false);
+
+  const [dataNascimento, setDataNascimento] = useState("");
+  const [validatedDataNascimento, setValidatedDataNascimento] = useState(false);
+  const [invalidatedDataNascimento, setInvalidatedDataNascimento] = useState(false);
+
+  const [sexoPessoa, setSexoPessoa] = useState("Masculino");
+
+  const [cpf, setCpf] = useState("");
+  const [validatedCpf, setValidatedCpf] = useState(false);
+  const [invalidatedCpf, setInvalidatedCpf] = useState(false);
+
+  const [telefone, setTelefone] = useState("");
+  const [validatedTelefone, setValidatedTelefone] = useState(false);
+  const [invalidatedTelefone, setInvalidatedTelefone] = useState(false);
+
+  const [comentario, setComentario] = useState("");
+
+  const converterData = data => {
+    let dia = data.substring(0,2);
+    let mes = data.substring(3,5);
+    let ano = data.substring(6,10);
+    let conv = ano + "-" + mes + "-" + dia;
+    return conv;
+  }
 
   const handleSubmit = e => {
-    const form = e.currentTarget;
-    if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
+    let flag = false;
+
+    if(validatedNomeCompleto === false){
+      setInvalidatedNomeCompleto(true);
+      flag = true;
     }
-    else{
-      setToRedirect(true);
+    if(validatedDataNascimento === false){
+      setInvalidatedDataNascimento(true);
+      flag = true;
     }
-    setValidated(true);
+    if(validatedCpf === false){
+      setInvalidatedCpf(true);
+      flag = true;
+    }
+   
+    if(flag === false){
+      let dtNascimento = converterData(dataNascimento);
+
+      var text = '{' +
+        '"nome": "' + nomeCompleto + '",' +
+        '"dataNascimento": "' + dtNascimento + '",' +
+        '"sexo": "' + sexoPessoa + '",' +
+        '"cpf" : "' + cpf + '",' +
+        '"comentario" : "' + comentario + '",' +
+        '"foto" : "",' +
+        '"endereco" : {' +
+          '"logradouro" : "Rua três",' +
+          '"bairro" : "Itapemirim",' +
+          '"cidade" : "Sorocaba",' +
+          '"cep" : "18071536",' +
+          '"numero" : 2' +
+        '},' +
+        '"contatos" : [' +
+          '{' +
+            '"tipo" : "email",'+
+            '"contato" : "carlos.teste@gmail.com"'+
+          '}' +	
+        ']'+
+      '}';
+      var obj = JSON.parse(text);
+      postResponsavel(obj);
+      dtNascimento = telefone;
+      setShowAlert(true);
+    }
+    e.preventDefault();
+    e.stopPropagation();
 
   };
 
+  const handleConfirm = e => {
+    setShowAlert(false);
+    window.location.reload();
+  }
+
+  const onChangeNome = e => {
+    checkText(e, setNomeCompleto, setValidatedNomeCompleto, setInvalidatedNomeCompleto);
+  }
+
+  const onChangeSexo = e => {
+    setSexoPessoa(e.target.value);
+  }
+
+  const onChangeData = e => {
+    checkData(e, dataNascimento, setDataNascimento, setValidatedDataNascimento, setInvalidatedDataNascimento)
+  }
+
   return (
-    <Form onSubmit={handleSubmit} noValidate validated={validated}>
-      <CamposPessoa />
-      <Form.Group as={Row} controlId="formGroup">
-        <Form.Label column sm={2}>
+    <>
+    <SweetAlert title="Criança cadastrada com sucesso!" show={showAlert} 
+      type='success' onConfirm={handleConfirm}
+      btnSize='sm' confirmBtnText="Entendido"
+    />
+
+    <label className="CadastroResponsavel-Descricao">É obrigatório o preenchimento de campos com * (Asterisco) no título, é opcional quando não possuem o asterisco</label>
+
+    <Form onSubmit={handleSubmit} noValidate>
+      <CamposPessoa onChangeNome={onChangeNome} valNome={validatedNomeCompleto} invNome={invalidatedNomeCompleto}
+          data={dataNascimento} onChangeData={onChangeData} valData={validatedDataNascimento} invData={invalidatedDataNascimento}
+          onChangeSexo={onChangeSexo}
+      />
+
+      <Form.Group as={Row} controlId="formGroupCpf">
+        <Form.Label column sm={2} className="CadastroResponsavel-label">
           CPF *
         </Form.Label>
-        <Col sm={10}>
+        <Col sm={8} className="CadastroResponsavel-inputText">
           <Form.Control 
+            className="CadastroResponsavel-inputCpf"
             required
             type="text" 
-            placeholder="(apenas números)" />
+            placeholder="Digite apenas números"
+            onChange={e => checkCpf(e.target, setCpf, setValidatedCpf, setInvalidatedCpf)}
+            isValid={validatedCpf}
+            isInvalid={invalidatedCpf}
+          />
           <Form.Control.Feedback type="invalid">
-            Campo obrigatório.
+            Campo obrigatório, digite um CPF válido/correto (Apenas números)
           </Form.Control.Feedback>
         </Col>
       </Form.Group>
 
-      <Comentario />
-      <Contato />
+      <Comentario setComentario={setComentario}/>
+      
+      <Form.Group as={Row} controlId="formGroupTelefone">
+        <Form.Label column sm={2} className="CadastroResponsavel-label">
+          Telefone celular
+        </Form.Label>
+        <Col sm={4} className="CadastroResponsavel-inputCpf">
+          <Form.Control 
+            required
+            type="text" 
+            placeholder="Ex: 1533224466"
+            onChange={e => checkTelefone(e.target, setTelefone, setValidatedTelefone, setInvalidatedTelefone)}
+            isValid={validatedTelefone}
+            isInvalid={invalidatedTelefone}
+          />
+          <Form.Control.Feedback type="invalid">
+            Digite um número de telefone celular (9 dígitos)
+          </Form.Control.Feedback>
+        </Col>
+      </Form.Group>
 
       <Form.Group as={Row}>
         <Col sm={{ span: 10, offset: 2 }}>
@@ -55,6 +174,6 @@ export default function CadastroResponsavel(){
 
       
     </Form>
-    
+    </>
   );
 }

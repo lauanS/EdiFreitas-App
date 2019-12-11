@@ -7,7 +7,7 @@ export default class Administrar extends React.Component{
   render(){
     return (
       <>
-        <Sidebar titulo="Edi Freitas" ativo={-1}/>
+        <Sidebar titulo="Edi Freitas" ativo={-1} key={"sidebar"}/>
         
         <div className="cad">
           <h4>Bem vindo ao sistema de gerenciamento da ONG Edi Freitas.</h4>

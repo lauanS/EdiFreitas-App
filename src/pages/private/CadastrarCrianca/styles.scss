@@ -1,19 +1,19 @@
 @media (min-width: 600px) {
-    .FormsCadastrarResponsavel{
+    .FormsCadastrarCrianca{
         margin-left: 240px;
         width: calc(100%-250);
         max-width: 1000px;
     }
 }
 
-.FormsCadastrarResponsavel{
+.FormsCadastrarCrianca{
     padding: 30px;
     display: block;
     margin-top: 60px;
 }
 
 @media (max-width: 599px){
-    .FormsCadastrarResponsavel{
+    .FormsCadastrarCrianca{
         width: 95%;
     }
 }

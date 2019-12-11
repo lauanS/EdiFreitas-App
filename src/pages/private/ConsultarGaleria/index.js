@@ -6,7 +6,7 @@ export default class ConsultarGaleria extends React.Component{
     render(){
         return (
           <>
-          <Sidebar titulo="Consultar galeria" ativo={9}/>
+          <Sidebar titulo="Consultar galeria" ativo={9} key={"sidebar"}/>
           </>
         );
       }
