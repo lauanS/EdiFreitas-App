@@ -151,3 +151,25 @@
   }
 
 }
+
+.ListarPessoa-inputText{
+  max-width: 400px;
+}
+
+@media (min-width: 600px){
+  .ListarPessoa-inputText{
+      min-width: 340px;
+  }
+}
+
+.ListarPessoa-label{
+  max-width: 140px!important;
+  min-width: 140px;
+  padding-right: 0px;
+}
+
+@media (max-width: 737px){
+  .ListarPessoa-button{
+    margin-top: 10px;
+  }
+}

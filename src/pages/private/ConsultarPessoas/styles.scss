@@ -1,11 +1,18 @@
 @media (min-width: 600px) {
-    .listPessoas{
+    .ConsultarPessoas{
         margin-left: 240px;
+        width: calc(100%-250);
     }
 }
 
-.listPessoas{
+.ConsultarPessoas{
+    padding: 30px;
     display: block;
     margin-top: 60px;
-    padding: 20px;
+}
+
+@media (max-width: 599px){
+    .ConsultarPessoas{
+        width: 95%;
+    }
 }
