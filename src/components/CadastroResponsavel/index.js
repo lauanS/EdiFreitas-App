@@ -10,6 +10,7 @@ import CamposPessoa from '../CamposPessoa/index';
 import Comentario from '../CampoComentario/index';
 
 import SweetAlert from 'react-bootstrap-sweetalert';
+import {postResponsavel} from '../../services'
 
 export default function CadastroResponsavel(){
   const [showAlert, setShowAlert] = useState(false);
@@ -18,21 +19,29 @@ export default function CadastroResponsavel(){
   const [validatedNomeCompleto, setValidatedNomeCompleto] = useState(false);
   const [invalidatedNomeCompleto, setInvalidatedNomeCompleto] = useState(false);
 
-  const [dataNascimento, setDataNascimento] = useState('');
+  const [dataNascimento, setDataNascimento] = useState("");
   const [validatedDataNascimento, setValidatedDataNascimento] = useState(false);
   const [invalidatedDataNascimento, setInvalidatedDataNascimento] = useState(false);
 
   const [sexoPessoa, setSexoPessoa] = useState("Masculino");
 
-  const [cpf, setCpf] = useState('');
+  const [cpf, setCpf] = useState("");
   const [validatedCpf, setValidatedCpf] = useState(false);
   const [invalidatedCpf, setInvalidatedCpf] = useState(false);
 
-  const [telefone, setTelefone] = useState('');
+  const [telefone, setTelefone] = useState("");
   const [validatedTelefone, setValidatedTelefone] = useState(false);
   const [invalidatedTelefone, setInvalidatedTelefone] = useState(false);
 
   const [comentario, setComentario] = useState("");
+
+  const converterData = data => {
+    let dia = data.substring(0,2);
+    let mes = data.substring(3,5);
+    let ano = data.substring(6,10);
+    let conv = ano + "-" + mes + "-" + dia;
+    return conv;
+  }
 
   const handleSubmit = e => {
     let flag = false;
@@ -51,13 +60,32 @@ export default function CadastroResponsavel(){
     }
    
     if(flag === false){
-      console.log(nomeCompleto);
-      console.log(dataNascimento);
-      console.log(sexoPessoa);
-      console.log(cpf);
-      console.log(comentario);
-      console.log(telefone);
+      let dtNascimento = converterData(dataNascimento);
 
+      var text = '{' +
+        '"nome": "' + nomeCompleto + '",' +
+        '"dataNascimento": "' + dtNascimento + '",' +
+        '"sexo": "' + sexoPessoa + '",' +
+        '"cpf" : "' + cpf + '",' +
+        '"comentario" : "' + comentario + '",' +
+        '"foto" : "",' +
+        '"endereco" : {' +
+          '"logradouro" : "Rua três",' +
+          '"bairro" : "Itapemirim",' +
+          '"cidade" : "Sorocaba",' +
+          '"cep" : "18071536",' +
+          '"numero" : 2' +
+        '},' +
+        '"contatos" : [' +
+          '{' +
+            '"tipo" : "email",'+
+            '"contato" : "carlos.teste@gmail.com"'+
+          '}' +	
+        ']'+
+      '}';
+      var obj = JSON.parse(text);
+      postResponsavel(obj);
+      dtNascimento = telefone;
       setShowAlert(true);
     }
     e.preventDefault();
