@@ -7,9 +7,10 @@ export default function EditorDeTexto(props){
     <Editor
       apiKey='j8acg42y8znry1o8lqvyi8m51wk1qnsawu2c5haxb2j98trm'
       plugins="wordcount image imagetools"
-
+      
       /* opções de inicialização do editor*/
       init = {{
+        height: 300,
         /* Opções disponiveis na barra de ferramentas */
         toolbar: 'undo redo | formatselect | ' +
         ' bold italic backcolor | link image | alignleft aligncenter ' +

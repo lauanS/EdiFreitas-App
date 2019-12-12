@@ -18,7 +18,7 @@ export default function CriarNoticia(){
     console.log('Title: ', title);
     console.log('Subtitle: ', subtitle);
     console.log('Text: ', text);
-
+    
     e.preventDefault();
     e.stopPropagation();
   }
