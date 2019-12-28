@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export const getPeople = () => {
-    console.log("s");
     return axios.get('https://edi-freitas.herokuapp.com/api/responsaveis');
 }
 
