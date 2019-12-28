@@ -1,11 +1,12 @@
 import axios from "axios";
 
 export const getPeople = () => {
-    return axios.get('http://edi-freitas.herokuapp.com/api/responsaveis');
+    console.log("s");
+    return axios.get('https://edi-freitas.herokuapp.com/api/responsaveis');
 }
 
 export const postResponsavel = (responsavel) => {
-    axios.post('http://edi-freitas.herokuapp.com/api/responsaveis', responsavel).then(res => {
+    axios.post('https://edi-freitas.herokuapp.com/api/responsaveis', responsavel).then(res => {
         console.log(res);
         console.log(res.data);
       });
