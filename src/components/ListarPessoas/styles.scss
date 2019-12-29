@@ -11,12 +11,12 @@
 
 .cardPessoa{
   width: 330px;
-  height: 100px;
+  height: 140px;
   align-items: center;
   border: 1px solid rgba(#000, .2);
   border-radius: 5px;
   display: flex;
-  background-color: #f8f9fa;
+  background-color: #ffffff!important;
   padding: 5px 0px 5px 0px;
   color: #30333C;
   pointer-events: visible;
@@ -29,8 +29,13 @@
     border-radius: 5px;
   }
 
-  &__info{
-    width: 230px;
+  &__div-info{
+    width: 220px;
+    margin-left: 10px;
+  }
+
+  &__dados{
+    margin: 0px;
   }
 }
 

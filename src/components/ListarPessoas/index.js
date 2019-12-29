@@ -1,7 +1,6 @@
 import React from "react";
 import './styles.scss';
 import ModalCard from './modalCard';
-import foto from '../../assets/usuario.png';
 
 import {getPeople} from '../../services'
 import {Form, Row, Col} from 'react-bootstrap';
@@ -110,12 +109,7 @@ export default class extends React.Component {
       {search === '' ? <p>Total de {filteredList.length} resultados</p>: <p>Total de {filteredList.length} resultados para "{search}"</p>}
       <div className="resultadosPessoas"> 
         {filteredList.length > 0 ? filteredList.map(pessoa =>
-          <ModalCard 
-            key={pessoa.id} 
-            crianca={false} 
-            dtNasc={pessoa.dataNascimento} 
-            photo={foto} name={pessoa.nome} 
-            idade={this.idade(pessoa.dataNascimento)}/>
+          <ModalCard dados={pessoa} key={pessoa.id} crianca={false}/>
         ) : 'Nada encontrado'}
       </div> </>}
       </>
