@@ -10,3 +10,7 @@ export const postResponsavel = (responsavel) => {
         console.log(res.data);
       });
 }
+
+export const delPeople = (id) => {
+    return axios.delete('http://edi-freitas.herokuapp.com/api/responsaveis/' + id);
+}
