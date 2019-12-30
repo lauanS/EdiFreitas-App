@@ -1,10 +1,9 @@
 import React from "react";
-import './styles.scss';
+import './index.scss';
 import ModalCard from './modalCard';
-
-import {getPeople} from '../../services'
+import axios from "axios";
+import {getResponsaveis, getCriancas} from '../../services'
 import {Form, Row, Col} from 'react-bootstrap';
-import { checkTextForClass } from '../../validated';
 import Loader from '../Loader';
 
 export default class extends React.Component {
@@ -15,31 +14,28 @@ export default class extends React.Component {
       search: '',
       isLoading: true,
       errors: false,
-      valNome: false,
-      invNome: false,
-      establishments: [],
+      responsaveis: [],
+      criancas: [],
     };
   }
 
   componentDidMount() {
     setTimeout(() => {
-      getPeople()
-        .then(res => {
-          this.setState({ ...this.state, establishments: res.data, isLoading: false});
-        })
-        .catch(() =>
-          this.setState({ ...this.state, errors: true, isLoading: false })
-        );
+      axios.all([
+      getResponsaveis(),
+      getCriancas()
+      ]).then(axios.spread((responsavelRes, criancaRes) => {
+        this.setState({ ...this.state, responsaveis: responsavelRes.data, criancas: criancaRes.data, isLoading: false});
+      }))
+      .catch(() =>
+        this.setState({ ...this.state, errors: true, isLoading: false })
+      );
     }, 2000);
   }
 
   updateSearch(e) {
+    this.setState({ ...this.state, search: e.target.value});
     e.preventDefault();
-    checkTextForClass(e.target, this.setSearch.bind(this));
-  }
-
-  setSearch(nome, val, inv){
-    this.setState({ ...this.state, search: nome, valNome: val, invNome: inv});
   }
 
   searchPeople(list, search) {
@@ -47,52 +43,26 @@ export default class extends React.Component {
       return list;
 		}
 
-    return Array.isArray(list)
-			? list.filter(
-				person =>
-          person.nome.toLowerCase().indexOf(search.toLowerCase()) !== -1 
-			)
+    return Array.isArray(list) ? list.filter(person =>
+      person.nome.toLowerCase().indexOf(search.toLowerCase()) !== -1 )
       : [];
   }
 
-  idade(data) {
-    let dia_aniversario = data.substring(8,10);
-    let mes_aniversario = data.substring(5,7);
-    let ano_aniversario = data.substring(0,4);
-
-    let d = new Date();
-    let ano_atual = d.getFullYear();
-    let mes_atual = d.getMonth() + 1;
-    let dia_atual = d.getDate();
-
-    ano_aniversario = +ano_aniversario;
-    mes_aniversario = +mes_aniversario;
-    dia_aniversario = +dia_aniversario;
-
-    let quantos_anos = ano_atual - ano_aniversario;
-
-    if ((mes_atual < mes_aniversario) || (mes_atual === mes_aniversario && dia_atual < dia_aniversario)) {
-        quantos_anos--;
-    }
-
-    return quantos_anos < 0 ? 0 : quantos_anos;
-  }
-
   render(){
-    const { establishments, isLoading, errors, search } = this.state;
-    const filteredList = this.searchPeople(establishments, search) || [];
+    const { responsaveis, criancas, isLoading, errors, search } = this.state;
+    const filteredResponsaveis = this.searchPeople(responsaveis, search) || [];
+    const filteredCriancas = this.searchPeople(criancas, search) || [];
 
     return (
       <>
       {isLoading ? <Loader type="dots" /> : errors ? "Houve algum problema" :
-      
-      (<>
+      <>
       <Form autoComplete="off">
         <Form.Group as={Row} controlId="formGroupName">
-          <Form.Label column sm={2} className="ListarPessoa-label">
+          <Form.Label column sm={2} className="listarPessoas__label">
             Nome da pessoa
           </Form.Label>
-          <Col sm={8} className="ListarPessoa-inputText">
+          <Col sm={8} className="listarPessoas__inputText">
             <Form.Control 
               type="text" 
               placeholder="Ex: Leonardo dos Santos Sampaio" 
@@ -103,17 +73,27 @@ export default class extends React.Component {
         </Form.Group>
       </Form>
       
-
-      {filteredList.length === 0 ? <p>Nenhuma pessoa encontrada com o nome: "{search}"</p> :
-      <>
-      {search === '' ? <p>Total de {filteredList.length} resultados</p>: <p>Total de {filteredList.length} resultados para "{search}"</p>}
-      <div className="resultadosPessoas"> 
-        {filteredList.length > 0 ? filteredList.map(pessoa =>
-          <ModalCard dados={pessoa} key={pessoa.id} crianca={false}/>
-        ) : 'Nada encontrado'}
-      </div> </>}
+      {filteredResponsaveis.length === 0 && filteredCriancas.length === 0 ? 
+        <p>Nenhuma pessoa encontrada com o nome: "{search}"</p> 
+        :
+        <>
+        {search === '' ?
+          <p>Total de {filteredResponsaveis.length + filteredCriancas.length} resultados</p>:
+          <p>Total de {filteredResponsaveis.length + filteredCriancas.length}  resultados para "{search}"</p>
+        }
+        
+        <div className="listarPessoas"> 
+          {filteredResponsaveis.length > 0 ? filteredResponsaveis.map(pessoa =>
+            <ModalCard dados={pessoa} key={pessoa.id} crianca={false}/>
+          ) : ''}
+          {filteredCriancas.length > 0 ? filteredCriancas.map(pessoa =>
+            <ModalCard dados={pessoa} key={pessoa.id} crianca={true}/>
+          ) : ''}
+        </div>
+        </>
+      }
       </>
-      )}
+      }
       </>
     );
   }
