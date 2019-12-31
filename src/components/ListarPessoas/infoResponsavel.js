@@ -42,7 +42,7 @@ export default function ModalCard(props){
         : 
         <>     
         {dados.criancas.map(crianca =>
-          <p className="infoResp__text-margin">{formatDadosCrianca(crianca)}</p>
+          <p key={crianca.id} className="infoResp__text-margin">{formatDadosCrianca(crianca)}</p>
         )}
         </>
       }
@@ -58,9 +58,9 @@ export default function ModalCard(props){
         <>
         {dados.contatos.map(contato =>
           contato.tipo === "email" ? 
-          <p className="infoResp__text-margin">E-mail: {contato.contato}</p>
+          <p key={contato.id} className="infoResp__text-margin">E-mail: {contato.contato}</p>
           :
-          <p className="infoResp__text-margin">Telefone: {contato.contato}</p>
+          <p key={contato.id} className="infoResp__text-margin">Telefone: {contato.contato}</p>
         )}
         </>
       }

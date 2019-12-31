@@ -5,9 +5,11 @@ import './modalHeader.scss';
 import CloseIcon from '@material-ui/icons/Close';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import SaveAltIcon from '@material-ui/icons/SaveAlt';
+
 
 export default function ModalHeader(props) {
-  const {dados, showAlert, setShowAlert, setOpen, handleClose} = props;
+  const {dados, showAlert, setShowAlert, setOpen, handleClose, edit, setEdit, setSubmitEdit} = props;
   
   const handleOpenDeletar = () => {
     setShowAlert(true);
@@ -31,15 +33,43 @@ export default function ModalHeader(props) {
     setShowAlert(false);
   }
 
+  const handleSalvar = e => {
+    setSubmitEdit(true);
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+  const handleCancelar = e => {
+    setEdit(false);
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+  const handleEdit = e => {
+    setEdit(true);
+    console.log("aaa");
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+
   return (
+    <>
+    {edit ?
+      <div className="modalHeader">
+        <p className="modalHeader__link" onClick={handleCancelar}><CloseIcon/> Cancelar</p>
+        <p className="modalHeader__link" onClick={handleSalvar}><SaveAltIcon/> Salvar</p>
+      </div>
+    :
     <>
     <div className="modalHeader">
       <p className="modalHeader__link" onClick={handleClose}><CloseIcon/> Fechar</p>
-      <p className="modalHeader__link" ><EditIcon/> Editar</p>
+      <p className="modalHeader__link" onClick={handleEdit}><EditIcon/> Editar</p>
       <p className="modalHeader__link-remover" onClick={handleOpenDeletar}><DeleteIcon/> Deletar</p>
     </div>
 
     <SweetAlert 
+      customClass="sweetAlert"
       title={"Deseja mesmo deletar todas as informações de " + dados.nome + " ?"} 
       show={showAlert} 
       type='warning' 
@@ -54,6 +84,8 @@ export default function ModalHeader(props) {
       focusConfirmBtn={false}
       showCloseButton={true}
     />
+    </>
+    }
     </>
   );
 
