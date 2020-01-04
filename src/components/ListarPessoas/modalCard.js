@@ -42,7 +42,7 @@ export default function ModalCard(props) {
         {edit ?
         <ModalHeader edit={edit} setEdit={setEdit} setSubmitEdit={setSubmitEdit}/>
         :
-        <ModalHeader edit={edit} setEdit={setEdit} setOpen={setOpen} handleClose={handleClose} showAlert={showAlert} setShowAlert={setShowAlert} dados={dados}/>
+        <ModalHeader crianca={crianca} edit={edit} setEdit={setEdit} setOpen={setOpen} handleClose={handleClose} showAlert={showAlert} setShowAlert={setShowAlert} dados={dados}/>
         }
       </Modal.Header>
       <Modal.Body>

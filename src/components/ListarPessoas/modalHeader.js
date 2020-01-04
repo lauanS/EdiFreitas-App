@@ -1,6 +1,6 @@
 import React from 'react';
 import SweetAlert from 'react-bootstrap-sweetalert';
-import {delPeople} from '../../services'
+import {deleteCrianca, deleteResponsavel} from '../../services'
 import './modalHeader.scss';
 import CloseIcon from '@material-ui/icons/Close';
 import EditIcon from '@material-ui/icons/Edit';
@@ -9,24 +9,36 @@ import SaveAltIcon from '@material-ui/icons/SaveAlt';
 
 
 export default function ModalHeader(props) {
-  const {dados, showAlert, setShowAlert, setOpen, handleClose, edit, setEdit, setSubmitEdit} = props;
+  const {crianca, dados, showAlert, setShowAlert, setOpen, handleClose, edit, setEdit, setSubmitEdit} = props;
   
   const handleOpenDeletar = () => {
     setShowAlert(true);
   };
 
   const handleConfirm = e => {
-    setTimeout(() => {
-      delPeople(dados.id)
-        .then(res => {
-          setShowAlert(false);
-          setOpen(false);
-        })
-        .catch(() =>{
-          setShowAlert(false);
-          setOpen(false);
-        });
-    }, 2000);
+    if(crianca === true){
+      deleteCrianca(dados.id)
+      .then(res => {
+        setShowAlert(false);
+        setOpen(false);
+      })
+      .catch(() =>{
+        setShowAlert(false);
+        setOpen(false);
+      });
+    }
+    else{
+      deleteResponsavel(dados.id)
+      .then(res => {
+        setShowAlert(false);
+        setOpen(false);
+      })
+      .catch(() =>{
+        setShowAlert(false);
+        setOpen(false);
+      });
+    }
+
   }
 
   const handleCancel = e => {
