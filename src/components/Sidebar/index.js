@@ -20,6 +20,8 @@ import PeopleIcon from '@material-ui/icons/People';
 import NewsIcon from '@material-ui/icons/ImportContacts';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
+import {logout} from '../../services/auth';
+
 const drawerWidth = 220;
 
 const useStyles = makeStyles(theme => ({
@@ -66,8 +68,7 @@ function ResponsiveDrawer(props) {
   };
 
   const handleExit = () => {
-    localStorage.clear();
-    localStorage.setItem("authToken", false);
+    logout();
     setToRedirect(true);
   };
 
