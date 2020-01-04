@@ -1,21 +1,38 @@
 import axios from "axios";
+import {getToken} from './auth'
+
+const api = axios.create({
+  baseURL: 'https://edi-freitas.herokuapp.com/api'
+});
+
+/*api.interceptors.request.use(async config => {
+  const token = getToken();
+  if(token){
+    config.headers.Authorization = 'Bearer ${token}';
+  }
+  return config;
+});*/
 
 export const getResponsaveis = () => {
-  return axios.get('https://edi-freitas.herokuapp.com/api/responsaveis');
+  return api.get('/responsaveis');
 }
 
 export const postResponsavel = (responsavel) => {
-  axios.post('https://edi-freitas.herokuapp.com/api/responsaveis', responsavel).then(res => {
+  api.post('/responsaveis', responsavel).then(res => {
     console.log(res);
     console.log(res.data);
   });
 }
 
-export const delPeople = (id) => {
-  return axios.delete('http://edi-freitas.herokuapp.com/api/responsaveis/' + id);
+export const deleteResponsavel = (id) => {
+  return api.delete('/responsaveis/' + id);
+}
+
+export const deleteCrianca = (id) => {
+  return api.delete('/criancas/' + id);
 }
 
 export const getCriancas = () => {
-  return axios.get('http://edi-freitas.herokuapp.com/api/criancas');
+  return api.get('/criancas');
 }
 

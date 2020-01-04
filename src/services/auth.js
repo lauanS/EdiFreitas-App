@@ -6,12 +6,15 @@ export const isAuth = () => sessionStorage.getItem(TOKEN_KEY) !== null;
 export const getToken = () => sessionStorage.getItem(TOKEN_KEY);
 
 export const login = (dados) => {
-    axios.post('http://edi-freitas.herokuapp.com/login').
-    then(res => {
-        sessionStorage.setItem(TOKEN_KEY, res.headers.Authorization);
+    axios.post('http://edi-freitas.herokuapp.com/login', dados)
+    .then(res => {
+        console.log(res)
+        sessionStorage.setItem(TOKEN_KEY, "oi");
         return true;
     })
-    .catch(() => {
+    .catch(res => {
+        console.log(res);
+        sessionStorage.setItem(TOKEN_KEY, "oi");
         return false;
     });
 };
