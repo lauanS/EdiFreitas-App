@@ -1,0 +1,18 @@
+
+.CadastroCrianca-label{
+    min-width: 170px;
+    padding-right: 0px;
+}
+
+.CadastroCrianca-inputText{
+    max-width: 500px;
+}
+
+.CadastroCrianca-inputNumber{
+    width: 150px;
+    max-width: 150px;
+}
+
+.CadastroCriaca-Descricao{
+    margin-bottom: 20px;
+}
