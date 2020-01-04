@@ -7,12 +7,22 @@ import Container from 'react-bootstrap/Container'
 import './styles.css';
 import ongLogo from '../../assets/ong_logo.jpg';
 import { Redirect } from 'react-router-dom';
+import {login} from '../../services/auth'
 
 export default function Login() {
   const [validated, setValidated] = useState(false);
   const [toRedirect, setToRedirect] = useState(false);
-  localStorage.clear();
-  localStorage.setItem("authToken", false);
+
+  const [usuario, setUsuario] = useState("");
+  const [senha, setSenha] = useState("");
+
+  const changeSenha = e =>{
+    setSenha(e.target.value);
+  }
+
+  const changeUsuario = e =>{
+    setUsuario(e.target.value);
+  }
 
   const handleSubmit = event => {
     const form = event.currentTarget;
@@ -21,8 +31,19 @@ export default function Login() {
       event.stopPropagation();
     }
     else{
-      setToRedirect(true);
-      localStorage.setItem("authToken", true);
+      var text = '{' +
+        '"usuario": "' + usuario + '",' +
+        '"senha": "' + senha + '"' +  
+      '}';
+      var obj = JSON.parse(text);
+      if(login(obj) === true){
+        setToRedirect(true);
+      }
+      else{
+        setToRedirect(false);
+      }
+      event.preventDefault();
+      event.stopPropagation();
     }
     setValidated(true);
 
@@ -50,11 +71,22 @@ export default function Login() {
             <br/>
             <Form.Group md="4" controlId="validationCustom01">
               <Form.Label>Usuário</Form.Label>
-              <Form.Control required type="text" placeholder="Nome de usuário"/>
+              <Form.Control 
+                required type="text" 
+                placeholder="Nome de usuário"
+                value={usuario}
+                onChange={changeUsuario}
+              />
             </Form.Group>
             <Form.Group md="4" controlId="validationCustom02">
               <Form.Label>Senha</Form.Label>
-              <Form.Control required type="password" placeholder="Senha de usuário" />
+              <Form.Control 
+                required 
+                type="password" 
+                placeholder="Senha de usuário" 
+                value={senha}
+                onChange={changeSenha}
+              />
             </Form.Group>
             <br/>
             
