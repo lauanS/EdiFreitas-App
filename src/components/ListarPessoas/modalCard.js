@@ -6,11 +6,12 @@ import photo from '../../assets/usuario.png';
 import {idade  } from '../../assist';
 import CardPessoa from './cardPessoa';
 import InfoResponsavel from './infoResponsavel';
+import InfoCrianca from './infoCrianca';
 import EditarCrianca from '../EditarCrianca/index';
 
 
 export default function ModalCard(props) {
-  const { dados, crianca} = props;
+  const { dados, crianca, remover, error} = props;
 
   const [showAlert, setShowAlert] = useState(false);
   const [open, setOpen] = useState(false);
@@ -42,7 +43,7 @@ export default function ModalCard(props) {
         {edit ?
         <ModalHeader edit={edit} setEdit={setEdit} setSubmitEdit={setSubmitEdit}/>
         :
-        <ModalHeader crianca={crianca} edit={edit} setEdit={setEdit} setOpen={setOpen} handleClose={handleClose} showAlert={showAlert} setShowAlert={setShowAlert} dados={dados}/>
+        <ModalHeader error={error} remover={remover} crianca={crianca} edit={edit} setEdit={setEdit} setOpen={setOpen} handleClose={handleClose} showAlert={showAlert} setShowAlert={setShowAlert} dados={dados}/>
         }
       </Modal.Header>
       <Modal.Body>
@@ -50,7 +51,7 @@ export default function ModalCard(props) {
           <EditarCrianca submitEdit={submitEdit} setEdit={setEdit} setSubmitEdit={setSubmitEdit}/>
           :
           crianca ?
-            ''
+            <InfoCrianca dados={dados}/>
             :
             <InfoResponsavel dados={dados}/>
         }

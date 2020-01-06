@@ -5,6 +5,7 @@ import './infoCrianca.scss';
 
 export default function ModalCard(props){
   const {dados} = props;
+  const dadosResp = dados.responsavel;
 
   return(
     <>
@@ -31,13 +32,17 @@ export default function ModalCard(props){
           }
         </div>
       </div>
-      {dados.comentario.length > 0 ? 
+      {dados.comentario !== null ? 
         <p className="infoCrianca__text-margin">Comentário: {dados.comentario}</p>
         :
         <p className="infoCrianca__text-margin">Não há comentário para essa pessoa</p>
       }
     </div>
-
+    
+    {dadosResp === undefined || dadosResp === null ? 
+    ''
+    :
+    <>
     <div className="infoCrianca">
       <div className="infoCrianca__divTitle">
         <h6 className="infoCrianca__title">Dados do responsável</h6>
@@ -45,19 +50,19 @@ export default function ModalCard(props){
       <div className="infoCrianca__divFlex">
         <img src={photo} alt="foto de perfil" className="infoCrianca__img"/>
         <div className="infoCrianca__dadosPessoais">
-          <h5 className="infoCrianca__text">{dados.nome}</h5>
-          {idade(dados.dataNascimento) > 1 ? 
-            <p className="infoCrianca__text">Idade: {idade(dados.dataNascimento)} anos</p>
+          <h5 className="infoCrianca__text">{dadosResp.nome}</h5>
+          {idade(dadosResp.dataNascimento) > 1 ? 
+            <p className="infoCrianca__text">Idade: {idade(dadosResp.dataNascimento)} anos</p>
             :
-            <p className="infoCrianca__text">Idade: {idade(dados.dataNascimento)} ano</p>
+            <p className="infoCrianca__text">Idade: {idade(dadosResp.dataNascimento)} ano</p>
           }
-          <p className="infoCrianca__text">Nascimento: {nascimento(dados.dataNascimento)}</p>
-          <p className="infoCrianca__text">CPF: {cpfFormat(dados.cpf)}</p>
+          <p className="infoCrianca__text">Nascimento: {nascimento(dadosResp.dataNascimento)}</p>
+          <p className="infoCrianca__text">CPF: {cpfFormat(dadosResp.cpf)}</p>
           
         </div>
       </div>
-      {dados.comentario.length > 0 ? 
-        <p className="infoCrianca__text-margin">Comentário: {dados.comentario}</p>
+      {dadosResp.comentario !== null ? 
+        <p className="infoCrianca__text-margin">Comentário: {dadosResp.comentario}</p>
         :
         <p className="infoCrianca__text-margin">Não há comentário para essa pessoa</p>
       }
@@ -67,11 +72,11 @@ export default function ModalCard(props){
       <div className="infoCrianca__divTitle">
         <h6 className="infoCrianca__title">Contato do responsável</h6>
       </div>
-      {dados.contatos.length === 0 ? 
+      {dadosResp.contatos.length === 0 ? 
         <p className="infoCrianca__text-margin">Esse responsável não possui meio de contato cadastrado</p>
         :
         <>
-        {dados.contatos.map(contato =>
+        {dadosResp.contatos.map(contato =>
           contato.tipo === "email" ? 
           <p className="infoCrianca__text-margin">E-mail: {contato.contato}</p>
           :
@@ -85,18 +90,20 @@ export default function ModalCard(props){
       <div className="infoCrianca__divTitle">
         <h6 className="infoCrianca__title">Endereço do responsável</h6>
       </div>
-      {dados.endereco === undefined ? 
+      {dadosResp.endereco === undefined ? 
         <p className="infoCrianca__text-margin">Essa responsável não possui endereço cadastrado</p>
         :
         <>
-          <p className="infoCrianca__text-margin">Logradouro: {dados.endereco.logradouro}</p>
-          <p className="infoCrianca__text-margin">Bairro: {dados.endereco.bairro}</p>
-          <p className="infoCrianca__text-margin">Cidade: {dados.endereco.cidade}</p>
-          <p className="infoCrianca__text-margin">CEP: {dados.endereco.cep}</p>
-          <p className="infoCrianca__text-margin">Número: {dados.endereco.numero}</p>
+          <p className="infoCrianca__text-margin">Logradouro: {dadosResp.endereco.logradouro}</p>
+          <p className="infoCrianca__text-margin">Bairro: {dadosResp.endereco.bairro}</p>
+          <p className="infoCrianca__text-margin">Cidade: {dadosResp.endereco.cidade}</p>
+          <p className="infoCrianca__text-margin">CEP: {dadosResp.endereco.cep}</p>
+          <p className="infoCrianca__text-margin">Número: {dadosResp.endereco.numero}</p>
         </>
       }
     </div>
+    </>
+    }
     </>
   );
 }

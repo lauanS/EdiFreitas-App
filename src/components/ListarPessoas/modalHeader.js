@@ -7,35 +7,37 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 
-
 export default function ModalHeader(props) {
-  const {crianca, dados, showAlert, setShowAlert, setOpen, handleClose, edit, setEdit, setSubmitEdit} = props;
-  
+  const {error, remover, crianca, dados, showAlert, setShowAlert, setOpen, handleClose, edit, setEdit, setSubmitEdit} = props;
+
   const handleOpenDeletar = () => {
     setShowAlert(true);
   };
 
   const handleConfirm = e => {
     if(crianca === true){
-      deleteCrianca(dados.id)
-      .then(res => {
+      if(deleteCrianca(dados.id) === true){
         setShowAlert(false);
         setOpen(false);
-      })
-      .catch(() =>{
+        console.log(dados.id + " oii");
+        remover(dados.id);
+      }
+      else{
         setShowAlert(false);
         setOpen(false);
-      });
+      }
     }
     else{
       deleteResponsavel(dados.id)
-      .then(res => {
+      .then(() => {
         setShowAlert(false);
         setOpen(false);
+        remover(dados.id);
       })
-      .catch(() =>{
+      .catch(() => {
         setShowAlert(false);
         setOpen(false);
+        error();
       });
     }
 
