@@ -8,10 +8,12 @@ import ModalBusca from './modalBusca';
 import Card from './card';
 import { checkText, checkNumber, checkCamiseta, checkData } from '../../validated';
 import {postCrianca} from '../../services'
-import SweetAlert from 'react-bootstrap-sweetalert';
+import Snackbar from '../Snackbars';
+
 
 export default function CadastroCrianca(){
-  const [showAlert, setShowAlert] = useState(false);
+  const [openAlertSuccess, setOpenAlertSuccess] = useState(false);
+  const [openAlertError, setOpenAlertError] = useState(false);
 
   const [nomeCompleto, setNomeCompleto] = useState("");
   const [validatedNomeCompleto, setValidatedNomeCompleto] = useState(false);
@@ -82,16 +84,18 @@ export default function CadastroCrianca(){
       '}';
 
       var obj = JSON.parse(text);
-      postCrianca(obj);
+      if(postCrianca(obj) === true){
+        setOpenAlertSuccess(true);
+        setOpenAlertError(false);
+      }
+      else{
+        setOpenAlertSuccess(false);
+        setOpenAlertError(true);
+      }
     }
     e.preventDefault();
     e.stopPropagation();
   };
-
-  const handleConfirm = e => {
-    setShowAlert(false);
-    window.location.reload();
-  }
 
   const onChangeNome = e => {
     checkText(e, setNomeCompleto, setValidatedNomeCompleto, setInvalidatedNomeCompleto);
@@ -107,10 +111,8 @@ export default function CadastroCrianca(){
 
   return (
     <>
-    <SweetAlert title="Criança cadastrada com sucesso!" show={showAlert} 
-      type='success' onConfirm={handleConfirm}
-      btnSize='sm' confirmBtnText="Entendido"
-    />
+    <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} msg="Criança cadastrada" type="success"/>
+    <Snackbar open={openAlertError} setOpen={setOpenAlertError} msg="Ocorreu um erro ao cadastrar" type="error"/>
 
     <label className="CadastroCriaca-Descricao">É obrigatório o preenchimento de campos com * (Asterisco) no título, é opcional quando não possuem o asterisco</label>
     
