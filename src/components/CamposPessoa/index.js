@@ -117,10 +117,9 @@ export default function CamposPessoa(props){
         Sexo *
       </Form.Label>
       <Col sm={8} className="CampoPessoa-inputText" >
-        <RadioGroup className="CampoPessoa-inputSexo" defaultValue="Masculino" name="customized-radios" onChange={onChangeSexo}>
-          <FormControlLabel className="label-radio" value="Masculino" control={<StyledRadio />} label="Masculino" />
-          <FormControlLabel className="label-radio" value="Feminino" control={<StyledRadio />} label="Feminino" />
-          <FormControlLabel className="label-radio" value="Outro" control={<StyledRadio />} label="Outro" />
+        <RadioGroup className="CampoPessoa-inputSexo" defaultValue="M" name="customized-radios" onChange={onChangeSexo}>
+          <FormControlLabel className="label-radio" value="M" control={<StyledRadio />} label="Masculino" />
+          <FormControlLabel className="label-radio" value="F" control={<StyledRadio />} label="Feminino" />
         </RadioGroup>
       </Col>
     </Form.Group>
