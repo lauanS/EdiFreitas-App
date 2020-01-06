@@ -1,7 +1,7 @@
 import React,  { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
-
+import Snackbar from '../Snackbars';
 import {Form, Row, Col, Button} from 'react-bootstrap';
 
 import { checkText, checkData, checkCpf, checkTelefone } from '../../validated';
@@ -9,11 +9,11 @@ import { checkText, checkData, checkCpf, checkTelefone } from '../../validated';
 import CamposPessoa from '../CamposPessoa/index';
 import Comentario from '../CampoComentario/index';
 
-import SweetAlert from 'react-bootstrap-sweetalert';
 import {postResponsavel} from '../../services'
 
 export default function CadastroResponsavel(){
-  const [showAlert, setShowAlert] = useState(false);
+  const [openAlertSuccess, setOpenAlertSuccess] = useState(false);
+  const [openAlertError, setOpenAlertError] = useState(false);
 
   const [nomeCompleto, setNomeCompleto] = useState("");
   const [validatedNomeCompleto, setValidatedNomeCompleto] = useState(false);
@@ -84,19 +84,21 @@ export default function CadastroResponsavel(){
         ']'+
       '}';
       var obj = JSON.parse(text);
-      postResponsavel(obj);
+      if(postResponsavel(obj) === true){
+        setOpenAlertSuccess(true);
+        setOpenAlertError(false);
+      }
+      else{
+        setOpenAlertSuccess(false);
+        setOpenAlertError(true);
+      }
       dtNascimento = telefone;
-      setShowAlert(true);
+
     }
     e.preventDefault();
     e.stopPropagation();
 
   };
-
-  const handleConfirm = e => {
-    setShowAlert(false);
-    window.location.reload();
-  }
 
   const onChangeNome = e => {
     checkText(e, setNomeCompleto, setValidatedNomeCompleto, setInvalidatedNomeCompleto);
@@ -112,10 +114,8 @@ export default function CadastroResponsavel(){
 
   return (
     <>
-    <SweetAlert title="Criança cadastrada com sucesso!" show={showAlert} 
-      type='success' onConfirm={handleConfirm}
-      btnSize='sm' confirmBtnText="Entendido"
-    />
+      <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} msg="Criança cadastrada" type="success"/>
+      <Snackbar open={openAlertError} setOpen={setOpenAlertError} msg="Ocorreu um erro ao cadastrar" type="error"/>
 
     <label className="CadastroResponsavel-Descricao">É obrigatório o preenchimento de campos com * (Asterisco) no título, é opcional quando não possuem o asterisco</label>
 
