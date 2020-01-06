@@ -16,3 +16,8 @@
 .CadastroCriaca-Descricao{
     margin-bottom: 20px;
 }
+
+.CadastroCrianca-error{
+    font-size: 80%;
+    color:#dc3545;
+}

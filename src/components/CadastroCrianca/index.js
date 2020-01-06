@@ -1,13 +1,13 @@
 import React,  { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles.css';
-
+import './index.css';
 import {Form, Row, Col, Button} from 'react-bootstrap';
 import CamposPessoa from '../CamposPessoa/index';
 import Comentario from '../CampoComentario/index';
-
+import ModalBusca from './modalBusca';
+import Card from './card';
 import { checkText, checkNumber, checkCamiseta, checkData } from '../../validated';
-
+import {postCrianca} from '../../services'
 import SweetAlert from 'react-bootstrap-sweetalert';
 
 export default function CadastroCrianca(){
@@ -21,12 +21,11 @@ export default function CadastroCrianca(){
   const [validatedDataNascimento, setValidatedDataNascimento] = useState(false);
   const [invalidatedDataNascimento, setInvalidatedDataNascimento] = useState(false);
 
-  const [sexoPessoa, setSexoPessoa] = useState("Masculino");
+  const [sexoPessoa, setSexoPessoa] = useState("M");
 
-  const [nomeResponsavel, setNomeResponsavel] = useState("");
-  const [validatedNomeResponsavel, setValidatedNomeResponsavel] = useState(false);
-  const [invalidatedNomeResponsavel, setInvalidatedNomeResponsavel] = useState(false);
-  
+  const [dadosResponsavel, setDadosResponsavel] = useState({});
+  const [invalidatedDadosResponsavel, setInvalidatedDadosResponsavel] = useState(false);
+
   const [numCalcado, setNumCalcado] = useState(0);
   const [validatedNumCalcado, setValidatedNumCalcado] = useState(false);
   const [invalidatedNumCalcado, setInvalidatedNumCalcado] = useState(false);
@@ -36,6 +35,14 @@ export default function CadastroCrianca(){
   const [invalidatedTamCamiseta, setInvalidatedTamCamiseta] = useState(false);
 
   const [comentario, setComentario] = useState("");
+
+  const converterData = data => {
+    let dia = data.substring(0,2);
+    let mes = data.substring(3,5);
+    let ano = data.substring(6,10);
+    let conv = ano + "-" + mes + "-" + dia;
+    return conv;
+  }
 
   const handleSubmit = e => {
 
@@ -49,8 +56,8 @@ export default function CadastroCrianca(){
       setInvalidatedDataNascimento(true);
       flag = true;
     }
-    if(validatedNomeResponsavel === false){
-      setInvalidatedNomeResponsavel(true);
+    if(dadosResponsavel.id === undefined){
+      setInvalidatedDadosResponsavel(true);
       flag = true;
     }
     if(invalidatedNumCalcado === true){
@@ -61,15 +68,21 @@ export default function CadastroCrianca(){
     }
    
     if(flag === false){
-      console.log(nomeCompleto);
-      console.log(dataNascimento);
-      console.log(sexoPessoa);
-      console.log(nomeResponsavel);
-      console.log(numCalcado);
-      console.log(tamCamiseta);
-      console.log(comentario);
+      let dtNascimento = converterData(dataNascimento);
 
-      setShowAlert(true);
+      var text = '{' +
+        '"nome": "' + nomeCompleto + '",' +
+        '"dataNascimento": "' + dtNascimento + '",' +
+        '"sexo": "' + sexoPessoa + '",' +
+        '"idResponsavel": "' + dadosResponsavel.id + '",' +
+        '"nCalcado": "' + numCalcado + '",' +
+        '"tamRoupa": "' + tamCamiseta + '",' + 
+        '"comentario" : "' + comentario + '",' +
+        '"foto" : ""' +
+      '}';
+
+      var obj = JSON.parse(text);
+      postCrianca(obj);
     }
     e.preventDefault();
     e.stopPropagation();
@@ -109,19 +122,25 @@ export default function CadastroCrianca(){
 
       <Form.Group as={Row} controlId="formGroupName" >
         <Form.Label column sm={2} className="CadastroCrianca-label">
-          Nome do responsável *
+          Responsável *
         </Form.Label>
         <Col sm={8} className="CadastroCrianca-inputText">
-          <Form.Control 
-            required 
-            type="text" 
-            onChange={e => checkText(e.target, setNomeResponsavel, setValidatedNomeResponsavel, setInvalidatedNomeResponsavel)}
-            isValid={validatedNomeResponsavel}
-            isInvalid={invalidatedNomeResponsavel}
-          />
-          <Form.Control.Feedback type="invalid">
-            Preencha o nome completo do responsável (Apenas letras).
-          </Form.Control.Feedback>
+          {dadosResponsavel.id === undefined ?
+          <>
+          <ModalBusca setDadosResponsavel={setDadosResponsavel} valor="Selecionar o responsável"/>
+          {invalidatedDadosResponsavel ? 
+          <div className="CadastroCrianca-error">Campo obrigatório, selecione o responsável desta criança</div>
+          :
+          ''}
+          </>
+            :
+          <>
+          <Card modal={false} dados={dadosResponsavel}/>
+          <ModalBusca setDadosResponsavel={setDadosResponsavel} valor="Mudar de responsável"/>
+          </>  
+          
+          }
+          
         </Col>
       </Form.Group>
 
