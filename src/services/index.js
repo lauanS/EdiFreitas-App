@@ -26,6 +26,7 @@ export const postResponsavel = (responsavel) => {
 
 export const deleteResponsavel = (id) => {
   return api.delete('/responsaveis/' + id);
+  
 }
 
 export const getCriancas = () => {
@@ -33,16 +34,23 @@ export const getCriancas = () => {
 }
 
 export const postCrianca = (crianca) => {
-  api.post('/crianca', crianca).then(res => {
+  api.post('/crianca', crianca)
+  .then(() => {
     return true;
   })
-  .catch(res => {
+  .catch(() => {
     return false;
   });
 }
 
 export const deleteCrianca = (id) => {
-  return api.delete('/criancas/' + id);
+  api.delete('/criancas/' + id)
+  .then(() => {
+    return true;
+  })
+  .catch(() => {
+    return false;
+  })
 }
 
 
