@@ -1,4 +1,7 @@
 export function idade(niver){
+  if(niver === undefined){
+    return 0;
+  }
   let ano_aniversario = + parseInt(niver.substring(0,4)),
     mes_aniversario = + parseInt(niver.substring(5,7)),
     dia_aniversario = + parseInt(niver.substring(8,10));
@@ -30,6 +33,9 @@ export function nascimento(data){
 }
 
 export function cpfFormat(cpf){
+  if(cpf === undefined){
+    return "";
+  }
   let newCpf = cpf.substring(0,3) + "." + cpf.substring(3,6) + "." + cpf.substring(6,9)
     + "-" + cpf.substring(9,11)
   return newCpf;
