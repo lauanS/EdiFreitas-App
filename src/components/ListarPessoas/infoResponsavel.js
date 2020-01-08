@@ -26,7 +26,7 @@ export default function ModalCard(props){
           
         </div>
       </div>
-      {dados.comentario.length > 0 ? 
+      {dados.comentario !== "" ? 
         <p className="infoResp__text-margin">Comentário: {dados.comentario}</p>
         :
         <p className="infoResp__text-margin">Não há comentário para essa pessoa</p>
@@ -70,7 +70,7 @@ export default function ModalCard(props){
       <div className="infoResp__divTitle">
         <h6 className="infoResp__title">Endereço</h6>
       </div>
-      {dados.endereco === undefined ? 
+      {dados.endereco === undefined || dados.endereco === null ? 
         <p className="infoResp__text-margin">Essa pessoa não possui endereço cadastrado</p>
         :
         <>

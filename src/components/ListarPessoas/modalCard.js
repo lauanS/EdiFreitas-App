@@ -26,6 +26,10 @@ export default function ModalCard(props) {
     setOpen(false);
   };
 
+  const handleOpenBusca = (valor) => {
+    setOpen(!valor);
+  };
+
   return (
     <>
     <CardPessoa change={handleOpen} foto={photo} dados={dados} crianca={crianca} idade={idade(dados.dataNascimento)}/>
@@ -48,7 +52,7 @@ export default function ModalCard(props) {
       </Modal.Header>
       <Modal.Body>
         {edit ? 
-          <EditarCrianca submitEdit={submitEdit} setEdit={setEdit} setSubmitEdit={setSubmitEdit}/>
+          <EditarCrianca handleOpenBusca={handleOpenBusca} dados={dados} submitEdit={submitEdit} setEdit={setEdit} setSubmitEdit={setSubmitEdit}/>
           :
           crianca ?
             <InfoCrianca dados={dados}/>

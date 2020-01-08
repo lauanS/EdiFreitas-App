@@ -66,7 +66,12 @@ export default class extends React.Component {
   }
 
   removerCrianca(id){
-    console.log(id);
+    this.setState({ ...this.state, openAlertSuccess: true,
+      openAlertError: false, criancas: 
+      Array.isArray(this.state.criancas) ? 
+        this.state.criancas.filter(person =>
+        person.id !== id ) : []
+    }); 
   }
 
   setOpenAlertSuccess(b){

@@ -23,8 +23,17 @@ export default function ModalCard(props){
             <p className="infoCrianca__text">Idade: {idade(dados.dataNascimento)} ano</p>
           }
           <p className="infoCrianca__text">Nascimento: {nascimento(dados.dataNascimento)}</p>
+          {dados.nCalcado !== 0 ?
           <p className="infoCrianca__text">Número do calçado: {dados.nCalcado}</p>
+          :
+          <p className="infoCrianca__text">Número do calçado não cadastrado</p>
+          }
+          {dados.tamRoupa !== "" ?
           <p className="infoCrianca__text">Tamanho da roupa: {dados.tamRoupa}</p>
+          :
+          <p className="infoCrianca__text">Tamanho de roupa não cadastrado</p>
+          }
+          
           {dados.sexo === "F" ?
             <p className="infoCrianca__text">Sexo: Feminino</p>
             :
@@ -32,7 +41,7 @@ export default function ModalCard(props){
           }
         </div>
       </div>
-      {dados.comentario !== null ? 
+      {dados.comentario !== "" ? 
         <p className="infoCrianca__text-margin">Comentário: {dados.comentario}</p>
         :
         <p className="infoCrianca__text-margin">Não há comentário para essa pessoa</p>
@@ -61,7 +70,7 @@ export default function ModalCard(props){
           
         </div>
       </div>
-      {dadosResp.comentario !== null ? 
+      {dadosResp.comentario !== "" ? 
         <p className="infoCrianca__text-margin">Comentário: {dadosResp.comentario}</p>
         :
         <p className="infoCrianca__text-margin">Não há comentário para essa pessoa</p>
@@ -90,7 +99,7 @@ export default function ModalCard(props){
       <div className="infoCrianca__divTitle">
         <h6 className="infoCrianca__title">Endereço do responsável</h6>
       </div>
-      {dadosResp.endereco === undefined ? 
+      {dadosResp.endereco === undefined || dadosResp.endereco === null ? 
         <p className="infoCrianca__text-margin">Essa responsável não possui endereço cadastrado</p>
         :
         <>

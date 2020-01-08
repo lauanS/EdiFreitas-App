@@ -23,7 +23,11 @@ export default function cardPessoa(props) {
           {idade > 1 ? <p className="cardPessoa__dados">Idade: {idade} anos</p> :
           <p className="cardPessoa__dados">Idade: {idade} ano</p>}
           <p className="cardPessoa__dados">CPF: {cpfFormat(dados.cpf)}</p>
-          <p className="cardPessoa__dados">Endereço: {dados.endereco.logradouro}, {dados.endereco.bairro}, {dados.endereco.cidade}</p>
+          {dados.endereco === null ?
+            <p className="cardPessoa__dados">Essa pessoa não possui endereço cadastrado</p>
+          :
+            <p className="cardPessoa__dados">Endereço: {dados.endereco.logradouro}, {dados.endereco.bairro}, {dados.endereco.cidade}</p>
+          }
         </div>
       }
     </div>

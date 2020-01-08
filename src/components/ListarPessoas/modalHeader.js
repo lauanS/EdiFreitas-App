@@ -16,16 +16,17 @@ export default function ModalHeader(props) {
 
   const handleConfirm = e => {
     if(crianca === true){
-      if(deleteCrianca(dados.id) === true){
+      deleteCrianca(dados.id)
+      .then(() => {
         setShowAlert(false);
         setOpen(false);
-        console.log(dados.id + " oii");
         remover(dados.id);
-      }
-      else{
+      })
+      .catch(() => {
         setShowAlert(false);
         setOpen(false);
-      }
+        error();
+      });
     }
     else{
       deleteResponsavel(dados.id)
