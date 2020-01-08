@@ -1,0 +1,54 @@
+import React, {useState} from "react";
+import {Modal} from 'react-bootstrap';
+import './index.scss';
+import CloseIcon from '@material-ui/icons/Close';
+import Button from '@material-ui/core/Button';
+import BuscaResponsavel from '../BuscaResponsavel';
+
+export default function ModalBusca(props) {
+  const {setDadosResponsavel, valor} = props;
+
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = e => {
+    setOpen(true);
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleClose = e => {
+    setOpen(false);
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+  return (
+    <>
+     <Button 
+      onClick={handleOpen} 
+      className="modalBusca__button" 
+      variant="contained" 
+      color="primary"
+    >{valor}
+    </Button>
+    
+    <Modal
+      className="modalBusca"
+      show={open}
+      onHide={() => setOpen(false)}
+      dialogClassName="modalBusca__dialog"
+      aria-labelledby="example-custom-modal-styling-title"
+      scrollable
+      centered
+    >
+      <Modal.Header className="modalBusca__header">
+        <p className="modalBusca__link" onClick={handleClose}><CloseIcon/> Fechar</p>
+      </Modal.Header>
+      <Modal.Body>
+        <BuscaResponsavel setOpen={setOpen} setDadosResponsavel={setDadosResponsavel}/>
+      </Modal.Body>
+    </Modal>
+    </>
+  );
+}
+  
