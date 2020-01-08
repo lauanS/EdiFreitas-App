@@ -1,0 +1,26 @@
+.CadastroCrianca{
+  &__descricao{
+    margin-bottom: 20px;
+  }
+
+  &__label{
+    min-width: 170px;
+    padding-right: 0px;
+  }
+
+  &__inputText{
+    max-width: 500px;
+  }
+
+  &__error{
+    font-size: 80%;
+    color:#dc3545;
+  }
+
+  &__inputNumber{
+    width: 150px;
+    max-width: 150px;
+  }
+}
+
+
