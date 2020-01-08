@@ -57,3 +57,19 @@ export function formatDadosCrianca(crianca){
   }
   return retorno;
 }
+
+export function desconverterData(data){
+  let ano = data.substring(0,4);
+  let mes = data.substring(5,7);
+  let dia = data.substring(8,10);
+  let conv = dia + "/" + mes + "/" + ano;
+  return conv;
+}
+
+export function converterData(data){
+  let dia = data.substring(0,2);
+  let mes = data.substring(3,5);
+  let ano = data.substring(6,10);
+  let conv = ano + "-" + mes + "-" + dia;
+  return conv;
+}
