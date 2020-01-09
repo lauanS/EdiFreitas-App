@@ -11,7 +11,6 @@ import {login} from '../../services/auth'
 
 
 export default function Login() {
-  const [validated, setValidated] = useState(false);
   const [toRedirect, setToRedirect] = useState(false);
 
   const TOKEN_KEY = "@edifreitas-token";
@@ -19,21 +18,35 @@ export default function Login() {
   const [usuario, setUsuario] = useState("");
   const [senha, setSenha] = useState("");
 
+  const [erroLogin, setErroLogin] = useState(false);
+  const [invalitedSenha, setInvalitedSenha] = useState(false);
+  const [invalitedUsuario, setInvalitedUsuario] = useState(false);
+
   const changeSenha = e =>{
+    if(e.target.value.length > 0){
+      setInvalitedSenha(false);
+    }
+    else{
+      setInvalitedSenha(true);
+    }
     setSenha(e.target.value);
   }
 
   const changeUsuario = e =>{
+    if(e.target.value.length > 0){
+      setInvalitedUsuario(false);
+    }
+    else{
+      setInvalitedUsuario(true);
+    }
     setUsuario(e.target.value);
   }
 
   const handleSubmit = event => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    else{
+    event.preventDefault();
+    event.stopPropagation();
+
+    if(usuario.length > 0 && senha.length > 0){
       var text = '{' +
         '"username": "' + usuario + '",' +
         '"password": "' + senha + '"' +  
@@ -46,12 +59,21 @@ export default function Login() {
         setToRedirect(true);
       })
       .catch(res => {
+        setErroLogin(true);
+        setUsuario("");
+        setSenha("");
+
         setToRedirect(false);
       });
-      event.preventDefault();
-      event.stopPropagation();
     }
-    setValidated(true);
+    else{
+      if(usuario.length === 0){
+        setInvalitedUsuario(true);
+      }
+      if(senha.length === 0){
+        setInvalitedSenha(true);
+      }
+    }
   };
 
 
@@ -61,7 +83,7 @@ export default function Login() {
     <Container className="formsContainer">
       <Row className="justify-center">
         <Col className="forms">
-          <Form  noValidate validated={validated} onSubmit={handleSubmit}>
+          <Form  noValidate onSubmit={handleSubmit}>
             <Container>
               <Row className="justify-center">
                 <img src={ongLogo} alt="First slide" width="100" height="100"/>
@@ -72,25 +94,37 @@ export default function Login() {
               <Row className="justify-center">
                 <span className="desc justify-center">Parte reservada para o administrador do sistema.</span>
               </Row>
+              {erroLogin === true ?
+              <Row className="justify-center">
+                <span className="desc justify-center error">Usuário ou senha inválida!</span>
+                <span className="desc justify-center error">Corrija e tente novamente</span>
+              </Row>
+              :
+              ''
+              }
             </Container>
             <br/>
             <Form.Group md="4" controlId="validationCustom01">
               <Form.Label>Usuário</Form.Label>
               <Form.Control 
-                required type="text" 
+                type="text" 
                 placeholder="Nome de usuário"
                 value={usuario}
                 onChange={changeUsuario}
+                isValid={false}
+                isInvalid={invalitedUsuario}
               />
             </Form.Group>
+
             <Form.Group md="4" controlId="validationCustom02">
               <Form.Label>Senha</Form.Label>
               <Form.Control 
-                required 
                 type="password" 
                 placeholder="Senha de usuário" 
                 value={senha}
                 onChange={changeSenha}
+                isValid={false}
+                isInvalid={invalitedSenha}
               />
             </Form.Group>
             <br/>

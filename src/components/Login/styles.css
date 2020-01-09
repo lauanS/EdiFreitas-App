@@ -15,6 +15,10 @@
   display: block;
 }
 
+.error{
+  color: #dc3545;
+}
+
 .justify-center{
   justify-content: center;
 }
@@ -42,6 +46,7 @@
 .desc{
   text-align: center;
 }
+
 .form-control:focus {
   border-width: 2px;
   border-style: solid;
@@ -61,6 +66,10 @@
   width: 100%;
   background-color: #1a73e8;
   font-weight: 700;
+}
+
+.botao:focus{
+  outline: none!important;
 }
 
 body{
