@@ -1,65 +1,66 @@
 import React,  { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.scss';
-import {Form, Row, Col} from 'react-bootstrap';
+import {Modal, Form, Row, Col} from 'react-bootstrap';
 import CamposPessoa from '../CamposPessoa/index';
 import Comentario from '../CampoComentario/index';
 import BuscaResponsavel from '../BuscaResponsavel';
 import Card from '../CardResponsavel';
 import { checkText, checkNumber, checkCamiseta, checkData } from '../../validated';
-import {postCrianca} from '../../services';
+import {putCrianca} from '../../services';
 import {desconverterData, converterData} from '../../assist';
-import Snackbar from '../Snackbars';
 import Button from '@material-ui/core/Button';
+import ModalHeader from './modalHeader'
 
 export default function EditarCrianca(props){
-  const {submitEdit, setEdit, setSubmitEdit, dados} = props;
-
-  const [openAlertSuccess, setOpenAlertSuccess] = useState(false);
-  const [openAlertError, setOpenAlertError] = useState(false);
+  const {setOpen, erroUpdate, update, updateList, setEdit, dados, responsaveis} = props;
 
   const [nomeCompleto, setNomeCompleto] = useState(dados.nome);
-  const [validatedNomeCompleto, setValidatedNomeCompleto] = useState(false);
+  const [validatedNomeCompleto, setValidatedNomeCompleto] = useState(true);
   const [invalidatedNomeCompleto, setInvalidatedNomeCompleto] = useState(false);
 
   const [dataNascimento, setDataNascimento] = useState(desconverterData(dados.dataNascimento));
-  const [validatedDataNascimento, setValidatedDataNascimento] = useState(false);
+  const [validatedDataNascimento, setValidatedDataNascimento] = useState(true);
   const [invalidatedDataNascimento, setInvalidatedDataNascimento] = useState(false);
 
   const [sexoPessoa, setSexoPessoa] = useState(dados.sexo);
 
   const [dadosResponsavel, setDadosResponsavel] = useState(dados.responsavel);
 
-  let calcado = 0;
+  let calcado = "";
+  let calcadoVali = false;
   if(dados.nCalcado !== null){
     calcado = dados.nCalcado;
+    calcadoVali = true;
   }
 
   const [numCalcado, setNumCalcado] = useState(calcado);
-  const [validatedNumCalcado, setValidatedNumCalcado] = useState(false);
+  const [validatedNumCalcado, setValidatedNumCalcado] = useState(calcadoVali);
   const [invalidatedNumCalcado, setInvalidatedNumCalcado] = useState(false);
 
+  let camisetaVali = false;
+  if(dados.tamRoupa !== ""){
+    camisetaVali = true;
+  } 
+
   const [tamCamiseta, setTamCamiseta] = useState(dados.tamRoupa);
-  const [validatedTamCamiseta, setValidatedTamCamiseta] = useState(false);
+  const [validatedTamCamiseta, setValidatedTamCamiseta] = useState(camisetaVali);
   const [invalidatedTamCamiseta, setInvalidatedTamCamiseta] = useState(false);
 
   let comen = "";
-  if(dados.comentario !== null){
+  let comenVali = false;
+  if(dados.comentario !== ""){
     comen = dados.comentario;
+    comenVali = true;
   }
 
   const [comentario, setComentario] = useState(comen);
-  const [validatedComentario, setValidatedComentario] = useState(false);
+  const [validatedComentario, setValidatedComentario] = useState(comenVali);
 
+  const [openModal, setOpenModal] = useState(true);
   const [openBusca, setOpenBusca] = useState(false);
 
-  const handleBusca = e => {
-    setOpenBusca(true);
-    e.preventDefault();
-    e.stopPropagation();
-  }
-
-  const handleSubmit = e => {
+  const handleSubmit = () => {
     let flag = false;
 
     if(validatedNomeCompleto === false){
@@ -92,19 +93,23 @@ export default function EditarCrianca(props){
       '}';
 
       var obj = JSON.parse(text);
-      postCrianca(obj).then(res => {
-        setOpenAlertSuccess(true);
-        setOpenAlertError(false);
+      putCrianca(obj, dados.id).then(res => {
+        setEdit(false);
+        setOpen(false);
+        update();
+        updateList();
       })
       .catch(res => {
-        console.log(res);
-        setOpenAlertSuccess(false);
-        setOpenAlertError(true);
+        erroUpdate();
       });
     }
+  }
+
+  const handleBusca = e => {
+    setOpenBusca(true);
     e.preventDefault();
     e.stopPropagation();
-  };
+  }
 
   const onChangeNome = e => {
     checkText(e, setNomeCompleto, setValidatedNomeCompleto, setInvalidatedNomeCompleto);
@@ -121,79 +126,107 @@ export default function EditarCrianca(props){
   return (
     <>
     {openBusca === true ? 
-    <BuscaResponsavel setDadosResponsavel={setDadosResponsavel} setOpen={setOpenBusca}/>
+    <Modal
+      className="modalCard"
+      show={openBusca}
+      onHide={() => setOpenBusca(true)}
+      keyboard={false}
+      dialogClassName="modalCard__dialog"
+      aria-labelledby="example-custom-modal-styling-title"
+      scrollable
+      centered
+    >
+      <Modal.Header className="modalCard__header">
+        <ModalHeader setOpenBusca={setOpenBusca} busca={true} setEdit={setEdit} submit={handleSubmit}/>
+      </Modal.Header>
+      <Modal.Body>
+        <BuscaResponsavel responsaveis={responsaveis} setDadosResponsavel={setDadosResponsavel} setOpen={setOpenBusca}/>
+      </Modal.Body>
+    </Modal>
     :
     <>
-    <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} msg="Informações alteradas" type="success"/>
-    <Snackbar open={openAlertError} setOpen={setOpenAlertError} msg="Ocorreu um erro ao salvar" type="error"/>
-
-    <label className="EditarCrianca__descricao">É obrigatório o preenchimento de campos com * (Asterisco) no título, é opcional quando não possuem o asterisco</label>
-    
-    <Form onSubmit={handleSubmit} noValidate  >
-      <CamposPessoa nome={nomeCompleto} onChangeNome={onChangeNome} valNome={validatedNomeCompleto} invNome={invalidatedNomeCompleto}
-          data={dataNascimento} onChangeData={onChangeData} valData={validatedDataNascimento} invData={invalidatedDataNascimento}
-          sexo={sexoPessoa} onChangeSexo={onChangeSexo}
-      />
-
-      <Form.Group as={Row} controlId="formGroupName" >
-        <Form.Label column sm={2} className="EditarCrianca__label">
-          Responsável *
-        </Form.Label>
-        <Col sm={8} className="EditarCrianca__inputText">
-          <Card modal={false} dados={dadosResponsavel}/>
-          <Button
-            onClick={handleBusca} 
-            className="EditarCrianca__button" 
-            variant="contained" 
-            color="primary"
-          >Mudar de responsável
-          </Button>
-        </Col>
-      </Form.Group>
-
-      <Form.Group as={Row} controlId="formGroupCalcado">
-        <Form.Label column sm={2} className="EditarCrianca__label">
-          Número do calçado
-        </Form.Label>
-        <Col sm={8} className="EditarCrianca__inputText">
-          <Form.Control 
-            className="EditarCrianca__inputNumber"
-            type="text"
-            placeholder="Ex: 33"
-            value={numCalcado}
-            onChange={e => checkNumber(e.target, setNumCalcado, setValidatedNumCalcado, setInvalidatedNumCalcado)}
-            isValid={validatedNumCalcado}
-            isInvalid={invalidatedNumCalcado}
+    <Modal
+      className="modalCard"
+      show={openModal}
+      onHide={() => setOpenModal(false)}
+      dialogClassName="modalCard__dialog"
+      aria-labelledby="example-custom-modal-styling-title"
+      scrollable
+      centered
+    >
+      <Modal.Header className="modalCard__header">
+        <ModalHeader busca={false} setEdit={setEdit} submit={handleSubmit}/>
+      </Modal.Header>
+      <Modal.Body>
+        <label className="EditarCrianca__descricao">É obrigatório o preenchimento de campos com * (Asterisco) no título, é opcional quando não possuem o asterisco</label>
+      
+        <Form noValidate  >
+          <CamposPessoa nome={nomeCompleto} onChangeNome={onChangeNome} valNome={validatedNomeCompleto} invNome={invalidatedNomeCompleto}
+              data={dataNascimento} onChangeData={onChangeData} valData={validatedDataNascimento} invData={invalidatedDataNascimento}
+              sexo={sexoPessoa} onChangeSexo={onChangeSexo}
           />
-          <Form.Control.Feedback type="invalid">
-            Insira um número maior que zero (Apenas números).
-          </Form.Control.Feedback>
-        </Col>
-      </Form.Group>
 
-      <Form.Group as={Row} controlId="formGroupTamanho">
-        <Form.Label column sm={2} className="EditarCrianca__label">
-          Tamanho de camiseta
-        </Form.Label>
-        <Col sm={8} className="EditarCrianca__inputText">
-          <Form.Control 
-            className="EditarCrianca__inputNumber"
-            type="text"
-            placeholder="Ex: 10, 12, GG ..."
-            value={tamCamiseta}
-            onChange={e => checkCamiseta(e.target, setTamCamiseta, setValidatedTamCamiseta, setInvalidatedTamCamiseta)}
-            isValid={validatedTamCamiseta}
-            isInvalid={invalidatedTamCamiseta}
-          />
-          <Form.Control.Feedback type="invalid">
-            Insira um número ou um tamanho (PP, P, M, G, GG, GGG).
-          </Form.Control.Feedback>
-        </Col>
-      </Form.Group>
+          <Form.Group as={Row} controlId="formGroupName" >
+            <Form.Label column sm={2} className="EditarCrianca__label">
+              Responsável *
+            </Form.Label>
+            <Col sm={8} className="EditarCrianca__inputText">
+              <Card modal={false} dados={dadosResponsavel}/>
+              <Button
+                onClick={handleBusca} 
+                className="EditarCrianca__button" 
+                variant="contained" 
+                color="primary"
+              >Mudar de responsável
+              </Button>
+            </Col>
+          </Form.Group>
 
-      <Comentario validatedComentario={validatedComentario} setValidatedComentario={setValidatedComentario} comentario={comentario} setComentario={setComentario}/>
+          <Form.Group as={Row} controlId="formGroupCalcado">
+            <Form.Label column sm={2} className="EditarCrianca__label">
+              Número do calçado
+            </Form.Label>
+            <Col sm={8} className="EditarCrianca__inputText">
+              <Form.Control 
+                className="EditarCrianca__inputNumber"
+                type="text"
+                placeholder="Ex: 33"
+                value={numCalcado}
+                onChange={e => checkNumber(e.target, setNumCalcado, setValidatedNumCalcado, setInvalidatedNumCalcado)}
+                isValid={validatedNumCalcado}
+                isInvalid={invalidatedNumCalcado}
+              />
+              <Form.Control.Feedback type="invalid">
+                Insira um número maior que zero (Apenas números).
+              </Form.Control.Feedback>
+            </Col>
+          </Form.Group>
 
-    </Form>
+          <Form.Group as={Row} controlId="formGroupTamanho">
+            <Form.Label column sm={2} className="EditarCrianca__label">
+              Tamanho de camiseta
+            </Form.Label>
+            <Col sm={8} className="EditarCrianca__inputText">
+              <Form.Control 
+                className="EditarCrianca__inputNumber"
+                type="text"
+                placeholder="Ex: 10, 12, GG ..."
+                value={tamCamiseta}
+                onChange={e => checkCamiseta(e.target, setTamCamiseta, setValidatedTamCamiseta, setInvalidatedTamCamiseta)}
+                isValid={validatedTamCamiseta}
+                isInvalid={invalidatedTamCamiseta}
+              />
+              <Form.Control.Feedback type="invalid">
+                Insira um número ou um tamanho (PP, P, M, G, GG, GGG).
+              </Form.Control.Feedback>
+            </Col>
+          </Form.Group>
+
+          <Comentario validatedComentario={validatedComentario} setValidatedComentario={setValidatedComentario} comentario={comentario} setComentario={setComentario}/>
+
+        </Form>
+      </Modal.Body>
+    </Modal>
     </>
     }
     </>
