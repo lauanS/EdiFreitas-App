@@ -28,7 +28,7 @@ export default function CadastroCrianca(){
   const [dadosResponsavel, setDadosResponsavel] = useState({});
   const [invalidatedDadosResponsavel, setInvalidatedDadosResponsavel] = useState(false);
 
-  const [numCalcado, setNumCalcado] = useState(0);
+  const [numCalcado, setNumCalcado] = useState("");
   const [validatedNumCalcado, setValidatedNumCalcado] = useState(false);
   const [invalidatedNumCalcado, setInvalidatedNumCalcado] = useState(false);
 
@@ -53,7 +53,7 @@ export default function CadastroCrianca(){
     setDadosResponsavel({});
     setInvalidatedDadosResponsavel(false);
 
-    setNumCalcado(0);
+    setNumCalcado("");
     setValidatedNumCalcado(false);
     setInvalidatedNumCalcado(false);
 
@@ -174,6 +174,7 @@ export default function CadastroCrianca(){
             type="text"
             placeholder="Ex: 33"
             onChange={e => checkNumber(e.target, setNumCalcado, setValidatedNumCalcado, setInvalidatedNumCalcado)}
+            value={numCalcado}
             isValid={validatedNumCalcado}
             isInvalid={invalidatedNumCalcado}
           />
