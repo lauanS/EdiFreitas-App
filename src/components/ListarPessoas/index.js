@@ -30,9 +30,9 @@ export default class extends React.Component {
       ]).then(axios.spread((responsavelRes, criancaRes) => {
         this.setState({ ...this.state, responsaveis: responsavelRes.data, criancas: criancaRes.data, isLoading: false});
       }))
-      .catch(() =>
+      .catch(() => {
         this.setState({ ...this.state, errors: true, isLoading: false })
-      );
+      });
     }, 2000);
   }
 
