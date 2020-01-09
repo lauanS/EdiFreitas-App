@@ -1,14 +1,26 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {Modal} from 'react-bootstrap';
 import './index.scss';
 import CloseIcon from '@material-ui/icons/Close';
 import Button from '@material-ui/core/Button';
 import BuscaResponsavel from '../BuscaResponsavel';
+import {getResponsaveis} from '../../services'
 
 export default function ModalBusca(props) {
   const {setDadosResponsavel, valor} = props;
 
   const [open, setOpen] = useState(false);
+  const [responsaveis, setResponsaveis] = useState([]);
+
+  useEffect(() => {
+    getResponsaveis()
+    .then(res => {
+      setResponsaveis(res.data);
+    })
+    .catch(() => {
+
+    });
+  }, []);
 
   const handleOpen = e => {
     setOpen(true);
@@ -45,7 +57,7 @@ export default function ModalBusca(props) {
         <p className="modalBusca__link" onClick={handleClose}><CloseIcon/> Fechar</p>
       </Modal.Header>
       <Modal.Body>
-        <BuscaResponsavel setOpen={setOpen} setDadosResponsavel={setDadosResponsavel}/>
+        <BuscaResponsavel responsaveis={responsaveis} setOpen={setOpen} setDadosResponsavel={setDadosResponsavel}/>
       </Modal.Body>
     </Modal>
     </>
