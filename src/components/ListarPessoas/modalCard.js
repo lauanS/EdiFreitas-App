@@ -9,14 +9,12 @@ import InfoResponsavel from './infoResponsavel';
 import InfoCrianca from './infoCrianca';
 import EditarCrianca from '../EditarCrianca/index';
 
-
 export default function ModalCard(props) {
-  const { dados, crianca, remover, error} = props;
+  const { dados, crianca, remover, erroRemover, update, erroUpdate, responsaveis, updateList} = props;
 
   const [showAlert, setShowAlert] = useState(false);
   const [open, setOpen] = useState(false);
   const [edit, setEdit] = useState(false);
-  const [submitEdit, setSubmitEdit] = useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -26,11 +24,14 @@ export default function ModalCard(props) {
     setOpen(false);
   };
 
-  const handleOpenBusca = (valor) => {
-    setOpen(!valor);
-  };
-
   return (
+    <>
+    {edit === true ? 
+      crianca === true ?
+        <EditarCrianca update={update} erroUpdate={erroUpdate} setOpen={setOpen} updateList={updateList} responsaveis={responsaveis} dados={dados} setEdit={setEdit}/>
+        :
+        ''
+    :
     <>
     <CardPessoa change={handleOpen} foto={photo} dados={dados} crianca={crianca} idade={idade(dados.dataNascimento)}/>
     <Modal
@@ -44,23 +45,18 @@ export default function ModalCard(props) {
       centered
     >
       <Modal.Header className="modalCard__header">
-        {edit ?
-        <ModalHeader edit={edit} setEdit={setEdit} setSubmitEdit={setSubmitEdit}/>
-        :
-        <ModalHeader error={error} remover={remover} crianca={crianca} edit={edit} setEdit={setEdit} setOpen={setOpen} handleClose={handleClose} showAlert={showAlert} setShowAlert={setShowAlert} dados={dados}/>
-        }
+        <ModalHeader updateList={updateList} error={erroRemover} remover={remover} crianca={crianca} edit={edit} setEdit={setEdit} setOpen={setOpen} handleClose={handleClose} showAlert={showAlert} setShowAlert={setShowAlert} dados={dados}/>
       </Modal.Header>
       <Modal.Body>
-        {edit ? 
-          <EditarCrianca handleOpenBusca={handleOpenBusca} dados={dados} submitEdit={submitEdit} setEdit={setEdit} setSubmitEdit={setSubmitEdit}/>
+        {crianca === true ?
+          <InfoCrianca dados={dados}/>
           :
-          crianca ?
-            <InfoCrianca dados={dados}/>
-            :
-            <InfoResponsavel dados={dados}/>
+          <InfoResponsavel dados={dados}/>
         }
       </Modal.Body>
     </Modal>
+    </>
+    }
     </>
   );
 }

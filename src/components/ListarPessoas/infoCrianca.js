@@ -87,9 +87,9 @@ export default function ModalCard(props){
         <>
         {dadosResp.contatos.map(contato =>
           contato.tipo === "email" ? 
-          <p className="infoCrianca__text-margin">E-mail: {contato.contato}</p>
+          <p className="infoCrianca__text-margin" key={contato.id}>E-mail: {contato.contato}</p>
           :
-          <p className="infoCrianca__text-margin">Telefone: {contato.contato}</p>
+          <p className="infoCrianca__text-margin" key={contato.id}>Telefone: {contato.contato}</p>
         )}
         </>
       }

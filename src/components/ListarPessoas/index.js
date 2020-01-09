@@ -15,8 +15,10 @@ export default class extends React.Component {
       search: '',
       isLoading: true,
       errors: false,
-      openAlertSuccess: false,
-      openAlertError: false,
+      alertSuccessDeletar: false,
+      alertErrorDeletar: false,
+      alertSuccessUpdate: false,
+      alertErrorUpdate: false, 
       responsaveis: [],
       criancas: [],
     };
@@ -36,6 +38,18 @@ export default class extends React.Component {
     }, 2000);
   }
 
+  updateList() {
+    axios.all([
+      getResponsaveis(),
+      getCriancas()
+      ]).then(axios.spread((responsavelRes, criancaRes) => {
+        this.setState({ ...this.state, responsaveis: responsavelRes.data, criancas: criancaRes.data, isLoading: false});
+      }))
+      .catch(() => {
+        this.setState({ ...this.state, errors: true, isLoading: false })
+    });
+  }
+
   updateSearch(e) {
     this.setState({ ...this.state, search: e.target.value});
     e.preventDefault();
@@ -51,46 +65,55 @@ export default class extends React.Component {
       : [];
   }
 
-  removerResponsavel(id){
-    this.setState({ ...this.state, openAlertSuccess: true,
-      openAlertError: false, responsaveis: 
-      Array.isArray(this.state.responsaveis) ? 
-        this.state.responsaveis.filter(person =>
-        person.id !== id ) : []
-    }); 
+  remover(id){
+    this.setState({ ...this.state, alertSuccessDeletar: true,
+      alertErrorDeletar: false});
   }
 
   erroRemover(){
-    this.setState({ ...this.state, openAlertSuccess: false,
-      openAlertError: true }); 
+    this.setState({ ...this.state, alertSuccessDeletar: false,
+      alertErrorDeletar: true }); 
   }
 
-  removerCrianca(id){
-    this.setState({ ...this.state, openAlertSuccess: true,
-      openAlertError: false, criancas: 
-      Array.isArray(this.state.criancas) ? 
-        this.state.criancas.filter(person =>
-        person.id !== id ) : []
-    }); 
+  update(){
+    this.setState({ ...this.state, alertSuccessUpdate: true,
+      alertErrorUpdate: false});
   }
 
-  setOpenAlertSuccess(b){
-    this.setState({ ...this.state, openAlertSuccess: b }); 
+  erroUpdate(){
+    this.setState({ ...this.state, alertSuccessUpdate: false,
+      alertErrorUpdate: true }); 
   }
 
-  setOpenAlertError(b){
-    this.setState({ ...this.state, openAlertError: b }); 
+  setAlertSuccessDeletar(b){
+    this.setState({ ...this.state, alertSuccessDeletar: b }); 
+  }
+
+  setAlertErrorDeletar(b){
+    this.setState({ ...this.state, alertErrorDeletar: b }); 
+  }
+
+  setAlertSuccessUpdate(b){
+    this.setState({ ...this.state, alertSuccessUpdate: b }); 
+  }
+
+  setAlertErrorUpdate(b){
+    this.setState({ ...this.state, alertErrorUpdate: b }); 
   }
 
   render(){
-    const { responsaveis, criancas, isLoading, errors, search, openAlertSuccess, openAlertError} = this.state;
+    const { responsaveis, criancas, isLoading, errors, search } = this.state;
+    const {alertSuccessDeletar, alertErrorDeletar, alertSuccessUpdate, alertErrorUpdate} = this.state;
     const filteredResponsaveis = this.searchPeople(responsaveis, search) || [];
     const filteredCriancas = this.searchPeople(criancas, search) || [];
 
     return (
       <>
-      <Snackbar open={openAlertSuccess} setOpen={this.setOpenAlertSuccess.bind(this)} msg="Informações deletadas" type="delete"/>
-      <Snackbar open={openAlertError} setOpen={this.setOpenAlertError.bind(this)} msg="Ocorreu um erro ao deletar" type="error"/>
+      <Snackbar open={alertSuccessDeletar} setOpen={this.setAlertSuccessDeletar.bind(this)} msg="Informações deletadas" type="delete"/>
+      <Snackbar open={alertErrorDeletar} setOpen={this.setAlertErrorDeletar.bind(this)} msg="Ocorreu um erro ao deletar" type="error"/>
+      
+      <Snackbar open={alertSuccessUpdate} setOpen={this.setAlertSuccessUpdate.bind(this)} msg="Informações atualizadas" type="delete"/>
+      <Snackbar open={alertErrorUpdate} setOpen={this.setAlertErrorUpdate.bind(this)} msg="Ocorreu um erro ao atualizar" type="error"/>
 
       {isLoading ? <Loader type="dots" /> : errors ? "Houve algum problema" :
       <>
@@ -121,10 +144,29 @@ export default class extends React.Component {
         
         <div className="listarPessoas"> 
           {filteredResponsaveis.length > 0 ? filteredResponsaveis.map(pessoa =>
-            <ModalCard dados={pessoa} key={pessoa.id} crianca={false} remover={this.removerResponsavel.bind(this)} error={this.erroRemover.bind(this)}/>
+            <ModalCard 
+              updateList={this.updateList.bind(this)} 
+              dados={pessoa} 
+              key={"R" + pessoa.id} 
+              crianca={false} 
+              remover={this.remover.bind(this)} 
+              erroRemover={this.erroRemover.bind(this)}
+              update={this.update.bind(this)}
+              erroUpdate={this.erroUpdate.bind(this)}  
+            />
           ) : ''}
           {filteredCriancas.length > 0 ? filteredCriancas.map(pessoa =>
-            <ModalCard dados={pessoa} key={pessoa.id} crianca={true} remover={this.removerCrianca.bind(this)} error={this.erroRemover.bind(this)}/>
+            <ModalCard 
+              updateList={this.updateList.bind(this)} 
+              responsaveis={responsaveis} 
+              dados={pessoa} 
+              key={"C" + pessoa.id} 
+              crianca={true} 
+              remover={this.remover.bind(this)} 
+              erroRemover={this.erroRemover.bind(this)}
+              update={this.update.bind(this)}
+              erroUpdate={this.erroUpdate.bind(this)} 
+            />
           ) : ''}
         </div>
         </>

@@ -8,7 +8,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 
 export default function ModalHeader(props) {
-  const {error, remover, crianca, dados, showAlert, setShowAlert, setOpen, handleClose, edit, setEdit, setSubmitEdit} = props;
+  const {updateList, error, remover, crianca, dados, showAlert, setShowAlert, setOpen, handleClose, edit, setEdit, setSubmitEdit} = props;
 
   const handleOpenDeletar = () => {
     setShowAlert(true);
@@ -21,6 +21,7 @@ export default function ModalHeader(props) {
         setShowAlert(false);
         setOpen(false);
         remover(dados.id);
+        updateList();
       })
       .catch(() => {
         setShowAlert(false);
@@ -34,6 +35,7 @@ export default function ModalHeader(props) {
         setShowAlert(false);
         setOpen(false);
         remover(dados.id);
+        updateList();
       })
       .catch(() => {
         setShowAlert(false);
@@ -62,7 +64,6 @@ export default function ModalHeader(props) {
 
   const handleEdit = e => {
     setEdit(true);
-    console.log("aaa");
     e.preventDefault();
     e.stopPropagation();
   }
