@@ -1,15 +1,16 @@
 import React,  { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.scss';
-import {Form, Row, Col, Button} from 'react-bootstrap';
+import {Form, Row, Col} from 'react-bootstrap';
 import CamposPessoa from '../CamposPessoa/index';
 import Comentario from '../CampoComentario/index';
-import ModalBusca from '../BuscaResponsavel';
+import BuscaResponsavel from '../BuscaResponsavel';
 import Card from '../CardResponsavel';
 import { checkText, checkNumber, checkCamiseta, checkData } from '../../validated';
 import {postCrianca} from '../../services';
 import {desconverterData, converterData} from '../../assist';
 import Snackbar from '../Snackbars';
+import Button from '@material-ui/core/Button';
 
 export default function EditarCrianca(props){
   const {submitEdit, setEdit, setSubmitEdit, dados} = props;
@@ -49,6 +50,14 @@ export default function EditarCrianca(props){
 
   const [comentario, setComentario] = useState(comen);
   const [validatedComentario, setValidatedComentario] = useState(false);
+
+  const [openBusca, setOpenBusca] = useState(false);
+
+  const handleBusca = e => {
+    setOpenBusca(true);
+    e.preventDefault();
+    e.stopPropagation();
+  }
 
   const handleSubmit = e => {
     let flag = false;
@@ -111,10 +120,14 @@ export default function EditarCrianca(props){
 
   return (
     <>
-    <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} msg="Criança cadastrada" type="success"/>
-    <Snackbar open={openAlertError} setOpen={setOpenAlertError} msg="Ocorreu um erro ao cadastrar" type="error"/>
+    {openBusca === true ? 
+    <BuscaResponsavel setDadosResponsavel={setDadosResponsavel} setOpen={setOpenBusca}/>
+    :
+    <>
+    <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} msg="Informações alteradas" type="success"/>
+    <Snackbar open={openAlertError} setOpen={setOpenAlertError} msg="Ocorreu um erro ao salvar" type="error"/>
 
-    <label className="CadastroCrianca__descricao">É obrigatório o preenchimento de campos com * (Asterisco) no título, é opcional quando não possuem o asterisco</label>
+    <label className="EditarCrianca__descricao">É obrigatório o preenchimento de campos com * (Asterisco) no título, é opcional quando não possuem o asterisco</label>
     
     <Form onSubmit={handleSubmit} noValidate  >
       <CamposPessoa nome={nomeCompleto} onChangeNome={onChangeNome} valNome={validatedNomeCompleto} invNome={invalidatedNomeCompleto}
@@ -123,22 +136,28 @@ export default function EditarCrianca(props){
       />
 
       <Form.Group as={Row} controlId="formGroupName" >
-        <Form.Label column sm={2} className="CadastroCrianca__label">
+        <Form.Label column sm={2} className="EditarCrianca__label">
           Responsável *
         </Form.Label>
-        <Col sm={8} className="CadastroCrianca__inputText">
+        <Col sm={8} className="EditarCrianca__inputText">
           <Card modal={false} dados={dadosResponsavel}/>
-          <ModalBusca setDadosResponsavel={setDadosResponsavel} valor="Mudar de responsável"/>
+          <Button
+            onClick={handleBusca} 
+            className="EditarCrianca__button" 
+            variant="contained" 
+            color="primary"
+          >Mudar de responsável
+          </Button>
         </Col>
       </Form.Group>
 
       <Form.Group as={Row} controlId="formGroupCalcado">
-        <Form.Label column sm={2} className="CadastroCrianca__label">
+        <Form.Label column sm={2} className="EditarCrianca__label">
           Número do calçado
         </Form.Label>
-        <Col sm={8} className="CadastroCrianca__inputText">
+        <Col sm={8} className="EditarCrianca__inputText">
           <Form.Control 
-            className="CadastroCrianca__inputNumber"
+            className="EditarCrianca__inputNumber"
             type="text"
             placeholder="Ex: 33"
             value={numCalcado}
@@ -153,12 +172,12 @@ export default function EditarCrianca(props){
       </Form.Group>
 
       <Form.Group as={Row} controlId="formGroupTamanho">
-        <Form.Label column sm={2} className="CadastroCrianca__label">
+        <Form.Label column sm={2} className="EditarCrianca__label">
           Tamanho de camiseta
         </Form.Label>
-        <Col sm={8} className="CadastroCrianca__inputText">
+        <Col sm={8} className="EditarCrianca__inputText">
           <Form.Control 
-            className="CadastroCrianca__inputNumber"
+            className="EditarCrianca__inputNumber"
             type="text"
             placeholder="Ex: 10, 12, GG ..."
             value={tamCamiseta}
@@ -174,12 +193,9 @@ export default function EditarCrianca(props){
 
       <Comentario validatedComentario={validatedComentario} setValidatedComentario={setValidatedComentario} comentario={comentario} setComentario={setComentario}/>
 
-      <Form.Group as={Row}>
-        <Col sm={{ span: 10, offset: 2 }}>
-          <Button type="submit">Cadastrar</Button>
-        </Col>
-      </Form.Group>
     </Form>
+    </>
+    }
     </>
   );
 }
