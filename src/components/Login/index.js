@@ -9,9 +9,12 @@ import ongLogo from '../../assets/ong_logo.jpg';
 import { Redirect } from 'react-router-dom';
 import {login} from '../../services/auth'
 
+
 export default function Login() {
   const [validated, setValidated] = useState(false);
   const [toRedirect, setToRedirect] = useState(false);
+
+  const TOKEN_KEY = "@edifreitas-token";
 
   const [usuario, setUsuario] = useState("");
   const [senha, setSenha] = useState("");
@@ -32,21 +35,23 @@ export default function Login() {
     }
     else{
       var text = '{' +
-        '"usuario": "' + usuario + '",' +
-        '"senha": "' + senha + '"' +  
+        '"username": "' + usuario + '",' +
+        '"password": "' + senha + '"' +  
       '}';
       var obj = JSON.parse(text);
-      if(login(obj) === true){
+
+      login(obj)
+      .then(res => {
+        sessionStorage.setItem(TOKEN_KEY, res.data.token);
         setToRedirect(true);
-      }
-      else{
+      })
+      .catch(res => {
         setToRedirect(false);
-      }
+      });
       event.preventDefault();
       event.stopPropagation();
     }
     setValidated(true);
-
   };
 
 
