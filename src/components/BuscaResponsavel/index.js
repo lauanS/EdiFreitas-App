@@ -1,26 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {Form, Row, Col} from 'react-bootstrap';
 import './index.scss';
 import Card from '../CardResponsavel'
-import {getResponsaveis} from '../../services'
 
 export default function useResponsavelBuscar(props) {
-  const {setDadosResponsavel, setOpen} = props;
+  const {setDadosResponsavel, setOpen, responsaveis} = props;
   
-  const [responsaveis, setResponsaveis] = useState([]);
   const [filteredResponsaveis, setFilteredResponsaveis] = useState(responsaveis);
   const [search, setSearch] = useState('');
   
-  useEffect(() => {
-    getResponsaveis()
-    .then(res => {
-      setResponsaveis(res.data);
-      setFilteredResponsaveis(res.data);
-    })
-    .catch(() => {
-    });
-  }, []);
-
   const updateSearch = e => {
     setFilteredResponsaveis(searchPeople(responsaveis, e.target.value) || []);
     setSearch(e.target.value);
