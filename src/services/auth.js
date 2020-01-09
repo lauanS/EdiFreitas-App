@@ -6,7 +6,7 @@ export const isAuth = () => sessionStorage.getItem(TOKEN_KEY) !== null;
 export const getToken = () => sessionStorage.getItem(TOKEN_KEY);
 
 export const login = (dados) => {
-  return axios.post('http://edi-freitas.herokuapp.com/authenticate', dados);
+  return axios.post('https://edi-freitas.herokuapp.com/authenticate', dados);
 };
 
 export const logout = () => {
