@@ -6,7 +6,31 @@ import {Form, Row, Col} from 'react-bootstrap';
 
 
 export default function Endereco(props){
-  const [invalidatedNumero, setInvalidatedNumero] = useState(false);
+  const {logradouro, setLogradouro} = props;
+  const {validatedLogradouro, setValidatedLogradouro} = props;
+  const {invalidatedLogradouro, setInvalidatedLogradouro} = props;
+
+  const {numero, setNumero} = props;
+  const {validatedNumero, setValidatedNumero} = props;
+  const {invalidatedNumero, setInvalidatedNumero} = props;
+
+  const {cep, setCep} = props;
+  const {validatedCep, setValidatedCep} = props;
+  const {invalidatedCep, setInvalidatedCep} = props;
+
+  const {bairro, setBairro} = props;
+  const {validatedBairro, setValidatedBairro} = props;
+  const {invalidatedBairro, setInvalidatedBairro} = props;
+
+  const {cidade, setCidade} = props;
+  const {validatedCidade, setValidatedCidade} = props;
+  const {invalidatedCidade, setInvalidatedCidade} = props;
+
+  const {estado, setEstado} = props;
+  const {validatedEstado, setValidatedEstado} = props;
+  const {invalidatedEstado, setInvalidatedEstado} = props;
+
+  const { onChangedTextField } = props;
 
   /* Formata o CEP */
   const onChangeCep = e => {
@@ -49,6 +73,10 @@ export default function Endereco(props){
           required
           type="text" 
           placeholder="Rua/Avenidade/Estrada"
+          value={logradouro}
+          onChange={e => onChangedTextField(e.target, setLogradouro, setValidatedLogradouro, setInvalidatedLogradouro)}
+          isValid={validatedLogradouro}
+          isInvalid={invalidatedLogradouro}
           className="cadastro-inputText"
         />
         <Form.Control.Feedback type="invalid">
@@ -66,9 +94,11 @@ export default function Endereco(props){
         <Form.Control 
           required
           className="num-endereco"
-          isInvalid={invalidatedNumero}
           placeholder="Digite apenas números"
           onChange={onChangeNumero}
+          value={numero}
+          isValid={validatedNumero}
+          isInvalid={invalidatedNumero}
         />
         <Form.Control.Feedback type="invalid">
           Campo obrigatório, digite apenas números.
@@ -86,6 +116,9 @@ export default function Endereco(props){
           className="num-endereco"
           placeholder="Digite apenas números"
           onChange={onChangeCep}
+          value={cep}
+          isValid={validatedCep}
+          isInvalid={invalidatedCep}
         />        
       </Col>     
     </Form.Group>
@@ -101,6 +134,10 @@ export default function Endereco(props){
           type="text" 
           placeholder="Ex: Jd. Neptune"
           className="cadastro-inputText"
+          onChange={e => onChangedTextField(e.target, setBairro, setValidatedBairro, setInvalidatedBairro)}
+          value={bairro}
+          isValid={validatedBairro}
+          isInvalid={invalidatedBairro}
         />
         <Form.Control.Feedback type="invalid">
           Campo obrigatório.
@@ -118,6 +155,10 @@ export default function Endereco(props){
           required
           defaultValue="Sorocaba"     
           className="cadastro-inputText"   
+          onChange={e => onChangedTextField(e.target, setCidade, setValidatedCidade, setInvalidatedCidade)}
+          value={cidade}
+          isValid={validatedCidade}
+          isInvalid={invalidatedCidade}
         />
         <Form.Control.Feedback type="invalid">
           Campo obrigatório.
@@ -135,6 +176,10 @@ export default function Endereco(props){
           required
           defaultValue="São Paulo"
           className="cadastro-inputText"
+          onChange={e => onChangedTextField(e.target, setEstado, setValidatedEstado, setInvalidatedEstado)}
+          value={estado}
+          isValid={validatedEstado}
+          isInvalid={invalidatedEstado}
         />
         <Form.Control.Feedback type="invalid">
           Campo obrigatório.

@@ -4,7 +4,7 @@ import './styles.css';
 import Snackbar from '../Snackbars';
 import {Form, Row, Col, Button} from 'react-bootstrap';
 
-import { checkText, checkData, checkCpf, checkTelefone } from '../../validated';
+import { checkText, checkData, checkCpf, checkTelefone, checkTextField } from '../../validated';
 
 import CamposPessoa from '../CamposPessoa/index';
 import Comentario from '../CampoComentario/index';
@@ -81,6 +81,10 @@ export default function CadastroResponsavel(){
 
     setComentario("");
     setValidatedComentario(false);
+
+    setLogradouro("");
+    setValidatedLogradouro(false);
+    setInvalidatedLogradouro(false);
   }
 
   const handleSubmit = e => {
@@ -96,6 +100,10 @@ export default function CadastroResponsavel(){
     }
     if(validatedCpf === false){
       setInvalidatedCpf(true);
+      flag = true;
+    }
+    if(validatedLogradouro === false){
+      setInvalidatedLogradouro(true);
       flag = true;
     }
    
@@ -123,6 +131,7 @@ export default function CadastroResponsavel(){
           '}' +	
         ']'+
       '}';
+      
       var obj = JSON.parse(text);
       
       postResponsavel(obj)
@@ -152,7 +161,16 @@ export default function CadastroResponsavel(){
   }
 
   const onChangeData = e => {
-    checkData(e, dataNascimento, setDataNascimento, setValidatedDataNascimento, setInvalidatedDataNascimento)
+    checkData(e, dataNascimento, setDataNascimento, 
+        setValidatedDataNascimento, setInvalidatedDataNascimento)
+  }
+
+  function onChangeTextField(e, setField, setValidated, setInvalidated) {
+    console.log('Função chamada!!');
+    checkTextField(e, setField, setValidated, setInvalidated);
+    console.log('Logradouro: ', logradouro);
+    console.log('Valido: ', validatedLogradouro);
+    console.log('Invalido: ', invalidatedLogradouro);
   }
 
   return (
@@ -188,7 +206,51 @@ export default function CadastroResponsavel(){
         </Col>
       </Form.Group>
 
-      <Endereco />
+      <Endereco 
+        onChangedTextField={onChangeTextField}
+        logradouro={logradouro}
+        setLogradouro={setLogradouro}
+        validatedLogradouro={validatedLogradouro}
+        setValidatedLogradouro={setValidatedLogradouro}
+        invalidatedLogradouro={invalidatedLogradouro}
+        setInvalidatedLogradouro={setInvalidatedLogradouro}
+
+        bairro={bairro}
+        setBairro={setBairro}
+        validatedBairro={validatedBairro}
+        setValidatedBairro={setValidatedBairro}
+        invalidatedBairro={invalidatedBairro}
+        setInvalidatedBairro={setInvalidatedBairro}
+
+        cidade={cidade}
+        setCidade={setCidade}
+        validatedCidade={validatedCidade}
+        setValidatedCidade={setValidatedCidade}
+        invalidatedCidade={invalidatedCidade}
+        setInvalidatedCidade={setInvalidatedCidade}
+
+        estado={estado}
+        setEstado={setEstado}
+        validatedEstado={validatedEstado}
+        setValidatedEstado={setValidatedEstado}
+        invalidatedEstado={invalidatedEstado}
+        setInvalidatedEstado={setInvalidatedEstado}
+
+        numero={numero}
+        setNumero={setNumero}
+        validatedNumero={validatedNumero}
+        setValidatedNumero={setValidatedNumero}
+        invalidatedNumero={invalidatedNumero}
+        setInvalidatedNumero={setInvalidatedNumero}
+
+        cep={cep}
+        setCep={setCep}
+        validatedCep={validatedCep}
+        setValidatedCep={setValidatedCep}
+        invalidatedCep={invalidatedCep}
+        setInvalidatedCep={setInvalidatedCep}
+        
+      />
 
       <Comentario validatedComentario={validatedComentario} setValidatedComentario={setValidatedComentario}  comentario={comentario} setComentario={setComentario}/>
       
