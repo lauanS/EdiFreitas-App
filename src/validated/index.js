@@ -124,6 +124,7 @@ function checkDataAtual(d, m, a){
     }
   }
 }
+
 export function checkData(e, data, setData, setVali, setInva){
   let valor = e.value;
   let cont = 0;
@@ -341,5 +342,19 @@ export function checkTelefone(e, setTelefone, setVali, setInva){
     setVali(false);
     setInva(true);
   }
+}
+
+// Função genérica para verificar inputs de texto
+export function checkTextField(e, setText, setValidatedText, setInvalidatedText){
+  
+    setText(e.value);
+    if(e.value.length > 0){
+      setValidatedText(true);
+      setInvalidatedText(false);
+    }
+    else{
+      setInvalidatedText(true);
+      setValidatedText(false);
+    }
 }
 
