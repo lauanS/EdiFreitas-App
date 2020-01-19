@@ -8,6 +8,7 @@ import { checkText, checkData, checkCpf, checkTelefone } from '../../validated';
 
 import CamposPessoa from '../CamposPessoa/index';
 import Comentario from '../CampoComentario/index';
+import Endereco from "../Endereco/index";
 import {converterData} from '../../assist'
 import {postResponsavel} from '../../services'
 
@@ -36,6 +37,33 @@ export default function CadastroResponsavel(){
   const [comentario, setComentario] = useState("");
   const [validatedComentario, setValidatedComentario] = useState(false);
 
+  const [logradouro, setLogradouro] = useState("");
+  const [validatedLogradouro, setValidatedLogradouro] = useState(false);
+  const [invalidatedLogradouro, setInvalidatedLogradouro] = useState(false);
+
+  const [numero, setNumero] = useState("");
+  const [validatedNumero, setValidatedNumero] = useState(false);
+  const [invalidatedNumero, setInvalidatedNumero] = useState(false);
+
+  const [cep, setCep] = useState("");
+  const [validatedCep, setValidatedCep] = useState(false);
+  const [invalidatedCep, setInvalidatedCep] = useState(false);
+
+  const [bairro, setBairro] = useState("");
+  const [validatedBairro, setValidatedBairro] = useState(false);
+  const [invalidatedBairro, setInvalidatedBairro] = useState(false);
+
+  const [cidade, setCidade] = useState("");
+  const [validatedCidade, setValidatedCidade] = useState(false);
+  const [invalidatedCidade, setInvalidatedCidade] = useState(false);
+
+  const [estado, setEstado] = useState("");
+  const [validatedEstado, setValidatedEstado] = useState(false);
+  const [invalidatedEstado, setInvalidatedEstado] = useState(false);
+
+
+
+
   const resetFields = () => {
     setNomeCompleto("");
     setValidatedNomeCompleto(false);
@@ -47,7 +75,7 @@ export default function CadastroResponsavel(){
 
     setSexoPessoa("M");
 
-    setCpf("");
+    setCpf(""); 
     setValidatedCpf(false);
     setInvalidatedCpf(false);
 
@@ -82,11 +110,11 @@ export default function CadastroResponsavel(){
         '"comentario" : "' + comentario + '",' +
         '"foto" : "",' +
         '"endereco" : {' +
-          '"logradouro" : "Rua três",' +
-          '"bairro" : "Itapemirim",' +
-          '"cidade" : "Sorocaba",' +
-          '"cep" : "18071536",' +
-          '"numero" : 2' +
+          '"logradouro" : "' + logradouro + '",' +
+          '"bairro" : "' + bairro + '",' +
+          '"cidade" : "' + cidade + '",' +
+          '"cep" : "' + cep + '",' +
+          '"numero" : '+ numero +
         '},' +
         '"contatos" : [' +
           '{' +
@@ -159,6 +187,8 @@ export default function CadastroResponsavel(){
           </Form.Control.Feedback>
         </Col>
       </Form.Group>
+
+      <Endereco />
 
       <Comentario validatedComentario={validatedComentario} setValidatedComentario={setValidatedComentario}  comentario={comentario} setComentario={setComentario}/>
       
