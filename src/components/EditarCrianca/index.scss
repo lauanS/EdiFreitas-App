@@ -1,0 +1,23 @@
+.EditarCrianca{
+  &__button{
+    text-transform: none!important;
+  }
+
+  &__inputText{
+    max-width: 500px;
+  }
+
+  &__label{
+    min-width: 170px;
+    padding-right: 0px;
+  }
+  
+  &__descricao{
+    margin-bottom: 20px;
+  }
+
+  &__inputNumber{
+    width: 150px;
+    max-width: 150px;
+  }
+}

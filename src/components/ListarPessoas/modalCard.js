@@ -1,48 +1,20 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
+import React, {useState} from "react";
+import {Modal} from 'react-bootstrap';
+import ModalHeader from './modalHeader';
+import './modalCard.scss';
+import photo from '../../assets/usuario.png';
+import {idade  } from '../../assist';
 import CardPessoa from './cardPessoa';
-import './styles.scss';
+import InfoResponsavel from './infoResponsavel';
+import InfoCrianca from './infoCrianca';
+import EditarCrianca from '../EditarCrianca/index';
 
+export default function ModalCard(props) {
+  const { dados, crianca, remover, erroRemover, update, erroUpdate, responsaveis, updateList} = props;
 
-const useStyles = makeStyles(theme => ({
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  paper: {
-    backgroundColor: '#F8F9FA',
-    border: '1px solid #30333C',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(1, 2, 1),
-    '&:focus': { outline: 'none',},
-    borderRadius: '5px',
-    width: '40%',
-    minWidth: '300px',
-    display: 'block',
-  },
-  paper1: {
-    backgroundColor: '#F8F9FA',
-    border: '1px solid #30333C',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(1, 2, 1),
-    '&:focus': { outline: 'none',},
-    borderRadius: '5px',
-    width: '250px',
-    display: 'block',
-  },
-  
-}));
-
-export default function TransitionsModal(props) {
-  const { photo, name, idade, dtNasc, crianca, numCalcado } = props;
-
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const [openDeletar, setOpenDeletar] = React.useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [edit, setEdit] = useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -52,86 +24,40 @@ export default function TransitionsModal(props) {
     setOpen(false);
   };
 
-  const handleOpenDeletar = () => {
-    setOpenDeletar(true);
-  };
-
-  const handleCloseDeletar = () => {
-    setOpenDeletar(false);
-  };
-
-  const handleCloseAll = () => {
-    setOpenDeletar(false);
-    setOpen(false);
-  };
-
   return (
     <>
-      <CardPessoa change={handleOpen} photo={photo} name={name} idade={idade}/>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        className={classes.modal}
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={open}>
-          <div className={classes.paper}>
-            <div className="modalPessoa__header">
-              <p className="modalPessoa__link" onClick={handleClose}>Fechar</p>
-              <p className="modalPessoa__link" >Editar</p>
-              <p className="modalPessoa__link-remover" onClick={handleOpenDeletar}>Deletar</p>
-            </div>
-
-            <h5 className="modalPessoa__title">{name}</h5>
-
-            <img src={photo} alt="foto de perfil" className="modalPessoa__img"/>
-            {crianca ?
-            <div className="modalPessoa__info">
-              <p>Idade: {idade} anos</p>
-              <p>Nascimento: {dtNasc}</p>
-              <p>Número calçado: {numCalcado}</p>
-            </div>
-            :
-            <div className="modalPessoa__info">
-              <p>Idade: {idade} anos</p>
-              <p>Nascimento: {dtNasc}</p>
-            </div>
-            }
-            
-
-            
-          </div>
-        </Fade>
-      </Modal>
-
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        className={classes.modal}
-        open={openDeletar}
-        onClose={handleCloseDeletar}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={openDeletar}>
-          <div className={classes.paper1}>
-            <p>Deseja mesmo deletar todas as informações de {name}?</p>
-            <div className="modalPessoa__header">
-              <button className="modalPessoa__buttonCancelar" onClick={handleCloseDeletar}>Cancelar</button>
-              <button className="modalPessoa__buttonDeletar" onClick={handleCloseAll}>Deletar</button>
-            </div>
-          </div>
-        </Fade>
-      </Modal>
+    {edit === true ? 
+      crianca === true ?
+        <EditarCrianca update={update} erroUpdate={erroUpdate} setOpen={setOpen} updateList={updateList} responsaveis={responsaveis} dados={dados} setEdit={setEdit}/>
+        :
+        ''
+    :
+    <>
+    <CardPessoa change={handleOpen} foto={photo} dados={dados} crianca={crianca} idade={idade(dados.dataNascimento)}/>
+    <Modal
+      className="modalCard"
+      show={open}
+      onHide={() => setOpen(false)}
+      dialogClassName="modalCard__dialog"
+      aria-labelledby="example-custom-modal-styling-title"
+      scrollable
+      keyboard={!showAlert}
+      centered
+    >
+      <Modal.Header className="modalCard__header">
+        <ModalHeader updateList={updateList} error={erroRemover} remover={remover} crianca={crianca} edit={edit} setEdit={setEdit} setOpen={setOpen} handleClose={handleClose} showAlert={showAlert} setShowAlert={setShowAlert} dados={dados}/>
+      </Modal.Header>
+      <Modal.Body>
+        {crianca === true ?
+          <InfoCrianca dados={dados}/>
+          :
+          <InfoResponsavel dados={dados}/>
+        }
+      </Modal.Body>
+    </Modal>
+    </>
+    }
     </>
   );
 }
+  

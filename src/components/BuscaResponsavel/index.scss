@@ -1,0 +1,27 @@
+.buscaResponsavel{
+  &__form{
+    width: 100%;
+    margin: 0px!important;
+  }
+
+  &__label{
+    max-width: 160px!important;
+    min-width: 160px;
+    padding-right: 0px;
+  }
+
+  &__inputText{
+    max-width: 400px;
+  }
+
+  &__listarPessoas{
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 500px) {
+  .buscaResponsavel__listarPessoas{
+    justify-content: center;
+  }
+}

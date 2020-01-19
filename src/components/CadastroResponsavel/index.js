@@ -1,19 +1,19 @@
 import React,  { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
-
+import Snackbar from '../Snackbars';
 import {Form, Row, Col, Button} from 'react-bootstrap';
 
 import { checkText, checkData, checkCpf, checkTelefone } from '../../validated';
 
 import CamposPessoa from '../CamposPessoa/index';
 import Comentario from '../CampoComentario/index';
-
-import SweetAlert from 'react-bootstrap-sweetalert';
+import {converterData} from '../../assist'
 import {postResponsavel} from '../../services'
 
 export default function CadastroResponsavel(){
-  const [showAlert, setShowAlert] = useState(false);
+  const [openAlertSuccess, setOpenAlertSuccess] = useState(false);
+  const [openAlertError, setOpenAlertError] = useState(false);
 
   const [nomeCompleto, setNomeCompleto] = useState("");
   const [validatedNomeCompleto, setValidatedNomeCompleto] = useState(false);
@@ -23,7 +23,7 @@ export default function CadastroResponsavel(){
   const [validatedDataNascimento, setValidatedDataNascimento] = useState(false);
   const [invalidatedDataNascimento, setInvalidatedDataNascimento] = useState(false);
 
-  const [sexoPessoa, setSexoPessoa] = useState("Masculino");
+  const [sexoPessoa, setSexoPessoa] = useState("M");
 
   const [cpf, setCpf] = useState("");
   const [validatedCpf, setValidatedCpf] = useState(false);
@@ -34,13 +34,25 @@ export default function CadastroResponsavel(){
   const [invalidatedTelefone, setInvalidatedTelefone] = useState(false);
 
   const [comentario, setComentario] = useState("");
+  const [validatedComentario, setValidatedComentario] = useState(false);
 
-  const converterData = data => {
-    let dia = data.substring(0,2);
-    let mes = data.substring(3,5);
-    let ano = data.substring(6,10);
-    let conv = ano + "-" + mes + "-" + dia;
-    return conv;
+  const resetFields = () => {
+    setNomeCompleto("");
+    setValidatedNomeCompleto(false);
+    setInvalidatedNomeCompleto(false);
+
+    setDataNascimento("");
+    setValidatedDataNascimento(false);
+    setInvalidatedDataNascimento(false);
+
+    setSexoPessoa("M");
+
+    setCpf("");
+    setValidatedCpf(false);
+    setInvalidatedCpf(false);
+
+    setComentario("");
+    setValidatedComentario(false);
   }
 
   const handleSubmit = e => {
@@ -84,19 +96,24 @@ export default function CadastroResponsavel(){
         ']'+
       '}';
       var obj = JSON.parse(text);
-      postResponsavel(obj);
+      
+      postResponsavel(obj)
+      .then(res => {
+        setOpenAlertSuccess(true);
+        setOpenAlertError(false);
+        resetFields();
+      })
+      .catch(res => {
+        setOpenAlertSuccess(false);
+        setOpenAlertError(true);
+      });
       dtNascimento = telefone;
-      setShowAlert(true);
+
     }
     e.preventDefault();
     e.stopPropagation();
 
   };
-
-  const handleConfirm = e => {
-    setShowAlert(false);
-    window.location.reload();
-  }
 
   const onChangeNome = e => {
     checkText(e, setNomeCompleto, setValidatedNomeCompleto, setInvalidatedNomeCompleto);
@@ -112,17 +129,15 @@ export default function CadastroResponsavel(){
 
   return (
     <>
-    <SweetAlert title="Criança cadastrada com sucesso!" show={showAlert} 
-      type='success' onConfirm={handleConfirm}
-      btnSize='sm' confirmBtnText="Entendido"
-    />
+      <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} msg="Responsável cadastrado" type="success"/>
+      <Snackbar open={openAlertError} setOpen={setOpenAlertError} msg="Ocorreu um erro ao cadastrar" type="error"/>
 
     <label className="CadastroResponsavel-Descricao">É obrigatório o preenchimento de campos com * (Asterisco) no título, é opcional quando não possuem o asterisco</label>
 
     <Form onSubmit={handleSubmit} noValidate>
-      <CamposPessoa onChangeNome={onChangeNome} valNome={validatedNomeCompleto} invNome={invalidatedNomeCompleto}
+      <CamposPessoa nome={nomeCompleto} onChangeNome={onChangeNome} valNome={validatedNomeCompleto} invNome={invalidatedNomeCompleto}
           data={dataNascimento} onChangeData={onChangeData} valData={validatedDataNascimento} invData={invalidatedDataNascimento}
-          onChangeSexo={onChangeSexo}
+          sexo={sexoPessoa} onChangeSexo={onChangeSexo}
       />
 
       <Form.Group as={Row} controlId="formGroupCpf">
@@ -145,7 +160,7 @@ export default function CadastroResponsavel(){
         </Col>
       </Form.Group>
 
-      <Comentario setComentario={setComentario}/>
+      <Comentario validatedComentario={validatedComentario} setValidatedComentario={setValidatedComentario}  comentario={comentario} setComentario={setComentario}/>
       
       <Form.Group as={Row} controlId="formGroupTelefone">
         <Form.Label column sm={2} className="CadastroResponsavel-label">

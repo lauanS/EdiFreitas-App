@@ -1,12 +1,11 @@
 import React from "react";
-import './styles.scss';
+import './index.scss';
 import ModalCard from './modalCard';
-import foto from '../../assets/usuario.png';
-
-import {getPeople} from '../../services'
+import axios from "axios";
+import {getResponsaveis, getCriancas} from '../../services'
 import {Form, Row, Col} from 'react-bootstrap';
-import { checkTextForClass } from '../../validated';
 import Loader from '../Loader';
+import Snackbar from '../Snackbars';
 
 export default class extends React.Component {
   constructor(props) {
@@ -16,31 +15,44 @@ export default class extends React.Component {
       search: '',
       isLoading: true,
       errors: false,
-      valNome: false,
-      invNome: false,
-      establishments: [],
+      alertSuccessDeletar: false,
+      alertErrorDeletar: false,
+      alertSuccessUpdate: false,
+      alertErrorUpdate: false, 
+      responsaveis: [],
+      criancas: [],
     };
   }
 
   componentDidMount() {
     setTimeout(() => {
-      getPeople()
-        .then(res => {
-          this.setState({ ...this.state, establishments: res.data, isLoading: false});
-        })
-        .catch(() =>
-          this.setState({ ...this.state, errors: true, isLoading: false })
-        );
+      axios.all([
+      getResponsaveis(),
+      getCriancas()
+      ]).then(axios.spread((responsavelRes, criancaRes) => {
+        this.setState({ ...this.state, responsaveis: responsavelRes.data, criancas: criancaRes.data, isLoading: false});
+      }))
+      .catch(() => {
+        this.setState({ ...this.state, errors: true, isLoading: false })
+      });
     }, 2000);
   }
 
-  updateSearch(e) {
-    e.preventDefault();
-    checkTextForClass(e.target, this.setSearch.bind(this));
+  updateList() {
+    axios.all([
+      getResponsaveis(),
+      getCriancas()
+      ]).then(axios.spread((responsavelRes, criancaRes) => {
+        this.setState({ ...this.state, responsaveis: responsavelRes.data, criancas: criancaRes.data, isLoading: false});
+      }))
+      .catch(() => {
+        this.setState({ ...this.state, errors: true, isLoading: false })
+    });
   }
 
-  setSearch(nome, val, inv){
-    this.setState({ ...this.state, search: nome, valNome: val, invNome: inv});
+  updateSearch(e) {
+    this.setState({ ...this.state, search: e.target.value});
+    e.preventDefault();
   }
 
   searchPeople(list, search) {
@@ -48,52 +60,69 @@ export default class extends React.Component {
       return list;
 		}
 
-    return Array.isArray(list)
-			? list.filter(
-				person =>
-          person.nome.toLowerCase().indexOf(search.toLowerCase()) !== -1 
-			)
+    return Array.isArray(list) ? list.filter(person =>
+      person.nome.toLowerCase().indexOf(search.toLowerCase()) !== -1 )
       : [];
   }
 
-  idade(data) {
-    let dia_aniversario = data.substring(8,10);
-    let mes_aniversario = data.substring(5,7);
-    let ano_aniversario = data.substring(0,4);
+  remover(id){
+    this.setState({ ...this.state, alertSuccessDeletar: true,
+      alertErrorDeletar: false});
+  }
 
-    let d = new Date();
-    let ano_atual = d.getFullYear();
-    let mes_atual = d.getMonth() + 1;
-    let dia_atual = d.getDate();
+  erroRemover(){
+    this.setState({ ...this.state, alertSuccessDeletar: false,
+      alertErrorDeletar: true }); 
+  }
 
-    ano_aniversario = +ano_aniversario;
-    mes_aniversario = +mes_aniversario;
-    dia_aniversario = +dia_aniversario;
+  update(){
+    this.setState({ ...this.state, alertSuccessUpdate: true,
+      alertErrorUpdate: false});
+  }
 
-    let quantos_anos = ano_atual - ano_aniversario;
+  erroUpdate(){
+    this.setState({ ...this.state, alertSuccessUpdate: false,
+      alertErrorUpdate: true }); 
+  }
 
-    if ((mes_atual < mes_aniversario) || (mes_atual === mes_aniversario && dia_atual < dia_aniversario)) {
-        quantos_anos--;
-    }
+  setAlertSuccessDeletar(b){
+    this.setState({ ...this.state, alertSuccessDeletar: b }); 
+  }
 
-    return quantos_anos < 0 ? 0 : quantos_anos;
+  setAlertErrorDeletar(b){
+    this.setState({ ...this.state, alertErrorDeletar: b }); 
+  }
+
+  setAlertSuccessUpdate(b){
+    this.setState({ ...this.state, alertSuccessUpdate: b }); 
+  }
+
+  setAlertErrorUpdate(b){
+    this.setState({ ...this.state, alertErrorUpdate: b }); 
   }
 
   render(){
-    const { establishments, isLoading, errors, search } = this.state;
-    const filteredList = this.searchPeople(establishments, search) || [];
+    const { responsaveis, criancas, isLoading, errors, search } = this.state;
+    const {alertSuccessDeletar, alertErrorDeletar, alertSuccessUpdate, alertErrorUpdate} = this.state;
+    const filteredResponsaveis = this.searchPeople(responsaveis, search) || [];
+    const filteredCriancas = this.searchPeople(criancas, search) || [];
 
     return (
       <>
-      {isLoading ? <Loader type="dots" /> : errors ? "Houve algum problema" :
+      <Snackbar open={alertSuccessDeletar} setOpen={this.setAlertSuccessDeletar.bind(this)} msg="Informações deletadas" type="delete"/>
+      <Snackbar open={alertErrorDeletar} setOpen={this.setAlertErrorDeletar.bind(this)} msg="Ocorreu um erro ao deletar" type="error"/>
       
-      (<>
+      <Snackbar open={alertSuccessUpdate} setOpen={this.setAlertSuccessUpdate.bind(this)} msg="Informações atualizadas" type="delete"/>
+      <Snackbar open={alertErrorUpdate} setOpen={this.setAlertErrorUpdate.bind(this)} msg="Ocorreu um erro ao atualizar" type="error"/>
+
+      {isLoading ? <Loader type="dots" /> : errors ? "Houve algum problema" :
+      <>
       <Form autoComplete="off">
         <Form.Group as={Row} controlId="formGroupName">
-          <Form.Label column sm={2} className="ListarPessoa-label">
+          <Form.Label column sm={2} className="listarPessoas__label">
             Nome da pessoa
           </Form.Label>
-          <Col sm={8} className="ListarPessoa-inputText">
+          <Col sm={8} className="listarPessoas__inputText">
             <Form.Control 
               type="text" 
               placeholder="Ex: Leonardo dos Santos Sampaio" 
@@ -104,22 +133,46 @@ export default class extends React.Component {
         </Form.Group>
       </Form>
       
-
-      {filteredList.length === 0 ? <p>Nenhuma pessoa encontrada com o nome: "{search}"</p> :
-      <>
-      {search === '' ? <p>Total de {filteredList.length} resultados</p>: <p>Total de {filteredList.length} resultados para "{search}"</p>}
-      <div className="resultadosPessoas"> 
-        {filteredList.length > 0 ? filteredList.map(pessoa =>
-          <ModalCard 
-            key={pessoa.id} 
-            crianca={false} 
-            dtNasc={pessoa.dataNascimento} 
-            photo={foto} name={pessoa.nome} 
-            idade={this.idade(pessoa.dataNascimento)}/>
-        ) : 'Nada encontrado'}
-      </div> </>}
+      {filteredResponsaveis.length === 0 && filteredCriancas.length === 0 ? 
+        <p>Nenhuma pessoa encontrada com o nome: "{search}"</p> 
+        :
+        <>
+        {search === '' ?
+          <p>Total de {filteredResponsaveis.length + filteredCriancas.length} resultados</p>:
+          <p>Total de {filteredResponsaveis.length + filteredCriancas.length}  resultados para "{search}"</p>
+        }
+        
+        <div className="listarPessoas"> 
+          {filteredResponsaveis.length > 0 ? filteredResponsaveis.map(pessoa =>
+            <ModalCard 
+              updateList={this.updateList.bind(this)} 
+              dados={pessoa} 
+              key={"R" + pessoa.id} 
+              crianca={false} 
+              remover={this.remover.bind(this)} 
+              erroRemover={this.erroRemover.bind(this)}
+              update={this.update.bind(this)}
+              erroUpdate={this.erroUpdate.bind(this)}  
+            />
+          ) : ''}
+          {filteredCriancas.length > 0 ? filteredCriancas.map(pessoa =>
+            <ModalCard 
+              updateList={this.updateList.bind(this)} 
+              responsaveis={responsaveis} 
+              dados={pessoa} 
+              key={"C" + pessoa.id} 
+              crianca={true} 
+              remover={this.remover.bind(this)} 
+              erroRemover={this.erroRemover.bind(this)}
+              update={this.update.bind(this)}
+              erroUpdate={this.erroUpdate.bind(this)} 
+            />
+          ) : ''}
+        </div>
+        </>
+      }
       </>
-      )}
+      }
       </>
     );
   }

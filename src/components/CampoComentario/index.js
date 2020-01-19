@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
 
@@ -6,17 +6,16 @@ import {Form, Row, Col} from 'react-bootstrap';
 
 
 export default function CampoComentario(props){
-  const {setComentario} = props;
-  const [valited, setValidated] = useState(false);
+  const {setComentario, comentario, validatedComentario, setValidatedComentario} = props;
 
   const onChange = e => {
-   setComentario(e.value);
-   if(e.value.length > 0){
-     setValidated(true);
-   }
-   else{
-     setValidated(false);
-   }
+    setComentario(e.value);
+    if(e.value.length > 0){
+      setValidatedComentario(true);
+    }
+    else{
+      setValidatedComentario(false);
+    }
   }
 
   return (
@@ -28,8 +27,9 @@ export default function CampoComentario(props){
         <Form.Control 
           onChange={e => onChange(e.target)}
           as="textarea" 
-          isValid={valited}
+          isValid={validatedComentario}
           rows="3" 
+          value={comentario}
           placeholder="Algum comentário sobre a pessoa"/>
       </Col>
     </Form.Group>

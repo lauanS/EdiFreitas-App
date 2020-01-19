@@ -68,7 +68,7 @@ function StyledRadio(props) {
 }
 
 export default function CamposPessoa(props){
-  const { onChangeNome, valNome, invNome, data, onChangeData, valData, invData, onChangeSexo } = props;
+  const { nome, onChangeNome, valNome, invNome, data, onChangeData, valData, invData, sexo, onChangeSexo } = props;
 
   return (
     <>
@@ -82,6 +82,7 @@ export default function CamposPessoa(props){
           type="text" 
           placeholder="Ex: Leonardo dos Santos Sampaio" 
           onChange={e => onChangeNome(e.target)}
+          value={nome}
           isValid={valNome}
           isInvalid={invNome}
           />
@@ -117,10 +118,9 @@ export default function CamposPessoa(props){
         Sexo *
       </Form.Label>
       <Col sm={8} className="CampoPessoa-inputText" >
-        <RadioGroup className="CampoPessoa-inputSexo" defaultValue="Masculino" name="customized-radios" onChange={onChangeSexo}>
-          <FormControlLabel className="label-radio" value="Masculino" control={<StyledRadio />} label="Masculino" />
-          <FormControlLabel className="label-radio" value="Feminino" control={<StyledRadio />} label="Feminino" />
-          <FormControlLabel className="label-radio" value="Outro" control={<StyledRadio />} label="Outro" />
+        <RadioGroup className="CampoPessoa-inputSexo" defaultValue={sexo} name="customized-radios" onChange={onChangeSexo}>
+          <FormControlLabel className="label-radio" value="M" control={<StyledRadio />} label="Masculino" />
+          <FormControlLabel className="label-radio" value="F" control={<StyledRadio />} label="Feminino" />
         </RadioGroup>
       </Col>
     </Form.Group>

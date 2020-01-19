@@ -1,17 +1,19 @@
 import React,  { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles.css';
-
+import './index.scss';
 import {Form, Row, Col, Button} from 'react-bootstrap';
 import CamposPessoa from '../CamposPessoa/index';
 import Comentario from '../CampoComentario/index';
-
+import ModalBusca from '../ModalBuscaResponsavel';
+import Card from '../CardResponsavel';
 import { checkText, checkNumber, checkCamiseta, checkData } from '../../validated';
-
-import SweetAlert from 'react-bootstrap-sweetalert';
+import {postCrianca} from '../../services'
+import {converterData} from '../../assist';
+import Snackbar from '../Snackbars';
 
 export default function CadastroCrianca(){
-  const [showAlert, setShowAlert] = useState(false);
+  const [openAlertSuccess, setOpenAlertSuccess] = useState(false);
+  const [openAlertError, setOpenAlertError] = useState(false);
 
   const [nomeCompleto, setNomeCompleto] = useState("");
   const [validatedNomeCompleto, setValidatedNomeCompleto] = useState(false);
@@ -21,13 +23,12 @@ export default function CadastroCrianca(){
   const [validatedDataNascimento, setValidatedDataNascimento] = useState(false);
   const [invalidatedDataNascimento, setInvalidatedDataNascimento] = useState(false);
 
-  const [sexoPessoa, setSexoPessoa] = useState("Masculino");
+  const [sexoPessoa, setSexoPessoa] = useState("M");
 
-  const [nomeResponsavel, setNomeResponsavel] = useState("");
-  const [validatedNomeResponsavel, setValidatedNomeResponsavel] = useState(false);
-  const [invalidatedNomeResponsavel, setInvalidatedNomeResponsavel] = useState(false);
-  
-  const [numCalcado, setNumCalcado] = useState(0);
+  const [dadosResponsavel, setDadosResponsavel] = useState({});
+  const [invalidatedDadosResponsavel, setInvalidatedDadosResponsavel] = useState(false);
+
+  const [numCalcado, setNumCalcado] = useState("");
   const [validatedNumCalcado, setValidatedNumCalcado] = useState(false);
   const [invalidatedNumCalcado, setInvalidatedNumCalcado] = useState(false);
 
@@ -36,9 +37,35 @@ export default function CadastroCrianca(){
   const [invalidatedTamCamiseta, setInvalidatedTamCamiseta] = useState(false);
 
   const [comentario, setComentario] = useState("");
+  const [validatedComentario, setValidatedComentario] = useState(false);
+
+  const resetFields = () => {
+    setNomeCompleto("");
+    setValidatedNomeCompleto(false);
+    setInvalidatedNomeCompleto(false);
+
+    setDataNascimento('');
+    setValidatedDataNascimento(false);
+    setInvalidatedDataNascimento(false);
+
+    setSexoPessoa("M");
+
+    setDadosResponsavel({});
+    setInvalidatedDadosResponsavel(false);
+
+    setNumCalcado("");
+    setValidatedNumCalcado(false);
+    setInvalidatedNumCalcado(false);
+
+    setTamCamiseta("");
+    setValidatedTamCamiseta(false);
+    setInvalidatedTamCamiseta(false);
+
+    setComentario("");
+    setValidatedComentario(false);
+  }
 
   const handleSubmit = e => {
-
     let flag = false;
 
     if(validatedNomeCompleto === false){
@@ -49,8 +76,8 @@ export default function CadastroCrianca(){
       setInvalidatedDataNascimento(true);
       flag = true;
     }
-    if(validatedNomeResponsavel === false){
-      setInvalidatedNomeResponsavel(true);
+    if(dadosResponsavel.id === undefined){
+      setInvalidatedDadosResponsavel(true);
       flag = true;
     }
     if(invalidatedNumCalcado === true){
@@ -61,24 +88,34 @@ export default function CadastroCrianca(){
     }
    
     if(flag === false){
-      console.log(nomeCompleto);
-      console.log(dataNascimento);
-      console.log(sexoPessoa);
-      console.log(nomeResponsavel);
-      console.log(numCalcado);
-      console.log(tamCamiseta);
-      console.log(comentario);
+      let dtNascimento = converterData(dataNascimento);
 
-      setShowAlert(true);
+      var text = '{' +
+        '"nome": "' + nomeCompleto + '",' +
+        '"dataNascimento": "' + dtNascimento + '",' +
+        '"sexo": "' + sexoPessoa + '",' +
+        '"idResponsavel": "' + dadosResponsavel.id + '",' +
+        '"nCalcado": "' + numCalcado + '",' +
+        '"tamRoupa": "' + tamCamiseta + '",' + 
+        '"comentario" : "' + comentario + '",' +
+        '"foto" :  "https://www.gazetadopovo.com.br/viver-bem/wp-content/uploads/2015/12/smith-prd-meth01-tom_rpc_intra3-600x457.jpg"' +
+      '}';
+
+      var obj = JSON.parse(text);
+      postCrianca(obj).then(res => {
+        setOpenAlertSuccess(true);
+        setOpenAlertError(false);
+        resetFields();
+      })
+      .catch(res => {
+        setOpenAlertSuccess(false);
+        setOpenAlertError(true);
+      });
+
     }
     e.preventDefault();
     e.stopPropagation();
   };
-
-  const handleConfirm = e => {
-    setShowAlert(false);
-    window.location.reload();
-  }
 
   const onChangeNome = e => {
     checkText(e, setNomeCompleto, setValidatedNomeCompleto, setInvalidatedNomeCompleto);
@@ -94,47 +131,50 @@ export default function CadastroCrianca(){
 
   return (
     <>
-    <SweetAlert title="Criança cadastrada com sucesso!" show={showAlert} 
-      type='success' onConfirm={handleConfirm}
-      btnSize='sm' confirmBtnText="Entendido"
-    />
+    <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} msg="Criança cadastrada" type="success"/>
+    <Snackbar open={openAlertError} setOpen={setOpenAlertError} msg="Ocorreu um erro ao cadastrar" type="error"/>
 
-    <label className="CadastroCriaca-Descricao">É obrigatório o preenchimento de campos com * (Asterisco) no título, é opcional quando não possuem o asterisco</label>
+    <label className="CadastroCrianca__descricao">É obrigatório o preenchimento de campos com * (Asterisco) no título, é opcional quando não possuem o asterisco</label>
     
     <Form onSubmit={handleSubmit} noValidate  >
-      <CamposPessoa onChangeNome={onChangeNome} valNome={validatedNomeCompleto} invNome={invalidatedNomeCompleto}
+      <CamposPessoa nome={nomeCompleto} onChangeNome={onChangeNome} valNome={validatedNomeCompleto} invNome={invalidatedNomeCompleto}
           data={dataNascimento} onChangeData={onChangeData} valData={validatedDataNascimento} invData={invalidatedDataNascimento}
-          onChangeSexo={onChangeSexo}
+          sexo={sexoPessoa} onChangeSexo={onChangeSexo}
       />
 
       <Form.Group as={Row} controlId="formGroupName" >
-        <Form.Label column sm={2} className="CadastroCrianca-label">
-          Nome do responsável *
+        <Form.Label column sm={2} className="CadastroCrianca__label">
+          Responsável *
         </Form.Label>
-        <Col sm={8} className="CadastroCrianca-inputText">
-          <Form.Control 
-            required 
-            type="text" 
-            onChange={e => checkText(e.target, setNomeResponsavel, setValidatedNomeResponsavel, setInvalidatedNomeResponsavel)}
-            isValid={validatedNomeResponsavel}
-            isInvalid={invalidatedNomeResponsavel}
-          />
-          <Form.Control.Feedback type="invalid">
-            Preencha o nome completo do responsável (Apenas letras).
-          </Form.Control.Feedback>
+        <Col sm={8} className="CadastroCrianca__inputText">
+          {dadosResponsavel.id === undefined ?
+          <>
+          <ModalBusca setDadosResponsavel={setDadosResponsavel} valor="Selecionar o responsável"/>
+          {invalidatedDadosResponsavel ? 
+          <div className="CadastroCrianca__error">Campo obrigatório, selecione o responsável desta criança</div>
+          :
+          ''}
+          </>
+            :
+          <>
+          <Card modal={false} dados={dadosResponsavel}/>
+          <ModalBusca setDadosResponsavel={setDadosResponsavel} valor="Mudar de responsável"/>
+          </>  
+          }
         </Col>
       </Form.Group>
 
       <Form.Group as={Row} controlId="formGroupCalcado">
-        <Form.Label column sm={2} className="CadastroCrianca-label">
+        <Form.Label column sm={2} className="CadastroCrianca__label">
           Número do calçado
         </Form.Label>
-        <Col sm={8} className="CadastroCrianca-inputText">
+        <Col sm={8} className="CadastroCrianca__inputText">
           <Form.Control 
-            className="CadastroCrianca-inputNumber"
+            className="CadastroCrianca__inputNumber"
             type="text"
             placeholder="Ex: 33"
             onChange={e => checkNumber(e.target, setNumCalcado, setValidatedNumCalcado, setInvalidatedNumCalcado)}
+            value={numCalcado}
             isValid={validatedNumCalcado}
             isInvalid={invalidatedNumCalcado}
           />
@@ -145,12 +185,12 @@ export default function CadastroCrianca(){
       </Form.Group>
 
       <Form.Group as={Row} controlId="formGroupTamanho">
-        <Form.Label column sm={2} className="CadastroCrianca-label">
+        <Form.Label column sm={2} className="CadastroCrianca__label">
           Tamanho de camiseta
         </Form.Label>
-        <Col sm={8} className="CadastroCrianca-inputText">
+        <Col sm={8} className="CadastroCrianca__inputText">
           <Form.Control 
-            className="CadastroCrianca-inputNumber"
+            className="CadastroCrianca__inputNumber"
             type="text"
             placeholder="Ex: 10, 12, GG ..."
             onChange={e => checkCamiseta(e.target, setTamCamiseta, setValidatedTamCamiseta, setInvalidatedTamCamiseta)}
@@ -163,7 +203,7 @@ export default function CadastroCrianca(){
         </Col>
       </Form.Group>
 
-      <Comentario setComentario={setComentario}/>
+      <Comentario validatedComentario={validatedComentario} setValidatedComentario={setValidatedComentario} comentario={comentario} setComentario={setComentario}/>
 
       <Form.Group as={Row}>
         <Col sm={{ span: 10, offset: 2 }}>
