@@ -53,9 +53,18 @@ export default function Endereco(props){
       value = value.substring(0,9);
     }
 
+    // Regras para o CEP ser válido
+    const sizeIsCorrect = (value.length === 9);
+    const onlyNumbers = value.match(re);
+    const IsEmpty = (value.length === 0);
+
     // Verificar se o tamanho e o formato do CEP está correto 
-    if (value.length === 9 && value.match(re)){
+    if (sizeIsCorrect && onlyNumbers){
       setValidatedCep(true);
+      setInvalidatedCep(false);
+    }
+    else if(IsEmpty){
+      setValidatedCep(false);
       setInvalidatedCep(false);
     }
     else{
