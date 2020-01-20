@@ -278,24 +278,31 @@ export default function CadastroResponsavel(){
 
       <Comentario validatedComentario={validatedComentario} setValidatedComentario={setValidatedComentario}  comentario={comentario} setComentario={setComentario}/>
       
-      { 
-        telefones.map((_, index) => (
-            <Contato key={index} id={index} contacts={telefones} setContacts={setTelefones} type="telefone"/>
-          ))
-      }
-      <Button onClick={addNewPhone}>Novo telefone</Button>
+      <Form.Group>
+        { 
+          telefones.map((_, index) => (
+              <Contato key={index} id={index} contacts={telefones} setContacts={setTelefones} type="telefone"/>
+            ))
+        }
+        <Button as={Row} variant="link" onClick={addNewPhone}>Novo telefone</Button>
 
-      { 
-        emails.map((_, index) => (
-            <Contato key={index} id={index} contacts={emails} setContacts={setEmails} type="email"/>
-          ))
-      }
-      <Button onClick={addNewEmail}>Novo e-mail</Button>
+      </Form.Group>
+
+      <Form.Group>
+        { 
+          emails.map((_, index) => (
+              <Contato key={index} id={index} contacts={emails} setContacts={setEmails} type="email"/>
+            ))
+        }
+        <Button as={Row} variant="link" onClick={addNewEmail}>Novo e-mail</Button>
+      </Form.Group>
+  
+      
               
 
       <Form.Group as={Row}>
         <Col sm={{ span: 10, offset: 2 }}>
-          <Button type="submit">Cadastrar</Button>
+          <Button type="submit" >Cadastrar</Button>
         </Col>
       </Form.Group>
 

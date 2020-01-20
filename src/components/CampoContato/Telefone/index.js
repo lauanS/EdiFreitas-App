@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {Form, Col, Row, InputGroup} from 'react-bootstrap';
 
-import PhoneIcon from '@material-ui/icons/Phone';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import { IconButton } from '@material-ui/core';
@@ -55,25 +54,32 @@ export default function Telefone(props){
   }
 
   function removeContact(id, contacts, setContacts){
+    if(contacts.length === 1) {
+      return;
+    }
     // Atualiza o valor
     const newContacts = contacts.filter(( _ , index) => id !== index);
     setContacts(newContacts);
 
   }
 
+  function labelText(){
+    if(id === 0){
+      return `Telefone`;
+    }
+    else{
+      return `Telefone ${id + 1}`;;
+    }
+  }
+
   return(
     <Form.Group as={Row} controlId="formGroupTelefone">
       
       <Form.Label column sm={2} className="cadastro-label">
-        Telefone {id}
+      { labelText() }
       </Form.Label>
       <Col sm={5} >
         <InputGroup>
-          <InputGroup.Prepend>
-            <InputGroup.Text id="inputGroupPrepend"> 
-              <PhoneIcon />
-            </InputGroup.Text>
-          </InputGroup.Prepend>
           <Form.Control 
             className="cadastro-inputText"
             required
@@ -84,18 +90,21 @@ export default function Telefone(props){
             isValid={validatedContact}
             isInvalid={invalidatedContact}
           />
+          <InputGroup.Append>
+            <InputGroup.Text id="inputGroupAppend"  className="cadastro-inputGroup"> 
+              <IconButton 
+                aria-label="Apagar o telefone" 
+                size="small"
+                onClick={() => removeContact(id, contacts, setContacts)}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </InputGroup.Text>
+          </InputGroup.Append>
           <Form.Control.Feedback type="invalid">
             Digite um número de telefone celular (11 dígitos)
           </Form.Control.Feedback>
         </InputGroup>
-      </Col>
-      <Col>
-        <IconButton 
-          aria-label="delete" 
-          onClick={() => removeContact(id, contacts, setContacts)}
-        >
-          <DeleteIcon />
-        </IconButton>
       </Col>
     </Form.Group> 
   );

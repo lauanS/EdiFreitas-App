@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {Form, Col, Row, InputGroup} from 'react-bootstrap';
 
-import EmailIcon from '@material-ui/icons/Email';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import { IconButton } from '@material-ui/core';
@@ -56,24 +55,31 @@ export default function Telefone(props){
   }
 
   function removeContact(id, contacts, setContacts){
+    if(contacts.length === 1) {
+      return;
+    }
     // Atualiza o valor
     const newContacts = contacts.filter(( _ , index) => id !== index);
     setContacts(newContacts);
+  }
+
+  function labelText(){
+    if(id === 0){
+      return `Email`;
+    }
+    else{
+      return `Email ${id + 1}`;;
+    }
   }
 
   return(
     <Form.Group as={Row} controlId="formGroupEmail">
       
       <Form.Label column sm={2} className="cadastro-label">
-        E-mail {id}
+        {labelText()}
       </Form.Label>
       <Col sm={5} >
         <InputGroup>
-          <InputGroup.Prepend>
-            <InputGroup.Text id="inputGroupPrepend"> 
-              <EmailIcon />
-            </InputGroup.Text>
-          </InputGroup.Prepend>
           <Form.Control 
             className="cadastro-inputText"
             required
@@ -84,18 +90,21 @@ export default function Telefone(props){
             isValid={validatedContact}
             isInvalid={invalidatedContact}
           />
+           <InputGroup.Append>
+            <InputGroup.Text id="inputGroupAppend"  className="cadastro-inputGroup"> 
+              <IconButton 
+                aria-label="Apagar o email" 
+                size="small"
+                onClick={() => removeContact(id, contacts, setContacts)}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </InputGroup.Text>
+          </InputGroup.Append>
           <Form.Control.Feedback type="invalid">
             Digite um e-mail válido
           </Form.Control.Feedback>
         </InputGroup>
-      </Col>
-      <Col>
-        <IconButton 
-          aria-label="delete" 
-          onClick={() => removeContact(id, contacts, setContacts)}
-        >
-          <DeleteIcon />
-        </IconButton>
       </Col>
     </Form.Group> 
   );
