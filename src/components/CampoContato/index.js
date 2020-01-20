@@ -1,87 +1,55 @@
-import React,  { useState } from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import EmailIcon from '@material-ui/icons/Email';
-import PhoneIcon from '@material-ui/icons/Phone';
+import './styles.scss';
 
-import './styles.css';
+import {Form, Col, Row} from 'react-bootstrap';
 
-import {Form, Col, InputGroup} from 'react-bootstrap';
+export default function CampoContato(props){
 
-export default function CampoContato(){
+  const { id, valor, contacts, setContacts } = props;
 
-  const [typeContact, setType] = useState('E-mail');
 
-  const handleChange = e => {
-    let {value} = e.target;
-    setType(value);
-  }
+  function handleChangeContact(e, contacts, setContacts){
+    let count = 0;
+    const newContacts = contacts.map(contact => {      
+      if(id === count){
+        count++;
+        return e.value;
+      }
+      else{
+        count++;
+        return contact;
+      }
 
-  const displayContactField = type => {
-    if(typeContact === "Telefone"){
-      return contactFieldPhone();
-    }
-    return contactFieldEmail();
-  }
+    });
 
-  const contactFieldEmail = () => {
-    return (
-      <InputGroup>
-        <InputGroup.Prepend>
-          <InputGroup.Text id="inputGroupPrepend"> 
-          <EmailIcon />
-          </InputGroup.Text>
-        </InputGroup.Prepend>
-        <Form.Control 
-          required 
-          type="email" 
-          placeholder="Ex: seu.email@exemplo.com" />
-        <Form.Control.Feedback type="invalid">
-          E-mail inválido.
-        </Form.Control.Feedback>    
-      </InputGroup>
-    )
-  }
+      
+    setContacts(newContacts);
 
-  const contactFieldPhone = () => {
-    return (
-      <InputGroup>
-        <InputGroup.Prepend>
-          <InputGroup.Text id="inputGroupPrepend"> 
-            <PhoneIcon />
-          </InputGroup.Text>
-        </InputGroup.Prepend>
-        <Form.Control 
-          required 
-          type="text" 
-          placeholder="Ex: (99) 99999-9999" />
-        <Form.Control.Feedback type="invalid">
-          Telefone inválido.
-        </Form.Control.Feedback>    
-      </InputGroup>
-    );
   }
 
   return (
   <>
-    <Form.Row>
-      <Form.Group as={Col} controlId="fromGroupTypeContact">
-        <Form.Label>Novo contato: </Form.Label>
-        <Form.Control as="select" value={typeContact} onChange={handleChange}>
-          <option>Telefone</option>
-          <option>E-mail</option>
-        </Form.Control>  
-      </Form.Group>
-
-      <Form.Group as={Col} sm={10} controlId="formGroupContact">
-        <Form.Label>
-          {typeContact}
-        </Form.Label>
-        { displayContactField('') } 
-      </Form.Group> 
-
-    </Form.Row>
-    
+    <Form.Group as={Row} controlId="formGroupTelefone">
+      <Form.Label column sm={2} className="CadastroResponsavel-label">
+        Contato {id}
+      </Form.Label>
+      <Col sm={5} className="cadastro-inputText">
+        <Form.Control 
+          required
+          type="text" 
+          placeholder="E-mail ou telefone"
+          onChange={e => handleChangeContact(e.target, contacts, setContacts)}
+          value={valor}
+          isValid={e => {}}
+          isInvalid={e => {}}
+        />
+        <Form.Control.Feedback type="invalid">
+          Digite um número de telefone celular (9 dígitos) ou um e-mail
+        </Form.Control.Feedback>
+      </Col>
+    </Form.Group> 
   </>
   );
 }

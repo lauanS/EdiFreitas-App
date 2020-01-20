@@ -8,7 +8,9 @@ import { checkText, checkData, checkCpf, checkTelefone, checkTextField } from '.
 
 import CamposPessoa from '../CamposPessoa/index';
 import Comentario from '../CampoComentario/index';
-import Endereco from "../Endereco/index";
+import Endereco from '../Endereco/index';
+import Contato from '../CampoContato/index'
+
 import {converterData} from '../../assist';
 import {postResponsavel} from '../../services';
 
@@ -56,6 +58,8 @@ export default function CadastroResponsavel(){
   const [cidade, setCidade] = useState("");
   const [validatedCidade, setValidatedCidade] = useState(false);
   const [invalidatedCidade, setInvalidatedCidade] = useState(false);
+
+  const [contacts, setContacts] = useState(['']);
 
 
   const resetFields = () => {
@@ -188,6 +192,10 @@ export default function CadastroResponsavel(){
     checkTextField(e, setText, setValidated, setInvalidated);
   }
 
+  const addNewContact = () => {
+    setContacts([...contacts, ''])
+  }
+
   return (
     <>
       <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} msg="Responsável cadastrado" type="success"/>
@@ -288,6 +296,16 @@ export default function CadastroResponsavel(){
           </Form.Control.Feedback>
         </Col>
       </Form.Group>
+
+
+      { 
+        contacts.map((contact, index) => (
+            <Contato key={index} id={index} contacts={contacts} setContacts={setContacts} valor={contact} />
+          ))
+      }
+
+      <Button onClick={addNewContact}>Novo contato</Button>
+              
 
       <Form.Group as={Row}>
         <Col sm={{ span: 10, offset: 2 }}>
