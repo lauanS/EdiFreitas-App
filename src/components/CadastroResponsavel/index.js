@@ -55,7 +55,8 @@ export default function CadastroResponsavel(){
   const [validatedCidade, setValidatedCidade] = useState(false);
   const [invalidatedCidade, setInvalidatedCidade] = useState(false);
 
-  const [contacts, setContacts] = useState(['']);
+  const [telefones, setTelefones] = useState(['']);
+  const [emails, setEmails] = useState(['']);
 
 
   const resetFields = () => {
@@ -187,8 +188,12 @@ export default function CadastroResponsavel(){
     checkTextField(e, setText, setValidated, setInvalidated);
   }
 
-  const addNewContact = () => {
-    setContacts([...contacts, ''])
+  const addNewPhone = () => {
+    setTelefones([...telefones, ''])
+  }
+
+  const addNewEmail = () => {
+    setEmails([...emails, ''])
   }
 
   return (
@@ -274,12 +279,20 @@ export default function CadastroResponsavel(){
       <Comentario validatedComentario={validatedComentario} setValidatedComentario={setValidatedComentario}  comentario={comentario} setComentario={setComentario}/>
       
       { 
-        contacts.map((contact, index) => (
-            <Contato key={index} id={index} contacts={contacts} setContacts={setContacts} />
+        telefones.map((contact, index) => (
+            <Contato key={index} id={index} contacts={telefones} setContacts={setTelefones} type="telefone"/>
           ))
       }
 
-      <Button onClick={addNewContact}>Novo contato</Button>
+      <Button onClick={addNewPhone}>Novo telefone</Button>
+
+      { 
+        emails.map((contact, index) => (
+            <Contato key={index} id={index} contacts={emails} setContacts={setEmails} type="email"/>
+          ))
+      }
+
+      <Button onClick={addNewEmail}>Novo e-mail</Button>
               
 
       <Form.Group as={Row}>

@@ -6,16 +6,16 @@ import { IconButton } from '@material-ui/core';
 
 import { checkTelefone } from '../../validated';
 
+import Telefone from './Telefone/index';
+import Email from './Email/index';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.scss';
 
 
-
-
-
 export default function CampoContato(props){
 
-  const { id, contacts, setContacts } = props;
+  const { id, contacts, setContacts, type} =  props;
 
   const [validatedContact, setValidatedContact] = useState(false);
   const [invalidatedContact, setInvalidatedContact] = useState(false);
@@ -69,36 +69,16 @@ export default function CampoContato(props){
 
   }
 
+  const displayContactField = type => {
+    if(type === "telefone"){
+      return <Telefone id={id} contacts={contacts} setContacts={setContacts} />;
+    }
+    return <Email id={id} contacts={contacts} setContacts={setContacts} />;
+  }
+
   return (
   <>
-    <Form.Group as={Row} controlId="formGroupTelefone">
-      <Form.Label column sm={2} className="CadastroResponsavel-label">
-        Contato {id}
-      </Form.Label>
-      <Col sm={5} >
-        <Form.Control 
-          className="cadastro-inputText"
-          required
-          type="text" 
-          placeholder="E-mail ou telefone"
-          onChange={e => handleChangeContact(e.target, contacts, setContacts)}
-          value={contacts[id]}
-          isValid={validatedContact}
-          isInvalid={invalidatedContact}
-        />
-        <Form.Control.Feedback type="invalid">
-          Digite um número de telefone celular (11 dígitos) ou um e-mail
-        </Form.Control.Feedback>
-      </Col>
-      <Col>
-        <IconButton 
-          aria-label="delete" 
-          onClick={() => removeContact(id, contacts, setContacts)}
-        >
-          <DeleteIcon />
-        </IconButton>
-      </Col>
-    </Form.Group> 
+    { displayContactField(type) }
   </>
   );
 }
