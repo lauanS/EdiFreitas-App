@@ -287,7 +287,7 @@ export default function CadastroResponsavel(){
             required
             type="text" 
             placeholder="Ex: 1533224466"
-            onChange={e => checkTelefone(e.target, setTelefone, setValidatedTelefone, setInvalidatedTelefone)}
+            onChange={e => checkTelefone(e.target, setValidatedTelefone, setInvalidatedTelefone)}
             isValid={validatedTelefone}
             isInvalid={invalidatedTelefone}
           />
