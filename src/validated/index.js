@@ -323,7 +323,7 @@ export function checkCpf(e, setCpf, setVali, setInva){
   }
 }
 
-export function checkTelefone(e, setTelefone, setVali, setInva){ 
+export function checkTelefone(e, setVali, setInva){ 
   let flag = false
 
   for(let i = 0; i < e.value.length; i++){
@@ -333,7 +333,6 @@ export function checkTelefone(e, setTelefone, setVali, setInva){
     }
   }
 
-  setTelefone(e.value);
   if(e.value.length === 11 && flag === false){
     setVali(true);
     setInva(false);
