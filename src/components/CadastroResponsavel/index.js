@@ -279,19 +279,17 @@ export default function CadastroResponsavel(){
       <Comentario validatedComentario={validatedComentario} setValidatedComentario={setValidatedComentario}  comentario={comentario} setComentario={setComentario}/>
       
       { 
-        telefones.map((contact, index) => (
+        telefones.map((_, index) => (
             <Contato key={index} id={index} contacts={telefones} setContacts={setTelefones} type="telefone"/>
           ))
       }
-
       <Button onClick={addNewPhone}>Novo telefone</Button>
 
       { 
-        emails.map((contact, index) => (
+        emails.map((_, index) => (
             <Contato key={index} id={index} contacts={emails} setContacts={setEmails} type="email"/>
           ))
       }
-
       <Button onClick={addNewEmail}>Novo e-mail</Button>
               
 

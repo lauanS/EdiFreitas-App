@@ -6,8 +6,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import { IconButton } from '@material-ui/core';
 
-import { checkTelefone } from '../../../validated';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.scss';
 
@@ -42,10 +40,6 @@ export default function Telefone(props){
       setInvalidatedContact(false);
 
     }
-    else if(e.value.match(/[\d]{9}/gm)){
-      // quando for um telefone
-      checkTelefone(e, setValidatedContact, setInvalidatedContact)
-    }
     else if(!e.value.length){
       // quando estiver vazio
       setValidatedContact(false);
@@ -65,7 +59,6 @@ export default function Telefone(props){
     // Atualiza o valor
     const newContacts = contacts.filter(( _ , index) => id !== index);
     setContacts(newContacts);
-
   }
 
   return(

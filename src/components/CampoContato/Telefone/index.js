@@ -35,14 +35,7 @@ export default function Telefone(props){
       }
     });
 
-    // Verifica se é um email "valido"
-    if(e.value.match(/.+@.+/gm)){
-      // quando for um e-mail
-      setValidatedContact(true);
-      setInvalidatedContact(false);
-
-    }
-    else if(e.value.match(/[\d]{9}/gm)){
+    if(e.value.match(/[\d]{9}/gm)){
       // quando for um telefone
       checkTelefone(e, setValidatedContact, setInvalidatedContact)
     }
