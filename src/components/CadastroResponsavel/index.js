@@ -53,7 +53,7 @@ export default function CadastroResponsavel(){
   const [validatedBairro, setValidatedBairro] = useState(false);
   const [invalidatedBairro, setInvalidatedBairro] = useState(false);
 
-  const [cidade, setCidade] = useState("");
+  const [cidade, setCidade] = useState("Sorocaba");
   const [validatedCidade, setValidatedCidade] = useState(false);
   const [invalidatedCidade, setInvalidatedCidade] = useState(false);
 
