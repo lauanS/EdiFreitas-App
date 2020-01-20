@@ -56,6 +56,7 @@ export default function Telefone(props){
 
   function removeContact(id, contacts, setContacts){
     if(contacts.length === 1) {
+      setContacts(['']);
       return;
     }
     // Atualiza o valor
