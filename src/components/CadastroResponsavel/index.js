@@ -4,7 +4,7 @@ import './styles.css';
 import Snackbar from '../Snackbars';
 import {Form, Row, Col, Button} from 'react-bootstrap';
 
-import { checkText, checkData, checkCpf, checkTelefone, checkTextField } from '../../validated';
+import { checkText, checkData, checkCpf, checkTextField } from '../../validated';
 
 import CamposPessoa from '../CamposPessoa/index';
 import Comentario from '../CampoComentario/index';
@@ -31,10 +31,6 @@ export default function CadastroResponsavel(){
   const [cpf, setCpf] = useState("");
   const [validatedCpf, setValidatedCpf] = useState(false);
   const [invalidatedCpf, setInvalidatedCpf] = useState(false);
-
-  const [telefone, setTelefone] = useState("");
-  const [validatedTelefone, setValidatedTelefone] = useState(false);
-  const [invalidatedTelefone, setInvalidatedTelefone] = useState(false);
 
   const [comentario, setComentario] = useState("");
   const [validatedComentario, setValidatedComentario] = useState(false);
@@ -167,7 +163,6 @@ export default function CadastroResponsavel(){
         setOpenAlertSuccess(false);
         setOpenAlertError(true);
       });
-      dtNascimento = telefone;
 
     }
     e.preventDefault();
@@ -278,29 +273,9 @@ export default function CadastroResponsavel(){
 
       <Comentario validatedComentario={validatedComentario} setValidatedComentario={setValidatedComentario}  comentario={comentario} setComentario={setComentario}/>
       
-      <Form.Group as={Row} controlId="formGroupTelefone">
-        <Form.Label column sm={2} className="CadastroResponsavel-label">
-          Telefone celular
-        </Form.Label>
-        <Col sm={4} className="CadastroResponsavel-inputCpf">
-          <Form.Control 
-            required
-            type="text" 
-            placeholder="Ex: 1533224466"
-            onChange={e => checkTelefone(e.target, setValidatedTelefone, setInvalidatedTelefone)}
-            isValid={validatedTelefone}
-            isInvalid={invalidatedTelefone}
-          />
-          <Form.Control.Feedback type="invalid">
-            Digite um número de telefone celular (9 dígitos)
-          </Form.Control.Feedback>
-        </Col>
-      </Form.Group>
-
-
       { 
         contacts.map((contact, index) => (
-            <Contato key={index} id={index} contacts={contacts} setContacts={setContacts} valor={contact} />
+            <Contato key={index} id={index} contacts={contacts} setContacts={setContacts} />
           ))
       }
 
