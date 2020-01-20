@@ -123,6 +123,7 @@ export default function Endereco(props){
       <Col sm={8}>
         <Form.Control 
           required
+          type="number"
           className="num-endereco"
           placeholder="Digite apenas números"
           onChange={onChangeNumero}
@@ -143,6 +144,7 @@ export default function Endereco(props){
       </Form.Label>
       <Col sm={8}>
         <Form.Control
+          type="text"
           className="num-endereco"
           placeholder="Digite apenas números"
           onChange={onChangeCep}
@@ -183,11 +185,13 @@ export default function Endereco(props){
       <Col sm={8}>
         <Form.Control
           required   
+          type="text" 
           className="cadastro-inputText"
           onChange={e => onChangeTextField(e.target, setCidade, setValidatedCidade, setInvalidatedCidade)}
           value={cidade}
           isValid={validatedCidade}
           isInvalid={invalidatedCidade}
+          placeholder="Ex: Sorocaba"
         />
         <Form.Control.Feedback type="invalid">
           Campo obrigatório.

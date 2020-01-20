@@ -53,7 +53,7 @@ export default function CadastroResponsavel(){
   const [validatedBairro, setValidatedBairro] = useState(false);
   const [invalidatedBairro, setInvalidatedBairro] = useState(false);
 
-  const [cidade, setCidade] = useState("Sorocaba");
+  const [cidade, setCidade] = useState("");
   const [validatedCidade, setValidatedCidade] = useState(false);
   const [invalidatedCidade, setInvalidatedCidade] = useState(false);
 
@@ -79,6 +79,18 @@ export default function CadastroResponsavel(){
     setLogradouro("");
     setValidatedLogradouro(false);
     setInvalidatedLogradouro(false);
+
+    setBairro("");
+    setValidatedBairro(false);
+    setInvalidatedBairro(false);
+
+    setCidade("Sorocaba");
+    setValidatedCidade(false);
+    setInvalidatedCidade(false);
+
+    setNumero("");
+    setValidatedNumero(false);
+    setInvalidatedNumero(false);
   }
 
   const handleSubmit = e => {
@@ -98,6 +110,18 @@ export default function CadastroResponsavel(){
     }
     if(validatedLogradouro === false){
       setInvalidatedLogradouro(true);
+      flag = true;
+    }
+    if(validatedBairro === false){
+      setInvalidatedBairro(true);
+      flag = true;
+    }
+    if(validatedCidade === false){
+      setInvalidatedCidade(true);
+      flag = true;
+    }
+    if(validatedNumero === false){
+      setInvalidatedNumero(true);
       flag = true;
     }
    
