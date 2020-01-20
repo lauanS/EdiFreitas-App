@@ -9,8 +9,8 @@ import { checkText, checkData, checkCpf, checkTelefone, checkTextField } from '.
 import CamposPessoa from '../CamposPessoa/index';
 import Comentario from '../CampoComentario/index';
 import Endereco from "../Endereco/index";
-import {converterData} from '../../assist'
-import {postResponsavel} from '../../services'
+import {converterData} from '../../assist';
+import {postResponsavel} from '../../services';
 
 export default function CadastroResponsavel(){
   const [openAlertSuccess, setOpenAlertSuccess] = useState(false);
@@ -165,12 +165,8 @@ export default function CadastroResponsavel(){
         setValidatedDataNascimento, setInvalidatedDataNascimento)
   }
 
-  function onChangeTextField(e, setField, setValidated, setInvalidated) {
-    console.log('Função chamada!!');
-    checkTextField(e, setField, setValidated, setInvalidated);
-    console.log('Logradouro: ', logradouro);
-    console.log('Valido: ', validatedLogradouro);
-    console.log('Invalido: ', invalidatedLogradouro);
+  const onChangeTextField = (e, setText, setValidated, setInvalidated) => {
+    checkTextField(e, setText, setValidated, setInvalidated);
   }
 
   return (
@@ -181,9 +177,17 @@ export default function CadastroResponsavel(){
     <label className="CadastroResponsavel-Descricao">É obrigatório o preenchimento de campos com * (Asterisco) no título, é opcional quando não possuem o asterisco</label>
 
     <Form onSubmit={handleSubmit} noValidate>
-      <CamposPessoa nome={nomeCompleto} onChangeNome={onChangeNome} valNome={validatedNomeCompleto} invNome={invalidatedNomeCompleto}
-          data={dataNascimento} onChangeData={onChangeData} valData={validatedDataNascimento} invData={invalidatedDataNascimento}
-          sexo={sexoPessoa} onChangeSexo={onChangeSexo}
+      <CamposPessoa 
+        nome={nomeCompleto} 
+        onChangeNome={onChangeNome} 
+        valNome={validatedNomeCompleto} 
+        invNome={invalidatedNomeCompleto}
+        data={dataNascimento} 
+        onChangeData={onChangeData} 
+        valData={validatedDataNascimento} 
+        invData={invalidatedDataNascimento}
+        sexo={sexoPessoa} 
+        onChangeSexo={onChangeSexo}
       />
 
       <Form.Group as={Row} controlId="formGroupCpf">
@@ -207,7 +211,7 @@ export default function CadastroResponsavel(){
       </Form.Group>
 
       <Endereco 
-        onChangedTextField={onChangeTextField}
+        onChangeTextField={onChangeTextField}
         logradouro={logradouro}
         setLogradouro={setLogradouro}
         validatedLogradouro={validatedLogradouro}

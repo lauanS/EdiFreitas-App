@@ -30,10 +30,10 @@ export default function Endereco(props){
   const {validatedEstado, setValidatedEstado} = props;
   const {invalidatedEstado, setInvalidatedEstado} = props;
 
-  const { onChangedTextField } = props;
+  const { onChangeTextField } = props;
 
   /* Formata o CEP */
-  function onChangeCep(e, setCep, setValidatedCep, setInvalidatedCep) {
+  const onChangeCep = e => {
     let value = e.target.value;
 
     value = value.replace('-', '');
@@ -99,7 +99,7 @@ export default function Endereco(props){
           type="text" 
           placeholder="Rua/Avenidade/Estrada"
           value={logradouro}
-          onChange={e => onChangedTextField(e.target, setLogradouro, setValidatedLogradouro, setInvalidatedLogradouro)}
+          onChange={e => onChangeTextField(e.target, setLogradouro, setValidatedLogradouro, setInvalidatedLogradouro)}
           isValid={validatedLogradouro}
           isInvalid={invalidatedLogradouro}
           className="cadastro-inputText"
@@ -140,7 +140,7 @@ export default function Endereco(props){
         <Form.Control
           className="num-endereco"
           placeholder="Digite apenas números"
-          onChange={e => onChangeCep(e, setCep, setValidatedCep, setInvalidatedCep)}
+          onChange={onChangeCep}
           value={cep}
           isValid={validatedCep}
           isInvalid={invalidatedCep}
@@ -159,7 +159,7 @@ export default function Endereco(props){
           type="text" 
           placeholder="Ex: Jd. Neptune"
           className="cadastro-inputText"
-          onChange={e => onChangedTextField(e.target, setBairro, setValidatedBairro, setInvalidatedBairro)}
+          onChange={e => onChangeTextField(e.target, setBairro, setValidatedBairro, setInvalidatedBairro)}
           value={bairro}
           isValid={validatedBairro}
           isInvalid={invalidatedBairro}
@@ -179,7 +179,7 @@ export default function Endereco(props){
         <Form.Control
           required   
           className="cadastro-inputText"
-          onChange={e => onChangedTextField(e.target, setCidade, setValidatedCidade, setInvalidatedCidade)}
+          onChange={e => onChangeTextField(e.target, setCidade, setValidatedCidade, setInvalidatedCidade)}
           value={cidade}
           isValid={validatedCidade}
           isInvalid={invalidatedCidade}
@@ -199,7 +199,7 @@ export default function Endereco(props){
         <Form.Control 
           required
           className="cadastro-inputText"
-          onChange={e => onChangedTextField(e.target, setEstado, setValidatedEstado, setInvalidatedEstado)}
+          onChange={e => onChangeTextField(e.target, setEstado, setValidatedEstado, setInvalidatedEstado)}
           value={estado}
           isValid={validatedEstado}
           isInvalid={invalidatedEstado}
