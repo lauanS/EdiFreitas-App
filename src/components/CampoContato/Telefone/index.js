@@ -8,7 +8,7 @@ import { IconButton } from '@material-ui/core';
 import { checkTelefone } from '../../../validated';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles.scss';
+import '../styles.scss';
 
 
 export default function Telefone(props){
@@ -56,6 +56,8 @@ export default function Telefone(props){
   function removeContact(id, contacts, setContacts){
     if(contacts.length === 1) {
       setContacts(['']);
+      setValidatedContact(false);
+      setInvalidatedContact(false);
       return;
     }
     // Atualiza o valor
@@ -79,7 +81,7 @@ export default function Telefone(props){
       <Form.Label column sm={2} className="cadastro-label">
       { labelText() }
       </Form.Label>
-      <Col sm={5} >
+      <Col sm={8} className="cadastro-inputContact">
         <InputGroup>
           <Form.Control 
             className="cadastro-inputText"
