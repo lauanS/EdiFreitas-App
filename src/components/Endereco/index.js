@@ -33,20 +33,41 @@ export default function Endereco(props){
   const { onChangedTextField } = props;
 
   /* Formata o CEP */
-  const onChangeCep = e => {
+  function onChangeCep(e, setCep, setValidatedCep, setInvalidatedCep) {
     let value = e.target.value;
+
     value = value.replace('-', '');
-    let newValue = value.replace(/(\d{5})(\d{0,3})/,
-                    function( regex, arg1, arg2) {
-                      if(arg2.length){
-                        return arg1 + '-' + arg2 ;
-                      }
-                      else{
-                        return arg1 + arg2 ;
-                      }
-                        
-                    });
-    e.target.value = newValue;           
+
+    // Formata a string para o formato 00000-000
+    value = value.replace(/(\d{5})(\d{0,3})/,
+      function( regex, arg1, arg2) {
+        if(arg2.length){
+          return arg1 + '-' + arg2 ;
+        }
+        else{
+          return arg1 + arg2 ;
+        }                   
+    });  
+
+    // Expressão regular para verificar o formato do CEP
+    const re = /\d{5}-\d{3}/gm; 
+
+    // Impede que o usuário digite mais de 9 caracteres
+    if (value.length > 9) {
+      value = value.substring(0,9);
+    }
+
+    // Verificar se o tamanho e o formato do CEP está correto 
+    if (value.length === 9 && value.match(re)){
+      setValidatedCep(true);
+      setInvalidatedCep(false);
+    }
+    else{
+      setValidatedCep(false);
+      setInvalidatedCep(true);
+    }
+  
+    setCep(value);   
   }
 
   /* Verifica o número */
@@ -54,12 +75,16 @@ export default function Endereco(props){
     let value = e.target.value;
     let re = /[^\d]+/gm;
 
-    if(value.match(re)){
+    if(value.match(re) || !value.length){
       setInvalidatedNumero(true);
+      setValidatedNumero(false);
     }          
     else{
       setInvalidatedNumero(false);
+      setValidatedNumero(true);
     }
+
+    setNumero(value);
   }
 
   return (
@@ -115,7 +140,7 @@ export default function Endereco(props){
         <Form.Control
           className="num-endereco"
           placeholder="Digite apenas números"
-          onChange={onChangeCep}
+          onChange={e => onChangeCep(e, setCep, setValidatedCep, setInvalidatedCep)}
           value={cep}
           isValid={validatedCep}
           isInvalid={invalidatedCep}
@@ -152,9 +177,8 @@ export default function Endereco(props){
       </Form.Label>
       <Col sm={8}>
         <Form.Control
-          required
-          defaultValue="Sorocaba"     
-          className="cadastro-inputText"   
+          required   
+          className="cadastro-inputText"
           onChange={e => onChangedTextField(e.target, setCidade, setValidatedCidade, setInvalidatedCidade)}
           value={cidade}
           isValid={validatedCidade}
@@ -174,7 +198,6 @@ export default function Endereco(props){
       <Col sm={8}>
         <Form.Control 
           required
-          defaultValue="São Paulo"
           className="cadastro-inputText"
           onChange={e => onChangedTextField(e.target, setEstado, setValidatedEstado, setInvalidatedEstado)}
           value={estado}
