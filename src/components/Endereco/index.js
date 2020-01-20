@@ -136,24 +136,6 @@ export default function Endereco(props){
         </Form.Control.Feedback>
       </Col>
     </Form.Group>
-
-
-    <Form.Group as={Row}  controlId="formCEP">
-      <Form.Label  column sm={2} className="cadastro-label">
-        CEP
-      </Form.Label>
-      <Col sm={8}>
-        <Form.Control
-          type="text"
-          className="num-endereco"
-          placeholder="Digite apenas números"
-          onChange={onChangeCep}
-          value={cep}
-          isValid={validatedCep}
-          isInvalid={invalidatedCep}
-        />        
-      </Col>     
-    </Form.Group>
     
 
     <Form.Group as={Row} controlId="formBairro">
@@ -198,6 +180,23 @@ export default function Endereco(props){
         </Form.Control.Feedback>
       </Col>
     </Form.Group>   
+
+    <Form.Group as={Row}  controlId="formCEP">
+      <Form.Label  column sm={2} className="cadastro-label">
+        CEP
+      </Form.Label>
+      <Col sm={8}>
+        <Form.Control
+          type="text"
+          className="num-endereco"
+          placeholder="Digite apenas números"
+          onChange={onChangeCep}
+          value={cep}
+          isValid={validatedCep}
+          isInvalid={invalidatedCep}
+        />        
+      </Col>     
+    </Form.Group>
 
     </>
   );
