@@ -103,6 +103,7 @@ export default function CadastroResponsavel(){
    
     if(flag === false){
       let dtNascimento = converterData(dataNascimento);
+      const cepFormatado = cep.replace('-', '');
 
       var text = '{' +
         '"nome": "' + nomeCompleto + '",' +
@@ -115,7 +116,7 @@ export default function CadastroResponsavel(){
           '"logradouro" : "' + logradouro + '",' +
           '"bairro" : "' + bairro + '",' +
           '"cidade" : "' + cidade + '",' +
-          '"cep" : "' + cep + '",' +
+          '"cep" : "' + cepFormatado + '",' +
           '"numero" : '+ numero +
         '},' +
         '"contatos" : [' +
