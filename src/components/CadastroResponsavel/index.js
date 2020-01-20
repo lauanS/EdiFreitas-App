@@ -130,29 +130,41 @@ export default function CadastroResponsavel(){
       let dtNascimento = converterData(dataNascimento);
       const cepFormatado = cep.replace('-', '');
 
-      var text = '{' +
-        '"nome": "' + nomeCompleto + '",' +
-        '"dataNascimento": "' + dtNascimento + '",' +
-        '"sexo": "' + sexoPessoa + '",' +
-        '"cpf" : "' + cpf + '",' +
-        '"comentario" : "' + comentario + '",' +
-        '"foto" : "",' +
-        '"endereco" : {' +
-          '"logradouro" : "' + logradouro + '",' +
-          '"bairro" : "' + bairro + '",' +
-          '"cidade" : "' + cidade + '",' +
-          '"cep" : "' + cepFormatado + '",' +
-          '"numero" : '+ numero +
-        '},' +
-        '"contatos" : [' +
-          '{' +
-            '"tipo" : "email",'+
-            '"contato" : "carlos.teste@gmail.com"'+
-          '}' +	
-        ']'+
-      '}';
-      
-      var obj = JSON.parse(text);
+      const emailsWithType = emails.map((value) => {
+        return {
+          tipo: "email",
+          contato: value 
+        }
+      });      
+
+      const phonesWithType = telefones.map((value) => {
+        return {
+          tipo: "telefone",
+          contato: value 
+        }
+      });
+
+      setNumero(Number(numero));
+
+      const contatos = emailsWithType.concat(phonesWithType);
+
+      const obj = {
+        nome: nomeCompleto,
+        dataNascimento: dtNascimento,
+        sexo: sexoPessoa,
+        cpf,
+        comentario,
+        foto: "",
+        endereco: {
+          logradouro,
+          bairro,
+          cidade,
+          cep: cepFormatado,
+          numero: parseInt(numero)
+        },
+        contatos
+      }
+
       
       postResponsavel(obj)
       .then(res => {
