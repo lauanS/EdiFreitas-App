@@ -26,10 +26,6 @@ export default function Endereco(props){
   const {validatedCidade, setValidatedCidade} = props;
   const {invalidatedCidade, setInvalidatedCidade} = props;
 
-  const {estado, setEstado} = props;
-  const {validatedEstado, setValidatedEstado} = props;
-  const {invalidatedEstado, setInvalidatedEstado} = props;
-
   const { onChangeTextField } = props;
 
   /* Formata o CEP */
@@ -188,28 +184,7 @@ export default function Endereco(props){
           Campo obrigatório.
         </Form.Control.Feedback>
       </Col>
-    </Form.Group>
-
-
-    <Form.Group as={Row} controlId="formEstado">
-      <Form.Label column sm={2}>
-        Estado *
-      </Form.Label>
-      <Col sm={8}>
-        <Form.Control 
-          required
-          className="cadastro-inputText"
-          onChange={e => onChangeTextField(e.target, setEstado, setValidatedEstado, setInvalidatedEstado)}
-          value={estado}
-          isValid={validatedEstado}
-          isInvalid={invalidatedEstado}
-        />
-        <Form.Control.Feedback type="invalid">
-          Campo obrigatório.
-        </Form.Control.Feedback>
-      </Col>
-    </Form.Group>
-    
+    </Form.Group>   
 
     </>
   );

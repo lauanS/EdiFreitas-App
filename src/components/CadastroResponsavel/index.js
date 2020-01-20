@@ -57,12 +57,6 @@ export default function CadastroResponsavel(){
   const [validatedCidade, setValidatedCidade] = useState(false);
   const [invalidatedCidade, setInvalidatedCidade] = useState(false);
 
-  const [estado, setEstado] = useState("");
-  const [validatedEstado, setValidatedEstado] = useState(false);
-  const [invalidatedEstado, setInvalidatedEstado] = useState(false);
-
-
-
 
   const resetFields = () => {
     setNomeCompleto("");
@@ -232,13 +226,6 @@ export default function CadastroResponsavel(){
         setValidatedCidade={setValidatedCidade}
         invalidatedCidade={invalidatedCidade}
         setInvalidatedCidade={setInvalidatedCidade}
-
-        estado={estado}
-        setEstado={setEstado}
-        validatedEstado={validatedEstado}
-        setValidatedEstado={setValidatedEstado}
-        invalidatedEstado={invalidatedEstado}
-        setInvalidatedEstado={setInvalidatedEstado}
 
         numero={numero}
         setNumero={setNumero}
