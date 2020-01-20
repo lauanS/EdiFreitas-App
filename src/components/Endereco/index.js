@@ -95,7 +95,7 @@ export default function Endereco(props){
   return (
     <>
     <Form.Group as={Row} controlId="formLogradouro">
-      <Form.Label column sm={2}>
+      <Form.Label column sm={2} className="cadastro-label">
         Logradouro *
       </Form.Label>
       <Col sm={8}>
@@ -117,7 +117,7 @@ export default function Endereco(props){
 
 
     <Form.Group as={Row} sm="3" controlId="formNumero">
-      <Form.Label  column sm={2}>
+      <Form.Label  column sm={2} className="cadastro-label">
         Número *
       </Form.Label>
       <Col sm={8}>
@@ -139,7 +139,7 @@ export default function Endereco(props){
 
 
     <Form.Group as={Row}  controlId="formCEP">
-      <Form.Label  column sm={2}>
+      <Form.Label  column sm={2} className="cadastro-label">
         CEP
       </Form.Label>
       <Col sm={8}>
@@ -157,7 +157,7 @@ export default function Endereco(props){
     
 
     <Form.Group as={Row} controlId="formBairro">
-      <Form.Label column sm={2}>
+      <Form.Label column sm={2} className="cadastro-label">
         Bairro *
       </Form.Label>
       <Col sm={8}>
@@ -179,7 +179,7 @@ export default function Endereco(props){
 
 
     <Form.Group as={Row} controlId="formCidade">
-      <Form.Label column sm={2}>
+      <Form.Label column sm={2} className="cadastro-label">
         Cidade *
       </Form.Label>
       <Col sm={8}>
