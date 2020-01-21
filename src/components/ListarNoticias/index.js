@@ -24,24 +24,48 @@ export default function ConsultarNoticias(){
     </Form>
 
     <Card>
-      <Card.Img variant="top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSty7h8ESj2uu40elR9QB8bkFZVzp-p5wcR9fSj7OMoZeajQz9x" className="card-img"/>
-      <Card.Body>
-        <Card.Text>
-          Some quick example text to build on the card title and make up the bulk
-          of the card's content.
-        </Card.Text>
+      <Card.Header as="h5">
+        Trabalho de Extensão para a ONG EdiFreitas
+      </Card.Header>
+
+      <Card.Body className="card-body">    
+        
+        <Card.Img           
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ9ZMs6-RUMHVgbRhRwZh8KhRZizU55MwhREo75SwFNSthHbGWC" 
+        />
+        <Card.Subtitle className="card-subtitle">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente minus id voluptatibus atque nam voluptatum illum temporibus repudiandae, numquam, eaque alias aspernatur molestiae! Harum nulla dolorem inventore, eius ut pariatur.  
+        </Card.Subtitle>
+
+        <footer className="card-footer ">
+          <p>Criado em 10/09/2019</p>
+          <p>Última atualização 15/09/2019</p>
+        </footer>
       </Card.Body>
+     
     </Card>
     <br />
 
     <Card>
-      <Card.Body>
-        <Card.Text>
-          Some quick example text to build on the card title and make up the bulk
-          of the card's content.
-        </Card.Text>
+      <Card.Header as="h5">
+        Trabalho de Extensão para a ONG EdiFreitas
+      </Card.Header>
+
+      <Card.Body className="card-body">    
+        
+        <Card.Img           
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ9ZMs6-RUMHVgbRhRwZh8KhRZizU55MwhREo75SwFNSthHbGWC" 
+        />
+        <Card.Subtitle className="card-subtitle">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente minus id voluptatibus atque nam voluptatum illum temporibus repudiandae, numquam, eaque alias aspernatur molestiae! Harum nulla dolorem inventore, eius ut pariatur.  
+        </Card.Subtitle>
+
+        <footer className="card-footer ">
+          <p>Criado em 10/09/2019</p>
+          <p>Última atualização 15/09/2019</p>
+        </footer>
       </Card.Body>
-      <Card.Img variant="bottom" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ9ZMs6-RUMHVgbRhRwZh8KhRZizU55MwhREo75SwFNSthHbGWC" />
+     
     </Card>
 
 
