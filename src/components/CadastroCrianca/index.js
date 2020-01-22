@@ -99,7 +99,6 @@ export default function CadastroCrianca(){
         foto: "https://www.gazetadopovo.com.br/viver-bem/wp-content/uploads/2015/12/smith-prd-meth01-tom_rpc_intra3-600x457.jpg"
       };
 
-      console.log(obj)
       postCrianca(obj).then(res => {
         setOpenAlertSuccess(true);
         setOpenAlertError(false);
