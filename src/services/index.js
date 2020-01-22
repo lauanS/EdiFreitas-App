@@ -13,32 +13,32 @@ api.interceptors.request.use(async config => {
   return config;
 });
 
-export const getResponsaveis = () => {
+export function getResponsaveis(){
   return api.get('/responsaveis');
 }
 
-export const postResponsavel = (responsavel) => {
+export function postResponsavel(responsavel){
   return api.post('/responsaveis', responsavel);
 }
 
-export const deleteResponsavel = (id) => {
+export function deleteResponsavel(id){
   return api.delete('/responsaveis/' + id);
   
 }
 
-export const getCriancas = () => {
+export function getCriancas(){
   return api.get('/criancas');
 }
 
-export const postCrianca = (crianca) => {
+export function postCrianca(crianca){
   return api.post('/criancas', crianca);
 }
 
-export const deleteCrianca = (id) => {
+export function deleteCrianca(id){
   return api.delete('/criancas/' + id);
 }
 
-export const putCrianca = (crianca, id) => {
+export function putCrianca(crianca, id){
   return api.put('/criancas/' + id, crianca);
 }
 

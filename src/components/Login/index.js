@@ -6,12 +6,10 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import './styles.css';
 import ongLogo from '../../assets/ong_logo.jpg';
-import { Redirect } from 'react-router-dom';
 import {login} from '../../services/auth'
 
 
 export default function Login() {
-  const [toRedirect, setToRedirect] = useState(false);
 
   const TOKEN_KEY = "@edifreitas-token";
 
@@ -42,7 +40,7 @@ export default function Login() {
     setUsuario(e.target.value);
   }
 
-  const handleSubmit = event => {
+  async function handleSubmit(event){
     event.preventDefault();
     event.stopPropagation();
 
@@ -53,17 +51,17 @@ export default function Login() {
       '}';
       var obj = JSON.parse(text);
 
-      login(obj)
+      await login(obj)
       .then(res => {
         sessionStorage.setItem(TOKEN_KEY, res.data.token);
-        setToRedirect(true);
+        window.location.reload();
+        console.log("oi redis")
       })
       .catch(res => {
         setErroLogin(true);
         setUsuario("");
         setSenha("");
 
-        setToRedirect(false);
       });
     }
     else{
@@ -79,7 +77,6 @@ export default function Login() {
 
   return (
     <>
-    {toRedirect ? <Redirect to="/admin"/> : null }
     <Container className="formsContainer">
       <Row className="justify-center">
         <Col className="forms">
