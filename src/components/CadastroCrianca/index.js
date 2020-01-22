@@ -48,8 +48,6 @@ export default function CadastroCrianca(){
     setValidatedDataNascimento(false);
     setInvalidatedDataNascimento(false);
 
-    setSexoPessoa("M");
-
     setDadosResponsavel({});
     setInvalidatedDadosResponsavel(false);
 
@@ -90,18 +88,18 @@ export default function CadastroCrianca(){
     if(flag === false){
       let dtNascimento = converterData(dataNascimento);
 
-      var text = '{' +
-        '"nome": "' + nomeCompleto + '",' +
-        '"dataNascimento": "' + dtNascimento + '",' +
-        '"sexo": "' + sexoPessoa + '",' +
-        '"idResponsavel": "' + dadosResponsavel.id + '",' +
-        '"nCalcado": "' + numCalcado + '",' +
-        '"tamRoupa": "' + tamCamiseta + '",' + 
-        '"comentario" : "' + comentario + '",' +
-        '"foto" :  "https://www.gazetadopovo.com.br/viver-bem/wp-content/uploads/2015/12/smith-prd-meth01-tom_rpc_intra3-600x457.jpg"' +
-      '}';
+      const obj = {
+        nome: nomeCompleto,
+        dataNascimento: dtNascimento,
+        sexo: sexoPessoa,
+        idResponsavel: dadosResponsavel.id,
+        nCalcado: numCalcado,
+        tamRoupa: tamCamiseta,
+        comentario: comentario,
+        foto: "https://www.gazetadopovo.com.br/viver-bem/wp-content/uploads/2015/12/smith-prd-meth01-tom_rpc_intra3-600x457.jpg"
+      };
 
-      var obj = JSON.parse(text);
+      console.log(obj)
       postCrianca(obj).then(res => {
         setOpenAlertSuccess(true);
         setOpenAlertError(false);
@@ -196,6 +194,7 @@ export default function CadastroCrianca(){
             onChange={e => checkCamiseta(e.target, setTamCamiseta, setValidatedTamCamiseta, setInvalidatedTamCamiseta)}
             isValid={validatedTamCamiseta}
             isInvalid={invalidatedTamCamiseta}
+            value={tamCamiseta}
           />
           <Form.Control.Feedback type="invalid">
             Insira um número ou um tamanho (PP, P, M, G, GG, GGG).
