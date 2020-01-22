@@ -324,7 +324,7 @@ export function checkCpf(e, setCpf, setVali, setInva){
 }
 
 export function checkTelefone(e, setValidated, setInvalidated){ 
-  const re = /[\d]{8,11}/gm
+  const re = /[\d]{10,11}/gm
 
   const empty = !e.value.length;
   const sizeLessThan11 = e.value.length <= 11;

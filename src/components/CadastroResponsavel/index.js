@@ -130,11 +130,11 @@ export default function CadastroResponsavel(){
       setInvalidatedNumero(true);
       flag = true;
     }
-   
+
     if(flag === false){
       let dtNascimento = converterData(dataNascimento);
       const cepFormatado = cep.replace('-', '');
-
+ 
       const emailsWithType = emails.map((value) => {
         return {
           tipo: "email",
@@ -149,7 +149,11 @@ export default function CadastroResponsavel(){
         }
       });
 
-      const contatos = emailsWithType.concat(phonesWithType);
+      let contatos = emailsWithType.concat(phonesWithType);
+      
+      contatos = contatos.filter((obj) => {
+        return obj.contato !== ""
+      });
 
       const obj = {
         nome: nomeCompleto,
