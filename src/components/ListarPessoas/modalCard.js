@@ -8,6 +8,7 @@ import CardPessoa from './cardPessoa';
 import InfoResponsavel from './infoResponsavel';
 import InfoCrianca from './infoCrianca';
 import EditarCrianca from '../EditarCrianca/index';
+import EditarResponsavel from '../EditarResponsavel/index';
 
 export default function ModalCard(props) {
   const { dados, crianca, remover, erroRemover, update, erroUpdate, responsaveis, updateList} = props;
@@ -24,16 +25,21 @@ export default function ModalCard(props) {
     setOpen(false);
   };
 
+  const handleCloseEdit = () => {
+    setEdit(false);
+    setOpen(false);
+  }
+
   return (
     <>
+    <CardPessoa change={handleOpen} foto={photo} dados={dados} crianca={crianca} idade={idade(dados.dataNascimento)}/>
     {edit === true ? 
       crianca === true ?
-        <EditarCrianca update={update} erroUpdate={erroUpdate} setOpen={setOpen} updateList={updateList} responsaveis={responsaveis} dados={dados} setEdit={setEdit}/>
+        <EditarCrianca update={update} erroUpdate={erroUpdate} updateList={updateList} responsaveis={responsaveis} dados={dados} setEdit={handleCloseEdit}/>
         :
-        ''
+        <EditarResponsavel update={update} erroUpdate={erroUpdate} updateList={updateList} dados={dados} setEdit={handleCloseEdit}/>
     :
     <>
-    <CardPessoa change={handleOpen} foto={photo} dados={dados} crianca={crianca} idade={idade(dados.dataNascimento)}/>
     <Modal
       className="modalCard"
       show={open}
