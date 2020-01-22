@@ -26,6 +26,11 @@ export function deleteResponsavel(id){
   
 }
 
+export function putResponsavel(responsavel, id){
+  return api.put('/responsaveis/' + id, responsavel);
+}
+
+
 export function getCriancas(){
   return api.get('/criancas');
 }
