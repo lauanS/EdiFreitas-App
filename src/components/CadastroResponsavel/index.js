@@ -144,8 +144,6 @@ export default function CadastroResponsavel(){
         }
       });
 
-      setNumero(Number(numero));
-
       const contatos = emailsWithType.concat(phonesWithType);
 
       const obj = {
@@ -160,7 +158,7 @@ export default function CadastroResponsavel(){
           bairro,
           cidade,
           cep: cepFormatado,
-          numero: parseInt(numero)
+          numero: numero
         },
         contatos
       }
