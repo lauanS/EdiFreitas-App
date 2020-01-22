@@ -68,8 +68,6 @@ export default function CadastroResponsavel(){
     setValidatedDataNascimento(false);
     setInvalidatedDataNascimento(false);
 
-    setSexoPessoa("M");
-
     setCpf(""); 
     setValidatedCpf(false);
     setInvalidatedCpf(false);
@@ -81,6 +79,14 @@ export default function CadastroResponsavel(){
     setValidatedLogradouro(false);
     setInvalidatedLogradouro(false);
 
+    setNumero("");
+    setValidatedNumero(false);
+    setInvalidatedNumero(false);
+
+    setCep("");
+    setValidatedCep(false);
+    setInvalidatedCep(false);
+
     setBairro("");
     setValidatedBairro(false);
     setInvalidatedBairro(false);
@@ -89,9 +95,8 @@ export default function CadastroResponsavel(){
     setValidatedCidade(false);
     setInvalidatedCidade(false);
 
-    setNumero("");
-    setValidatedNumero(false);
-    setInvalidatedNumero(false);
+    setTelefones(['']);
+    setEmails(['']);
   }
 
   const handleSubmit = e => {
@@ -240,6 +245,7 @@ export default function CadastroResponsavel(){
             onChange={e => checkCpf(e.target, setCpf, setValidatedCpf, setInvalidatedCpf)}
             isValid={validatedCpf}
             isInvalid={invalidatedCpf}
+            value={cpf}
           />
           <Form.Control.Feedback type="invalid">
             Campo obrigatório, digite um CPF válido/correto (Apenas números)
