@@ -323,23 +323,23 @@ export function checkCpf(e, setCpf, setVali, setInva){
   }
 }
 
-export function checkTelefone(e, setVali, setInva){ 
-  let flag = false
+export function checkTelefone(e, setValidated, setInvalidated){ 
+  const re = /[\d]{8,11}/gm
 
-  for(let i = 0; i < e.value.length; i++){
-    let char = e.value.charAt(i);
-    if(!(char >= '0' && char <= '9')){
-      flag = true;
-    }
+  const empty = !e.value.length;
+  const sizeLessThan11 = e.value.length <= 11;
+
+  if(e.value.match(re) && sizeLessThan11 && !empty){
+    setValidated(true);
+    setInvalidated(false);
   }
-
-  if(e.value.length === 11 && flag === false){
-    setVali(true);
-    setInva(false);
+  else if(empty){
+    setValidated(false);
+    setInvalidated(false);
   }
   else{
-    setVali(false);
-    setInva(true);
+    setValidated(false);
+    setInvalidated(true);
   }
 }
 
