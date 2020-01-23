@@ -91,7 +91,7 @@ export default function CadastroResponsavel(){
     setValidatedBairro(false);
     setInvalidatedBairro(false);
 
-    setCidade("Sorocaba");
+    setCidade("");
     setValidatedCidade(false);
     setInvalidatedCidade(false);
 
