@@ -151,8 +151,12 @@ export default function CadastroResponsavel(props){
         }
       });
 
-      const contatos = emailsWithType.concat(phonesWithType);
-
+      let contatos = emailsWithType.concat(phonesWithType);
+      
+      contatos = contatos.filter((obj) => {
+        return obj.contato !== ""
+      });
+      
       const obj = {
         nome: nomeCompleto,
         dataNascimento: dtNascimento,
