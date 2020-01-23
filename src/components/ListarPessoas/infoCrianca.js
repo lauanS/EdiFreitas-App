@@ -23,7 +23,7 @@ export default function ModalCard(props){
             <p className="infoCrianca__text">Idade: {idade(dados.dataNascimento)} ano</p>
           }
           <p className="infoCrianca__text">Nascimento: {nascimento(dados.dataNascimento)}</p>
-          {dados.nCalcado !== 0 ?
+          {dados.nCalcado !== null ?
           <p className="infoCrianca__text">Número do calçado: {dados.nCalcado}</p>
           :
           <p className="infoCrianca__text">Número do calçado não cadastrado</p>
@@ -67,7 +67,11 @@ export default function ModalCard(props){
           }
           <p className="infoCrianca__text">Nascimento: {nascimento(dadosResp.dataNascimento)}</p>
           <p className="infoCrianca__text">CPF: {cpfFormat(dadosResp.cpf)}</p>
-          
+          {dadosResp.sexo === "F" ?
+            <p className="infoCrianca__text">Sexo: Feminino</p>
+            :
+            <p className="infoCrianca__text">Sexo: Masculino</p>
+          }
         </div>
       </div>
       {dadosResp.comentario !== "" ? 
@@ -106,7 +110,11 @@ export default function ModalCard(props){
           <p className="infoCrianca__text-margin">Logradouro: {dadosResp.endereco.logradouro}</p>
           <p className="infoCrianca__text-margin">Bairro: {dadosResp.endereco.bairro}</p>
           <p className="infoCrianca__text-margin">Cidade: {dadosResp.endereco.cidade}</p>
-          <p className="infoCrianca__text-margin">CEP: {dadosResp.endereco.cep}</p>
+          {dadosResp.endereco.cep !== "" ? 
+          <p className="infoResp__text-margin">CEP: {dados.endereco.cep}</p>
+          :
+          <p className="infoResp__text-margin">CEP não cadastrado</p>
+          }
           <p className="infoCrianca__text-margin">Número: {dadosResp.endereco.numero}</p>
         </>
       }

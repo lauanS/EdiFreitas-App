@@ -68,6 +68,13 @@ export default function ModalHeader(props) {
     e.stopPropagation();
   }
 
+  let texto = "";
+  if(dados.criancas === undefined || dados.criancas.length === 0){
+    texto = dados.nome;
+  }
+  else{
+    texto = dados.nome + " e as crianças relacionadas";
+  }
 
   return (
     <>
@@ -86,7 +93,7 @@ export default function ModalHeader(props) {
 
     <SweetAlert 
       customClass="sweetAlert"
-      title={"Deseja mesmo deletar todas as informações de " + dados.nome + " ?"} 
+      title={"Deseja mesmo deletar todas as informações de " + texto + " ?"} 
       show={showAlert} 
       type='warning' 
       onConfirm={handleConfirm}

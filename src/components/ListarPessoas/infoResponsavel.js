@@ -23,7 +23,11 @@ export default function ModalCard(props){
           }
           <p className="infoResp__text">Nascimento: {nascimento(dados.dataNascimento)}</p>
           <p className="infoResp__text">CPF: {cpfFormat(dados.cpf)}</p>
-          
+          {dados.sexo === "F" ?
+            <p className="infoCrianca__text">Sexo: Feminino</p>
+            :
+            <p className="infoCrianca__text">Sexo: Masculino</p>
+          }
         </div>
       </div>
       {dados.comentario !== "" ? 
@@ -77,7 +81,11 @@ export default function ModalCard(props){
           <p className="infoResp__text-margin">Logradouro: {dados.endereco.logradouro}</p>
           <p className="infoResp__text-margin">Bairro: {dados.endereco.bairro}</p>
           <p className="infoResp__text-margin">Cidade: {dados.endereco.cidade}</p>
+          {dados.endereco.cep !== "" ? 
           <p className="infoResp__text-margin">CEP: {dados.endereco.cep}</p>
+          :
+          <p className="infoResp__text-margin">CEP não cadastrado</p>
+          }
           <p className="infoResp__text-margin">Número: {dados.endereco.numero}</p>
         </>
       }
