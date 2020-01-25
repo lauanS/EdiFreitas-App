@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Form, Col, Row, InputGroup} from 'react-bootstrap';
 
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -18,6 +18,13 @@ export default function Telefone(props){
   const [validatedContact, setValidatedContact] = useState(false);
   const [invalidatedContact, setInvalidatedContact] = useState(false);
 
+  useEffect(() => {
+    if(!contacts[id]){
+      setValidatedContact(false);
+      setInvalidatedContact(false);
+    }
+    
+  }, [id, contacts]);
 
   function handleChangeContact(e, contacts, setContacts){
     let count = 0;
@@ -34,20 +41,7 @@ export default function Telefone(props){
       }
     });
 
-    if(e.value.match(/[\d]{9}/gm)){
-      // quando for um telefone
-      checkTelefone(e, setValidatedContact, setInvalidatedContact)
-    }
-    else if(!e.value.length){
-      // quando estiver vazio
-      setValidatedContact(false);
-      setInvalidatedContact(false);
-    }
-    else{
-      // quando for um contato inválido
-      setValidatedContact(false);
-      setInvalidatedContact(true);
-    }
+    checkTelefone(e, setValidatedContact, setInvalidatedContact)
       
     setContacts(newContacts);
 
@@ -87,7 +81,7 @@ export default function Telefone(props){
             className="cadastro-inputText"
             required
             type="text" 
-            placeholder="Ex: 15988884444"
+            placeholder="DDD + número, Ex: 15988884444"
             onChange={e => handleChangeContact(e.target, contacts, setContacts)}
             value={contacts[id]}
             isValid={validatedContact}
@@ -105,7 +99,7 @@ export default function Telefone(props){
             </InputGroup.Text>
           </InputGroup.Append>
           <Form.Control.Feedback type="invalid">
-            Digite um número de telefone celular (11 dígitos)
+            Digite um número de telefone válido, DDD obrigatório
           </Form.Control.Feedback>
         </InputGroup>
       </Col>

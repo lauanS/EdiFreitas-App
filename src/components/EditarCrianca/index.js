@@ -13,7 +13,7 @@ import Button from '@material-ui/core/Button';
 import ModalHeader from './modalHeader'
 
 export default function EditarCrianca(props){
-  const {setOpen, erroUpdate, update, updateList, setEdit, dados, responsaveis} = props;
+  const {erroUpdate, update, updateList, setEdit, dados, responsaveis} = props;
 
   const [nomeCompleto, setNomeCompleto] = useState(dados.nome);
   const [validatedNomeCompleto, setValidatedNomeCompleto] = useState(true);
@@ -81,21 +81,19 @@ export default function EditarCrianca(props){
     if(flag === false){
       let dtNascimento = converterData(dataNascimento);
 
-      var text = '{' +
-        '"nome": "' + nomeCompleto + '",' +
-        '"dataNascimento": "' + dtNascimento + '",' +
-        '"sexo": "' + sexoPessoa + '",' +
-        '"idResponsavel": "' + dadosResponsavel.id + '",' +
-        '"nCalcado": "' + numCalcado + '",' +
-        '"tamRoupa": "' + tamCamiseta + '",' + 
-        '"comentario" : "' + comentario + '",' +
-        '"foto" : ""' +
-      '}';
-
-      var obj = JSON.parse(text);
+      const obj = {
+        nome: nomeCompleto,
+        dataNascimento: dtNascimento,
+        sexo: sexoPessoa,
+        idResponsavel: dadosResponsavel.id,
+        nCalcado: numCalcado,
+        tamRoupa: tamCamiseta, 
+        comentario: comentario,
+        foto: dados.foto
+      };
+      
       putCrianca(obj, dados.id).then(res => {
         setEdit(false);
-        setOpen(false);
         update();
         updateList();
       })
@@ -103,6 +101,11 @@ export default function EditarCrianca(props){
         erroUpdate();
       });
     }
+  }
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setEdit(false);
   }
 
   const handleBusca = e => {
@@ -148,7 +151,7 @@ export default function EditarCrianca(props){
     <Modal
       className="modalCard"
       show={openModal}
-      onHide={() => setOpenModal(false)}
+      onHide={() => handleCloseModal()}
       dialogClassName="modalCard__dialog"
       aria-labelledby="example-custom-modal-styling-title"
       scrollable

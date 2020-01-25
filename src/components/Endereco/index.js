@@ -77,10 +77,9 @@ export default function Endereco(props){
 
   /* Verifica o número */
   const onChangeNumero = e => {
-    let value = e.target.value;
-    let re = /[^\d]+/gm;
-
-    if(value.match(re) || !value.length){
+    const value = e.target.value;
+    
+    if(!value.length){
       setInvalidatedNumero(true);
       setValidatedNumero(false);
     }          
@@ -123,16 +122,16 @@ export default function Endereco(props){
       <Col sm={8}>
         <Form.Control 
           required
-          type="number"
+          type="text"
           className="num-endereco"
-          placeholder="Digite apenas números"
+          placeholder="Número da sua casa"
           onChange={onChangeNumero}
           value={numero}
           isValid={validatedNumero}
           isInvalid={invalidatedNumero}
         />
         <Form.Control.Feedback type="invalid">
-          Campo obrigatório, digite apenas números.
+          Campo obrigatório.
         </Form.Control.Feedback>
       </Col>
     </Form.Group>

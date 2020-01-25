@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Form, Col, Row, InputGroup} from 'react-bootstrap';
 
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -16,6 +16,13 @@ export default function Telefone(props){
   const [validatedContact, setValidatedContact] = useState(false);
   const [invalidatedContact, setInvalidatedContact] = useState(false);
 
+  useEffect(() => {
+    if(!contacts[id]){
+      setValidatedContact(false);
+      setInvalidatedContact(false);
+    }
+    
+  }, [id, contacts]);
 
   function handleChangeContact(e, contacts, setContacts){
     let count = 0;

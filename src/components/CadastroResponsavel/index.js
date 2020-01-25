@@ -68,8 +68,6 @@ export default function CadastroResponsavel(){
     setValidatedDataNascimento(false);
     setInvalidatedDataNascimento(false);
 
-    setSexoPessoa("M");
-
     setCpf(""); 
     setValidatedCpf(false);
     setInvalidatedCpf(false);
@@ -81,6 +79,14 @@ export default function CadastroResponsavel(){
     setValidatedLogradouro(false);
     setInvalidatedLogradouro(false);
 
+    setNumero("");
+    setValidatedNumero(false);
+    setInvalidatedNumero(false);
+
+    setCep("");
+    setValidatedCep(false);
+    setInvalidatedCep(false);
+
     setBairro("");
     setValidatedBairro(false);
     setInvalidatedBairro(false);
@@ -89,9 +95,8 @@ export default function CadastroResponsavel(){
     setValidatedCidade(false);
     setInvalidatedCidade(false);
 
-    setNumero("");
-    setValidatedNumero(false);
-    setInvalidatedNumero(false);
+    setTelefones(['']);
+    setEmails(['']);
   }
 
   const handleSubmit = e => {
@@ -125,11 +130,11 @@ export default function CadastroResponsavel(){
       setInvalidatedNumero(true);
       flag = true;
     }
-   
+
     if(flag === false){
       let dtNascimento = converterData(dataNascimento);
       const cepFormatado = cep.replace('-', '');
-
+ 
       const emailsWithType = emails.map((value) => {
         return {
           tipo: "email",
@@ -144,9 +149,11 @@ export default function CadastroResponsavel(){
         }
       });
 
-      setNumero(Number(numero));
-
-      const contatos = emailsWithType.concat(phonesWithType);
+      let contatos = emailsWithType.concat(phonesWithType);
+      
+      contatos = contatos.filter((obj) => {
+        return obj.contato !== ""
+      });
 
       const obj = {
         nome: nomeCompleto,
@@ -160,7 +167,7 @@ export default function CadastroResponsavel(){
           bairro,
           cidade,
           cep: cepFormatado,
-          numero: parseInt(numero)
+          numero: numero
         },
         contatos
       }
@@ -242,6 +249,7 @@ export default function CadastroResponsavel(){
             onChange={e => checkCpf(e.target, setCpf, setValidatedCpf, setInvalidatedCpf)}
             isValid={validatedCpf}
             isInvalid={invalidatedCpf}
+            value={cpf}
           />
           <Form.Control.Feedback type="invalid">
             Campo obrigatório, digite um CPF válido/correto (Apenas números)
