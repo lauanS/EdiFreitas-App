@@ -1,6 +1,7 @@
 import React from 'react';
-
 import {Form, Row, Col, Card, CardColumns, Button} from 'react-bootstrap';
+
+import CardConsulta from '../CardConsulta';
 
 import './styles.scss';
 
@@ -24,130 +25,53 @@ export default function ConsultarNoticias(){
     </Form>
     
     <CardColumns>
-      <Card>
-        <Card.Header as="h5">
-          Trabalho de Extensão para a ONG EdiFreitas
-        </Card.Header>
+      <CardConsulta 
+        title="Novo title"
+        subtitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente minus id voluptatibus atque nam voluptatum illum temporibus repudiandae,"
+        urlImg="https://steamuserimages-a.akamaihd.net/ugc/486769343081008872/C1C2C608F78907DCBFBD78ADFE683C942E7B9C25/"
+        creationDate="25/01/2020"
+        updateDate="26/01/2020"      
+      />
 
-        <Card.Body className="card-body">    
-          
-          <Card.Img           
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSGSchNBJSYBWUARzgM2YisE5S9_Ew8LSyblcHTg_sCRf38-ApP" 
-          />
-          <Col>
-            <Row>
-              <Card.Subtitle className="card-subtitle">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente minus id voluptatibus atque nam voluptatum illum temporibus repudiandae, numquam, eaque alias aspernatur molestiae! Harum nulla dolorem inventore, eius ut pariatur.  
-              </Card.Subtitle>
-            </Row>
-            <Row>      
-                <Button as={Col} variant="link"> Visualizar </Button>
-                <Button as={Col} variant="link"> Editar </Button>    
-                <Button as={Col} variant="link"> Excluir </Button>        
-            </Row>
-          </Col>    
+      <CardConsulta 
+        title="Lorem ipsum dolor"
+        subtitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente minus id voluptatibus atque nam voluptatum illum temporibus repudiandae,"
+        urlImg="https://cdn.myanimelist.net/r/360x360/images/characters/15/266029.jpg?s=029bb39a4d062e862fbbc59bd9dea268"
+        creationDate="25/01/2020"
+        updateDate="26/01/2020"      
+      />
 
-          <footer className="card-footer ">
-            <p>Criado em 10/09/2019</p>
-            <p>Última atualização 15/09/2019</p>
-          </footer>
-        </Card.Body>
-      
-      </Card>
-      <br />
+      <CardConsulta 
+        title="Trabalho de Extensão para a ONG EdiFreitas Extensão para a ONG EdiFreitas"
+        subtitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente minus id voluptatibus atque nam voluptatum illum temporibus repudiandae,"
+        urlImg="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSGSchNBJSYBWUARzgM2YisE5S9_Ew8LSyblcHTg_sCRf38-ApP"
+        creationDate="20/01/2020"
+        updateDate="26/01/2020"      
+      />
 
-      <Card>
-        <Card.Header as="h5">
-          Trabalho de Extensão para a ONG EdiFreitas
-        </Card.Header>
+      <CardConsulta 
+        title="Lorem ipsum dolor"
+        subtitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente minus id voluptatibus atque nam voluptatum illum temporibus repudiandae,"
+        urlImg="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSkYn64tYtWf04OeSY2Wnapanr_BzXLNtUbukVcbzEP7Ox04wls"
+        creationDate="20/01/2020"
+        updateDate="26/01/2020"      
+      />
 
-        <Card.Body className="card-body">    
-          
-          <Card.Img           
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSkYn64tYtWf04OeSY2Wnapanr_BzXLNtUbukVcbzEP7Ox04wls" 
-          />
-          <Col>
-            <Row>
-              <Card.Subtitle className="card-subtitle">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente minus id voluptatibus atque nam voluptatum illum temporibus repudiandae, numquam, eaque alias aspernatur molestiae! Harum nulla dolorem inventore, eius ut pariatur.  
-              </Card.Subtitle>
-            </Row>
-            <Row>      
-                <Button as={Col} variant="link"> Visualizar </Button>
-                <Button as={Col} variant="link"> Editar </Button>    
-                <Button as={Col} variant="link"> Excluir </Button>        
-            </Row>
-          </Col>    
+      <CardConsulta 
+        title="Lorem ipsum dolor"
+        subtitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente minus id voluptatibus atque nam voluptatum illum temporibus repudiandae,"
+        urlImg="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT0h6YYldvKZUH9MQu3WWhxpDGh9Uvu8mNafg-GGaQyvHcdK_ca"
+        creationDate="25/01/2020"
+        updateDate="26/01/2020"      
+      />
 
-          <footer className="card-footer ">
-            <p>Criado em 10/09/2019</p>
-            <p>Última atualização 15/09/2019</p>
-          </footer>
-        </Card.Body>
-      
-      </Card>
-
-      <Card>
-        <Card.Header as="h5">
-          Trabalho de Extensão para a ONG EdiFreitas
-        </Card.Header>
-
-        <Card.Body className="card-body">    
-          
-          <Card.Img           
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ9ZMs6-RUMHVgbRhRwZh8KhRZizU55MwhREo75SwFNSthHbGWC" 
-          />
-          <Col>
-            <Row>
-              <Card.Subtitle className="card-subtitle">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente minus id voluptatibus atque nam voluptatum illum temporibus repudiandae, numquam, eaque alias aspernatur molestiae! Harum nulla dolorem inventore, eius ut pariatur.  
-              </Card.Subtitle>
-            </Row>
-            <Row>      
-                <Button as={Col} variant="link"> Visualizar </Button>
-                <Button as={Col} variant="link"> Editar </Button>    
-                <Button as={Col} variant="link"> Excluir </Button>        
-            </Row>
-          </Col>    
-
-          <footer className="card-footer ">
-            <p>Criado em 10/09/2019</p>
-            <p>Última atualização 15/09/2019</p>
-          </footer>
-        </Card.Body>
-      
-      </Card>
-
-      <Card>
-        <Card.Header as="h5">
-          Trabalho de Extensão para a ONG EdiFreitas
-        </Card.Header>
-
-        <Card.Body className="card-body">    
-          
-          <Card.Img           
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT0h6YYldvKZUH9MQu3WWhxpDGh9Uvu8mNafg-GGaQyvHcdK_ca" 
-          />
-          <Col>
-            <Row>
-              <Card.Subtitle className="card-subtitle">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente minus id voluptatibus atque nam voluptatum illum temporibus repudiandae, numquam, eaque alias aspernatur molestiae! Harum nulla dolorem inventore, eius ut pariatur.  
-              </Card.Subtitle>
-            </Row>
-            <Row>      
-                <Button as={Col} variant="link"> Visualizar </Button>
-                <Button as={Col} variant="link"> Editar </Button>    
-                <Button as={Col} variant="link"> Excluir </Button>        
-            </Row>
-          </Col>    
-
-          <footer className="card-footer ">
-            <p>Criado em 10/09/2019</p>
-            <p>Última atualização 15/09/2019</p>
-          </footer>
-        </Card.Body>
-      
-      </Card>
+      <CardConsulta 
+        title="Lorem ipsum dolor"
+        subtitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente minus id voluptatibus atque nam voluptatum illum temporibus repudiandae,"
+        urlImg="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ9ZMs6-RUMHVgbRhRwZh8KhRZizU55MwhREo75SwFNSthHbGWC"
+        creationDate="25/01/2020"
+        updateDate="26/01/2020"      
+      />      
 
     </CardColumns>
     </>
