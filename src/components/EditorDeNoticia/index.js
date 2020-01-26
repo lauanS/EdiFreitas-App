@@ -6,28 +6,23 @@ import DadosNoticia from '../DadosNoticia/index'
 
 import './styles.scss';
 
-export default function EditorDeNoticia(){
-  
-  const [title, setTitle] = useState("");
-  const [subtitle, setSubtitle] = useState("");
-  const [text, setText] = useState("");
+export default function EditorDeNoticia(props){
+  const { initialTitle, initialSubtitle, initialText } = props;
+
+  const [title, setTitle] = useState(initialTitle);
+  const [subtitle, setSubtitle] = useState(initialSubtitle);
+  const [text, setText] = useState(initialText);
 
   const [open, setOpen] = useState(true);
 
 
-  const handleSubmit = e => {
-    console.log('Title: ', title);
-    console.log('Subtitle: ', subtitle);
-    console.log('Text: ', text);
-    
+  const handleSubmit = e => {    
     e.preventDefault();
     e.stopPropagation();
   }
 
-  // Function that will be called by your child when he changed
   const handleChildChange = e => {
     setText(e.target.getContent());
-    console.log('New text: ' + text);
   }
 
 
@@ -37,7 +32,12 @@ export default function EditorDeNoticia(){
       <Form onSubmit={handleSubmit} >
         <Collapse in={open}>
           <div id="fade-fields">
-            <DadosNoticia setTitle={setTitle} setSubtitle={setSubtitle} />
+            <DadosNoticia 
+              title={title}
+              setTitle={setTitle} 
+              subtitle={subtitle}
+              setSubtitle={setSubtitle} 
+            />
           </div>
         </Collapse>
 

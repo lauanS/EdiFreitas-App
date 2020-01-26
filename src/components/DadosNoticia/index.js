@@ -6,15 +6,14 @@ import {Form, Row, Col} from 'react-bootstrap';
 
 
 export default function DadosNoticia(props){
+  const { title, subtitle, setTitle, setSubtitle } = props;
 
   const handleTitleChange = e => {
-    console.log("New title: ", e.target.value);
-    props.setTitle(e.target.value);
+    setTitle(e.target.value);
   }
 
   const handleSubtitleChange = e => {
-    console.log("New subtitle: ", e.target.value);
-    props.setSubtitle(e.target.value);
+    setSubtitle(e.target.value);
   }
 
   return (
@@ -25,6 +24,7 @@ export default function DadosNoticia(props){
         </Form.Label>
         <Col sm={5}>
           <Form.Control 
+            value={title}
             onChange={handleTitleChange} 
             type="text" 
           />
@@ -39,6 +39,7 @@ export default function DadosNoticia(props){
           <Form.Control 
             as="textarea" 
             rows="2" 
+            value={subtitle}
             onChange={handleSubtitleChange}
           />
         </Col>

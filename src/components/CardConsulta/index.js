@@ -4,8 +4,6 @@ import {Row, Col, Card, Button, Modal} from 'react-bootstrap'
 
 import './styles.scss';
 
-
-
 import TextEditor from "../EditorDeNoticia";
 
 export default function ConsultarNoticias(props){
@@ -66,7 +64,11 @@ export default function ConsultarNoticias(props){
         <Modal.Title>Editor</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <TextEditor />
+        <TextEditor 
+          initialTitle={title}
+          initialSubtitle={subtitle}
+          initialText=""        
+        />
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
