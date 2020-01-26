@@ -3,21 +3,34 @@ import {Form, Row, Col, CardColumns} from 'react-bootstrap';
 
 import CardConsulta from '../CardConsulta';
 
-import getNoticias from './news';
+import getNews from './news';
 
 import './styles.scss';
 
 export default function ConsultarNoticias(){
-  const [noticias, setNoticias] = useState([]);
+  const [news, setNews] = useState([]);
+  const [title, setTitle] = useState('');
 
-
-  function loadNoticias(){
-    setNoticias(getNoticias())
+  function loadNews(){
+    setNews(getNews())
     return;
   }
 
+  function updateTitle(e) {
+    setTitle(e.target.value);
+    console.log(title);    
+  }
+
+  function filterNews(value){
+    const re = new RegExp(title, "i");
+    if(value.title.match(re)){
+      return true;
+    }
+    return false;
+  }
+
   useEffect(() => {   
-    loadNoticias();      
+    loadNews();      
   }, []);
 
   return (
@@ -31,7 +44,8 @@ export default function ConsultarNoticias(){
           <Form.Control 
             type="text" 
             placeholder="Ex: Especial de Natal na EdiFreitas" 
-            onChange={() => {}}
+            value={title}
+            onChange={updateTitle}
           />
         </Col>
       </Form.Group>
@@ -39,14 +53,14 @@ export default function ConsultarNoticias(){
     
     <CardColumns>
       {
-        noticias.map((noticia, key) => (
+        news.filter(filterNews).map((card, key) => (
           <CardConsulta
             key={key}
-            title={noticia.title}
-            subtitle={noticia.subtitle}
-            urlImg={noticia.urlImg}
-            creationDate={noticia.creationDate}
-            updateDate={noticia.updateDate}
+            title={card.title}
+            subtitle={card.subtitle}
+            urlImg={card.urlImg}
+            creationDate={card.creationDate}
+            updateDate={card.updateDate}
           />
         ))
       }
