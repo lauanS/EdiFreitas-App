@@ -24,12 +24,10 @@ export default function ConsultarNoticias(){
     setTitle(e.target.value);  
   }
 
-  function filterNews(value){
-    const re = new RegExp(title, "i");
-    if(value.title.match(re)){
-      return true;
-    }
-    return false;
+  function filterNews(value){  
+    const titleLowerCase = title.toLowerCase()
+    const valueLowerCase = value.title.toLowerCase()
+    return valueLowerCase.includes(titleLowerCase);
   }
 
   useEffect(() => {   
