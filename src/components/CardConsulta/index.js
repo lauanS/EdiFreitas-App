@@ -1,13 +1,28 @@
-import React from 'react';
+import React, {useState} from 'react';
 
-import {Row, Col, Card, Button} from 'react-bootstrap';
+import {Row, Col, Card, Button, Modal} from 'react-bootstrap'
 
 import './styles.scss';
+
+
+
+import TextEditor from "../EditorDeNoticia";
 
 export default function ConsultarNoticias(props){
   const { title, subtitle, urlImg, creationDate, updateDate } = props
 
+  function showModal(){
+    setShow(true);
+  }
+
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => {setShow(false)}
+
+
   return (
+    <>
     <Card>
       <Card.Header as="h5">
         {title}
@@ -26,7 +41,7 @@ export default function ConsultarNoticias(props){
           </Row>
           <Row>      
               <Button as={Col} variant="link"> Visualizar </Button>
-              <Button as={Col} variant="link"> Editar </Button>    
+              <Button as={Col} variant="link" onClick={showModal}> Editar </Button>    
               <Button as={Col} variant="link"> Excluir </Button>        
           </Row>
         </Col>    
@@ -38,5 +53,30 @@ export default function ConsultarNoticias(props){
       </Card.Body>
     
     </Card>
+
+
+    <Modal 
+      show={show} 
+      onHide={handleClose}
+      className="modalCard"
+      dialogClassName="modalCard__dialog"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>Editor</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <TextEditor />
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Fechar
+        </Button>
+        <Button variant="primary" onClick={handleClose}>
+          Salvar
+        </Button>
+      </Modal.Footer>
+    </Modal>
+    </>
   );
 }
