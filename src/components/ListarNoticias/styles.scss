@@ -7,3 +7,30 @@
     column-count: 1;
   }
 }
+.listarPessoas{
+  display: flex;
+  flex-wrap: wrap;
+
+  &__label{
+    max-width: 140px!important;
+    min-width: 140px;
+    padding-right: 0px;
+  }
+
+  &__inputText{
+    max-width: 400px;
+  }
+
+}
+  
+@media (max-width: 500px) {
+  .listarPessoas{
+    justify-content: center;
+  }
+}
+
+@media (min-width: 600px){
+  .listarPessoas__inputText{
+    min-width: 340px;
+  }
+}
