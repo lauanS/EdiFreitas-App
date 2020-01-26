@@ -4,12 +4,16 @@ import {Form, Row, Col, CardColumns} from 'react-bootstrap';
 import CardConsulta from '../CardConsulta';
 
 import getNews from './news';
+import { notFind } from '../../assist/feedback';
 
 import './styles.scss';
 
 export default function ConsultarNoticias(){
   const [news, setNews] = useState([]);
   const [title, setTitle] = useState('');
+  const [feedback, setFeedback] = useState('');
+
+  let filteredNews = [];
 
   function loadNews(){
     setNews(getNews())
@@ -17,8 +21,7 @@ export default function ConsultarNoticias(){
   }
 
   function updateTitle(e) {
-    setTitle(e.target.value);
-    console.log(title);    
+    setTitle(e.target.value);  
   }
 
   function filterNews(value){
@@ -33,6 +36,29 @@ export default function ConsultarNoticias(){
     loadNews();      
   }, []);
 
+  /* Mensagens de feedback */
+  useEffect(() => {   
+    if(!filteredNews.length && title.length){
+      setFeedback(notFind('notícia', title));
+    }
+    else{
+      setFeedback("");
+    }      
+  }, [filteredNews, title]);
+
+  function renderCards(){
+    filteredNews = news.filter(filterNews)
+    return filteredNews.map((card, key) => (
+      <CardConsulta
+        key={key}
+        title={card.title}
+        subtitle={card.subtitle}
+        urlImg={card.urlImg}
+        creationDate={card.creationDate}
+        updateDate={card.updateDate}
+      />
+    ))
+  }
   return (
     <>
     <Form autoComplete="off">
@@ -50,19 +76,12 @@ export default function ConsultarNoticias(){
         </Col>
       </Form.Group>
     </Form>
+
+    <p>{feedback}</p>
     
     <CardColumns>
       {
-        news.filter(filterNews).map((card, key) => (
-          <CardConsulta
-            key={key}
-            title={card.title}
-            subtitle={card.subtitle}
-            urlImg={card.urlImg}
-            creationDate={card.creationDate}
-            updateDate={card.updateDate}
-          />
-        ))
+        renderCards()  
       }
     </CardColumns>
     </>
