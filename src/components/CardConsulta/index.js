@@ -70,14 +70,6 @@ export default function ConsultarNoticias(props){
           initialText=""        
         />
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          Fechar
-        </Button>
-        <Button variant="primary" onClick={handleClose}>
-          Salvar
-        </Button>
-      </Modal.Footer>
     </Modal>
     </>
   );
