@@ -215,17 +215,12 @@ export default function CadastroResponsavel(props){
     setEmails([...emails, '']);
   }
 
-  const handleCloseModal = () => {
-    setOpenModal(false);
-    setEdit(false);
-  }
-
   return (
     <>
     <Modal
       className="modalEditarResp"
       show={openModal}
-      onHide={() => handleCloseModal()}
+      onHide={() => setOpenModal(true)}
       dialogClassName="modalEditarResp__dialog"
       aria-labelledby="example-custom-modal-styling-title"
       scrollable
@@ -240,7 +235,7 @@ export default function CadastroResponsavel(props){
       <Modal.Body>
       <label className="EditarResponsavel__descricao">É obrigatório o preenchimento de campos com * (Asterisco) no título, é opcional quando não possuem o asterisco</label>
 
-      <Form onSubmit={handleSubmit} noValidate>
+      <Form noValidate autoComplete="off">
         <CamposPessoa 
           nome={nomeCompleto} 
           onChangeNome={onChangeNome} 

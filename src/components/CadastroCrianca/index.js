@@ -133,7 +133,7 @@ export default function CadastroCrianca(){
 
     <label className="CadastroCrianca__descricao">É obrigatório o preenchimento de campos com * (Asterisco) no título, é opcional quando não possuem o asterisco</label>
     
-    <Form onSubmit={handleSubmit} noValidate  >
+    <Form onSubmit={handleSubmit} noValidate autoComplete="off">
       <CamposPessoa nome={nomeCompleto} onChangeNome={onChangeNome} valNome={validatedNomeCompleto} invNome={invalidatedNomeCompleto}
           data={dataNascimento} onChangeData={onChangeData} valData={validatedDataNascimento} invData={invalidatedDataNascimento}
           sexo={sexoPessoa} onChangeSexo={onChangeSexo}

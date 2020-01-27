@@ -103,11 +103,6 @@ export default function EditarCrianca(props){
     }
   }
 
-  const handleCloseModal = () => {
-    setOpenModal(false);
-    setEdit(false);
-  }
-
   const handleBusca = e => {
     setOpenBusca(true);
     e.preventDefault();
@@ -151,7 +146,7 @@ export default function EditarCrianca(props){
     <Modal
       className="modalCard"
       show={openModal}
-      onHide={() => handleCloseModal()}
+      onHide={() => setOpenModal(true)}
       dialogClassName="modalCard__dialog"
       aria-labelledby="example-custom-modal-styling-title"
       scrollable
@@ -163,7 +158,7 @@ export default function EditarCrianca(props){
       <Modal.Body>
         <label className="EditarCrianca__descricao">É obrigatório o preenchimento de campos com * (Asterisco) no título, é opcional quando não possuem o asterisco</label>
       
-        <Form noValidate  >
+        <Form noValidate autoComplete="off">
           <CamposPessoa nome={nomeCompleto} onChangeNome={onChangeNome} valNome={validatedNomeCompleto} invNome={invalidatedNomeCompleto}
               data={dataNascimento} onChangeData={onChangeData} valData={validatedDataNascimento} invData={invalidatedDataNascimento}
               sexo={sexoPessoa} onChangeSexo={onChangeSexo}
