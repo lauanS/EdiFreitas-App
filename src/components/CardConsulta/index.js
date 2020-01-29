@@ -4,20 +4,23 @@ import {Row, Col, Card, Button, Modal} from 'react-bootstrap'
 
 import './styles.scss';
 
-import TextEditor from "../EditorDeNoticia";
 
 export default function ConsultarNoticias(props){
-  const { title, subtitle, urlImg, creationDate, updateDate } = props
+  const { title, subtitle, urlImg, creationDate, updateDate } = props;
+  const { editor } = props;
 
-  function showModal(){
-    setShow(true);
+  const [showModal, setShowModal] = useState(false);
+
+  function handleClick(){
+    setShowModal(true)
   }
-
-
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => {setShow(false)}
-
+  function renderModal(){
+    if(showModal){
+      return editor;
+    }else{
+      return;
+    }  
+  }
 
   return (
     <>
@@ -39,7 +42,7 @@ export default function ConsultarNoticias(props){
           </Row>
           <Row>      
               <Button as={Col} variant="link"> Visualizar </Button>
-              <Button as={Col} variant="link" onClick={showModal}> Editar </Button>    
+              <Button as={Col} variant="link" onClick={handleClick}> Editar </Button>
               <Button as={Col} variant="link"> Excluir </Button>        
           </Row>
         </Col>    
@@ -52,25 +55,9 @@ export default function ConsultarNoticias(props){
     
     </Card>
 
-
-    <Modal 
-      show={show} 
-      onHide={handleClose}
-      className="modalCard"
-      dialogClassName="modalCard__dialog"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title>Editor</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <TextEditor 
-          initialTitle={title}
-          initialSubtitle={subtitle}
-          initialText=""        
-        />
-      </Modal.Body>
-    </Modal>
+    { 
+      renderModal()
+    }
     </>
   );
 }

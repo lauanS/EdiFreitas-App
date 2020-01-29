@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {Form, Row, Col, CardColumns} from 'react-bootstrap';
 
 import CardConsulta from '../CardConsulta';
+import EditorDeNoticia from "./EditarNoticia";
 
 import getNews from './news';
 import { notFind } from '../../assist/feedback';
@@ -30,6 +31,7 @@ export default function ConsultarNoticias(){
     return valueLowerCase.includes(titleLowerCase);
   }
 
+  /* Carregando as notícias */
   useEffect(() => {   
     loadNews();      
   }, []);
@@ -54,9 +56,16 @@ export default function ConsultarNoticias(){
         urlImg={card.urlImg}
         creationDate={card.creationDate}
         updateDate={card.updateDate}
+        editor={
+          <EditorDeNoticia 
+            title={card.title}
+            subtitle={card.subtitle}
+          />
+        }
       />
     ))
   }
+
   return (
     <>
     <Form autoComplete="off">
