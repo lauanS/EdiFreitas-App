@@ -55,7 +55,7 @@ export default function EditorDeNoticia(props){
 
 
         <div className='news-editor'>
-          <TextEditor handleChange={handleChildChange}/>      
+          <TextEditor text={text} handleChange={handleChildChange}/>      
         </div>
 
         <Button type="submit" block>Cadastrar</Button>

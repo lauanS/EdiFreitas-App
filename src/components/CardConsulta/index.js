@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import {Row, Col, Card, Button, Modal} from 'react-bootstrap'
+import {Row, Col, Card, Button} from 'react-bootstrap'
 
 import './styles.scss';
 

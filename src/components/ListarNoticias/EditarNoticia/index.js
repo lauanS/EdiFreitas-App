@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Modal, Button} from 'react-bootstrap';
+import {Modal} from 'react-bootstrap';
 
 import './styles.scss';
 import TextEditor from "../../EditorDeNoticia";

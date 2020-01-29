@@ -70,6 +70,7 @@ export default function EditorDeTexto(props){
           input.click();
         }
       }}
+      value={props.text}
       onChange={props.handleChange}
       />
   );
