@@ -1,20 +1,18 @@
 import React,  { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.scss';
+
 import {Modal, Form, Row, Col, Button} from 'react-bootstrap';
-
-import { checkText, checkData, checkCpf, checkTextField } from '../../validated';
-
 import CamposPessoa from '../CamposPessoa/index';
 import Comentario from '../CampoComentario/index';
 import Endereco from '../Endereco/index';
 import Contato from '../CampoContato/index'
-
-import {desconverterData, converterData} from '../../assist';
-import {putResponsavel} from '../../services';
-
 import CloseIcon from '@material-ui/icons/Close';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
+
+import { checkText, checkData, checkCpf, checkTextField } from '../../validated';
+import {desconverterData, converterData} from '../../assist';
+import {putResponsavel} from '../../services';
 
 export default function CadastroResponsavel(props){
   const {erroUpdate, update, updateList, setEdit, dados} = props;
@@ -233,104 +231,102 @@ export default function CadastroResponsavel(props){
         </div>
       </Modal.Header>
       <Modal.Body>
-      <label className="EditarResponsavel__descricao">É obrigatório o preenchimento de campos com * (Asterisco) no título, é opcional quando não possuem o asterisco</label>
+        <label className="EditarResponsavel__descricao">É obrigatório o preenchimento de campos com * (Asterisco) no título, é opcional quando não possuem o asterisco</label>
 
-      <Form noValidate autoComplete="off">
-        <CamposPessoa 
-          nome={nomeCompleto} 
-          onChangeNome={onChangeNome} 
-          valNome={validatedNomeCompleto} 
-          invNome={invalidatedNomeCompleto}
-          data={dataNascimento} 
-          onChangeData={onChangeData} 
-          valData={validatedDataNascimento} 
-          invData={invalidatedDataNascimento}
-          sexo={sexoPessoa} 
-          onChangeSexo={onChangeSexo}
-        />
+        <Form noValidate autoComplete="off">
+          <CamposPessoa 
+            nome={nomeCompleto} 
+            onChangeNome={onChangeNome} 
+            valNome={validatedNomeCompleto} 
+            invNome={invalidatedNomeCompleto}
+            data={dataNascimento} 
+            onChangeData={onChangeData} 
+            valData={validatedDataNascimento} 
+            invData={invalidatedDataNascimento}
+            sexo={sexoPessoa} 
+            onChangeSexo={onChangeSexo}
+          />
 
-        <Form.Group as={Row} controlId="formGroupCpf">
-          <Form.Label column sm={2} className="EditarResponsavel__label">
-            CPF *
-          </Form.Label>
-          <Col sm={8} className="EditarResponsavel__inputText">
-            <Form.Control 
-              className="EditarResponsavel__inputCpf"
-              required
-              type="text" 
-              placeholder="Digite apenas números"
-              onChange={e => checkCpf(e.target, setCpf, setValidatedCpf, setInvalidatedCpf)}
-              isValid={validatedCpf}
-              isInvalid={invalidatedCpf}
-              value={cpf}
-            />
-            <Form.Control.Feedback type="invalid">
-              Campo obrigatório, digite um CPF válido/correto (Apenas números)
-            </Form.Control.Feedback>
-          </Col>
-        </Form.Group>
+          <Form.Group as={Row} controlId="formGroupCpf">
+            <Form.Label column sm={2} className="EditarResponsavel__label">
+              CPF *
+            </Form.Label>
+            <Col sm={8} className="EditarResponsavel__inputText">
+              <Form.Control 
+                className="EditarResponsavel__inputCpf"
+                required
+                type="text" 
+                placeholder="Digite apenas números"
+                onChange={e => checkCpf(e.target, setCpf, setValidatedCpf, setInvalidatedCpf)}
+                isValid={validatedCpf}
+                isInvalid={invalidatedCpf}
+                value={cpf}
+              />
+              <Form.Control.Feedback type="invalid">
+                Campo obrigatório, digite um CPF válido/correto (Apenas números)
+              </Form.Control.Feedback>
+            </Col>
+          </Form.Group>
 
-        <Endereco 
-          onChangeTextField={onChangeTextField}
-          logradouro={logradouro}
-          setLogradouro={setLogradouro}
-          validatedLogradouro={validatedLogradouro}
-          setValidatedLogradouro={setValidatedLogradouro}
-          invalidatedLogradouro={invalidatedLogradouro}
-          setInvalidatedLogradouro={setInvalidatedLogradouro}
+          <Endereco 
+            onChangeTextField={onChangeTextField}
+            logradouro={logradouro}
+            setLogradouro={setLogradouro}
+            validatedLogradouro={validatedLogradouro}
+            setValidatedLogradouro={setValidatedLogradouro}
+            invalidatedLogradouro={invalidatedLogradouro}
+            setInvalidatedLogradouro={setInvalidatedLogradouro}
 
-          bairro={bairro}
-          setBairro={setBairro}
-          validatedBairro={validatedBairro}
-          setValidatedBairro={setValidatedBairro}
-          invalidatedBairro={invalidatedBairro}
-          setInvalidatedBairro={setInvalidatedBairro}
+            bairro={bairro}
+            setBairro={setBairro}
+            validatedBairro={validatedBairro}
+            setValidatedBairro={setValidatedBairro}
+            invalidatedBairro={invalidatedBairro}
+            setInvalidatedBairro={setInvalidatedBairro}
 
-          cidade={cidade}
-          setCidade={setCidade}
-          validatedCidade={validatedCidade}
-          setValidatedCidade={setValidatedCidade}
-          invalidatedCidade={invalidatedCidade}
-          setInvalidatedCidade={setInvalidatedCidade}
+            cidade={cidade}
+            setCidade={setCidade}
+            validatedCidade={validatedCidade}
+            setValidatedCidade={setValidatedCidade}
+            invalidatedCidade={invalidatedCidade}
+            setInvalidatedCidade={setInvalidatedCidade}
 
-          numero={numero}
-          setNumero={setNumero}
-          validatedNumero={validatedNumero}
-          setValidatedNumero={setValidatedNumero}
-          invalidatedNumero={invalidatedNumero}
-          setInvalidatedNumero={setInvalidatedNumero}
+            numero={numero}
+            setNumero={setNumero}
+            validatedNumero={validatedNumero}
+            setValidatedNumero={setValidatedNumero}
+            invalidatedNumero={invalidatedNumero}
+            setInvalidatedNumero={setInvalidatedNumero}
 
-          cep={cep}
-          setCep={setCep}
-          validatedCep={validatedCep}
-          setValidatedCep={setValidatedCep}
-          invalidatedCep={invalidatedCep}
-          setInvalidatedCep={setInvalidatedCep}
+            cep={cep}
+            setCep={setCep}
+            validatedCep={validatedCep}
+            setValidatedCep={setValidatedCep}
+            invalidatedCep={invalidatedCep}
+            setInvalidatedCep={setInvalidatedCep}
+          />
+
+          <Comentario validatedComentario={validatedComentario} setValidatedComentario={setValidatedComentario}  comentario={comentario} setComentario={setComentario}/>
           
-        />
+          <Form.Group>
+            { 
+              telefones.map((_, index) => (
+                  <Contato key={index} id={index} contacts={telefones} setContacts={setTelefones} type="telefone"/>
+                ))
+            }
+            <Button as={Row} variant="link" onClick={addNewPhone}>Novo telefone</Button>
 
-        <Comentario validatedComentario={validatedComentario} setValidatedComentario={setValidatedComentario}  comentario={comentario} setComentario={setComentario}/>
-        
-        <Form.Group>
-          { 
-            telefones.map((_, index) => (
-                <Contato key={index} id={index} contacts={telefones} setContacts={setTelefones} type="telefone"/>
-              ))
-          }
-          <Button as={Row} variant="link" onClick={addNewPhone}>Novo telefone</Button>
+          </Form.Group>
 
-        </Form.Group>
-
-        <Form.Group>
-          { 
-            emails.map((_, index) => (
-                <Contato key={index} id={index} contacts={emails} setContacts={setEmails} type="email"/>
-              ))
-          }
-          <Button as={Row} variant="link" onClick={addNewEmail}>Novo e-mail</Button>
-        </Form.Group>
-
-      </Form>
+          <Form.Group>
+            { 
+              emails.map((_, index) => (
+                  <Contato key={index} id={index} contacts={emails} setContacts={setEmails} type="email"/>
+                ))
+            }
+            <Button as={Row} variant="link" onClick={addNewEmail}>Novo e-mail</Button>
+          </Form.Group>
+        </Form>
       </Modal.Body>
     </Modal>
     </>

@@ -1,15 +1,17 @@
 import React,  { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.scss';
+
 import {Form, Row, Col, Button} from 'react-bootstrap';
 import CamposPessoa from '../CamposPessoa/index';
 import Comentario from '../CampoComentario/index';
 import ModalBusca from '../ModalBuscaResponsavel';
 import Card from '../CardResponsavel';
+import Snackbar from '../Snackbars';
+
 import { checkText, checkNumber, checkCamiseta, checkData } from '../../validated';
 import {postCrianca} from '../../services'
 import {converterData} from '../../assist';
-import Snackbar from '../Snackbars';
 
 export default function CadastroCrianca(){
   const [openAlertSuccess, setOpenAlertSuccess] = useState(false);

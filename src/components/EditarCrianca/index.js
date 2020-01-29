@@ -1,16 +1,19 @@
 import React,  { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.scss';
+
 import {Modal, Form, Row, Col} from 'react-bootstrap';
 import CamposPessoa from '../CamposPessoa/index';
 import Comentario from '../CampoComentario/index';
 import BuscaResponsavel from '../BuscaResponsavel';
 import Card from '../CardResponsavel';
+import Button from '@material-ui/core/Button';
+import ModalHeader from './modalHeader'
+
 import { checkText, checkNumber, checkCamiseta, checkData } from '../../validated';
 import {putCrianca} from '../../services';
 import {desconverterData, converterData} from '../../assist';
-import Button from '@material-ui/core/Button';
-import ModalHeader from './modalHeader'
+
 
 export default function EditarCrianca(props){
   const {erroUpdate, update, updateList, setEdit, dados, responsaveis} = props;
