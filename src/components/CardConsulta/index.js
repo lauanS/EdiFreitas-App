@@ -6,7 +6,7 @@ import './styles.scss';
 
 
 export default function ConsultarNoticias(props){
-  const { title, subtitle, urlImg, creationDate, updateDate } = props;
+  const { title, subtitle, urlImg, firstFooter, lastFooter } = props;
   const { editor } = props;
 
   const [showModal, setShowModal] = useState(false);
@@ -48,8 +48,8 @@ export default function ConsultarNoticias(props){
         </Col>    
 
         <footer className="card-footer ">
-          <p>Criado em {creationDate}</p>
-          <p>Última atualização {updateDate}</p>
+          <p>{firstFooter}</p>
+          <p>{lastFooter}</p>
         </footer>
       </Card.Body>
     

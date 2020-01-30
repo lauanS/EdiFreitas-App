@@ -54,8 +54,8 @@ export default function ConsultarNoticias(){
         title={card.title}
         subtitle={card.subtitle}
         urlImg={card.urlImg}
-        creationDate={card.creationDate}
-        updateDate={card.updateDate}
+        firstFooter={`Criado em ${card.firstFooter}`}
+        lastFooter={`Última atualização ${card.lastFooter}`}
         editor={
           <EditorDeNoticia 
             title={card.title}

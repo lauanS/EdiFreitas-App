@@ -54,8 +54,8 @@ export default function ConsultarEventos(){
         title={card.title}
         subtitle={card.subtitle}
         urlImg={card.urlImg}
-        creationDate={card.creationDate}
-        updateDate={card.updateDate}
+        firstFooter={`Dia: ${card.firstFooter}`}
+        lastFooter={`Local: ${card.lastFooter}`}
         editor={
           <EditorDeEventos 
             title={card.title}
