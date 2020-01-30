@@ -10,7 +10,7 @@ export default function getNews(){
   const n2 = {
     title:"Lorem ipsum dolor",
     subtitle:"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente minus id voluptatibus atque nam voluptatum illum temporibus repudiandae,",
-    urlImg:"https://cdn.myanimelist.net/r/360x360/images/characters/15/266029.jpg?s=029bb39a4d062e862fbbc59bd9dea268",
+    urlImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ0aFVdEVV5EsXgGgZ0npbKv-lR2R0QYINbZHnLxtRFsq-I4uZY",
     firstFooter:"25/01/2020",
     lastFooter:"26/01/2020",
    }
