@@ -1,16 +1,15 @@
 import React,  { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
+
 import Snackbar from '../Snackbars';
 import {Form, Row, Col, Button} from 'react-bootstrap';
-
-import { checkText, checkData, checkCpf, checkTextField } from '../../validated';
-
 import CamposPessoa from '../CamposPessoa/index';
 import Comentario from '../CampoComentario/index';
 import Endereco from '../Endereco/index';
 import Contato from '../CampoContato/index'
 
+import { checkText, checkData, checkCpf, checkTextField } from '../../validated';
 import {converterData} from '../../assist';
 import {postResponsavel} from '../../services';
 
@@ -58,7 +57,6 @@ export default function CadastroResponsavel(){
   const [telefones, setTelefones] = useState(['']);
   const [emails, setEmails] = useState(['']);
 
-
   const resetFields = () => {
     setNomeCompleto("");
     setValidatedNomeCompleto(false);
@@ -91,7 +89,7 @@ export default function CadastroResponsavel(){
     setValidatedBairro(false);
     setInvalidatedBairro(false);
 
-    setCidade("Sorocaba");
+    setCidade("");
     setValidatedCidade(false);
     setInvalidatedCidade(false);
 
@@ -217,12 +215,12 @@ export default function CadastroResponsavel(){
 
   return (
     <>
-      <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} msg="Responsável cadastrado" type="success"/>
-      <Snackbar open={openAlertError} setOpen={setOpenAlertError} msg="Ocorreu um erro ao cadastrar" type="error"/>
+    <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} msg="Responsável cadastrado" type="success"/>
+    <Snackbar open={openAlertError} setOpen={setOpenAlertError} msg="Ocorreu um erro ao cadastrar" type="error"/>
 
     <label className="CadastroResponsavel-Descricao">É obrigatório o preenchimento de campos com * (Asterisco) no título, é opcional quando não possuem o asterisco</label>
 
-    <Form onSubmit={handleSubmit} noValidate>
+    <Form autoComplete="off" onSubmit={handleSubmit} noValidate >
       <CamposPessoa 
         nome={nomeCompleto} 
         onChangeNome={onChangeNome} 
@@ -256,7 +254,7 @@ export default function CadastroResponsavel(){
           </Form.Control.Feedback>
         </Col>
       </Form.Group>
-
+      
       <Endereco 
         onChangeTextField={onChangeTextField}
         logradouro={logradouro}
@@ -305,7 +303,6 @@ export default function CadastroResponsavel(){
             ))
         }
         <Button as={Row} variant="link" onClick={addNewPhone}>Novo telefone</Button>
-
       </Form.Group>
 
       <Form.Group>
@@ -316,17 +313,12 @@ export default function CadastroResponsavel(){
         }
         <Button as={Row} variant="link" onClick={addNewEmail}>Novo e-mail</Button>
       </Form.Group>
-  
-      
-              
 
       <Form.Group as={Row}>
         <Col sm={{ span: 10, offset: 2 }}>
           <Button type="submit" >Cadastrar</Button>
         </Col>
       </Form.Group>
-
-      
     </Form>
     </>
   );

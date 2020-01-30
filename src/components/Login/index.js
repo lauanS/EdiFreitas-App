@@ -55,7 +55,7 @@ export default function Login() {
       .then(res => {
         sessionStorage.setItem(TOKEN_KEY, res.data.token);
         window.location.reload();
-        console.log("oi redis")
+        console.log("Bem vindo");
       })
       .catch(res => {
         setErroLogin(true);
