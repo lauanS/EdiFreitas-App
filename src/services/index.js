@@ -49,8 +49,8 @@ export function putCrianca(crianca, id){
 }
 
 //===================== EVENTOS =====================
-export function getEventos(){
-  return api.get('/eventos');
+export async function getEventos(){
+  return await api.get('/eventos');
 }
 
 export function postEvento(evento){

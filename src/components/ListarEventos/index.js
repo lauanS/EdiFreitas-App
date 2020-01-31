@@ -4,31 +4,36 @@ import {Form, Row, Col, CardColumns} from 'react-bootstrap';
 import CardConsulta from '../CardConsulta';
 import EditorDeEventos from "./EditarEventos";
 
-import getEvents from './events';
+import { getEventos } from '../../services';
 import { notFind } from '../../assist/feedback';
 
 import './styles.scss';
 
 export default function ConsultarEventos(){
   const [events, setEvents] = useState([]);
-  const [title, setTitle] = useState('');
+  const [search, setSearch] = useState('');
   const [feedback, setFeedback] = useState('');
+
+  const urlImg = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSGSchNBJSYBWUARzgM2YisE5S9_Ew8LSyblcHTg_sCRf38-ApP"
 
   let filteredEvents = [];
 
-  function loadEvents(){
-    setEvents(getEvents())
+  async function loadEvents(){
+    const response = await getEventos();
+    console.log(response.data);
+
+    setEvents(response.data);
     return;
   }
 
-  function updateTitle(e) {
-    setTitle(e.target.value);  
+  function updateSearch(e) {
+    setSearch(e.target.value);  
   }
 
   function filterEvents(value){  
-    const titleLowerCase = title.toLowerCase()
-    const valueLowerCase = value.title.toLowerCase()
-    return valueLowerCase.includes(titleLowerCase);
+    const searchLowerCase = search.toLowerCase()
+    const valueLowerCase = value.nome.toLowerCase()
+    return valueLowerCase.includes(searchLowerCase);
   }
 
   /* Carregando as notícias */
@@ -38,28 +43,28 @@ export default function ConsultarEventos(){
 
   /* Mensagens de feedback */
   useEffect(() => {   
-    if(!filteredEvents.length && title.length){
-      setFeedback(notFind('notícia', title));
+    if(!filteredEvents.length && search.length){
+      setFeedback(notFind('notícia', search));
     }
     else{
       setFeedback("");
     }      
-  }, [filteredEvents, title]);
+  }, [filteredEvents, search]);
 
   function renderCards(){
     filteredEvents = events.filter(filterEvents)
     return filteredEvents.map((card, key) => (
       <CardConsulta
         key={key}
-        title={card.title}
-        subtitle={card.subtitle}
-        urlImg={card.urlImg}
-        firstFooter={`Dia: ${card.firstFooter}`}
-        lastFooter={`Local: ${card.lastFooter}`}
+        title={card.nome}
+        subtitle={card.descricao}
+        urlImg={urlImg}
+        firstFooter={`Dia: ${card.dataEvento}`}
+        lastFooter={`Local: ${card.local}`}
         editor={
           <EditorDeEventos 
-            title={card.title}
-            subtitle={card.subtitle}
+            title={card.nome}
+            subtitle={card.descricao}
           />
         }
       />
@@ -77,8 +82,8 @@ export default function ConsultarEventos(){
           <Form.Control 
             type="text" 
             placeholder="Ex: Dia das Crianças" 
-            value={title}
-            onChange={updateTitle}
+            value={search}
+            onChange={updateSearch}
           />
         </Col>
       </Form.Group>
