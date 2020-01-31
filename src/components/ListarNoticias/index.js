@@ -4,7 +4,7 @@ import {Form, Row, Col, CardColumns} from 'react-bootstrap';
 import CardConsulta from '../CardConsulta';
 import EditorDeNoticia from "./EditarNoticia";
 
-import getNews from './news';
+import { getNoticias } from '../../services';
 import { notFind } from '../../assist/feedback';
 
 import './styles.scss';
@@ -14,10 +14,13 @@ export default function ConsultarNoticias(){
   const [title, setTitle] = useState('');
   const [feedback, setFeedback] = useState('');
 
+  const urlImg = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT0h6YYldvKZUH9MQu3WWhxpDGh9Uvu8mNafg-GGaQyvHcdK_ca";
+
   let filteredNews = [];
 
-  function loadNews(){
-    setNews(getNews())
+  async function loadNews(){
+    const response = await getNoticias();
+    setNews(response.data)
     return;
   }
 
@@ -27,7 +30,7 @@ export default function ConsultarNoticias(){
 
   function filterNews(value){  
     const titleLowerCase = title.toLowerCase()
-    const valueLowerCase = value.title.toLowerCase()
+    const valueLowerCase = value.titulo.toLowerCase()
     return valueLowerCase.includes(titleLowerCase);
   }
 
@@ -51,15 +54,15 @@ export default function ConsultarNoticias(){
     return filteredNews.map((card, key) => (
       <CardConsulta
         key={key}
-        title={card.title}
-        description={card.subtitle}
-        urlImg={card.urlImg}
-        firstFooter={`Criado em ${card.firstFooter}`}
-        lastFooter={`Última atualização ${card.lastFooter}`}
+        title={card.titulo}
+        description={card.descricao}
+        urlImg={urlImg}
+        firstFooter={`Criado em ${card.data}`}
+        lastFooter={`${card.tag}`}
         editor={
           <EditorDeNoticia 
-            title={card.title}
-            subtitle={card.subtitle}
+            title={card.titulo}
+            subtitle={card.descricao}
           />
         }
       />
