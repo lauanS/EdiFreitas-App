@@ -6,7 +6,7 @@ import {Form, Row, Col} from 'react-bootstrap';
 
 
 export default function DadosNoticia(props){
-  const { title, subtitle, setTitle, setSubtitle } = props;
+  const { title, subtitle, setTitle, setSubtitle, tags, setTags } = props;
 
   const handleTitleChange = e => {
     setTitle(e.target.value);
@@ -16,13 +16,17 @@ export default function DadosNoticia(props){
     setSubtitle(e.target.value);
   }
 
+  const handleTagsChange = e => {
+    setTags(e.target.value);
+  }
+
   return (
     <>
-      <Form.Group as={Row} controlId="formGroupName">
+      <Form.Group as={Row} controlId="formGroupTitle">
         <Form.Label column sm={2}>
           Título da notícia
         </Form.Label>
-        <Col sm={5}>
+        <Col>
           <Form.Control 
             value={title}
             onChange={handleTitleChange} 
@@ -31,7 +35,7 @@ export default function DadosNoticia(props){
         </Col>
       </Form.Group>
 
-      <Form.Group as={Row} controlId="formGroupName">
+      <Form.Group as={Row} controlId="formGroupSubtitle">
         <Form.Label column sm={2}>
           Subtítulo
         </Form.Label>
@@ -41,6 +45,19 @@ export default function DadosNoticia(props){
             rows="2" 
             value={subtitle}
             onChange={handleSubtitleChange}
+          />
+        </Col>
+      </Form.Group>
+
+      <Form.Group as={Row} controlId="formGroupTags">
+        <Form.Label column sm={2}>
+          Tags
+        </Form.Label>
+        <Col>
+          <Form.Control
+            rows="2" 
+            value={tags}
+            onChange={handleTagsChange}
           />
         </Col>
       </Form.Group>

@@ -7,10 +7,11 @@ import DadosNoticia from '../DadosNoticia/index'
 import './styles.scss';
 
 export default function EditorDeNoticia(props){
-  const { initialTitle, initialSubtitle, initialText } = props;
+  const { initialTitle="", initialSubtitle="", initialText="", initialTags="" } = props;
 
   const [title, setTitle] = useState(initialTitle);
   const [subtitle, setSubtitle] = useState(initialSubtitle);
+  const [tags, setTags] = useState(initialTags);
   const [text, setText] = useState(initialText);
 
   const [open, setOpen] = useState(true);
@@ -37,6 +38,8 @@ export default function EditorDeNoticia(props){
               setTitle={setTitle} 
               subtitle={subtitle}
               setSubtitle={setSubtitle} 
+              tags={tags}
+              setTags={setTags}
             />
           </div>
         </Collapse>
