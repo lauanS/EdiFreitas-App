@@ -70,14 +70,14 @@ export async function getNoticias(){
   return await api.get('/noticias');
 }
 
-export function postNoticia(noticia){
-  return api.post('/noticias', noticia);
+export async function postNoticia(noticia){
+  return await api.post('/noticias', noticia);
 }
 
-export function deleteNoticia(id){
-  return api.delete('/noticias/' + id);
+export async function deleteNoticia(id){
+  return await api.delete('/noticias/' + id);
 }
 
-export function putNoticia(noticia, id){
-  return api.put('/noticias/' + id, noticia);
+export async function putNoticia(noticia, id){
+  return await api.put('/noticias/' + id, noticia);
 }
