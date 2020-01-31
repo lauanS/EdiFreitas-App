@@ -20,8 +20,6 @@ export default function ConsultarEventos(){
 
   async function loadEvents(){
     const response = await getEventos();
-    console.log(response.data);
-
     setEvents(response.data);
     return;
   }
@@ -57,7 +55,7 @@ export default function ConsultarEventos(){
       <CardConsulta
         key={key}
         title={card.nome}
-        subtitle={card.descricao}
+        description={card.descricao}
         urlImg={urlImg}
         firstFooter={`Dia: ${card.dataEvento}`}
         lastFooter={`Local: ${card.local}`}

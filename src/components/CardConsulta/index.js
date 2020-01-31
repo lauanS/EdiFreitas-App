@@ -5,8 +5,8 @@ import {Row, Col, Card, Button} from 'react-bootstrap'
 import './styles.scss';
 
 
-export default function ConsultarNoticias(props){
-  const { title, subtitle, urlImg, firstFooter, lastFooter } = props;
+export default function CardConsulta(props){
+  const { title, description, urlImg, firstFooter, lastFooter } = props;
   const { editor } = props;
 
   const [showModal, setShowModal] = useState(false);
@@ -36,8 +36,8 @@ export default function ConsultarNoticias(props){
         />
         <Col>
           <Row>
-            <Card.Subtitle className="card-subtitle">
-              {subtitle}
+            <Card.Subtitle className="card-description">
+              {description}
             </Card.Subtitle>
           </Row>
           <Row>      

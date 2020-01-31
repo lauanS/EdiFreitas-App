@@ -52,7 +52,7 @@ export default function ConsultarNoticias(){
       <CardConsulta
         key={key}
         title={card.title}
-        subtitle={card.subtitle}
+        description={card.subtitle}
         urlImg={card.urlImg}
         firstFooter={`Criado em ${card.firstFooter}`}
         lastFooter={`Última atualização ${card.lastFooter}`}
