@@ -64,3 +64,20 @@ export function deleteEvento(id){
 export function putEvento(evento, id){
   return api.put('/eventos/' + id, evento);
 }
+
+//===================== NOTÍCIAS =====================
+export async function getNoticias(){
+  return await api.get('/noticias');
+}
+
+export function postNoticia(noticia){
+  return api.post('/noticias', noticia);
+}
+
+export function deleteNoticia(id){
+  return api.delete('/noticias/' + id);
+}
+
+export function putNoticia(noticia, id){
+  return api.put('/noticias/' + id, noticia);
+}
