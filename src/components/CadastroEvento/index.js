@@ -71,7 +71,7 @@ export default function CadastroEvento(){
 
       const obj = {
         nome: nomeEvento,
-        data,
+        dataEvento: data,
         descricao: descricaoEvento,
         local: localEvento
       }
