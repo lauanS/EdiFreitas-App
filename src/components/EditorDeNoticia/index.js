@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import { Form, Button, Collapse } from 'react-bootstrap';
 import TextEditor from '../EditorDeTexto/index'
 import DadosNoticia from '../DadosNoticia/index'
+import Snackbar from '../Snackbars';
 
 import {postNoticia} from '../../services';
 
@@ -20,9 +21,17 @@ export default function EditorDeNoticia(props){
 
   const [open, setOpen] = useState(true);
 
-  const urlImg = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT0h6YYldvKZUH9MQu3WWhxpDGh9Uvu8mNafg-GGaQyvHcdK_ca";
+  const [openAlertSuccess, setOpenAlertSuccess] = useState(false);
+  const [openAlertError, setOpenAlertError] = useState(false);
 
-  async function handleSubmit(e){    
+
+  const urlImg = "https://cutetheworld.files.wordpress.com/2008/11/cutebug.png";
+
+  async function handleSubmit(e){   
+     
+    e.persist();
+    e.preventDefault();
+    e.stopPropagation();
 
     const fullDate = new Date();
     const data = fullDate.toISOString().substr(0, 19);
@@ -37,10 +46,19 @@ export default function EditorDeNoticia(props){
       tag:tags
     }
 
-    await postNoticia(obj);
+    try {
+      const response = await postNoticia(obj);
+      console.log("Tudo certo: ", response);
+      setOpenAlertSuccess(true);
+      setOpenAlertError(false);
+    } catch (error) {
+      console.log("Ocorreu um erro:", error);
+      setOpenAlertSuccess(false);
+      setOpenAlertError(true);
+    }
+    
 
-    e.preventDefault();
-    e.stopPropagation();
+
   }
 
   const handleChildChange = e => {
@@ -50,6 +68,9 @@ export default function EditorDeNoticia(props){
 
   return (
     <>
+    <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} msg="Notícia criada!" type="success"/>
+    <Snackbar open={openAlertError} setOpen={setOpenAlertError} msg="Ocorreu um erro ao criar a notícia" type="error"/>
+
     <div className='news-content'>
       <Form onSubmit={handleSubmit} >
         <Collapse in={open}>
