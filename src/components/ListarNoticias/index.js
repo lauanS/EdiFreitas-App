@@ -51,12 +51,13 @@ export default function ConsultarNoticias(){
 
   function renderCards(){
     filteredNews = news.filter(filterNews)
+
     return filteredNews.map((card, key) => (
       <CardConsulta
         key={key}
         title={card.titulo}
         description={card.descricao}
-        urlImg={urlImg}
+        urlImg={(card.foto ? card.foto : urlImg)}
         firstFooter={`Criado em ${card.data}`}
         lastFooter={`${card.tag}`}
         editor={
