@@ -1,0 +1,19 @@
+@media (min-width: 600px) {
+    .AdicionarFotos {
+        margin-left: 240px;
+        width: calc(100%-250);
+        max-width: 1000px;
+    }
+}
+
+.AdicionarFotos {
+    padding: 30px;
+    display: block;
+    margin-top: 60px;
+}
+
+@media (max-width: 599px) {
+    .AdicionarFotos {
+        width: 95%;
+    }
+}
