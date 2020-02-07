@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Form, Button, Collapse } from 'react-bootstrap';
 import TextEditor from '../EditorDeTexto/index'
 import DadosNoticia from '../DadosNoticia/index'
 import Snackbar from '../Snackbars';
 
-import { postNoticia } from '../../services';
+import { postNoticia, putNoticia } from '../../services';
 
 import './styles.scss';
 
 export default function EditorDeNoticia(props){
   const { initialTitle="", initialSubtitle="", initialText="", initialTags="" } = props;
+  const { isUpdate, id } = props;
 
   const [title, setTitle] = useState(initialTitle);
   const [invalidatedTitle, setInvalidatedTitle] = useState(false);
@@ -21,7 +22,7 @@ export default function EditorDeNoticia(props){
   const [tags, setTags] = useState(initialTags);
 
   const [text, setText] = useState(initialText);
-  const [invalidatedText, setInvalidatedText] = useState(true);
+  const [invalidatedText, setInvalidatedText] = useState(false);
 
   const [open, setOpen] = useState(true);
 
@@ -31,6 +32,11 @@ export default function EditorDeNoticia(props){
   
 
   const urlImg = "https://cutetheworld.files.wordpress.com/2008/11/cutebug.png";
+
+  /* Verifica se o texto é válido ou inválido */
+  useEffect(() => {   
+    setInvalidatedText(text.length === 0);  
+  }, [text]);
 
   function resetFields(){
     setTitle("");
@@ -64,38 +70,70 @@ export default function EditorDeNoticia(props){
         data,
         tag:tags
       }
-  
-      try {
-        const response = await postNoticia(obj);
-        console.log("Tudo certo: ", response);
-        setOpenAlertSuccess(true);
-        setOpenAlertError(false);
-        setOpenFieldError(false);
-        resetFields();
-      } catch (error) {
-        console.log("Ocorreu um erro:", error);
-        setOpenAlertSuccess(false);
-        setOpenAlertError(true);
-        setOpenFieldError(false);
+
+      console.log('obj:');
+      console.log(obj);
+
+      if(isUpdate){
+        console.log("--Update--");
+        await update(obj, id);
       }
+      else{
+        console.log("--Save--");
+        await save(obj);
+      }
+      
     }
     else{
       setOpenAlertSuccess(false);
       setOpenAlertError(false);
       setOpenFieldError(true);
+      console.log("Campos inválidos: ", title);
+      console.log(subtitle);
+      console.log(tags);
+      console.log(text.length);
     }
+  }
+
+  async function save(obj){
+    try {
+      const response = await postNoticia(obj);
+      console.log("Tudo certo: ", response);
+      setOpenAlertSuccess(true);
+      setOpenAlertError(false);
+      setOpenFieldError(false);
+      resetFields();
+    } catch (error) {
+      console.log("Ocorreu um erro:", error);
+      setOpenAlertSuccess(false);
+      setOpenAlertError(true);
+      setOpenFieldError(false);
+    }
+  }
+
+  async function update(obj, id){
+    try {
+      const response = await putNoticia(obj, id);
+      setOpenAlertSuccess(true);
+      setOpenAlertError(false);
+      setOpenFieldError(false);
+    } catch (error) {
+      setOpenAlertSuccess(false);
+      setOpenAlertError(true);
+      setOpenFieldError(false);
+    }
+
   }
 
   const handleChildChange = e => {
     const content = e.target.getContent();
     setText(content);
-    setInvalidatedText(content.length === 0)
   }
 
   return (
     <>
-    <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} msg="Notícia criada!" type="success"/>
-    <Snackbar open={openAlertError} setOpen={setOpenAlertError} msg={"Ocorreu um erro ao criar a notícia"} type="error"/>
+    <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} msg="Notícia salva!" type="success"/>
+    <Snackbar open={openAlertError} setOpen={setOpenAlertError} msg={"Ocorreu um erro ao salvar a notícia"} type="error"/>
 
     <Snackbar open={openFieldError} setOpen={setOpenFieldError} msg="Insira o conteúdo da notícia" type="error"/>
 

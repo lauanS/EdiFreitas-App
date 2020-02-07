@@ -4,7 +4,7 @@ import {Modal} from 'react-bootstrap';
 import './styles.scss';
 import TextEditor from "../../EditorDeNoticia";
 
-export default function EditarNoticia({title, subtitle, text, tags, show, setShow}){
+export default function EditarNoticia({id, title, subtitle, text, tags, show, setShow}){
   const handleClose = () => {setShow(false)}
 
   return (
@@ -26,6 +26,8 @@ export default function EditarNoticia({title, subtitle, text, tags, show, setSho
           initialSubtitle={subtitle}
           initialText={text}        
           initialTags={tags}
+          isUpdate={true}
+          id={id}
         />
       </Modal.Body>
     </Modal>
