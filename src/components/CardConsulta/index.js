@@ -7,17 +7,17 @@ import './styles.scss';
 
 export default function CardConsulta(props){
   const { obj, title, description, urlImg, firstFooter, lastFooter } = props;
-  const { deleteThisCard, setSelectedNews } = props;
+  const { deleteThisCard, setSelectedObj } = props;
 
   const { setShowModal } = props;
 
   function handleClick(){
-    setSelectedNews(obj);
+    setSelectedObj(obj);
     setShowModal(true);
   }
 
   function handleDelete(){
-    setSelectedNews(obj);
+    setSelectedObj(obj);
     deleteThisCard();
   }
 

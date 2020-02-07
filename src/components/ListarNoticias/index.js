@@ -103,7 +103,7 @@ export default function ConsultarNoticias(){
         deleteThisCard={showDeleteAlert}
         showModal={showModal}
         setShowModal={setShowModal}
-        setSelectedNews={setSelectedNews}
+        setSelectedObj={setSelectedNews}
       />
     ))
   }
