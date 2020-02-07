@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {Modal} from 'react-bootstrap';
 
 import './styles.scss';
 import TextEditor from "../../EditorDeNoticia";
 
-export default function EditarNoticia({title, subtitle, text, tags}){
-  const [show, setShow] = useState(true);
-
+export default function EditarNoticia({title, subtitle, text, tags, show, setShow}){
   const handleClose = () => {setShow(false)}
 
   return (

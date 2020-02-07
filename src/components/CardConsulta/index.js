@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 import {Row, Col, Card, Button} from 'react-bootstrap'
 
@@ -6,26 +6,19 @@ import './styles.scss';
 
 
 export default function CardConsulta(props){
-  const { id, title, description, urlImg, firstFooter, lastFooter } = props;
-  const { editor } = props;
-  const { deleteThisCard } = props;
+  const { obj, title, description, urlImg, firstFooter, lastFooter } = props;
+  const { deleteThisCard, setSelectedNews } = props;
 
-  const [showModal, setShowModal] = useState(false);
+  const { setShowModal } = props;
 
   function handleClick(){
-    setShowModal(true)
+    setSelectedNews(obj);
+    setShowModal(true);
   }
 
   function handleDelete(){
-    deleteThisCard({id, title});
-  }
-
-  function renderModal(){
-    if(showModal){
-      return editor;
-    }else{
-      return;
-    }  
+    setSelectedNews(obj);
+    deleteThisCard();
   }
 
   return (
@@ -61,8 +54,6 @@ export default function CardConsulta(props){
 
     
     </Card>
-
-    { renderModal() }
     </>
   );
 }

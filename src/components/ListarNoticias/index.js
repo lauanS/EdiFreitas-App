@@ -18,7 +18,9 @@ export default function ConsultarNoticias(){
   const [feedback, setFeedback] = useState('');
 
   const [showAlert, setShowAlert] = useState(false);
-  const [selectedNews, setSelectedNews ] = useState({id: undefined, title: ""});
+  const [showModal, setShowModal] = useState(false);
+
+  const [selectedNews, setSelectedNews ] = useState({id: undefined, titulo: ""});
 
   const urlImg = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT0h6YYldvKZUH9MQu3WWhxpDGh9Uvu8mNafg-GGaQyvHcdK_ca";
 
@@ -67,8 +69,7 @@ export default function ConsultarNoticias(){
   }
 
   /* Função chamada ao clicar em deletar no cardConsulta */
-  function showDeleteAlert(news){
-    setSelectedNews(news);
+  function showDeleteAlert(){
     setShowAlert(true);
   }
 
@@ -93,21 +94,16 @@ export default function ConsultarNoticias(){
     return filteredNews.map((news, key) => (
       <CardConsulta
         key={key}
-        id={news.id}
+        obj={news}
         title={news.titulo}
         description={news.descricao}
         urlImg={(news.foto ? news.foto : urlImg)}
         firstFooter={`Criado em ${news.data}`}
         lastFooter={`${news.tag}`}
         deleteThisCard={showDeleteAlert}
-        editor={
-          <EditorDeNoticia 
-            title={news.titulo}
-            subtitle={news.descricao}
-            text={news.texto}
-            tags={news.tag}
-          />
-        }
+        showModal={showModal}
+        setShowModal={setShowModal}
+        setSelectedNews={setSelectedNews}
       />
     ))
   }
@@ -144,7 +140,7 @@ export default function ConsultarNoticias(){
 
     <SweetAlert 
       customClass="sweetAlert"
-      title={"Deseja mesmo deletar à notícia " + selectedNews.title + " ?"} 
+      title={"Deseja mesmo deletar à notícia " + selectedNews.titulo + " ?"} 
       show={showAlert}
       type='warning' 
       onConfirm={handleConfirm}
@@ -157,6 +153,16 @@ export default function ConsultarNoticias(){
       showCancel={true}
       focusConfirmBtn={false}
       showCloseButton={true}
+    />
+
+    <EditorDeNoticia
+      id={selectedNews.id} 
+      title={selectedNews.titulo}
+      subtitle={selectedNews.descricao}
+      text={selectedNews.texto}
+      tags={selectedNews.tag}
+      show={showModal}
+      setShow={setShowModal}
     />
 
     </>
