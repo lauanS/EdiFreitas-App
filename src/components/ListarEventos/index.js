@@ -137,7 +137,7 @@ export default function ConsultarEventos(){
 
     <SweetAlert 
       customClass="sweetAlert"
-      title={"Deseja mesmo deletar o evento " + selectedEvent.nome + " ?"} 
+      title={`Deseja mesmo deletar o evento "${selectedEvent.nome}" ?`} 
       show={showAlert}
       type='warning' 
       onConfirm={handleConfirm}

@@ -140,7 +140,7 @@ export default function ConsultarNoticias(){
 
     <SweetAlert 
       customClass="sweetAlert"
-      title={"Deseja mesmo deletar à notícia " + selectedNews.titulo + " ?"} 
+      title={`Deseja mesmo deletar à notícia "${selectedNews.titulo}" ?`} 
       show={showAlert}
       type='warning' 
       onConfirm={handleConfirm}
