@@ -104,6 +104,8 @@ export default function ConsultarNoticias(){
           <EditorDeNoticia 
             title={news.titulo}
             subtitle={news.descricao}
+            text={news.texto}
+            tags={news.tag}
           />
         }
       />
