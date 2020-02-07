@@ -10,7 +10,7 @@ export default class ConsultarEventos extends React.Component{
         return (
           <>
           <Sidebar titulo="Consultar eventos" ativo={4} key={"sidebar"}/>
-          <div className="ConsultarPessoas">
+          <div className="consulta">
             <ListarEventos />
           </div>
           </>

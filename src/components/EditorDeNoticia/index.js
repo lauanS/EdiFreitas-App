@@ -1,13 +1,11 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
 import { Form, Button, Collapse } from 'react-bootstrap';
 import TextEditor from '../EditorDeTexto/index'
 import DadosNoticia from '../DadosNoticia/index'
 import Snackbar from '../Snackbars';
 
-import {postNoticia} from '../../services';
-
-import {parseStringAsArray} from "../../assist/helpers"
+import { postNoticia } from '../../services';
 
 import './styles.scss';
 
@@ -64,7 +62,6 @@ export default function EditorDeNoticia(props){
         texto:text,
         foto:urlImg,
         data,
-        // tag:parseStringAsArray(tags)
         tag:tags
       }
   

@@ -7,9 +7,8 @@ import EditorDeEventos from "./EditarEventos";
 import Snackbar from '../Snackbars';
 
 import { getEventos, deleteEvento } from '../../services';
-import { notFind } from '../../assist/feedback';
 
-import { deleteError, deleteSucess } from "../../assist/feedback";
+import { notFind, deleteError, deleteSucess } from "../../assist/feedback";
 import './styles.scss';
 
 export default function ConsultarEventos(){

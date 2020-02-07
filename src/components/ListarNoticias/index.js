@@ -7,9 +7,8 @@ import EditorDeNoticia from "./EditarNoticia";
 import Snackbar from '../Snackbars';
 
 import { getNoticias, deleteNoticia } from '../../services';
-import { notFind } from '../../assist/feedback';
 
-import { deleteError, deleteSucess } from "../../assist/feedback";
+import { notFind, deleteError, deleteSucess } from "../../assist/feedback";
 import './styles.scss';
 
 export default function ConsultarNoticias(){
