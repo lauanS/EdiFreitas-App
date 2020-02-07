@@ -4,8 +4,7 @@ import {Modal} from 'react-bootstrap';
 import './styles.scss';
 import TextEditor from "../../EditorDeNoticia";
 
-export default function EditarNoticia({title, subtitle}){
-  const [show, setShow] = useState(true);
+export default function EditarNoticia({title, subtitle, show, setShow}){
 
   const handleClose = () => {setShow(false)}
 
