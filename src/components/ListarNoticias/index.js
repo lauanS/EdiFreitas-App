@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Row, Col, CardColumns } from 'react-bootstrap';
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 import CardConsulta from '../CardConsulta';
 import EditorDeNoticia from "./EditarNoticia";
+import Snackbar from '../Snackbars';
 
 import { getNoticias, deleteNoticia } from '../../services';
 import { notFind } from '../../assist/feedback';
 
+import { deleteError, deleteSucess } from "../../assist/feedback";
 import './styles.scss';
 
 export default function ConsultarNoticias(){
@@ -14,9 +17,15 @@ export default function ConsultarNoticias(){
   const [title, setTitle] = useState('');
   const [feedback, setFeedback] = useState('');
 
+  const [showAlert, setShowAlert] = useState(false);
+  const [selectedNews, setSelectedNews ] = useState({id: undefined, title: ""});
+
   const urlImg = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT0h6YYldvKZUH9MQu3WWhxpDGh9Uvu8mNafg-GGaQyvHcdK_ca";
 
-  let filteredNews = [];
+  let filteredNews = [];  
+
+  const [alertDeleteSucess, setAlertDeleteSucess] = useState(false);
+  const [alertDeleteError, setAlertDeleteError] = useState(false);
 
   async function loadNews(){
     const response = await getNoticias();
@@ -27,10 +36,12 @@ export default function ConsultarNoticias(){
 
   async function deleteNews(id){
     try {
-      const response = await deleteNoticia(id);
-      console.log(`Noticia -${id}- deletada com sucesso\nResponse: ${response}`);
+      await deleteNoticia(id);
+      setAlertDeleteSucess(true);
+      setAlertDeleteError(false);
     } catch (error) {
-      console.log(`Erro ao deletar a noticia -${id}-\nErro: ${error}`);
+      setAlertDeleteSucess(false);
+      setAlertDeleteError(true);
     }    
   }
 
@@ -43,6 +54,22 @@ export default function ConsultarNoticias(){
     const titleLowerCase = title.toLowerCase()
     const valueLowerCase = value.titulo.toLowerCase()
     return valueLowerCase.includes(titleLowerCase);
+  }
+
+  async function handleConfirm(){
+    setShowAlert(false);
+    await deleteNews(selectedNews.id);    
+    loadNews();
+  }
+
+  function handleCancel(){
+    setShowAlert(false);
+  }
+
+  /* Função chamada ao clicar em deletar no cardConsulta */
+  function showDeleteAlert(news){
+    setSelectedNews(news);
+    setShowAlert(true);
   }
 
   /* Carregando as notícias */
@@ -72,7 +99,7 @@ export default function ConsultarNoticias(){
         urlImg={(news.foto ? news.foto : urlImg)}
         firstFooter={`Criado em ${news.data}`}
         lastFooter={`${news.tag}`}
-        deleteCard={deleteNews}
+        deleteThisCard={showDeleteAlert}
         editor={
           <EditorDeNoticia 
             title={news.titulo}
@@ -85,6 +112,10 @@ export default function ConsultarNoticias(){
 
   return (
     <>
+    <Snackbar open={alertDeleteSucess} setOpen={setAlertDeleteSucess} msg={deleteSucess("Notícia")}type="success"/>
+    <Snackbar open={alertDeleteError} setOpen={setAlertDeleteError} msg={deleteError()} type="error"/>
+
+
     <Form autoComplete="off">
       <Form.Group as={Row} controlId="formGroupName">
         <Form.Label column sm={2} className="listarPessoas__label">
@@ -108,6 +139,24 @@ export default function ConsultarNoticias(){
         renderCards()  
       }
     </CardColumns>
+
+    <SweetAlert 
+      customClass="sweetAlert"
+      title={"Deseja mesmo deletar à notícia " + selectedNews.title + " ?"} 
+      show={showAlert}
+      type='warning' 
+      onConfirm={handleConfirm}
+      onCancel={handleCancel}
+      btnSize='sm' 
+      confirmBtnText="Deletar"
+      confirmBtnBsStyle="danger"
+      cancelBtnText="Cancelar"
+      cancelBtnBsStyle="secondary"
+      showCancel={true}
+      focusConfirmBtn={false}
+      showCloseButton={true}
+    />
+
     </>
   );
       

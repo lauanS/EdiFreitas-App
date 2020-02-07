@@ -8,15 +8,16 @@ import './styles.scss';
 export default function CardConsulta(props){
   const { id, title, description, urlImg, firstFooter, lastFooter } = props;
   const { editor } = props;
-  const { deleteCard } = props;
+  const { deleteThisCard } = props;
+
   const [showModal, setShowModal] = useState(false);
 
   function handleClick(){
     setShowModal(true)
   }
 
-  function handleDeleteCard() {
-    deleteCard(id);
+  function handleDelete(){
+    deleteThisCard({id, title});
   }
 
   function renderModal(){
@@ -48,7 +49,7 @@ export default function CardConsulta(props){
           <Row>      
               <Button as={Col} variant="link"> Visualizar </Button>
               <Button as={Col} variant="link" onClick={handleClick}> Editar </Button>
-              <Button as={Col} variant="link" onClick={handleDeleteCard}> Excluir </Button>        
+              <Button as={Col} variant="link" onClick={handleDelete}> Excluir </Button>        
           </Row>
         </Col>    
 
@@ -57,12 +58,11 @@ export default function CardConsulta(props){
           <p>{lastFooter}</p>
         </footer>
       </Card.Body>
+
     
     </Card>
 
-    { 
-      renderModal()
-    }
+    { renderModal() }
     </>
   );
 }
