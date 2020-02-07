@@ -6,14 +6,19 @@ import './styles.scss';
 
 
 export default function CardConsulta(props){
-  const { title, description, urlImg, firstFooter, lastFooter } = props;
+  const { id, title, description, urlImg, firstFooter, lastFooter } = props;
   const { editor } = props;
-
+  const { deleteCard } = props;
   const [showModal, setShowModal] = useState(false);
 
   function handleClick(){
     setShowModal(true)
   }
+
+  function handleDeleteCard() {
+    deleteCard(id);
+  }
+
   function renderModal(){
     if(showModal){
       return editor;
@@ -43,7 +48,7 @@ export default function CardConsulta(props){
           <Row>      
               <Button as={Col} variant="link"> Visualizar </Button>
               <Button as={Col} variant="link" onClick={handleClick}> Editar </Button>
-              <Button as={Col} variant="link"> Excluir </Button>        
+              <Button as={Col} variant="link" onClick={handleDeleteCard}> Excluir </Button>        
           </Row>
         </Col>    
 

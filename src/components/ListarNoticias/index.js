@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import {Form, Row, Col, CardColumns} from 'react-bootstrap';
+import { Form, Row, Col, CardColumns } from 'react-bootstrap';
 
 import CardConsulta from '../CardConsulta';
 import EditorDeNoticia from "./EditarNoticia";
 
-import { getNoticias } from '../../services';
+import { getNoticias, deleteNoticia } from '../../services';
 import { notFind } from '../../assist/feedback';
 
 import './styles.scss';
@@ -23,6 +23,17 @@ export default function ConsultarNoticias(){
     setNews(response.data)
     return;
   }
+
+
+  async function deleteNews(id){
+    try {
+      const response = await deleteNoticia(id);
+      console.log(`Noticia -${id}- deletada com sucesso\nResponse: ${response}`);
+    } catch (error) {
+      console.log(`Erro ao deletar a noticia -${id}-\nErro: ${error}`);
+    }    
+  }
+
 
   function updateTitle(e) {
     setTitle(e.target.value);  
@@ -52,18 +63,20 @@ export default function ConsultarNoticias(){
   function renderCards(){
     filteredNews = news.filter(filterNews)
 
-    return filteredNews.map((card, key) => (
+    return filteredNews.map((news, key) => (
       <CardConsulta
         key={key}
-        title={card.titulo}
-        description={card.descricao}
-        urlImg={(card.foto ? card.foto : urlImg)}
-        firstFooter={`Criado em ${card.data}`}
-        lastFooter={`${card.tag}`}
+        id={news.id}
+        title={news.titulo}
+        description={news.descricao}
+        urlImg={(news.foto ? news.foto : urlImg)}
+        firstFooter={`Criado em ${news.data}`}
+        lastFooter={`${news.tag}`}
+        deleteCard={deleteNews}
         editor={
           <EditorDeNoticia 
-            title={card.titulo}
-            subtitle={card.descricao}
+            title={news.titulo}
+            subtitle={news.descricao}
           />
         }
       />
