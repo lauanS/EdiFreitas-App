@@ -8,6 +8,7 @@ import Comentario from '../CampoComentario/index';
 import ModalBusca from '../ModalBuscaResponsavel';
 import Card from '../CardResponsavel';
 import Snackbar from '../Snackbars';
+import CampoImagem from '../CampoFotoPerfil';
 
 import { checkText, checkNumber, checkCamiseta, checkData } from '../../validated';
 import {postCrianca} from '../../services'
@@ -29,6 +30,9 @@ export default function CadastroCrianca(){
 
   const [dadosResponsavel, setDadosResponsavel] = useState({});
   const [invalidatedDadosResponsavel, setInvalidatedDadosResponsavel] = useState(false);
+
+  const [imgBase64, setImgBase64] = useState("");
+  const [invalidatedImgBase64, setInvalidatedImgBase64] = useState(false);
 
   const [numCalcado, setNumCalcado] = useState("");
   const [validatedNumCalcado, setValidatedNumCalcado] = useState(false);
@@ -53,6 +57,9 @@ export default function CadastroCrianca(){
     setDadosResponsavel({});
     setInvalidatedDadosResponsavel(false);
 
+    setImgBase64("");
+    setInvalidatedImgBase64(false);
+
     setNumCalcado("");
     setValidatedNumCalcado(false);
     setInvalidatedNumCalcado(false);
@@ -66,6 +73,8 @@ export default function CadastroCrianca(){
   }
 
   const handleSubmit = e => {
+    //tirar futuramente
+    console.log(imgBase64)
     let flag = false;
 
     if(validatedNomeCompleto === false){
@@ -78,6 +87,10 @@ export default function CadastroCrianca(){
     }
     if(dadosResponsavel.id === undefined){
       setInvalidatedDadosResponsavel(true);
+      flag = true;
+    }
+    if(imgBase64 === ""){
+      setInvalidatedImgBase64(true);
       flag = true;
     }
     if(invalidatedNumCalcado === true){
@@ -115,6 +128,10 @@ export default function CadastroCrianca(){
     e.preventDefault();
     e.stopPropagation();
   };
+
+  const handleImg = (base64) => {
+    setImgBase64(base64);
+  }
 
   const onChangeNome = e => {
     checkText(e, setNomeCompleto, setValidatedNomeCompleto, setInvalidatedNomeCompleto);
@@ -163,6 +180,19 @@ export default function CadastroCrianca(){
         </Col>
       </Form.Group>
 
+      <Form.Group as={Row} controlId="formGroupImagem">
+        <Form.Label column sm={2} className="CadastroCrianca__label">
+          Foto de perfil *
+        </Form.Label>
+        <Col sm={8} className="CadastroCrianca__inputText">
+          <CampoImagem setImgCrop={handleImg}/>
+          {invalidatedImgBase64 ? 
+          <div className="CadastroCrianca__error">Campo obrigatório, selecione uma foto de perfil</div>
+          :
+          ''}
+        </Col>
+      </Form.Group>
+      
       <Form.Group as={Row} controlId="formGroupCalcado">
         <Form.Label column sm={2} className="CadastroCrianca__label">
           Número do calçado

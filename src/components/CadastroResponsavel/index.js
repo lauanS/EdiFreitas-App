@@ -8,6 +8,7 @@ import CamposPessoa from '../CamposPessoa/index';
 import Comentario from '../CampoComentario/index';
 import Endereco from '../Endereco/index';
 import Contato from '../CampoContato/index'
+import CampoImagem from '../CampoFotoPerfil';
 
 import { checkText, checkData, checkCpf, checkTextField } from '../../validated';
 import {converterData} from '../../assist';
@@ -30,6 +31,9 @@ export default function CadastroResponsavel(){
   const [cpf, setCpf] = useState("");
   const [validatedCpf, setValidatedCpf] = useState(false);
   const [invalidatedCpf, setInvalidatedCpf] = useState(false);
+
+  const [imgBase64, setImgBase64] = useState("");
+  const [invalidatedImgBase64, setInvalidatedImgBase64] = useState(false);
 
   const [comentario, setComentario] = useState("");
   const [validatedComentario, setValidatedComentario] = useState(false);
@@ -70,6 +74,9 @@ export default function CadastroResponsavel(){
     setValidatedCpf(false);
     setInvalidatedCpf(false);
 
+    setImgBase64("");
+    setInvalidatedImgBase64(false);
+
     setComentario("");
     setValidatedComentario(false);
 
@@ -98,6 +105,8 @@ export default function CadastroResponsavel(){
   }
 
   const handleSubmit = e => {
+    //tirar futuramente
+    console.log(imgBase64)
     let flag = false;
 
     if(validatedNomeCompleto === false){
@@ -110,6 +119,10 @@ export default function CadastroResponsavel(){
     }
     if(validatedCpf === false){
       setInvalidatedCpf(true);
+      flag = true;
+    }
+    if(imgBase64 === ""){
+      setInvalidatedImgBase64(true);
       flag = true;
     }
     if(validatedLogradouro === false){
@@ -188,6 +201,10 @@ export default function CadastroResponsavel(){
 
   };
 
+  const handleImg = (base64) => {
+    setImgBase64(base64);
+  }
+
   const onChangeNome = e => {
     checkText(e, setNomeCompleto, setValidatedNomeCompleto, setInvalidatedNomeCompleto);
   }
@@ -252,6 +269,19 @@ export default function CadastroResponsavel(){
           <Form.Control.Feedback type="invalid">
             Campo obrigatório, digite um CPF válido/correto (Apenas números)
           </Form.Control.Feedback>
+        </Col>
+      </Form.Group>
+
+      <Form.Group as={Row} controlId="formGroupImagem">
+        <Form.Label column sm={2} className="CadastroResponsavel-label">
+          Foto de perfil *
+        </Form.Label>
+        <Col sm={8} className="CadastroResponsavel-inputText">
+          <CampoImagem setImgCrop={handleImg}/>
+          {invalidatedImgBase64 ? 
+          <div className="CadastroResponsavel-error">Campo obrigatório, selecione uma foto de perfil</div>
+          :
+          ''}
         </Col>
       </Form.Group>
       
