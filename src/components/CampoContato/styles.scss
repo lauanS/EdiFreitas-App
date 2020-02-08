@@ -1,25 +1,15 @@
-.cadastro-inputNumber{
-  width: 150px;
-  max-width: 150px;
+.contato {
+    &__label {
+        min-width: 170px;
+        padding-right: 0px;
+        max-width: 170px;
+    }
+    &__inputContact {
+        width: 400px;
+        max-width: 400px;
+    }
+    &__inputGroup {
+        max-height: 38px;
+        max-width: 58px;
+    }
 }
-
-.cadastro-inputContact{
-  width: 400px;
-  max-width: 400px;
-}
-
-.cadastro-inputText{
-  max-width: 500px;
-}
-
-.cadastro-label{
-  min-width: 170px;
-  padding-right: 0px;
-}
-
-.cadastro-inputGroup{
-  max-height: 38px;
-  max-width: 58px;
-}
-
-

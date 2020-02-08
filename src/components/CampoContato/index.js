@@ -1,11 +1,9 @@
 import React from 'react';
-
-import Telefone from './Telefone/index';
-import Email from './Email/index';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.scss';
 
+import Telefone from './Telefone/index';
+import Email from './Email/index';
 
 export default function CampoContato(props){
 

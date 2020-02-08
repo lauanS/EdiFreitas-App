@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import {Form, Col, Row, InputGroup} from 'react-bootstrap';
-
-import DeleteIcon from '@material-ui/icons/Delete';
-
-import { IconButton } from '@material-ui/core';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles.scss';
 
+import {Form, Col, Row, InputGroup} from 'react-bootstrap';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { IconButton } from '@material-ui/core';
 
 export default function Telefone(props){
-
   const { id, contacts, setContacts } = props;
 
   const [validatedContact, setValidatedContact] = useState(false);
@@ -21,7 +16,6 @@ export default function Telefone(props){
       setValidatedContact(false);
       setInvalidatedContact(false);
     }
-    
   }, [id, contacts]);
 
   function handleChangeContact(e, contacts, setContacts){
@@ -58,7 +52,6 @@ export default function Telefone(props){
     }
       
     setContacts(newContacts);
-
   }
 
   function removeContact(id, contacts, setContacts){
@@ -85,13 +78,12 @@ export default function Telefone(props){
   return(
     <Form.Group as={Row} controlId="formGroupEmail">
       
-      <Form.Label column sm={2} className="cadastro-label">
+      <Form.Label column sm={2} className="contato__label">
         {labelText()}
       </Form.Label>
-      <Col sm={8} className="cadastro-inputContact">
+      <Col sm={8} className="contato__inputContact">
         <InputGroup>
           <Form.Control 
-            className="cadastro-inputText"
             required
             type="text" 
             placeholder="Ex: seu-email@gmail.com"
@@ -101,7 +93,7 @@ export default function Telefone(props){
             isInvalid={invalidatedContact}
           />
            <InputGroup.Append>
-            <InputGroup.Text id="inputGroupAppend"  className="cadastro-inputGroup"> 
+            <InputGroup.Text id="inputGroupAppend"  className="contato__inputGroup"> 
               <IconButton 
                 aria-label="Apagar o email" 
                 size="small"

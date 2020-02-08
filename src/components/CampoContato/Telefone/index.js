@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import '../styles.scss';
+
 import {Form, Col, Row, InputGroup} from 'react-bootstrap';
-
 import DeleteIcon from '@material-ui/icons/Delete';
-
 import { IconButton } from '@material-ui/core';
 
 import { checkTelefone } from '../../../validated';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles.scss';
-
 
 export default function Telefone(props){
 
@@ -72,13 +68,12 @@ export default function Telefone(props){
   return(
     <Form.Group as={Row} controlId="formGroupTelefone">
       
-      <Form.Label column sm={2} className="cadastro-label">
+      <Form.Label column sm={2} className="contato__label">
       { labelText() }
       </Form.Label>
-      <Col sm={8} className="cadastro-inputContact">
+      <Col sm={8} className="contato__inputContact">
         <InputGroup>
           <Form.Control 
-            className="cadastro-inputText"
             required
             type="text" 
             placeholder="DDD + número, Ex: 15988884444"
@@ -88,7 +83,7 @@ export default function Telefone(props){
             isInvalid={invalidatedContact}
           />
           <InputGroup.Append>
-            <InputGroup.Text id="inputGroupAppend"  className="cadastro-inputGroup"> 
+            <InputGroup.Text id="inputGroupAppend"  className="contato__inputGroup"> 
               <IconButton 
                 aria-label="Apagar o telefone" 
                 size="small"
