@@ -1,19 +1,16 @@
-.sidebar{
-
-    &__sectionDiv{
+.sidebar {
+    &__sectionDiv {
         display: flex;
         width: 100%;
         padding: 0px 5px;
         align-items: center;
     }
-
-    &__sectionTitulo{
+    &__sectionTitulo {
         font-weight: 700!important;
         margin-bottom: 0px;
         padding: 0px 5px!important;
     }
-
-    &__activeItem{
+    &__activeItem {
         color: #Bc2018!important;
         font-weight: 700!important;
         margin: 0px!important;
@@ -23,22 +20,18 @@
         outline: 0;
         padding: 5px 0px 5px 42px;
     }
-
-    &__activeItem:hover{
+    &__activeItem:hover {
         text-decoration: none;
         color: #Bc2018!important;
         background-color: #E8EAED;
     }
-
-    &__icons{
+    &__icons {
         color: #30333C;
     }
-
-    &__divider{
+    &__divider {
         background-color: #7F8F9F!important;
     }
-
-    &__item{
+    &__item {
         color: #30333C;
         margin: 0px!important;
         text-decoration: none;
@@ -47,15 +40,13 @@
         outline: 0;
         padding: 5px 0px 5px 42px;
     }
-
-    &__item:hover{
+    &__item:hover {
         text-decoration: none;
         color: #30333C;
         outline: 0;
         background-color: #E8EAED;
     }
-
-    &__exit{
+    &__exit {
         color: #30333C;
         margin: 0px!important;
         display: flex;
@@ -69,16 +60,28 @@
         align-items: center;
         font-size: 1rem;
     }
-
-    &__exit:hover{
+    &__exit:hover {
         color: #30333C;
         outline: 0;
         background-color: #E8EAED;
     }
-
-    &__iconExit{
+    &__iconExit {
         color: #30333C;
         padding-right: 5px;
         font-size: 1.9em !important;
+    }
+}
+
+@media (min-width: 960px) {
+    .drawerNav {
+        width: 220px;
+        flex-shrink: 0;
+    }
+    .appBar {
+        width: calc(100% - 220px)!important;
+        margin-left: 220px!important;
+    }
+    .menuButton {
+        display: none!important;
     }
 }

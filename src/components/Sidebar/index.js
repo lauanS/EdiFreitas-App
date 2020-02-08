@@ -28,25 +28,6 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
   },
-  drawer: {
-    [theme.breakpoints.up('sm')]: {
-      width: drawerWidth,
-      flexShrink: 0,
-      display: 'block',
-    },
-  },
-  appBar: {
-    [theme.breakpoints.up('sm')]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
-    },
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up('sm')]: {
-      display: 'none',
-    },
-  },
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
@@ -58,7 +39,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function ResponsiveDrawer(props) {
-  const { container, titulo, ativo } = props;
+  const { container, titulo, ativo, children } = props;
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [toRedirect, setToRedirect] = useState(false);
@@ -149,21 +130,21 @@ function ResponsiveDrawer(props) {
     {toRedirect ? <Redirect to="/"/> : null }
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
+      <AppBar position="fixed" className="appBar">
         <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            className={classes.menuButton}
+            className="menuButton"
           >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>{titulo} </Typography>
         </Toolbar>
       </AppBar>
-      <nav className={classes.drawer} aria-label="mailbox folders">
+      <nav className="drawerNav" aria-label="mailbox folders">
         <Hidden smUp implementation="css">
           <Drawer
             container={container}
@@ -181,7 +162,7 @@ function ResponsiveDrawer(props) {
             {drawer}
           </Drawer>
         </Hidden>
-        <Hidden xsDown implementation="css">
+        <Hidden smDown implementation="css">
           <Drawer
             classes={{
               paper: classes.drawerPaper,
@@ -193,6 +174,10 @@ function ResponsiveDrawer(props) {
           </Drawer>
         </Hidden>
       </nav>
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        {children}
+      </main>
     </div>
     </>
   );
