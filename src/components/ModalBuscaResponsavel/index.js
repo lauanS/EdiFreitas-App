@@ -54,6 +54,7 @@ export default function ModalBusca(props) {
       centered
     >
       <Modal.Header className="modalBusca__header">
+        <p className="modalBusca__text">Selecionar o responsável</p>
         <p className="modalBusca__link" onClick={handleClose}><CloseIcon/> Fechar</p>
       </Modal.Header>
       <Modal.Body>
