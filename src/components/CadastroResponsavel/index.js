@@ -1,6 +1,5 @@
 import React,  { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles.css';
+import './styles.scss';
 
 import Snackbar from '../Snackbars';
 import {Form, Row, Col, Button} from 'react-bootstrap';
@@ -235,9 +234,9 @@ export default function CadastroResponsavel(){
     <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} msg="Responsável cadastrado" type="success"/>
     <Snackbar open={openAlertError} setOpen={setOpenAlertError} msg="Ocorreu um erro ao cadastrar" type="error"/>
 
-    <label className="CadastroResponsavel-Descricao">É obrigatório o preenchimento de campos com * (Asterisco) no título, é opcional quando não possuem o asterisco</label>
+    <label className="CadastroResponsavel__descricao">É obrigatório o preenchimento de campos com * (Asterisco) no título, é opcional quando não possuem o asterisco</label>
 
-    <Form autoComplete="off" onSubmit={handleSubmit} noValidate >
+    <Form autoComplete="off" onSubmit={handleSubmit} noValidate>
       <CamposPessoa 
         nome={nomeCompleto} 
         onChangeNome={onChangeNome} 
@@ -252,12 +251,12 @@ export default function CadastroResponsavel(){
       />
 
       <Form.Group as={Row} controlId="formGroupCpf">
-        <Form.Label column sm={2} className="CadastroResponsavel-label">
+        <Form.Label column sm={2} className="CadastroResponsavel__label">
           CPF *
         </Form.Label>
-        <Col sm={8} className="CadastroResponsavel-inputText">
+        <Col sm={8} className="CadastroResponsavel__inputText">
           <Form.Control 
-            className="CadastroResponsavel-inputCpf"
+            className="CadastroResponsavel__inputCpf"
             required
             type="text" 
             placeholder="Digite apenas números"
@@ -273,13 +272,13 @@ export default function CadastroResponsavel(){
       </Form.Group>
 
       <Form.Group as={Row} controlId="formGroupImagem">
-        <Form.Label column sm={2} className="CadastroResponsavel-label">
+        <Form.Label column sm={2} className="CadastroResponsavel__label">
           Foto de perfil *
         </Form.Label>
-        <Col sm={8} className="CadastroResponsavel-inputText">
+        <Col sm={8} className="CadastroResponsavel__inputText">
           <CampoImagem setImgCrop={handleImg}/>
           {invalidatedImgBase64 ? 
-          <div className="CadastroResponsavel-error">Campo obrigatório, selecione uma foto de perfil</div>
+          <div className="CadastroResponsavel__error">Campo obrigatório, selecione uma foto de perfil</div>
           :
           ''}
         </Col>
@@ -321,10 +320,14 @@ export default function CadastroResponsavel(){
         setValidatedCep={setValidatedCep}
         invalidatedCep={invalidatedCep}
         setInvalidatedCep={setInvalidatedCep}
-        
       />
 
-      <Comentario validatedComentario={validatedComentario} setValidatedComentario={setValidatedComentario}  comentario={comentario} setComentario={setComentario}/>
+      <Comentario 
+        validatedComentario={validatedComentario} 
+        setValidatedComentario={setValidatedComentario}  
+        comentario={comentario} 
+        setComentario={setComentario}
+      />
       
       <Form.Group>
         { 

@@ -1,0 +1,21 @@
+.CadastroResponsavel {
+    &__descricao {
+        margin-bottom: 20px;
+    }
+    &__label {
+        min-width: 170px;
+        padding-right: 0px;
+        max-width: 170px;
+    }
+    &__inputText {
+        max-width: 500px;
+    }
+    &__inputCpf {
+        min-width: 215px;
+        max-width: 215px;
+    }
+    &__error {
+        font-size: 80%;
+        color: #dc3545;
+    }
+}
