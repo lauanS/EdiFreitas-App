@@ -1,65 +1,57 @@
-.label-radio{
+.label-radio {
     margin: 0!important;
 }
 
-.MuiTypography-body1{
+.MuiTypography-body1 {
     font-size: 14px!important;
 }
 
-.MuiInput-underline::before{
+.MuiInput-underline::before {
     border-radius: 4px;
     border: 1px solid red !important;
     height: 100%!important;
 }
 
-.MuiInput-underline::after{
+.MuiInput-underline::after {
     border: 0!important;
 }
 
-.date-input{
+.date-input {
     color: #202124;
-    
 }
 
-button:focus{
+button:focus {
     outline: none!important;
 }
 
-.search-input{
+.search-input {
     border-radius: 4px;
     color: #202124;
     font-size: 16px;
-		display: block;
+    display: block;
     width: calc(100% - 83px);
     height: calc(1.5em + .75rem + 2px);
     padding: .375rem .75rem;
     font-weight: 400;
     background-color: #fff;
     border: 1px solid #ced4da;
-		outline: none;
+    outline: none;
 }
 
-
-.CampoPessoa-label{
-    min-width: 170px;
-    padding-right: 0px;
-}
-
-.CampoPessoa-inputText{
-    max-width: 500px;
-}
-
-@media (min-width: 600px){
-    .CampoPessoa-inputText{
-        min-width: 340px;
+.CampoPessoa {
+    &__label {
+        min-width: 170px;
+        padding-right: 0px;
+        max-width: 170px;
     }
-}
-
-.CampoPessoa-inputNumber{
-    width: 150px;
-    max-width: 150px;
-}
-
-.CampoPessoa-inputSexo{
-    max-width: 100px;
+    &__inputText {
+        max-width: 500px;
+    }
+    &__inputNumber {
+        width: 150px;
+        max-width: 150px;
+    }
+    &__inputSexo {
+        max-width: 100px;
+    }
 }

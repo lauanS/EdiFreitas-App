@@ -1,9 +1,7 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles.css';
+import './styles.scss';
 
 import {Form, Row, Col} from 'react-bootstrap';
-
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import clsx from 'clsx';
@@ -73,10 +71,10 @@ export default function CamposPessoa(props){
   return (
     <>
     <Form.Group as={Row} controlId="formGroupName">
-      <Form.Label column sm={2} className="CampoPessoa-label">
+      <Form.Label column sm={2} className="CampoPessoa__label">
         Nome completo *
       </Form.Label>
-      <Col sm={8} className="CampoPessoa-inputText">
+      <Col sm={8} className="CampoPessoa__inputText">
         <Form.Control 
           required 
           type="text" 
@@ -93,12 +91,12 @@ export default function CamposPessoa(props){
     </Form.Group>
 
     <Form.Group as={Row} controlId="formGroupDate">
-      <Form.Label column sm={2} className="CampoPessoa-label">
+      <Form.Label column sm={2} className="CampoPessoa__label">
         Data de nascimento *
       </Form.Label>
-      <Col sm={8} className="CampoPessoa-inputText">
+      <Col sm={8} className="CampoPessoa__inputText">
         <Form.Control 
-          className="CampoPessoa-inputNumber"
+          className="CampoPessoa__inputNumber"
           required 
           type="text" 
           placeholder="dd/MM/aaaa" 
@@ -114,11 +112,11 @@ export default function CamposPessoa(props){
     </Form.Group>
 
     <Form.Group as={Row} controlId="formGroupDate">
-      <Form.Label column sm={2} className="CampoPessoa-label">
+      <Form.Label column sm={2} className="CampoPessoa__label">
         Sexo *
       </Form.Label>
-      <Col sm={8} className="CampoPessoa-inputText" >
-        <RadioGroup className="CampoPessoa-inputSexo" defaultValue={sexo} name="customized-radios" onChange={onChangeSexo}>
+      <Col sm={8} className="CampoPessoa__inputText" >
+        <RadioGroup className="CampoPessoa__inputSexo" defaultValue={sexo} name="customized-radios" onChange={onChangeSexo}>
           <FormControlLabel className="label-radio" value="M" control={<StyledRadio />} label="Masculino" />
           <FormControlLabel className="label-radio" value="F" control={<StyledRadio />} label="Feminino" />
         </RadioGroup>
