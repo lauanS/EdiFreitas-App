@@ -5,14 +5,9 @@ import CampoImagem from '../../../components/CampoImagem/index'
 export default class AdicionarFotos extends React.Component{
     render(){
         return (
-          <>
-          <Sidebar titulo="Adicionar fotos" ativo={8}/>
-
-          <div className="AdicionarFotos">
-            <CampoImagem />   
-          </div>
-          </>
+          <Sidebar titulo="Adicionar fotos" ativo={8}>
+            <CampoImagem />
+          </Sidebar>
         );
       }
-
 }
