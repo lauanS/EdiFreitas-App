@@ -11,10 +11,6 @@ export default function DadosNoticia(props){
   const { invalidatedTitle, invalidatedSubtitle } = props;
 
   function checkField(content, setInvalidated){
-    console.log("content: ", content);
-    console.log("content.length: ", content.length);
-    console.log("setInvalidated: ", invalidatedTitle);
-
     if(content.length > 0){
       setInvalidated(false);
     }

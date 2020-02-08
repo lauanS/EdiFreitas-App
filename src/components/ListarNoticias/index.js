@@ -162,6 +162,7 @@ export default function ConsultarNoticias(){
       tags={selectedNews.tag}
       show={showModal}
       setShow={setShowModal}
+      updateList={loadNews}
     />
 
     </>

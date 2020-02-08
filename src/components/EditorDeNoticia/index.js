@@ -11,7 +11,7 @@ import './styles.scss';
 
 export default function EditorDeNoticia(props){
   const { initialTitle="", initialSubtitle="", initialText="", initialTags="" } = props;
-  const { isUpdate, id } = props;
+  const { isUpdate, updateNews, id } = props;
 
   const [title, setTitle] = useState(initialTitle);
   const [invalidatedTitle, setInvalidatedTitle] = useState(false);
@@ -71,15 +71,10 @@ export default function EditorDeNoticia(props){
         tag:tags
       }
 
-      console.log('obj:');
-      console.log(obj);
-
       if(isUpdate){
-        console.log("--Update--");
         await update(obj, id);
       }
       else{
-        console.log("--Save--");
         await save(obj);
       }
       
@@ -88,23 +83,17 @@ export default function EditorDeNoticia(props){
       setOpenAlertSuccess(false);
       setOpenAlertError(false);
       setOpenFieldError(true);
-      console.log("Campos inválidos: ", title);
-      console.log(subtitle);
-      console.log(tags);
-      console.log(text.length);
     }
   }
 
   async function save(obj){
     try {
-      const response = await postNoticia(obj);
-      console.log("Tudo certo: ", response);
+      await postNoticia(obj);
       setOpenAlertSuccess(true);
       setOpenAlertError(false);
       setOpenFieldError(false);
       resetFields();
     } catch (error) {
-      console.log("Ocorreu um erro:", error);
       setOpenAlertSuccess(false);
       setOpenAlertError(true);
       setOpenFieldError(false);
@@ -113,10 +102,11 @@ export default function EditorDeNoticia(props){
 
   async function update(obj, id){
     try {
-      const response = await putNoticia(obj, id);
+      await putNoticia(obj, id);
       setOpenAlertSuccess(true);
       setOpenAlertError(false);
       setOpenFieldError(false);
+      updateNews();
     } catch (error) {
       setOpenAlertSuccess(false);
       setOpenAlertError(true);
@@ -132,10 +122,13 @@ export default function EditorDeNoticia(props){
 
   return (
     <>
+
     <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} msg="Notícia salva!" type="success"/>
     <Snackbar open={openAlertError} setOpen={setOpenAlertError} msg={"Ocorreu um erro ao salvar a notícia"} type="error"/>
 
     <Snackbar open={openFieldError} setOpen={setOpenFieldError} msg="Insira o conteúdo da notícia" type="error"/>
+
+
 
     <div className='news-content'>
       <Form onSubmit={handleSubmit} >
@@ -173,7 +166,7 @@ export default function EditorDeNoticia(props){
           <TextEditor text={text} handleChange={handleChildChange}/>      
         </div>
 
-        <Button type="submit" block>Cadastrar</Button>
+        <Button type="submit" block>Salvar</Button>
 
       </Form>
 
