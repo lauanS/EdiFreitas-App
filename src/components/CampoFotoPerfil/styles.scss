@@ -1,0 +1,65 @@
+#inputImagem {
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
+    width: 1px;
+    height: 1px;
+}
+
+#labelImagem,
+#labelImagem1 {
+    display: inline-block;
+    cursor: pointer;
+    background-color: #bc2018;
+    font-weight: 500;
+    line-height: 1.75;
+    color: #fff;
+    background-color: #3f51b5;
+    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    font-size: 0.875rem;
+    padding: 6px 16px;
+    border-radius: 4px;
+    border: 0;
+    outline: 0;
+    margin: 0;
+}
+
+.modalFoto {
+    margin-top: 50px;
+    height: calc(100vh - 30px);
+    &__dialog {
+        max-width: 552px;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    &__header {
+        padding: 5px 10px 0px 10px;
+    }
+    &__link {
+        color: #30333C!important;
+        text-decoration: none;
+        padding: 4px 2px;
+        margin-top: 2px;
+        margin-right: 5px;
+        cursor: pointer;
+        display: flex;
+        font-weight: 700;
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+    &__text {
+        color: #30333C!important;
+        text-decoration: none;
+        padding: 4px 2px;
+        margin-top: 2px;
+        margin-right: 5px;
+        display: flex;
+        font-weight: 700;
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+    &__button {
+        width: 100%;
+    }
+}
