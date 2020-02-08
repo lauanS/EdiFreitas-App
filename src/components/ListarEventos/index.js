@@ -1,43 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Row, Col, CardColumns } from 'react-bootstrap';
+import {Form, Row, Col, CardColumns} from 'react-bootstrap';
 import SweetAlert from 'react-bootstrap-sweetalert';
 
 import CardConsulta from '../CardConsulta';
-import EditorDeNoticia from "./EditarNoticia";
+import EditorDeEventos from "./EditarEventos";
 import Snackbar from '../Snackbars';
 
-import { getNoticias, deleteNoticia } from '../../services';
+import { getEventos, deleteEvento } from '../../services';
 
 import { notFind, deleteError, deleteSucess } from "../../assist/feedback";
 import './styles.scss';
 
-export default function ConsultarNoticias(){
-  const [news, setNews] = useState([]);
-  const [title, setTitle] = useState('');
+export default function ConsultarEventos(){
+  const [events, setEvents] = useState([]);
+  const [search, setSearch] = useState('');
   const [feedback, setFeedback] = useState('');
 
   const [showAlert, setShowAlert] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const [selectedNews, setSelectedNews ] = useState({id: undefined, titulo: ""});
-
-  const urlImg = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT0h6YYldvKZUH9MQu3WWhxpDGh9Uvu8mNafg-GGaQyvHcdK_ca";
-
-  let filteredNews = [];  
-
   const [alertDeleteSucess, setAlertDeleteSucess] = useState(false);
   const [alertDeleteError, setAlertDeleteError] = useState(false);
 
-  async function loadNews(){
-    const response = await getNoticias();
-    setNews(response.data)
+
+  const [selectedEvent, setSelectedEvent ] = useState({id: undefined, nome: ""});
+
+  const urlImg = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSGSchNBJSYBWUARzgM2YisE5S9_Ew8LSyblcHTg_sCRf38-ApP"
+
+  let filteredEvents = [];
+
+  async function loadEvents(){
+    const response = await getEventos();
+    setEvents(response.data);
     return;
   }
 
-
-  async function deleteNews(id){
+  async function deleteEvent(id){
     try {
-      await deleteNoticia(id);
+      await deleteEvento(id);
       setAlertDeleteSucess(true);
       setAlertDeleteError(false);
     } catch (error) {
@@ -46,21 +46,20 @@ export default function ConsultarNoticias(){
     }    
   }
 
-
-  function updateTitle(e) {
-    setTitle(e.target.value);  
+  function updateSearch(e) {
+    setSearch(e.target.value);  
   }
 
-  function filterNews(value){  
-    const titleLowerCase = title.toLowerCase()
-    const valueLowerCase = value.titulo.toLowerCase()
-    return valueLowerCase.includes(titleLowerCase);
+  function filterEvents(value){  
+    const searchLowerCase = search.toLowerCase()
+    const valueLowerCase = value.nome.toLowerCase()
+    return valueLowerCase.includes(searchLowerCase);
   }
 
   async function handleConfirm(){
     setShowAlert(false);
-    await deleteNews(selectedNews.id);    
-    loadNews();
+    await deleteEvent(selectedEvent.id);    
+    loadEvents();
   }
 
   function handleCancel(){
@@ -74,56 +73,54 @@ export default function ConsultarNoticias(){
 
   /* Carregando as notícias */
   useEffect(() => {   
-    loadNews();      
+    loadEvents();      
   }, []);
 
   /* Mensagens de feedback */
   useEffect(() => {   
-    if(!filteredNews.length && title.length){
-      setFeedback(notFind('notícia', title));
+    if(!filteredEvents.length && search.length){
+      setFeedback(notFind('notícia', search));
     }
     else{
       setFeedback("");
     }      
-  }, [filteredNews, title]);
+  }, [filteredEvents, search]);
 
   function renderCards(){
-    filteredNews = news.filter(filterNews)
-
-    return filteredNews.map((news, key) => (
+    filteredEvents = events.filter(filterEvents)
+    return filteredEvents.map((card, key) => (
       <CardConsulta
         key={key}
-        obj={news}
-        title={news.titulo}
-        description={news.descricao}
-        urlImg={(news.foto ? news.foto : urlImg)}
-        firstFooter={`Criado em ${news.data}`}
-        lastFooter={`${news.tag}`}
+        obj={card}
+        title={card.nome}
+        description={card.descricao}
+        urlImg={urlImg}
+        firstFooter={`Dia: ${card.dataEvento}`}
+        lastFooter={`Local: ${card.local}`}
         deleteThisCard={showDeleteAlert}
         showModal={showModal}
         setShowModal={setShowModal}
-        setSelectedObj={setSelectedNews}
+        setSelectedObj={setSelectedEvent}
       />
     ))
   }
 
   return (
     <>
-    <Snackbar open={alertDeleteSucess} setOpen={setAlertDeleteSucess} msg={deleteSucess("Notícia")}type="success"/>
+    <Snackbar open={alertDeleteSucess} setOpen={setAlertDeleteSucess} msg={deleteSucess("Evento")}type="success"/>
     <Snackbar open={alertDeleteError} setOpen={setAlertDeleteError} msg={deleteError()} type="error"/>
-
 
     <Form autoComplete="off">
       <Form.Group as={Row} controlId="formGroupName">
         <Form.Label column sm={2} className="listarPessoas__label">
-          Título
+          Evento
         </Form.Label>
         <Col sm={8} className="listarPessoas__inputText">
           <Form.Control 
             type="text" 
-            placeholder="Ex: Especial de Natal na EdiFreitas" 
-            value={title}
-            onChange={updateTitle}
+            placeholder="Ex: Dia das Crianças" 
+            value={search}
+            onChange={updateSearch}
           />
         </Col>
       </Form.Group>
@@ -139,7 +136,7 @@ export default function ConsultarNoticias(){
 
     <SweetAlert 
       customClass="sweetAlert"
-      title={`Deseja mesmo deletar à notícia "${selectedNews.titulo}" ?`} 
+      title={`Deseja mesmo deletar o evento "${selectedEvent.nome}" ?`} 
       show={showAlert}
       type='warning' 
       onConfirm={handleConfirm}
@@ -154,17 +151,12 @@ export default function ConsultarNoticias(){
       showCloseButton={true}
     />
 
-    <EditorDeNoticia
-      id={selectedNews.id} 
-      title={selectedNews.titulo}
-      subtitle={selectedNews.descricao}
-      text={selectedNews.texto}
-      tags={selectedNews.tag}
+    <EditorDeEventos 
+      title={selectedEvent.nome}
+      subtitle={selectedEvent.descricao} 
       show={showModal}
       setShow={setShowModal}
-      updateList={loadNews}
     />
-
     </>
   );
       

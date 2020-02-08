@@ -125,10 +125,126 @@ function checkDataAtual(d, m, a){
   }
 }
 
+export function checkFormatData(e, data, setData, setVali, setInva){
+  let valor = e.value;
+  let cont = 0;
+
+  for(let i = 0; i < valor.length; i++){
+    let char = valor.charAt(i);
+    if(char === '/'){
+      cont++;
+    }
+  }
+
+  if(e.value.length === 2 && cont === 0 && data.length < valor.length){
+    valor = e.value.concat("/");
+  }
+  else if(e.value.length === 5 && cont === 1 && data.length < valor.length){
+    valor = e.value.concat("/");
+  }
+  else if(e.value.length > 10){
+    valor = data;
+  }
+  
+  setData(valor);
+  
+  cont = 0;
+  let flag = false;
+  let dia = "";
+  let mes = "";
+
+  for(let i = 0; i < valor.length; i++){
+    let char = valor.charAt(i);
+    if(!((char >= '0' && char <= '9') || (char === '/'))){
+      flag = true;
+    }
+    if(char === '/' && cont === 0 && i === 2){
+      cont++;
+      let str1 = valor.charAt(0);
+      let str2 = valor.charAt(1);
+      dia = str1.concat(str2);
+    }
+    else if(char === '/' && cont === 1 && i === 5){
+      cont++;
+      let str1 = valor.charAt(3);
+      let str2 = valor.charAt(4);
+      mes = str1.concat(str2);
+    }
+    else if(char === '/'){
+      cont++;
+    }
+  }
+  if(cont !== 2){
+    flag = true;
+  }
+
+  if(valor.length === 10 && flag === false){
+    dia = parseInt(dia);
+    mes = parseInt(mes);
+    let str1 = valor.charAt(6);
+    let str2 = valor.charAt(7);
+    let ano = str1.concat(str2);
+    str1 = valor.charAt(8);
+    str2 = valor.charAt(9);
+    ano = ano.concat(str1);
+    ano = ano.concat(str2);
+    ano = parseInt(ano);
+    if(mes === 1 || mes === 3 || mes === 5 || mes === 7 || mes === 8 || mes === 10 || mes === 12){
+      if(dia >= 1 && dia <= 31){
+        setVali(true);
+        setInva(false);
+      }
+      else{
+        setVali(false);
+        setInva(true);
+      }
+    }
+    else if(mes === 4 || mes === 6 || mes === 9 || mes === 11){
+      if(dia >= 1 && dia <= 30){
+        setVali(true);
+        setInva(false);
+      }
+      else{
+        setVali(false);
+        setInva(true);
+      }
+    }
+    else if(mes === 2){
+      let bis = false;
+      if ( ( ano % 4 === 0 && ano % 100 !== 0 ) || (ano % 400 === 0) ) { 
+        bis = true
+      } else {
+        bis = false;
+      }
+
+      if(dia >= 1 && dia <= 28){
+        setVali(true);
+        setInva(false);
+      }
+      else if(bis === true && dia === 29){
+        setVali(true);
+        setInva(false);
+      }
+      else{
+        setVali(false);
+        setInva(true);
+      }
+    }
+    else{
+      setVali(false);
+      setInva(true);
+    }
+  }
+  else{
+    setVali(false);
+    setInva(true);
+  }
+}
+
 export function checkData(e, data, setData, setVali, setInva){
   let valor = e.value;
   let cont = 0;
-  checkDataAtual(data);
+
   for(let i = 0; i < valor.length; i++){
     let char = valor.charAt(i);
     if(char === '/'){

@@ -1,10 +1,13 @@
-@media (min-width: 600px) {
+@media (max-width: 600px) {
   .news-content{
-      margin-left: 0px;
+    margin-left: 10px;
+    margin-right: 10px;
   }
 }
 
 .news-content{
+  margin-left: 20px;
+  margin-right: 20px;
   display: block;
 }
 

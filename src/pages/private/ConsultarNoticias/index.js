@@ -2,6 +2,7 @@ import React from 'react';
 
 import Sidebar from '../../../components/Sidebar/index';
 import ListarNoticias from "../../../components/ListarNoticias";
+
 import './styles.scss';
 
 export default class ConsultarNoticias extends React.Component{
@@ -9,7 +10,7 @@ export default class ConsultarNoticias extends React.Component{
         return (
           <>
           <Sidebar titulo="Consultar notícias" ativo={7} key={"sidebar"}/>
-          <div className="ConsultarPessoas">
+          <div className="consulta">
             <ListarNoticias />
           </div>
           </>

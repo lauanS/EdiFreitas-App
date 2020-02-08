@@ -13,6 +13,7 @@ api.interceptors.request.use(async config => {
   return config;
 });
 
+//===================== RESPONSAVEIS =====================
 export function getResponsaveis(){
   return api.get('/responsaveis');
 }
@@ -30,7 +31,7 @@ export function putResponsavel(responsavel, id){
   return api.put('/responsaveis/' + id, responsavel);
 }
 
-
+//===================== CRIANCAS =====================
 export function getCriancas(){
   return api.get('/criancas');
 }
@@ -47,4 +48,36 @@ export function putCrianca(crianca, id){
   return api.put('/criancas/' + id, crianca);
 }
 
+//===================== EVENTOS =====================
+export async function getEventos(){
+  return await api.get('/eventos');
+}
 
+export function postEvento(evento){
+  return api.post('/eventos', evento);
+}
+
+export function deleteEvento(id){
+  return api.delete('/eventos/' + id);
+}
+
+export function putEvento(evento, id){
+  return api.put('/eventos/' + id, evento);
+}
+
+//===================== NOTÍCIAS =====================
+export async function getNoticias(){
+  return await api.get('/noticias');
+}
+
+export async function postNoticia(noticia){
+  return await api.post('/noticias', noticia);
+}
+
+export async function deleteNoticia(id){
+  return await api.delete('/noticias/' + id);
+}
+
+export async function putNoticia(noticia, id){
+  return await api.put('/noticias/' + id, noticia);
+}

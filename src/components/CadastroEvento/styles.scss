@@ -1,0 +1,22 @@
+.CadastroEvento {
+    &__descricao {
+        margin-bottom: 20px;
+    }
+    &__label {
+        min-width: 170px;
+        padding-right: 0px;
+    }
+    &__inputText {
+        max-width: 500px;
+    }
+    &__inputNumber {
+        width: 150px;
+        max-width: 150px;
+    }
+}
+
+@media (min-width: 600px) {
+    .CadastroEvento__inputText {
+        min-width: 340px;
+    }
+}
