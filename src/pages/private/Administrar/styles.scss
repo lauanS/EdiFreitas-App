@@ -1,19 +1,5 @@
-@media (min-width: 600px) {
-    .cad {
-        margin-left: 240px;
-        width: 60vw;
-        min-width: 400px;
-    }
-}
-
-.cad {
-    padding: 30px;
-    display: block;
-    margin-top: 60px;
-}
-
-@media (max-width: 599px) {
-    .cad {
-        width: 95vw;
-    }
+//Refatorada em 08/02/2020 por Leonardo Nozaki
+.welcomeSystem {
+    width: 90%;
+    max-width: 800px;
 }
