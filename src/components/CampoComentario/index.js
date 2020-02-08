@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles.css';
+import './styles.scss';
 
 import {Form, Row, Col} from 'react-bootstrap';
 
@@ -20,10 +20,10 @@ export default function CampoComentario(props){
 
   return (
     <Form.Group as={Row} controlId="formGroupComment">
-      <Form.Label column sm={2} className="Comentario-label">
+      <Form.Label column sm={2} className="Comentario__label">
         Comentário
       </Form.Label>
-      <Col sm={8} className="Comentario-inputText">
+      <Col sm={8} className="Comentario__inputText">
         <Form.Control 
           onChange={e => onChange(e.target)}
           as="textarea" 
