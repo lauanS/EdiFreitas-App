@@ -1,9 +1,7 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.scss';
 
 import {Form, Row, Col} from 'react-bootstrap';
-
 
 export default function Endereco(props){
   const {logradouro, setLogradouro} = props;
@@ -94,7 +92,7 @@ export default function Endereco(props){
   return (
     <>
     <Form.Group as={Row} controlId="formLogradouro">
-      <Form.Label column sm={2} className="cadastro-label">
+      <Form.Label column sm={2} className="endereco__label">
         Logradouro *
       </Form.Label>
       <Col sm={8}>
@@ -106,7 +104,7 @@ export default function Endereco(props){
           onChange={e => onChangeTextField(e.target, setLogradouro, setValidatedLogradouro, setInvalidatedLogradouro)}
           isValid={validatedLogradouro}
           isInvalid={invalidatedLogradouro}
-          className="cadastro-inputText"
+          className="endereco__inputText"
         />
         <Form.Control.Feedback type="invalid">
           Campo obrigatório.
@@ -116,15 +114,15 @@ export default function Endereco(props){
 
 
     <Form.Group as={Row} sm="3" controlId="formNumero">
-      <Form.Label  column sm={2} className="cadastro-label">
+      <Form.Label  column sm={2} className="endereco__label">
         Número *
       </Form.Label>
       <Col sm={8}>
         <Form.Control 
           required
           type="text"
-          className="num-endereco"
-          placeholder="Número da sua casa"
+          className="endereco__inputNumber"
+          placeholder="Número da casa"
           onChange={onChangeNumero}
           value={numero}
           isValid={validatedNumero}
@@ -138,7 +136,7 @@ export default function Endereco(props){
     
 
     <Form.Group as={Row} controlId="formBairro">
-      <Form.Label column sm={2} className="cadastro-label">
+      <Form.Label column sm={2} className="endereco__label">
         Bairro *
       </Form.Label>
       <Col sm={8}>
@@ -146,7 +144,7 @@ export default function Endereco(props){
           required
           type="text" 
           placeholder="Ex: Jd. Neptune"
-          className="cadastro-inputText"
+          className="endereco__inputText"
           onChange={e => onChangeTextField(e.target, setBairro, setValidatedBairro, setInvalidatedBairro)}
           value={bairro}
           isValid={validatedBairro}
@@ -160,14 +158,14 @@ export default function Endereco(props){
 
 
     <Form.Group as={Row} controlId="formCidade">
-      <Form.Label column sm={2} className="cadastro-label">
+      <Form.Label column sm={2} className="endereco__label">
         Cidade *
       </Form.Label>
       <Col sm={8}>
         <Form.Control
           required   
           type="text" 
-          className="cadastro-inputText"
+          className="endereco__inputText"
           onChange={e => onChangeTextField(e.target, setCidade, setValidatedCidade, setInvalidatedCidade)}
           value={cidade}
           isValid={validatedCidade}
@@ -181,13 +179,13 @@ export default function Endereco(props){
     </Form.Group>   
 
     <Form.Group as={Row}  controlId="formCEP">
-      <Form.Label  column sm={2} className="cadastro-label">
+      <Form.Label  column sm={2} className="endereco__label">
         CEP
       </Form.Label>
       <Col sm={8}>
         <Form.Control
           type="text"
-          className="num-endereco"
+          className="endereco__inputNumber"
           placeholder="Digite apenas números"
           onChange={onChangeCep}
           value={cep}
