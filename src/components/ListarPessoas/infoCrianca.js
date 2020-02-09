@@ -1,7 +1,9 @@
 import React from 'react';
+import './styles.scss';
+
 import photo from '../../assets/usuario.png';
 import {cpfFormat, idade, nascimento} from '../../assist';
-import './infoCrianca.scss';
+
 
 export default function ModalCard(props){
   const {dados} = props;
@@ -111,7 +113,7 @@ export default function ModalCard(props){
           <p className="infoCrianca__text-margin">Bairro: {dadosResp.endereco.bairro}</p>
           <p className="infoCrianca__text-margin">Cidade: {dadosResp.endereco.cidade}</p>
           {dadosResp.endereco.cep !== "" ? 
-          <p className="infoResp__text-margin">CEP: {dados.endereco.cep}</p>
+          <p className="infoResp__text-margin">CEP: {dadosResp.endereco.cep}</p>
           :
           <p className="infoResp__text-margin">CEP não cadastrado</p>
           }

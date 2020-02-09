@@ -1,14 +1,17 @@
 import React, {useState} from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles.scss';
+
 import {Modal} from 'react-bootstrap';
 import ModalHeader from './modalHeader';
-import './modalCard.scss';
-import photo from '../../assets/usuario.png';
-import {idade  } from '../../assist';
 import CardPessoa from './cardPessoa';
 import InfoResponsavel from './infoResponsavel';
 import InfoCrianca from './infoCrianca';
 import EditarCrianca from '../EditarCrianca/index';
 import EditarResponsavel from '../EditarResponsavel/index';
+
+import photo from '../../assets/usuario.png';
+import { idade } from '../../assist';
 
 export default function ModalCard(props) {
   const { dados, crianca, remover, erroRemover, update, erroUpdate, responsaveis, updateList} = props;
@@ -41,16 +44,16 @@ export default function ModalCard(props) {
     :
     <>
     <Modal
-      className="modalCard"
+      className="modalPessoas"
       show={open}
       onHide={() => setOpen(false)}
-      dialogClassName="modalCard__dialog"
+      dialogClassName="modalPessoas__dialogs"
       aria-labelledby="example-custom-modal-styling-title"
       scrollable
       keyboard={!showAlert}
       centered
     >
-      <Modal.Header className="modalCard__header">
+      <Modal.Header className="modalPessoas__header">
         <ModalHeader updateList={updateList} error={erroRemover} remover={remover} crianca={crianca} edit={edit} setEdit={setEdit} setOpen={setOpen} handleClose={handleClose} showAlert={showAlert} setShowAlert={setShowAlert} dados={dados}/>
       </Modal.Header>
       <Modal.Body>

@@ -1,11 +1,13 @@
 import React from 'react';
+import './styles.scss';
+
 import SweetAlert from 'react-bootstrap-sweetalert';
-import {deleteCrianca, deleteResponsavel} from '../../services'
-import './modalHeader.scss';
 import CloseIcon from '@material-ui/icons/Close';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
+
+import {deleteCrianca, deleteResponsavel} from '../../services'
 
 export default function ModalHeader(props) {
   const {updateList, error, remover, crianca, dados, showAlert, setShowAlert, setOpen, handleClose, edit, setEdit, setSubmitEdit} = props;
@@ -92,7 +94,7 @@ export default function ModalHeader(props) {
     </div>
 
     <SweetAlert 
-      customClass="sweetAlert"
+      customClass="modalHeader__sweetAlert"
       title={"Deseja mesmo deletar todas as informações de " + texto + " ?"} 
       show={showAlert} 
       type='warning' 

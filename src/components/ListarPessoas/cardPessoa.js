@@ -1,5 +1,5 @@
 import React from "react";
-import './cardPessoa.scss';
+import './styles.scss';
 import {cpfFormat} from '../../assist';
 
 export default function cardPessoa(props) {

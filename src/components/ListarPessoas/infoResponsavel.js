@@ -1,7 +1,8 @@
 import React from 'react';
+import './styles.scss';
+
 import photo from '../../assets/usuario.png';
 import {cpfFormat, idade, nascimento, formatDadosCrianca } from '../../assist';
-import './infoResponsavel.scss';
 
 export default function ModalCard(props){
   const {dados} = props;

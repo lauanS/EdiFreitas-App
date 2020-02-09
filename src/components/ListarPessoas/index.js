@@ -1,11 +1,13 @@
 import React from "react";
-import './index.scss';
+import './styles.scss';
+
 import ModalCard from './modalCard';
-import axios from "axios";
-import {getResponsaveis, getCriancas} from '../../services'
 import {Form, Row, Col} from 'react-bootstrap';
 import Loader from '../Loader';
 import Snackbar from '../Snackbars';
+
+import axios from "axios";
+import {getResponsaveis, getCriancas} from '../../services';
 
 export default class extends React.Component {
   constructor(props) {

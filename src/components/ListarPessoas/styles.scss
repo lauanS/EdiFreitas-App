@@ -1,0 +1,215 @@
+.cardPessoa {
+    width: 330px;
+    min-height: 140px;
+    align-items: center;
+    border: 1px solid rgba(#000, .2);
+    border-radius: 5px;
+    display: flex;
+    background-color: #ffffff!important;
+    padding: 5px 0px 5px 0px;
+    color: #30333C;
+    pointer-events: visible;
+    cursor: pointer;
+    &__img {
+        height: 100px;
+        width: 100px;
+        padding: 2px;
+        border-radius: 5px;
+    }
+    &__divInfo {
+        width: 220px;
+        margin-left: 10px;
+    }
+    &__dados {
+        margin: 0px;
+    }
+}
+
+@media (max-width: 350px) {
+    .cardPessoa {
+        margin: 5px 0px 5px 0px;
+    }
+}
+
+@media (min-width: 351px) {
+    .cardPessoa {
+        margin: 5px 5px 5px 5px;
+    }
+}
+
+.listarPessoas {
+    display: flex;
+    flex-wrap: wrap;
+    &__label {
+        max-width: 140px!important;
+        min-width: 140px;
+        padding-right: 0px;
+    }
+    &__inputText {
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 500px) {
+    .listarPessoas {
+        justify-content: center;
+    }
+}
+
+.infoCrianca {
+    display: block;
+    min-width: 200px;
+    border-radius: 4px;
+    border: 1px solid #30333C;
+    margin-bottom: 10px;
+    width: 100%;
+    &__divTitle {
+        height: 30px;
+        align-items: center;
+        display: flex;
+        background: linear-gradient(to right, #3f51b5, #1f61db);
+        width: 100%;
+    }
+    &__title {
+        margin: 0;
+        padding-left: 10px;
+        font-weight: 700;
+        color: #f8f9fa;
+    }
+    &__divFlex {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    &__img {
+        min-width: 200px;
+        width: 200px;
+        height: 100%;
+        border-radius: 5px;
+        border: 1px solid #30333C;
+        margin: 10px 0px 0px 10px;
+    }
+    &__dadosPessoais {
+        display: block;
+        width: calc(100% - 220px);
+        min-width: 200px;
+        margin-left: 10px;
+    }
+    &__text {
+        margin: 5px 0px 5px 0px;
+        color: #30333C;
+    }
+    &__text-margin {
+        margin: 5px 10px 5px 10px;
+        color: #30333C;
+    }
+}
+
+.infoResp {
+    display: block;
+    min-width: 200px;
+    border-radius: 4px;
+    border: 1px solid #30333C;
+    margin-bottom: 10px;
+    width: 100%;
+    &__divTitle {
+        height: 30px;
+        align-items: center;
+        display: flex;
+        background: linear-gradient(to right, #3f51b5, #1f61db);
+        width: 100%;
+    }
+    &__title {
+        margin: 0;
+        padding-left: 10px;
+        font-weight: 700;
+        color: #f8f9fa;
+    }
+    &__divFlex {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    &__img {
+        min-width: 200px;
+        width: 200px;
+        align-self: center;
+        border-radius: 5px;
+        border: 1px solid #30333C;
+        margin: 10px 0px 0px 10px;
+    }
+    &__dadosPessoais {
+        display: block;
+        width: calc(100% - 220px);
+        min-width: 200px;
+        margin-left: 10px;
+    }
+    &__text {
+        margin: 5px 0px 5px 0px;
+        color: #30333C;
+    }
+    &__text-margin {
+        margin: 5px 10px 5px 10px;
+        color: #30333C;
+    }
+}
+
+@media (min-width: 960px) {
+    .modalPessoas {
+        margin-left: 100px;
+    }
+}
+
+.modalPessoas {
+    margin-top: 50px;
+    height: calc(100vh - 30px);
+    &__dialog {
+        max-width: 500px;
+        min-width: 300px;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    &__header {
+        padding: 5px 10px 0px 10px;
+    }
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0px;
+    width: 100%;
+    &__link {
+        color: #30333C!important;
+        text-decoration: none;
+        padding: 4px 2px;
+        margin-top: 2px;
+        margin-right: 5px;
+        cursor: pointer;
+        display: flex;
+        font-weight: 700;
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+    &__link-remover {
+        color: #BC2018!important;
+        text-decoration: none;
+        padding: 4px 2px;
+        margin-top: 2px;
+        margin-right: 5px;
+        cursor: pointer;
+        display: flex;
+        font-weight: 700;
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+}
+
+@media (min-width: 960px) {
+    .modalHeader__sweetAlert {
+        position: relative;
+        margin: 0 auto;
+        left: 100px;
+    }
+}
