@@ -1,10 +1,16 @@
+@media (min-width: 960px) {
+    .modalBusca {
+        margin-left: 100px;
+    }
+}
+
 .modalBusca {
     margin-top: 50px;
     height: calc(100vh - 30px);
     &__dialog {
         max-width: 500px;
         min-width: 320px;
-        width: 90%;
+        width: 100%;
         margin-left: auto;
         margin-right: auto;
     }
@@ -36,25 +42,5 @@
         font-weight: 700;
         font-size: 16px;
         margin-bottom: 5px;
-    }
-}
-
-@media (min-width: 600px) {
-    .modalBusca {
-        margin-left: 100px;
-    }
-}
-
-@media (max-width: 599px) {
-    .modalBusca {
-        margin-left: 0px;
-    }
-}
-
-@media (min-width: 600px) and (max-width: 750px) {
-    .modalBusca__dialog {
-        max-width: 500px;
-        min-width: 300px;
-        width: 60%;
     }
 }

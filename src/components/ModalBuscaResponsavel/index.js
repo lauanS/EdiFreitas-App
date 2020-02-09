@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from "react";
+import './styles.scss';
+
 import {Modal} from 'react-bootstrap';
-import './index.scss';
 import CloseIcon from '@material-ui/icons/Close';
 import Button from '@material-ui/core/Button';
 import BuscaResponsavel from '../BuscaResponsavel';
+
 import {getResponsaveis} from '../../services'
 
 export default function ModalBusca(props) {
