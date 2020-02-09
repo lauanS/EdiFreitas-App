@@ -83,7 +83,7 @@ export default class App extends PureComponent {
           blob.name = 'newFile.jpeg';
           window.URL.revokeObjectURL(this.fileUrl);
           this.fileUrl = window.URL.createObjectURL(blob);
-          this.setState({ croppedImageUrl: this.fileUrl });
+          this.props.setCroppedImageUrl(this.fileUrl)
           this.props.setImgCrop(canvas.toDataURL('image/jpeg'));
           resolve(this.fileUrl);
         }, 'image/jpeg');
@@ -93,7 +93,9 @@ export default class App extends PureComponent {
   }
 
   render() {
-    const { crop, src, croppedImageUrl, openModal } = this.state;
+    const { crop, src, openModal } = this.state;
+    const { croppedImageUrl } = this.props;
+
     let texto = "Selecionar a foto";
     if(croppedImageUrl){
       texto = "Mudar a foto";
