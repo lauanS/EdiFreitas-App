@@ -33,6 +33,7 @@ export default function CadastroCrianca(){
 
   const [imgBase64, setImgBase64] = useState("");
   const [invalidatedImgBase64, setInvalidatedImgBase64] = useState(false);
+  const [imgUrl, setImgUrl] = useState("");
 
   const [numCalcado, setNumCalcado] = useState("");
   const [validatedNumCalcado, setValidatedNumCalcado] = useState(false);
@@ -59,6 +60,7 @@ export default function CadastroCrianca(){
 
     setImgBase64("");
     setInvalidatedImgBase64(false);
+    setImgUrl("");
 
     setNumCalcado("");
     setValidatedNumCalcado(false);
@@ -185,7 +187,7 @@ export default function CadastroCrianca(){
           Foto de perfil *
         </Form.Label>
         <Col sm={8} className="CadastroCrianca__inputText">
-          <CampoImagem setImgCrop={handleImg}/>
+          <CampoImagem setImgCrop={handleImg} setCroppedImageUrl={setImgUrl} croppedImageUrl={imgUrl}/>
           {invalidatedImgBase64 ? 
           <div className="CadastroCrianca__error">Campo obrigatório, selecione uma foto de perfil</div>
           :

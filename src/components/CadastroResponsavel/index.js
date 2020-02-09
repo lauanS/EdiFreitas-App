@@ -33,6 +33,7 @@ export default function CadastroResponsavel(){
 
   const [imgBase64, setImgBase64] = useState("");
   const [invalidatedImgBase64, setInvalidatedImgBase64] = useState(false);
+  const [imgUrl, setImgUrl] = useState("");
 
   const [comentario, setComentario] = useState("");
   const [validatedComentario, setValidatedComentario] = useState(false);
@@ -75,7 +76,8 @@ export default function CadastroResponsavel(){
 
     setImgBase64("");
     setInvalidatedImgBase64(false);
-
+    setImgUrl("");
+    
     setComentario("");
     setValidatedComentario(false);
 
@@ -276,7 +278,7 @@ export default function CadastroResponsavel(){
           Foto de perfil *
         </Form.Label>
         <Col sm={8} className="CadastroResponsavel__inputText">
-          <CampoImagem setImgCrop={handleImg}/>
+          <CampoImagem setImgCrop={handleImg} setCroppedImageUrl={setImgUrl} croppedImageUrl={imgUrl}/>
           {invalidatedImgBase64 ? 
           <div className="CadastroResponsavel__error">Campo obrigatório, selecione uma foto de perfil</div>
           :
