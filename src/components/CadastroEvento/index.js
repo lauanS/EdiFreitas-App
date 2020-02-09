@@ -101,7 +101,7 @@ export default function CadastroEvento(){
     <Form onSubmit={handleSubmit} noValidate autoComplete="off">
       <Form.Group as={Row} controlId="formGroupNome">
         <Form.Label column sm={2} className="CadastroEvento__label">
-          Nome *
+          Nome do evento*
         </Form.Label>
         <Col sm={8} className="CadastroEvento__inputText">
           <Form.Control 
@@ -140,7 +140,7 @@ export default function CadastroEvento(){
 
       <Form.Group as={Row} controlId="formGroupData">
         <Form.Label column sm={2} className="CadastroEvento__label">
-          Data *
+          Data de realização*
         </Form.Label>
         <Col sm={8} className="CadastroEvento__inputText">
           <Form.Control 
