@@ -9,6 +9,7 @@ import Endereco from '../Endereco/index';
 import Contato from '../CampoContato/index'
 import CloseIcon from '@material-ui/icons/Close';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
+import CampoImagem from '../CampoFotoPerfil';
 
 import { checkText, checkData, checkCpf, checkTextField } from '../../validated';
 import {desconverterData, converterData} from '../../assist';
@@ -30,6 +31,10 @@ export default function CadastroResponsavel(props){
   const [cpf, setCpf] = useState(dados.cpf);
   const [validatedCpf, setValidatedCpf] = useState(true);
   const [invalidatedCpf, setInvalidatedCpf] = useState(false);
+
+  const [imgBase64, setImgBase64] = useState("");
+  const [invalidatedImgBase64, setInvalidatedImgBase64] = useState(false);
+  const [imgUrl, setImgUrl] = useState("");
 
   let comen = "";
   let comenVali = false;
@@ -114,6 +119,10 @@ export default function CadastroResponsavel(props){
       setInvalidatedCpf(true);
       flag = true;
     }
+    if(imgBase64 === ""){
+      setInvalidatedImgBase64(true);
+      flag = true;
+    }
     if(validatedLogradouro === false){
       setInvalidatedLogradouro(true);
       flag = true;
@@ -188,6 +197,11 @@ export default function CadastroResponsavel(props){
 
   };
 
+  const handleImg = (base64) => {
+    setImgBase64(base64);
+    setInvalidatedImgBase64(false);
+  }
+
   const onChangeNome = e => {
     checkText(e, setNomeCompleto, setValidatedNomeCompleto, setInvalidatedNomeCompleto);
   }
@@ -214,7 +228,6 @@ export default function CadastroResponsavel(props){
   }
 
   return (
-    <>
     <Modal
       className="modalEditarResp"
       show={openModal}
@@ -265,6 +278,19 @@ export default function CadastroResponsavel(props){
               <Form.Control.Feedback type="invalid">
                 Campo obrigatório, digite um CPF válido/correto (Apenas números)
               </Form.Control.Feedback>
+            </Col>
+          </Form.Group>
+
+          <Form.Group as={Row} controlId="formGroupImagem">
+            <Form.Label column sm={2} className="EditarResponsavel__label">
+              Foto de perfil *
+            </Form.Label>
+            <Col sm={8} className="EditarResponsavel__inputText">
+              <CampoImagem setImgCrop={handleImg} setCroppedImageUrl={setImgUrl} croppedImageUrl={imgUrl}/>
+              {invalidatedImgBase64 ? 
+              <div className="EditarResponsavel__error">Campo obrigatório, selecione uma foto de perfil</div>
+              :
+              ''}
             </Col>
           </Form.Group>
 
@@ -329,6 +355,5 @@ export default function CadastroResponsavel(props){
         </Form>
       </Modal.Body>
     </Modal>
-    </>
   );
 }
