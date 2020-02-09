@@ -1,6 +1,6 @@
 import React,  { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './index.scss';
+import './styles.scss';
 
 import {Modal, Form, Row, Col} from 'react-bootstrap';
 import CamposPessoa from '../CamposPessoa/index';
@@ -8,12 +8,12 @@ import Comentario from '../CampoComentario/index';
 import BuscaResponsavel from '../BuscaResponsavel';
 import Card from '../CardResponsavel';
 import Button from '@material-ui/core/Button';
-import ModalHeader from './modalHeader'
+import ModalHeader from './modalHeader';
+import CampoImagem from '../CampoFotoPerfil';
 
 import { checkText, checkNumber, checkCamiseta, checkData } from '../../validated';
 import {putCrianca} from '../../services';
 import {desconverterData, converterData} from '../../assist';
-
 
 export default function EditarCrianca(props){
   const {erroUpdate, update, updateList, setEdit, dados, responsaveis} = props;
@@ -29,6 +29,10 @@ export default function EditarCrianca(props){
   const [sexoPessoa, setSexoPessoa] = useState(dados.sexo);
 
   const [dadosResponsavel, setDadosResponsavel] = useState(dados.responsavel);
+
+  const [imgBase64, setImgBase64] = useState("");
+  const [invalidatedImgBase64, setInvalidatedImgBase64] = useState(false);
+  const [imgUrl, setImgUrl] = useState("");
 
   let calcado = "";
   let calcadoVali = false;
@@ -74,6 +78,10 @@ export default function EditarCrianca(props){
       setInvalidatedDataNascimento(true);
       flag = true;
     }
+    if(imgBase64 === ""){
+      setInvalidatedImgBase64(true);
+      flag = true;
+    }
     if(invalidatedNumCalcado === true){
       flag = true;
     }
@@ -106,6 +114,11 @@ export default function EditarCrianca(props){
     }
   }
 
+  const handleImg = (base64) => {
+    setImgBase64(base64);
+    setInvalidatedImgBase64(false);
+  }
+  
   const handleBusca = e => {
     setOpenBusca(true);
     e.preventDefault();
@@ -128,16 +141,16 @@ export default function EditarCrianca(props){
     <>
     {openBusca === true ? 
     <Modal
-      className="modalCard"
+      className="modalEditarCriancaBusca"
       show={openBusca}
       onHide={() => setOpenBusca(true)}
       keyboard={false}
-      dialogClassName="modalCard__dialog"
+      dialogClassName="modalEditarCriancaBusca__dialog"
       aria-labelledby="example-custom-modal-styling-title"
       scrollable
       centered
     >
-      <Modal.Header className="modalCard__header">
+      <Modal.Header className="modalEditarCrianca__header">
         <ModalHeader setOpenBusca={setOpenBusca} busca={true} setEdit={setEdit} submit={handleSubmit}/>
       </Modal.Header>
       <Modal.Body>
@@ -147,15 +160,15 @@ export default function EditarCrianca(props){
     :
     <>
     <Modal
-      className="modalCard"
+      className="modalEditarCrianca"
       show={openModal}
       onHide={() => setOpenModal(true)}
-      dialogClassName="modalCard__dialog"
+      dialogClassName="modalEditarCrianca__dialog"
       aria-labelledby="example-custom-modal-styling-title"
       scrollable
       centered
     >
-      <Modal.Header className="modalCard__header">
+      <Modal.Header className="modalEditarCrianca__header">
         <ModalHeader busca={false} setEdit={setEdit} submit={handleSubmit}/>
       </Modal.Header>
       <Modal.Body>
@@ -180,6 +193,19 @@ export default function EditarCrianca(props){
                 color="primary"
               >Mudar de responsável
               </Button>
+            </Col>
+          </Form.Group>
+
+          <Form.Group as={Row} controlId="formGroupImagem">
+            <Form.Label column sm={2} className="EditarCrianca__label">
+              Foto de perfil *
+            </Form.Label>
+            <Col sm={8} className="EditarCrianca__inputText">
+              <CampoImagem setImgCrop={handleImg} setCroppedImageUrl={setImgUrl} croppedImageUrl={imgUrl}/>
+              {invalidatedImgBase64 ? 
+              <div className="EditarCrianca__error">Campo obrigatório, selecione uma foto de perfil</div>
+              :
+              ''}
             </Col>
           </Form.Group>
 

@@ -1,5 +1,6 @@
 import React from 'react';
-import './modalHeader.scss';
+import './styles.scss';
+
 import CloseIcon from '@material-ui/icons/Close';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
