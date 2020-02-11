@@ -9,7 +9,7 @@ import { checkFormatData, checkTextField } from '../../validated';
 import {converterData} from '../../assist';
 import {postEvento} from '../../services';
 
-export default function CadastroEvento(){
+export default function EditorDeEventos(){
   const [openAlertSuccess, setOpenAlertSuccess] = useState(false);
   const [openAlertError, setOpenAlertError] = useState(false);
 
@@ -97,14 +97,14 @@ export default function CadastroEvento(){
     <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} msg="Evento cadastrado" type="success"/>
     <Snackbar open={openAlertError} setOpen={setOpenAlertError} msg="Ocorreu um erro ao cadastrar" type="error"/>
 
-    <label className="CadastroEvento__descricao">É obrigatório o preenchimento de todos os campos com * (Asterisco) no título</label>
+    <label className="EditorDeEventos__descricao">É obrigatório o preenchimento de todos os campos com * (Asterisco) no título</label>
     
     <Form onSubmit={handleSubmit} noValidate autoComplete="off">
       <Form.Group as={Row} controlId="formGroupNome">
-        <Form.Label column sm={2} className="CadastroEvento__label">
+        <Form.Label column sm={2} className="EditorDeEventos__label">
           Nome do evento*
         </Form.Label>
-        <Col sm={8} className="CadastroEvento__inputText">
+        <Col sm={8} className="EditorDeEventos__inputText">
           <Form.Control 
             type="text"
             placeholder="Festa de natal"
@@ -120,10 +120,10 @@ export default function CadastroEvento(){
       </Form.Group>
 
       <Form.Group as={Row} controlId="formGroupDescricao">
-        <Form.Label column sm={2} className="CadastroEvento__label">
+        <Form.Label column sm={2} className="EditorDeEventos__label">
           Descrição *
         </Form.Label>
-        <Col sm={8} className="CadastroEvento__inputText">
+        <Col sm={8} className="EditorDeEventos__inputText">
           <Form.Control 
             as="textarea" 
             rows="3" 
@@ -140,12 +140,12 @@ export default function CadastroEvento(){
       </Form.Group>
 
       <Form.Group as={Row} controlId="formGroupData">
-        <Form.Label column sm={2} className="CadastroEvento__label">
+        <Form.Label column sm={2} className="EditorDeEventos__label">
           Data de realização*
         </Form.Label>
-        <Col sm={8} className="CadastroEvento__inputText">
+        <Col sm={8} className="EditorDeEventos__inputText">
           <Form.Control 
-            className="CadastroEvento__inputNumber"
+            className="EditorDeEventos__inputNumber"
             type="text"
             placeholder="dd/MM/aaaa" 
             onChange={e => checkFormatData(e.target, dataEvento, setDataEvento, setValidatedDataEvento, setInvalidatedDataEvento)}
@@ -160,10 +160,10 @@ export default function CadastroEvento(){
       </Form.Group>
 
       <Form.Group as={Row} controlId="formGroupLocal">
-        <Form.Label column sm={2} className="CadastroEvento__label">
+        <Form.Label column sm={2} className="EditorDeEventos__label">
           Local *
         </Form.Label>
-        <Col sm={8} className="CadastroEvento__inputText">
+        <Col sm={8} className="EditorDeEventos__inputText">
           <Form.Control 
             type="text"
             placeholder="Na ONG Edi Freitas"

@@ -2,9 +2,9 @@ import React from 'react';
 import {Modal} from 'react-bootstrap';
 
 import './styles.scss';
-import TextEditor from "../../EditorDeNoticia";
+import EditorDeEventos from "../../EditorDeEventos";
 
-export default function EditarNoticia({title, subtitle, show, setShow}){
+export default function EditarEvento({name, description, date, local, show, setShow}){
 
   const handleClose = () => {setShow(false)}
 
@@ -22,9 +22,9 @@ export default function EditarNoticia({title, subtitle, show, setShow}){
         <Modal.Title>Editor</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <TextEditor 
-          initialTitle={title}
-          initialSubtitle={subtitle}
+        <EditorDeEventos 
+          initialTitle={name}
+          initialSubtitle={description}
           initialText=""        
         />
       </Modal.Body>
