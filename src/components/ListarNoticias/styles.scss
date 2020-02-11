@@ -1,59 +1,29 @@
-.card-columns {
-  column-count: 2;
-}
-
-@media screen and (max-width: 800px) {
-  .card-columns {
-    column-count: 1;
+.card{
+  &-columns {
+    column-count: 2;
   }
-}
-.listarPessoas{
-  display: flex;
-  flex-wrap: wrap;
-
-  &__label{
-    max-width: 140px!important;
-    min-width: 140px;
-    padding-right: 0px;
-  }
-
-  &__inputText{
-    max-width: 400px;
-  }
-
-}
   
-@media (max-width: 500px) {
-  .listarPessoas{
-    justify-content: center;
+  @media screen and (max-width: 800px) {
+    &-columns {
+      column-count: 1;
+    }
   }
 }
 
-@media (min-width: 600px){
-  .listarPessoas__inputText{
-    min-width: 340px;
-  }
-}
-
-// SweetAlert
-@media (min-width: 600px){
-  .sweetAlert{
+.sweetAlert{
+  @media (min-width: 600px){
     position:relative;
-    margin: 0 auto;
-    left: 100px;
+     margin: 0 auto;
   }
-}
-
-@media (max-width: 339px){
-  .sweetAlert{
+  
+  @media (max-width: 339px){
     position:relative;
     margin: 0 auto;
     top: 20px;
   }
-}
-
-@media (min-width: 600px) and (max-width: 700px){
-  .sweetAlert{
+  
+  @media (min-width: 600px) and (max-width: 700px){
     width: 370px!important;
   }
 }
+

@@ -9,10 +9,9 @@ export default class ConsultarNoticias extends React.Component{
     render(){
         return (
           <>
-          <Sidebar titulo="Consultar notícias" ativo={7} key={"sidebar"}/>
-          <div className="consulta">
+          <Sidebar titulo="Consultar notícias" ativo={7} key={"sidebar"}>
             <ListarNoticias />
-          </div>
+          </Sidebar>
           </>
         );
       }
