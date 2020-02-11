@@ -1,0 +1,50 @@
+@media (min-width: 960px) {
+    .modalFoto {
+        margin-left: 100px;
+    }
+}
+
+.modalFoto {
+    margin-top: 50px;
+    height: calc(100vh - 30px);
+    &__dialog {
+        max-width: 552px;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    &__header {
+        padding: 5px 10px 0px 10px;
+    }
+    &__link {
+        color: #30333C!important;
+        text-decoration: none;
+        padding: 4px 2px;
+        margin-top: 2px;
+        margin-right: 5px;
+        cursor: pointer;
+        display: flex;
+        font-weight: 700;
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+    &__text {
+        color: #30333C!important;
+        text-decoration: none;
+        padding: 4px 2px;
+        margin-top: 2px;
+        margin-right: 5px;
+        display: flex;
+        font-weight: 700;
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+    &__button {
+        width: 100%;
+    }
+}
+
+.modal-backdrop {
+    width: 100%!important;
+    height: 100%!important;
+}
