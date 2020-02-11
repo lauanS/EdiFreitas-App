@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.scss';
 
 import {Form, Row, Col, Button} from 'react-bootstrap';
