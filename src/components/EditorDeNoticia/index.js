@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-import { Form, Button, Collapse } from 'react-bootstrap';
+import { Form, Collapse } from 'react-bootstrap';
 import TextEditor from '../EditorDeTexto/index'
 import DadosNoticia from '../DadosNoticia/index'
 import Snackbar from '../Snackbars';
+
+import Button from '@material-ui/core/Button';
 
 import { postNoticia, putNoticia } from '../../services';
 
@@ -157,7 +159,7 @@ export default function EditorDeNoticia(props){
             aria-expanded={open}
             variant="link"
           >
-            Esconder/exibir campo de título e subtítulo
+            Esconder/exibir campos
           </Button>
         </div>
 
@@ -166,7 +168,14 @@ export default function EditorDeNoticia(props){
           <TextEditor text={text} handleChange={handleChildChange}/>      
         </div>
 
-        <Button type="submit" block>Salvar</Button>
+        <Button 
+          type="submit" 
+          variant="contained" 
+          color="primary"
+          className="btn-save"
+        >
+          Salvar
+        </Button>
 
       </Form>
 
