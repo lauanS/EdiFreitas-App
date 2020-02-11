@@ -8,7 +8,8 @@ import Comentario from '../CampoComentario/index';
 import ModalBusca from '../ModalBuscaResponsavel';
 import Card from '../CardResponsavel';
 import Snackbar from '../Snackbars';
-import CampoImagem from '../CampoFotoPerfil';
+import CampoImagem from '../CampoImagem';
+import CropFotos from '../CropFotos';
 
 import { checkText, checkNumber, checkCamiseta, checkData } from '../../validated';
 import {postCrianca} from '../../services'
@@ -33,7 +34,9 @@ export default function CadastroCrianca(){
 
   const [imgBase64, setImgBase64] = useState("");
   const [invalidatedImgBase64, setInvalidatedImgBase64] = useState(false);
-  const [imgUrl, setImgUrl] = useState("");
+  const [imgOriginal, setImgOriginal] = useState("");
+  const [src, setSrc] = useState(null);
+  const [openCrop, setOpenCrop] = useState(false);
 
   const [numCalcado, setNumCalcado] = useState("");
   const [validatedNumCalcado, setValidatedNumCalcado] = useState(false);
@@ -60,7 +63,9 @@ export default function CadastroCrianca(){
 
     setImgBase64("");
     setInvalidatedImgBase64(false);
-    setImgUrl("");
+    setImgOriginal("");
+    setSrc(null);
+    setOpenCrop(false);
 
     setNumCalcado("");
     setValidatedNumCalcado(false);
@@ -131,8 +136,33 @@ export default function CadastroCrianca(){
     e.stopPropagation();
   };
 
+  const onSelectImg = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        setSrc(reader.result);
+      });
+      reader.readAsDataURL(e.target.files[0]);
+      setOpenCrop(true);
+      e.target.value = '';
+    }
+  }
+
   const handleImg = (base64) => {
     setImgBase64(base64);
+    setImgOriginal(src);
+    setInvalidatedImgBase64(false);
+  }
+
+  const handleOpen = (e) => {
+    e.preventDefault();
+    setOpenCrop(true);
+    setSrc(imgOriginal);
+  }
+
+  const handleClose = () => {
+    setSrc(null);
+    setOpenCrop(false);
   }
 
   const onChangeNome = e => {
@@ -187,7 +217,38 @@ export default function CadastroCrianca(){
           Foto de perfil *
         </Form.Label>
         <Col sm={8} className="CadastroCrianca__inputText">
-          <CampoImagem setImgCrop={handleImg} setCroppedImageUrl={setImgUrl} croppedImageUrl={imgUrl}/>
+          {imgBase64 && (
+            <div style={{ marginBottom: '5px'}}>
+              <img 
+                alt="Crop" 
+                style={{ width: '200px', height: '200px', borderRadius: '4px', border: '1px solid black', marginTop: '1px' }} 
+                src={imgBase64} 
+              />
+            </div>
+          )}
+          <div style={{display: 'flex'}}>
+            <CampoImagem
+              onSelectFile={onSelectImg}
+              text={imgBase64 ? "Selecionar outra foto" : "Selecionar a foto"}
+              multiple={false}
+            />
+            {imgBase64 && (<button className="CadastroCrianca__buttonEdit" style={{marginLeft: '10px'}} onClick={handleOpen}>Editar foto</button>)}
+
+          </div>
+          
+          <CropFotos
+            cropping={{unit: 'px', aspect: 1, width: 200, height: 200, x: 0, y: 0}}
+            open={openCrop}
+            closed={handleClose}
+            setNewImage={handleImg}
+            src={src}
+            minWidth={200}
+            minHeight={200}
+            maxWidth={500}
+            maxHeight={500}
+            maxWidthImg={500}
+            textButton={"Concluir edição da foto de perfil"}
+          />
           {invalidatedImgBase64 ? 
           <div className="CadastroCrianca__error">Campo obrigatório, selecione uma foto de perfil</div>
           :
