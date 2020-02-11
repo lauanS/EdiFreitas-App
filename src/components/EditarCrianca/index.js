@@ -9,7 +9,8 @@ import BuscaResponsavel from '../BuscaResponsavel';
 import Card from '../CardResponsavel';
 import Button from '@material-ui/core/Button';
 import ModalHeader from './modalHeader';
-import CampoImagem from '../CampoFotoPerfil';
+import CampoImagem from '../CampoImagem';
+import CropFotos from '../CropFotos';
 
 import { checkText, checkNumber, checkCamiseta, checkData } from '../../validated';
 import {putCrianca} from '../../services';
@@ -32,7 +33,9 @@ export default function EditarCrianca(props){
 
   const [imgBase64, setImgBase64] = useState("");
   const [invalidatedImgBase64, setInvalidatedImgBase64] = useState(false);
-  const [imgUrl, setImgUrl] = useState("");
+  const [imgOriginal, setImgOriginal] = useState("");
+  const [src, setSrc] = useState(null);
+  const [openCrop, setOpenCrop] = useState(false);
 
   let calcado = "";
   let calcadoVali = false;
@@ -68,6 +71,7 @@ export default function EditarCrianca(props){
   const [openBusca, setOpenBusca] = useState(false);
 
   const handleSubmit = () => {
+    console.log(imgBase64)
     let flag = false;
 
     if(validatedNomeCompleto === false){
@@ -114,15 +118,38 @@ export default function EditarCrianca(props){
     }
   }
 
-  const handleImg = (base64) => {
+  const onSelectImg = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        setSrc(reader.result);
+      });
+      reader.readAsDataURL(e.target.files[0]);
+      setOpenCrop(true);
+      e.target.value = '';
+    }
+  }
+
+  const handleImg = (base64, index ) => {
     setImgBase64(base64);
+    setImgOriginal(src);
     setInvalidatedImgBase64(false);
   }
-  
+
+  const handleOpen = (e) => {
+    e.preventDefault();
+    setOpenCrop(true);
+    setSrc(imgOriginal);
+  }
   const handleBusca = e => {
     setOpenBusca(true);
     e.preventDefault();
     e.stopPropagation();
+  }
+
+  const handleClose = () => {
+    setSrc(null);
+    setOpenCrop(false);
   }
 
   const onChangeNome = e => {
@@ -159,6 +186,21 @@ export default function EditarCrianca(props){
     </Modal>
     :
     <>
+    {openCrop ? 
+    <CropFotos
+      cropping={{unit: 'px', aspect: 1, width: 200, height: 200, x: 0, y: 0}}
+      open={openCrop}
+      closed={handleClose}
+      setNewImage={handleImg} 
+      src={src}
+      minWidth={200}
+      minHeight={200}
+      maxWidth={500}
+      maxHeight={500}
+      maxWidthImg={500}
+      textButton={"Concluir edição da foto de perfil"}
+    />
+    :
     <Modal
       className="modalEditarCrianca"
       show={openModal}
@@ -201,11 +243,27 @@ export default function EditarCrianca(props){
               Foto de perfil *
             </Form.Label>
             <Col sm={8} className="EditarCrianca__inputText">
-              <CampoImagem setImgCrop={handleImg} setCroppedImageUrl={setImgUrl} croppedImageUrl={imgUrl}/>
-              {invalidatedImgBase64 ? 
-              <div className="EditarCrianca__error">Campo obrigatório, selecione uma foto de perfil</div>
-              :
-              ''}
+            {imgBase64 && (
+              <div style={{ marginBottom: '5px'}}>
+                <img 
+                  alt="Crop" 
+                  style={{ width: '200px', height: '200px', borderRadius: '4px', border: '1px solid black', marginTop: '1px' }} 
+                  src={imgBase64} 
+                />
+              </div>
+            )}
+            <div style={{display: 'flex'}}>
+              <CampoImagem
+                onSelectFile={onSelectImg}
+                text={imgBase64 ? "Selecionar outra foto" : "Selecionar a foto"}
+                multiple={false}
+              />
+              {imgBase64 && (<button className="EditarCrianca__buttonEdit" style={{marginLeft: '10px'}} onClick={handleOpen}>Editar foto</button>)}
+            </div>
+            {invalidatedImgBase64 ? 
+            <div className="EditarCrianca__error">Campo obrigatório, selecione uma foto de perfil</div>
+            :
+            ''}
             </Col>
           </Form.Group>
 
@@ -254,6 +312,7 @@ export default function EditarCrianca(props){
         </Form>
       </Modal.Body>
     </Modal>
+    }
     </>
     }
     </>
