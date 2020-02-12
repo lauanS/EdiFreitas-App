@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.scss';
 
-import {Form, Row, Col, Button} from 'react-bootstrap';
+import {Form, Row, Col} from 'react-bootstrap';
+import Button from '@material-ui/core/Button';
 import Snackbar from '../Snackbars';
 
 import { checkFormatData, checkTextField } from '../../validated';
@@ -137,8 +138,10 @@ export default function EditorDeEventos({isUpdate, obj, updateList}){
 
   return(
     <>
-    <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} msg="Evento cadastrado" type="success"/>
-    <Snackbar open={openAlertError} setOpen={setOpenAlertError} msg="Ocorreu um erro ao cadastrar" type="error"/>
+    <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} 
+      msg="Evento salvo!" type="success"/>
+    <Snackbar open={openAlertError} setOpen={setOpenAlertError} 
+      msg="Ocorreu um erro ao salvar o evento" type="error"/>
 
     <label className="EditorDeEventos__descricao">É obrigatório o preenchimento de todos os campos com * (Asterisco) no título</label>
     
@@ -223,7 +226,14 @@ export default function EditorDeEventos({isUpdate, obj, updateList}){
 
       <Form.Group as={Row}>
         <Col sm={{ span: 10, offset: 2 }}>
-          <Button type="submit">Cadastrar</Button>
+          <Button 
+            type="submit" 
+            variant="contained" 
+            color="primary"
+            className="btn-save-event"
+          >
+            Salvar
+          </Button>
         </Col>
       </Form.Group>
     </Form>

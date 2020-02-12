@@ -125,10 +125,13 @@ export default function EditorDeNoticia(props){
   return (
     <>
 
-    <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} msg="Notícia salva!" type="success"/>
-    <Snackbar open={openAlertError} setOpen={setOpenAlertError} msg={"Ocorreu um erro ao salvar a notícia"} type="error"/>
+    <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} 
+      msg="Notícia salva!" type="success"/>
+    <Snackbar open={openAlertError} setOpen={setOpenAlertError} 
+      msg={"Ocorreu um erro ao salvar a notícia"} type="error"/>
 
-    <Snackbar open={openFieldError} setOpen={setOpenFieldError} msg="Insira o conteúdo da notícia" type="error"/>
+    <Snackbar open={openFieldError} setOpen={setOpenFieldError} 
+      msg="Insira o conteúdo da notícia" type="error"/>
 
 
 
