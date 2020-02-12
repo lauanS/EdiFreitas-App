@@ -130,7 +130,7 @@ export default function EditarCrianca(props){
     }
   }
 
-  const handleImg = (base64, index ) => {
+  const handleImg = (base64) => {
     setImgBase64(base64);
     setImgOriginal(src);
     setInvalidatedImgBase64(false);
