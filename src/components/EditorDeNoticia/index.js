@@ -13,7 +13,7 @@ import './styles.scss';
 
 export default function EditorDeNoticia(props){
   const { initialTitle="", initialSubtitle="", initialText="", initialTags="" } = props;
-  const { isUpdate, updateNews, id } = props;
+  const { isUpdate, updateList, id } = props;
 
   const [title, setTitle] = useState(initialTitle);
   const [invalidatedTitle, setInvalidatedTitle] = useState(false);
@@ -108,7 +108,7 @@ export default function EditorDeNoticia(props){
       setOpenAlertSuccess(true);
       setOpenAlertError(false);
       setOpenFieldError(false);
-      updateNews();
+      updateList();
     } catch (error) {
       setOpenAlertSuccess(false);
       setOpenAlertError(true);
@@ -157,7 +157,6 @@ export default function EditorDeNoticia(props){
             onClick={() => setOpen(!open)}
             aria-controls="fade-fields"
             aria-expanded={open}
-            variant="link"
           >
             Esconder/exibir campos
           </Button>
