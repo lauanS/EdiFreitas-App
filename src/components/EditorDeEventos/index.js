@@ -88,9 +88,7 @@ export default function EditorDeEventos({isUpdate, obj, updateList}){
   async function handleSubmit(e){
     e.persist();
     e.preventDefault();
-    e.stopPropagation();
-
-    const id = obj.id;
+    e.stopPropagation(); 
 
     if(checkFields()){
       const data = converterData(dataEvento);
@@ -102,6 +100,7 @@ export default function EditorDeEventos({isUpdate, obj, updateList}){
       }
 
       if(isUpdate){
+        const id = obj.id;
         await update(obj, id);      
       }
       else{
