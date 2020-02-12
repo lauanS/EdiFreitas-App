@@ -9,7 +9,7 @@ import { checkFormatData, checkTextField } from '../../validated';
 import {converterData, desconverterData} from '../../assist';
 import {postEvento, putEvento} from '../../services';
 
-export default function EditorDeEventos({isUpdate, obj}){
+export default function EditorDeEventos({isUpdate, obj, updateList}){
   const [openAlertSuccess, setOpenAlertSuccess] = useState(false);
   const [openAlertError, setOpenAlertError] = useState(false);
 
@@ -126,7 +126,7 @@ export default function EditorDeEventos({isUpdate, obj}){
       await putEvento(obj, id);
       setOpenAlertSuccess(true);
       setOpenAlertError(false);
-      // updateNews();
+      updateList();
     } catch (error) {
       setOpenAlertSuccess(false);
       setOpenAlertError(true);

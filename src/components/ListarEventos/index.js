@@ -153,6 +153,7 @@ export default function ConsultarEventos(){
 
     <EditorDeEventos 
       obj={selectedEvent}
+      updateList={loadEvents}
       show={showModal}
       setShow={setShowModal}
     />
