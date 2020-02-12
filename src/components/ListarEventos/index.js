@@ -152,8 +152,7 @@ export default function ConsultarEventos(){
     />
 
     <EditorDeEventos 
-      title={selectedEvent.nome}
-      subtitle={selectedEvent.descricao} 
+      obj={selectedEvent}
       show={showModal}
       setShow={setShowModal}
     />

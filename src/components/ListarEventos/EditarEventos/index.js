@@ -4,7 +4,7 @@ import {Modal} from 'react-bootstrap';
 import './styles.scss';
 import EditorDeEventos from "../../EditorDeEventos";
 
-export default function EditarEvento({name, description, date, local, show, setShow}){
+export default function EditarEvento({obj, show, setShow}){
 
   const handleClose = () => {setShow(false)}
 
@@ -23,9 +23,8 @@ export default function EditarEvento({name, description, date, local, show, setS
       </Modal.Header>
       <Modal.Body>
         <EditorDeEventos 
-          initialTitle={name}
-          initialSubtitle={description}
-          initialText=""        
+          obj={obj}
+          isUpdate={true}  
         />
       </Modal.Body>
     </Modal>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.scss';
 
@@ -6,10 +6,10 @@ import {Form, Row, Col, Button} from 'react-bootstrap';
 import Snackbar from '../Snackbars';
 
 import { checkFormatData, checkTextField } from '../../validated';
-import {converterData} from '../../assist';
-import {postEvento} from '../../services';
+import {converterData, desconverterData} from '../../assist';
+import {postEvento, putEvento} from '../../services';
 
-export default function EditorDeEventos(){
+export default function EditorDeEventos({isUpdate, obj}){
   const [openAlertSuccess, setOpenAlertSuccess] = useState(false);
   const [openAlertError, setOpenAlertError] = useState(false);
 
@@ -29,6 +29,20 @@ export default function EditorDeEventos(){
   const [validatedLocalEvento, setValidatedLocalEvento] = useState(false);
   const [invalidatedLocalEvento, setInvalidatedLocalEvento] = useState(false);
 
+  /* Setup inicial do componente */
+  useEffect(() => {   
+    if(isUpdate){
+      setNomeEvento(obj.nome);
+      setDescricaoEvento(obj.descricao);
+      setDataEvento(desconverterData(obj.dataEvento));
+      setLocalEvento(obj.local);
+      setValidatedNomeEvento(true);
+      setValidatedDescricaoEvento(true);
+      setValidatedDataEvento(true);
+      setValidatedLocalEvento(true);
+    } 
+  }, [isUpdate, obj]);
+
   const resetFields = () => {
     setNomeEvento("");
     setValidatedNomeEvento(false);
@@ -47,50 +61,79 @@ export default function EditorDeEventos(){
     setInvalidatedLocalEvento(false);
   }
 
-  const handleSubmit = e => {
-    let flag = false;
-
+  function checkFields(){
+    let isValid = true;
     if(validatedNomeEvento === false){
       setInvalidatedNomeEvento(true);
-      flag = true;
+      isValid = false;
     }
     if(validatedDescricaoEvento === false){
       setInvalidatedDescricaoEvento(true);
-      flag = true;
+      isValid = false;
     }
     if(validatedDataEvento === false){
       setInvalidatedDataEvento(true);
-      flag = true;
+      isValid = false;
     }
     if(validatedLocalEvento === false){
       setInvalidatedLocalEvento(true);
-      flag = true;
+      isValid = false;
     }
 
-    if(flag === false){
-      let data = converterData(dataEvento);
 
-      const obj = {
+    return isValid;
+  }
+
+  async function handleSubmit(e){
+    e.persist();
+    e.preventDefault();
+    e.stopPropagation();
+
+    const id = obj.id;
+
+    if(checkFields()){
+      const data = converterData(dataEvento);
+      let obj = {
         nome: nomeEvento,
         dataEvento: data,
         descricao: descricaoEvento,
         local: localEvento
       }
 
-      postEvento(obj)
-      .then(res => {
-        setOpenAlertSuccess(true);
-        setOpenAlertError(false);
-        resetFields();
-      })
-      .catch(res => {
-        setOpenAlertSuccess(false);
-        setOpenAlertError(true);
-      });
+      if(isUpdate){
+        await update(obj, id);      
+      }
+      else{
+        await save(obj);
+      }
     }
-    e.preventDefault();
-    e.stopPropagation();
   }
+
+  async function save(obj){
+    try {
+      await postEvento(obj);
+      setOpenAlertSuccess(true);
+      setOpenAlertError(false);
+      resetFields();
+    } catch (error) {
+      setOpenAlertSuccess(false);
+      setOpenAlertError(true);
+    }
+  }
+
+  async function update(obj, id){
+    try {
+      await putEvento(obj, id);
+      setOpenAlertSuccess(true);
+      setOpenAlertError(false);
+      // updateNews();
+    } catch (error) {
+      setOpenAlertSuccess(false);
+      setOpenAlertError(true);
+    }
+
+  }
+
 
   return(
     <>
