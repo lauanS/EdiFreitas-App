@@ -21,6 +21,15 @@ export default function CardConsulta(props){
     deleteThisCard();
   }
 
+  function formattedDescription(){
+    if(description.length > 130){
+      let d = description.substring(0, 130) + " [ ... ]";
+      console.log("D: ", d);
+      return d;
+    }
+    return description;    
+  }
+
   return (
     <>
     <Card>
@@ -36,7 +45,7 @@ export default function CardConsulta(props){
         <Col>
           <Row>
             <Card.Subtitle className="card-description">
-              {description}
+              {formattedDescription()}
             </Card.Subtitle>
           </Row>
           <Row>      
