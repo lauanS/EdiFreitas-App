@@ -2,11 +2,17 @@ import React from "react";
 import './styles.scss';
 import {cpfFormat} from '../../assist';
 
+import Button from '@material-ui/core/Button';
+
 export default function cardPessoa(props) {
-  const { change, foto, dados, crianca, idade} = props;
+  const { setSelect, foto, dados, crianca, idade, opcao} = props;
+
+  const handleClick = () => {
+    setSelect(dados.id);
+  }
 
   return (
-    <div className="cardPessoa" onClick={change}> 
+    <div className="cardPessoa" onClick={handleClick}> 
       <img src={foto} alt='foto de perfil' className = "cardPessoa-img"/>
 
       {crianca === true ? 
@@ -15,6 +21,7 @@ export default function cardPessoa(props) {
           <p className="cardPessoa-dados">Nome: {dados.nome}</p>
           {idade > 1 ? <p className="cardPessoa-dados">Idade: {idade} anos</p> :
           <p className="cardPessoa-dados">Idade: {idade} ano</p>}
+          {opcao}
         </div>
       :
         <div className="cardPessoa-divInfo">

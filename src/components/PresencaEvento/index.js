@@ -16,6 +16,11 @@ export default function PresencaEvento(){
   const [people, setPeople] = useState([]);
   const [personSearch, setPersonSearch] = useState("");
 
+  const [selectPerson, setSelectedPerson] = useState(null);
+  const [selectEvent, setSelectedEvent] = useState(null);
+
+  
+
   async function loadPeople(){
     const response = await getCriancas();
     setPeople(response.data);
@@ -43,11 +48,21 @@ export default function PresencaEvento(){
     return filteredPeople.map((dados, key) => (
       <CardPerson 
         key={key}
-        change={loadPeople} 
+        setSelect={setSelectedEvent} 
         foto={imgUrl} 
         dados={dados} 
         crianca={true} 
         idade={idade(dados.dataNascimento)} 
+        opcao={
+        <Button 
+          type="submit" 
+          size="small" 
+          variant="contained" 
+          color="primary"
+        >
+          {personSearch}
+        </Button>
+        }
       />
     ));
 
