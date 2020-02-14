@@ -10,7 +10,6 @@ import InfoCrianca from './infoCrianca';
 import EditarCrianca from '../EditarCrianca/index';
 import EditarResponsavel from '../EditarResponsavel/index';
 
-import photo from '../../assets/usuario.png';
 import { idade } from '../../assist';
 
 export default function ModalCard(props) {
@@ -35,7 +34,7 @@ export default function ModalCard(props) {
 
   return (
     <>
-    <CardPessoa change={handleOpen} foto={photo} dados={dados} crianca={crianca} idade={idade(dados.dataNascimento)}/>
+    <CardPessoa change={handleOpen} dados={dados} crianca={crianca} idade={idade(dados.dataNascimento)}/>
     {edit === true ? 
       crianca === true ?
         <EditarCrianca update={update} erroUpdate={erroUpdate} updateList={updateList} responsaveis={responsaveis} dados={dados} setEdit={handleCloseEdit}/>
