@@ -1,0 +1,28 @@
+
+.jumbotron-event{
+  padding: 15px;
+}
+
+.colum-control{
+  width: 100%;
+  max-width: 240px;
+}
+
+.presenceControl {
+  display: flex;
+  flex-wrap: wrap;
+  &-label {
+      max-width: 140px!important;
+      min-width: 140px;
+      padding-right: 0px;
+  }
+  &-inputText {
+      max-width: 400px;
+  }
+}
+
+@media (max-width: 500px) {
+  .listarPessoas {
+      justify-content: center;
+  }
+}
