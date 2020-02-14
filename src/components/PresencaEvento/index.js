@@ -11,13 +11,12 @@ import { idade } from '../../assist';
 import './styles.scss';
 
 export default function PresencaEvento(){
-  const imgUrl = "https://data.whicdn.com/images/106478614/original.png";
 
   const [people, setPeople] = useState([]);
   const [personSearch, setPersonSearch] = useState("");
 
-  const [selectPerson, setSelectedPerson] = useState(null);
-  const [selectEvent, setSelectedEvent] = useState(null);
+  const [selectedPerson, setSelectedPerson] = useState(null);
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   
 
@@ -37,6 +36,10 @@ export default function PresencaEvento(){
     return valueLowerCase.includes(personSearchLowerCase);
   }
 
+  function selectEvent(){
+    return;
+  }
+
   /* Carrega todas as pessoas após renderizar o componente */
   useEffect(() => {
     loadPeople();
@@ -49,11 +52,9 @@ export default function PresencaEvento(){
       <CardPerson 
         key={key}
         setSelect={setSelectedEvent} 
-        foto={imgUrl} 
-        dados={dados} 
-        crianca={true} 
-        idade={idade(dados.dataNascimento)} 
-        opcao={
+        person={dados} 
+        isChild={true} 
+        extraFields={
         <Button 
           type="submit" 
           size="small" 
@@ -80,6 +81,7 @@ export default function PresencaEvento(){
             type="submit" 
             variant="contained" 
             color="primary"
+            onClick={selectEvent}
           >
             Selecionar evento
           </Button>      
@@ -103,7 +105,7 @@ export default function PresencaEvento(){
       </Form.Group>
     </Form>
 
-    <div>
+    <div className="listPeople">
       {
         renderCards()  
       }
