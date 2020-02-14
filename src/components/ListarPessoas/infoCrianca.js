@@ -1,7 +1,6 @@
 import React from 'react';
 import './styles.scss';
 
-import photo from '../../assets/usuario.png';
 import {cpfFormat, idade, nascimento} from '../../assist';
 
 
@@ -16,7 +15,7 @@ export default function ModalCard(props){
         <h6 className="infoCrianca__title">Dados pessoais</h6>
       </div>
       <div className="infoCrianca__divFlex">
-        <img src={photo} alt="foto de perfil" className="infoCrianca__img"/>
+        <img src={dados.foto} alt="foto de perfil" className="infoCrianca__img"/>
         <div className="infoCrianca__dadosPessoais">
           <h5 className="infoCrianca__text">{dados.nome}</h5>
           {idade(dados.dataNascimento) > 1 ? 
@@ -59,7 +58,7 @@ export default function ModalCard(props){
         <h6 className="infoCrianca__title">Dados do responsável</h6>
       </div>
       <div className="infoCrianca__divFlex">
-        <img src={photo} alt="foto de perfil" className="infoCrianca__img"/>
+        <img src={dadosResp.foto} alt="foto de perfil" className="infoCrianca__img"/>
         <div className="infoCrianca__dadosPessoais">
           <h5 className="infoCrianca__text">{dadosResp.nome}</h5>
           {idade(dadosResp.dataNascimento) > 1 ? 
