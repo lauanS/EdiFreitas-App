@@ -1,7 +1,6 @@
 import React from "react";
 import './index.scss';
 import {cpfFormat, idade} from '../../assist';
-import foto from '../../assets/usuario.png';
 import Button from '@material-ui/core/Button';
 
 export default function cardResponsavel(props) {
@@ -14,7 +13,7 @@ export default function cardResponsavel(props) {
 
   return (
     <div className={modal === true ? "cardResponsavel" : "cardResponsavel2"}> 
-      <img src={foto} alt='foto de perfil' className = "cardResponsavel__img"/>
+      <img src={dados.foto} alt='foto de perfil' className = "cardResponsavel__img"/>
       
       <div className="cardResponsavel__divInfo">
         <p className="cardResponsavel__dados">Nome: {dados.nome}</p>

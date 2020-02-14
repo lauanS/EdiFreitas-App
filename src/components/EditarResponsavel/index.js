@@ -9,11 +9,12 @@ import Endereco from '../Endereco/index';
 import Contato from '../CampoContato/index'
 import CloseIcon from '@material-ui/icons/Close';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
-import CampoImagem from '../CampoFotoPerfil';
+import CampoImagem from '../CampoImagem';
+import CropFotos from '../CropFotos';
 
 import { checkText, checkData, checkCpf, checkTextField } from '../../validated';
 import {desconverterData, converterData} from '../../assist';
-import {putResponsavel} from '../../services';
+import {putResponsavel, postImagem} from '../../services';
 
 export default function CadastroResponsavel(props){
   const {erroUpdate, update, updateList, setEdit, dados} = props;
@@ -34,7 +35,9 @@ export default function CadastroResponsavel(props){
 
   const [imgBase64, setImgBase64] = useState("");
   const [invalidatedImgBase64, setInvalidatedImgBase64] = useState(false);
-  const [imgUrl, setImgUrl] = useState("");
+  const [imgOriginal, setImgOriginal] = useState("");
+  const [src, setSrc] = useState(null);
+  const [openCrop, setOpenCrop] = useState(false);
 
   let comen = "";
   let comenVali = false;
@@ -104,7 +107,8 @@ export default function CadastroResponsavel(props){
 
   const [openModal, setOpenModal] = useState(true);
 
-  const handleSubmit = e => {
+  const handleSubmit = async () => {
+    console.log(imgBase64)
     let flag = false;
 
     if(validatedNomeCompleto === false){
@@ -164,42 +168,72 @@ export default function CadastroResponsavel(props){
         return obj.contato !== ""
       });
       
-      const obj = {
-        nome: nomeCompleto,
-        dataNascimento: dtNascimento,
-        sexo: sexoPessoa,
-        cpf,
-        comentario,
-        foto: "",
-        endereco: {
-          logradouro,
-          bairro,
-          cidade,
-          cep: cepFormatado,
-          numero: numero
-        },
-        contatos
-      }
+      try{
+        let d = new Date();
 
-      putResponsavel(obj, dados.id)
-      .then(res => {
+        const img = {
+          iBase: imgBase64,
+          filename: nomeCompleto + "" + d.getDate() + d.getMonth() + d.getFullYear() + d.getHours() + d.getMinutes() + d.getSeconds() + d.getMilliseconds()
+        }
+
+        const resImg = await postImagem(img);
+
+        const obj = {
+          nome: nomeCompleto,
+          dataNascimento: dtNascimento,
+          sexo: sexoPessoa,
+          cpf,
+          comentario,
+          foto: resImg.data.url,
+          endereco: {
+            logradouro,
+            bairro,
+            cidade,
+            cep: cepFormatado,
+            numero: numero
+          },
+          contatos
+        }
+
+        await putResponsavel(obj, dados.id)
+
         setEdit(false);
         update();
         updateList();
-      })
-      .catch(res => {
+      }
+      catch(res) {
         erroUpdate();
-      });
-
+      }
     }
-    e.preventDefault();
-    e.stopPropagation();
-
   };
+
+  const onSelectImg = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        setSrc(reader.result);
+      });
+      reader.readAsDataURL(e.target.files[0]);
+      setOpenCrop(true);
+      e.target.value = '';
+    }
+  }
 
   const handleImg = (base64) => {
     setImgBase64(base64);
+    setImgOriginal(src);
     setInvalidatedImgBase64(false);
+  }
+
+  const handleOpen = (e) => {
+    e.preventDefault();
+    setOpenCrop(true);
+    setSrc(imgOriginal);
+  }
+
+  const handleClose = () => {
+    setSrc(null);
+    setOpenCrop(false);
   }
 
   const onChangeNome = e => {
@@ -228,6 +262,22 @@ export default function CadastroResponsavel(props){
   }
 
   return (
+    <>
+    {openCrop ? 
+      <CropFotos
+        cropping={{unit: 'px', aspect: 1, width: 200, height: 200, x: 0, y: 0}}
+        open={openCrop}
+        closed={handleClose}
+        setNewImage={handleImg} 
+        src={src}
+        minWidth={200}
+        minHeight={200}
+        maxWidth={500}
+        maxHeight={500}
+        maxWidthImg={500}
+        textButton={"Concluir edição da foto de perfill"}
+      />
+    :
     <Modal
       className="modalEditarResp"
       show={openModal}
@@ -286,7 +336,23 @@ export default function CadastroResponsavel(props){
               Foto de perfil *
             </Form.Label>
             <Col sm={8} className="EditarResponsavel__inputText">
-              <CampoImagem setImgCrop={handleImg} setCroppedImageUrl={setImgUrl} croppedImageUrl={imgUrl}/>
+              {imgBase64 && (
+                <div style={{ marginBottom: '5px'}}>
+                  <img 
+                    alt="Crop" 
+                    style={{ width: '200px', height: '200px', borderRadius: '4px', border: '1px solid black', marginTop: '1px' }} 
+                    src={imgBase64} 
+                  />
+                </div>
+              )}
+              <div style={{display: 'flex'}}>
+                <CampoImagem
+                  onSelectFile={onSelectImg}
+                  text={imgBase64 ? "Selecionar outra foto" : "Selecionar a foto"}
+                  multiple={false}
+                />
+                {imgBase64 && (<button className="EditarResponsavel__buttonEdit" style={{marginLeft: '10px'}} onClick={handleOpen}>Editar foto</button>)}
+              </div>
               {invalidatedImgBase64 ? 
               <div className="EditarResponsavel__error">Campo obrigatório, selecione uma foto de perfil</div>
               :
@@ -355,5 +421,7 @@ export default function CadastroResponsavel(props){
         </Form>
       </Modal.Body>
     </Modal>
+    }
+    </>
   );
 }

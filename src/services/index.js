@@ -81,3 +81,21 @@ export async function deleteNoticia(id){
 export async function putNoticia(noticia, id){
   return await api.put('/noticias/' + id, noticia);
 }
+
+//===================== IMAGEM =====================
+export async function postImagem(imagem){
+  return await api.post('/imagem/upload', imagem);
+}
+
+export async function getImagem(id){
+  return await api.get('/imagem/' + id);
+}
+
+//===================== ALBUM =====================
+export async function postAlbum(album){
+  return await api.post('/album', album);
+}
+
+export async function getAlbum(){
+  return await api.get('/album');
+}
