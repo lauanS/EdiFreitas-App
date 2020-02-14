@@ -1,38 +1,44 @@
-.cardPessoa {
-  width: 330px;
-  min-height: 140px;
-  align-items: center;
+.cardPerson {
+  width: 250px;
   border: 1px solid rgba(#000, .2);
   border-radius: 5px;
-  display: flex;
+  display: block;
   background-color: #ffffff!important;
-  padding: 5px 0px 5px 0px;
   color: #30333C;
   pointer-events: visible;
   cursor: pointer;
-  &-img {
-      height: 100px;
-      width: 100px;
-      padding: 2px;
-      border-radius: 5px;
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
+  &__img {
+      height: 250px;
+      width: 248px;
+      border-style: none;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
   }
-  &-divInfo {
-      width: 220px;
-      margin-left: 10px;
+  &__divInfo {
+      display: block;
+      width: 100%;
+      padding: 10px 15px;
   }
-  &-dados {
+  &__dados {
       margin: 0px;
+  }
+  &__dadosNome {
+      margin: 0px;
+      font-weight: bolder;
+      font-size: 15px;
+      color: #000!important;
   }
 }
 
 @media (max-width: 350px) {
-  .cardPessoa {
+  .cardPerson {
       margin: 5px 0px 5px 0px;
   }
 }
 
 @media (min-width: 351px) {
-  .cardPessoa {
+  .cardPerson {
       margin: 5px 5px 5px 5px;
   }
 }

@@ -1,42 +1,53 @@
-import React from "react";
+import React, { useEffect } from "react";
 import './styles.scss';
-import {cpfFormat} from '../../assist';
 
 import Button from '@material-ui/core/Button';
 
-export default function cardPessoa(props) {
-  const { setSelect, foto, dados, crianca, idade, opcao} = props;
+import { idade as convertDateToAge, cpfFormat } from '../../assist';
+
+export default function cardPerson(props) {
+  const { setSelect, person, isChild, extraFields} = props;
+  let idade = convertDateToAge(person.dataNascimento);;
 
   const handleClick = () => {
-    setSelect(dados.id);
+    setSelect(person.id);
   }
 
   return (
-    <div className="cardPessoa" onClick={handleClick}> 
-      <img src={foto} alt='foto de perfil' className = "cardPessoa-img"/>
+    <div className="cardPerson" onClick={handleClick}> 
+      <img src={person.foto} alt='foto de perfil' className = "cardPerson__img"/>
 
-      {crianca === true ? 
-        <div className="cardPessoa-divInfo">
-          <p className="cardPessoa-dados">Criança</p>
-          <p className="cardPessoa-dados">Nome: {dados.nome}</p>
-          {idade > 1 ? <p className="cardPessoa-dados">Idade: {idade} anos</p> :
-          <p className="cardPessoa-dados">Idade: {idade} ano</p>}
-          {opcao}
+      {isChild === true ? 
+        <div className="cardPerson__divInfo">
+          <p className="cardPerson__dadosNome">{person.nome}</p>
+          <p className="cardPerson__dados">Criança</p>
+          {idade > 1 ? <p className="cardPerson__dados">
+            Idade: {idade} anos
+          </p> :
+          <p className="cardPerson__dados">Idade: {idade} ano</p>}
+          <p className="cardPerson__dados">Responsável: {person.responsavel.nome}</p>
+          {person.responsavel.endereco === null ?
+            <p className="cardPerson__dados">O responsavel não possui endereço cadastrado</p>
+          :
+            <p className="cardPerson__dados">Endereço: {person.responsavel.endereco.logradouro}, {person.responsavel.endereco.bairro}, {person.responsavel.endereco.cidade}</p>
+          }
+          {extraFields}
         </div>
       :
-        <div className="cardPessoa-divInfo">
-        <p className="cardPessoa-dados">Responsável</p>
-          <p className="cardPessoa-dados">Nome: {dados.nome}</p>
-          {idade > 1 ? <p className="cardPessoa-dados">Idade: {idade} anos</p> :
-          <p className="cardPessoa-dados">Idade: {idade} ano</p>}
-          <p className="cardPessoa-dados">CPF: {cpfFormat(dados.cpf)}</p>
-          {dados.endereco === null ?
-            <p className="cardPessoa-dados">Essa pessoa não possui endereço cadastrado</p>
+        <div className="cardPerson__divInfo">
+          <p className="cardPerson__dadosNome">{person.nome}</p>
+          <p className="cardPerson__dados">Responsável</p>
+          {idade > 1 ? <p className="cardPerson__dados">Idade: {idade} anos</p> :
+          <p className="cardPerson__dados">Idade: {idade} ano</p>}
+          <p className="cardPerson__dados">CPF: {cpfFormat(person.cpf)}</p>
+          {person.endereco === null ?
+            <p className="cardPerson__dados">Essa pessoa não possui endereço cadastrado</p>
           :
-            <p className="cardPessoa-dados">Endereço: {dados.endereco.logradouro}, {dados.endereco.bairro}, {dados.endereco.cidade}</p>
+            <p className="cardPerson__dados">Endereço: {person.endereco.logradouro}, {person.endereco.bairro}, {person.endereco.cidade}</p>
           }
+          {extraFields}
         </div>
       }
-    </div>
+    </div>  
   );
 }
