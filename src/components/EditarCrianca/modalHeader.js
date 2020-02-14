@@ -9,9 +9,9 @@ export default function ModalHeader(props) {
   const { setEdit, submit, busca, setOpenBusca} = props;
 
   const handleSalvar = e => {
-    submit();
     e.preventDefault();
     e.stopPropagation();
+    submit();
   }
 
   const handleCancelar = e => {
