@@ -13,7 +13,7 @@ import CropFotos from '../CropFotos';
 
 import { checkText, checkData, checkCpf, checkTextField } from '../../validated';
 import {converterData} from '../../assist';
-import {postResponsavel} from '../../services';
+import {postResponsavel, postImagem} from '../../services';
 
 export default function CadastroResponsavel(){
   const [openAlertSuccess, setOpenAlertSuccess] = useState(false);
@@ -111,9 +111,10 @@ export default function CadastroResponsavel(){
     setEmails(['']);
   }
 
-  const handleSubmit = e => {
-    //tirar futuramente
-    console.log(imgBase64)
+  const handleSubmit = async e => {
+    e.preventDefault();
+    e.stopPropagation();
+    
     let flag = false;
 
     if(validatedNomeCompleto === false){
@@ -173,39 +174,44 @@ export default function CadastroResponsavel(){
         return obj.contato !== ""
       });
 
-      const obj = {
-        nome: nomeCompleto,
-        dataNascimento: dtNascimento,
-        sexo: sexoPessoa,
-        cpf,
-        comentario,
-        foto: "",
-        endereco: {
-          logradouro,
-          bairro,
-          cidade,
-          cep: cepFormatado,
-          numero: numero
-        },
-        contatos
-      }
+      try{
+        let d = new Date();
 
-      
-      postResponsavel(obj)
-      .then(res => {
+        const img = {
+          iBase: imgBase64,
+          filename: nomeCompleto + "" + d.getDate() + d.getMonth() + d.getFullYear() + d.getHours() + d.getMinutes() + d.getSeconds() + d.getMilliseconds()
+        }
+
+        const resImg = await postImagem(img);
+
+        const obj = {
+          nome: nomeCompleto,
+          dataNascimento: dtNascimento,
+          sexo: sexoPessoa,
+          cpf,
+          comentario,
+          foto: resImg.data.url,
+          endereco: {
+            logradouro,
+            bairro,
+            cidade,
+            cep: cepFormatado,
+            numero: numero
+          },
+          contatos
+        }
+
+        await postResponsavel(obj);
+
         setOpenAlertSuccess(true);
         setOpenAlertError(false);
         resetFields();
-      })
-      .catch(res => {
+      }
+      catch(res){
         setOpenAlertSuccess(false);
         setOpenAlertError(true);
-      });
-
+      }
     }
-    e.preventDefault();
-    e.stopPropagation();
-
   };
 
   const onSelectImg = (e) => {

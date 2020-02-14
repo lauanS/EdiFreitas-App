@@ -12,7 +12,7 @@ import CampoImagem from '../CampoImagem';
 import CropFotos from '../CropFotos';
 
 import { checkText, checkNumber, checkCamiseta, checkData } from '../../validated';
-import {postCrianca} from '../../services'
+import {postCrianca, postImagem} from '../../services'
 import {converterData} from '../../assist';
 
 export default function CadastroCrianca(){
@@ -79,9 +79,10 @@ export default function CadastroCrianca(){
     setValidatedComentario(false);
   }
 
-  const handleSubmit = e => {
-    //tirar futuramente
-    console.log(imgBase64)
+  const handleSubmit = async e => {
+    e.preventDefault();
+    e.stopPropagation();
+    
     let flag = false;
 
     if(validatedNomeCompleto === false){
@@ -110,30 +111,37 @@ export default function CadastroCrianca(){
     if(flag === false){
       let dtNascimento = converterData(dataNascimento);
 
-      const obj = {
-        nome: nomeCompleto,
-        dataNascimento: dtNascimento,
-        sexo: sexoPessoa,
-        idResponsavel: dadosResponsavel.id,
-        nCalcado: numCalcado,
-        tamRoupa: tamCamiseta,
-        comentario: comentario,
-        foto: "https://www.gazetadopovo.com.br/viver-bem/wp-content/uploads/2015/12/smith-prd-meth01-tom_rpc_intra3-600x457.jpg"
-      };
+      try{
+        let d = new Date();
 
-      postCrianca(obj).then(res => {
+        const img = {
+          iBase: imgBase64,
+          filename: nomeCompleto + "" + d.getDate() + d.getMonth() + d.getFullYear() + d.getHours() + d.getMinutes() + d.getSeconds() + d.getMilliseconds()
+        }
+
+        const resImg = await postImagem(img);
+
+        const obj = {
+          nome: nomeCompleto,
+          dataNascimento: dtNascimento,
+          sexo: sexoPessoa,
+          idResponsavel: dadosResponsavel.id,
+          nCalcado: numCalcado,
+          tamRoupa: tamCamiseta,
+          comentario: comentario,
+          foto: resImg.data.url
+        };
+
+        await postCrianca(obj);
         setOpenAlertSuccess(true);
         setOpenAlertError(false);
         resetFields();
-      })
-      .catch(res => {
+      }
+      catch(res){
         setOpenAlertSuccess(false);
         setOpenAlertError(true);
-      });
-
+      }
     }
-    e.preventDefault();
-    e.stopPropagation();
   };
 
   const onSelectImg = (e) => {
