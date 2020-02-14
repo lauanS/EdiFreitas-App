@@ -13,7 +13,7 @@ import CampoImagem from '../CampoImagem';
 import CropFotos from '../CropFotos';
 
 import { checkText, checkNumber, checkCamiseta, checkData } from '../../validated';
-import {putCrianca} from '../../services';
+import {putCrianca, postImagem} from '../../services';
 import {desconverterData, converterData} from '../../assist';
 
 export default function EditarCrianca(props){
@@ -70,8 +70,7 @@ export default function EditarCrianca(props){
   const [openModal, setOpenModal] = useState(true);
   const [openBusca, setOpenBusca] = useState(false);
 
-  const handleSubmit = () => {
-    console.log(imgBase64)
+  const handleSubmit = async () => {
     let flag = false;
 
     if(validatedNomeCompleto === false){
@@ -96,25 +95,36 @@ export default function EditarCrianca(props){
     if(flag === false){
       let dtNascimento = converterData(dataNascimento);
 
-      const obj = {
-        nome: nomeCompleto,
-        dataNascimento: dtNascimento,
-        sexo: sexoPessoa,
-        idResponsavel: dadosResponsavel.id,
-        nCalcado: numCalcado,
-        tamRoupa: tamCamiseta, 
-        comentario: comentario,
-        foto: dados.foto
-      };
+      try{
+        let d = new Date();
+
+        const img = {
+          iBase: imgBase64,
+          filename: nomeCompleto + "" + d.getDate() + d.getMonth() + d.getFullYear() + d.getHours() + d.getMinutes() + d.getSeconds() + d.getMilliseconds()
+        }
+
+        const resImg = await postImagem(img);
+
+        const obj = {
+          nome: nomeCompleto,
+          dataNascimento: dtNascimento,
+          sexo: sexoPessoa,
+          idResponsavel: dadosResponsavel.id,
+          nCalcado: numCalcado,
+          tamRoupa: tamCamiseta, 
+          comentario: comentario,
+          foto: resImg.data.url
+        };
       
-      putCrianca(obj, dados.id).then(res => {
+        await putCrianca(obj, dados.id)
+
         setEdit(false);
         update();
         updateList();
-      })
-      .catch(res => {
+      }
+      catch(res){
         erroUpdate();
-      });
+      }
     }
   }
 

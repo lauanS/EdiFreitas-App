@@ -14,7 +14,7 @@ import CropFotos from '../CropFotos';
 
 import { checkText, checkData, checkCpf, checkTextField } from '../../validated';
 import {desconverterData, converterData} from '../../assist';
-import {putResponsavel} from '../../services';
+import {putResponsavel, postImagem} from '../../services';
 
 export default function CadastroResponsavel(props){
   const {erroUpdate, update, updateList, setEdit, dados} = props;
@@ -107,7 +107,7 @@ export default function CadastroResponsavel(props){
 
   const [openModal, setOpenModal] = useState(true);
 
-  const handleSubmit = e => {
+  const handleSubmit = async () => {
     console.log(imgBase64)
     let flag = false;
 
@@ -168,37 +168,43 @@ export default function CadastroResponsavel(props){
         return obj.contato !== ""
       });
       
-      const obj = {
-        nome: nomeCompleto,
-        dataNascimento: dtNascimento,
-        sexo: sexoPessoa,
-        cpf,
-        comentario,
-        foto: "",
-        endereco: {
-          logradouro,
-          bairro,
-          cidade,
-          cep: cepFormatado,
-          numero: numero
-        },
-        contatos
-      }
+      try{
+        let d = new Date();
 
-      putResponsavel(obj, dados.id)
-      .then(res => {
+        const img = {
+          iBase: imgBase64,
+          filename: nomeCompleto + "" + d.getDate() + d.getMonth() + d.getFullYear() + d.getHours() + d.getMinutes() + d.getSeconds() + d.getMilliseconds()
+        }
+
+        const resImg = await postImagem(img);
+
+        const obj = {
+          nome: nomeCompleto,
+          dataNascimento: dtNascimento,
+          sexo: sexoPessoa,
+          cpf,
+          comentario,
+          foto: resImg.data.url,
+          endereco: {
+            logradouro,
+            bairro,
+            cidade,
+            cep: cepFormatado,
+            numero: numero
+          },
+          contatos
+        }
+
+        await putResponsavel(obj, dados.id)
+
         setEdit(false);
         update();
         updateList();
-      })
-      .catch(res => {
+      }
+      catch(res) {
         erroUpdate();
-      });
-
+      }
     }
-    e.preventDefault();
-    e.stopPropagation();
-
   };
 
   const onSelectImg = (e) => {
