@@ -17,7 +17,7 @@ import urlImg from '../../assets/ong_logo.jpg'
 
 import './styles.scss';
 
-export default function ConsultarEventos(){
+export default function ConsultarEventos({selectEvent, action}){
   const [events, setEvents] = useState([]);
   const [search, setSearch] = useState('');
   const [feedback, setFeedback] = useState('');
@@ -101,12 +101,17 @@ export default function ConsultarEventos(){
         firstFooter={`Dia: ${event.dataEvento}`}
         lastFooter={`Local: ${event.local}`}
       >
-        <OpcoesConsulta 
+        {selectEvent === true ?
+          action
+          :
+          <OpcoesConsulta 
           obj={event}
           setSelectedObj={setSelectedEvent}          
           setShowModal={setShowModal}
           deleteItem={showDeleteAlert}
         />
+          
+        }
       </CardConsulta>
     ))
   }

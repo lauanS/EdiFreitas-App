@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import { getCriancas } from '../../services';
 import CardPerson from "../CardPerson";
 
+import SeletorDeEventos from './SeletorDeEventos'
 import { idade } from '../../assist';
 
 import './styles.scss';
@@ -18,6 +19,7 @@ export default function PresencaEvento(){
   const [selectedPerson, setSelectedPerson] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
 
+  const [showModal, setShowModal] = useState(false);
   
 
   async function loadPeople(){
@@ -37,6 +39,7 @@ export default function PresencaEvento(){
   }
 
   function selectEvent(){
+    setShowModal(true);
     return;
   }
 
@@ -111,6 +114,20 @@ export default function PresencaEvento(){
       }
     </div>
     
+    <SeletorDeEventos 
+      show={showModal}
+      setShow={setShowModal}
+    >
+      <Button 
+        size="small"
+        as={Col} 
+        variant="outlined" 
+        color="primary"
+        onClick={() => {console.log(">.<")}}
+      >
+        Selecionar
+      </Button>
+    </SeletorDeEventos>
     </>
   );
       
