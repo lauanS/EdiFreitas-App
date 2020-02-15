@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import './styles.scss';
 
-import Button from '@material-ui/core/Button';
 
 import { idade as convertDateToAge, cpfFormat } from '../../assist';
 
