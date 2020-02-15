@@ -4,11 +4,10 @@ import {Form, Row, Col, CardColumns} from 'react-bootstrap';
 
 import SweetAlert from 'react-bootstrap-sweetalert';
 
-import Button from '@material-ui/core/Button';
-
 import CardConsulta from '../CardConsulta';
 import EditorDeEventos from "./EditarEventos";
 import Snackbar from '../Snackbars';
+import OpcoesConsulta from '../OpcoesConsulta'
 
 import { getEventos, deleteEvento } from '../../services';
 
@@ -75,11 +74,6 @@ export default function ConsultarEventos(){
     setShowAlert(true);
   }
 
-  function handleClick(obj){
-    setSelectedEvent(obj);
-    setShowModal(true);
-  }
-
   /* Carregando as notícias */
   useEffect(() => {   
     loadEvents();      
@@ -97,39 +91,21 @@ export default function ConsultarEventos(){
 
   function renderCards(){
     filteredEvents = events.filter(filterEvents)
-    return filteredEvents.map((card, key) => (
+    return filteredEvents.map((event, key) => (
       <CardConsulta
         key={key}
-        title={card.nome}
-        description={card.descricao}
+        title={event.nome}
+        description={event.descricao}
         urlImg={urlImg}
-        firstFooter={`Dia: ${card.dataEvento}`}
-        lastFooter={`Local: ${card.local}`}
+        firstFooter={`Dia: ${event.dataEvento}`}
+        lastFooter={`Local: ${event.local}`}
       >
-        <Button as={Col} variant="outlined" color="primary"> Visualizar </Button>
-        <Button 
-          as={Col} 
-          variant="outlined" 
-          color="primary"
-          onClick={() => {
-            setSelectedEvent(card);
-            setShowModal(true);
-          }}
-        > 
-          Editar 
-        </Button>
-        <Button 
-          as={Col} 
-          variant="outlined" 
-          color="primary"
-          className="btn-card-consulta"
-          onClick={() => {  
-            setSelectedEvent(card);
-            showDeleteAlert();
-          }}
-        > 
-          Excluir 
-        </Button>
+        <OpcoesConsulta 
+          obj={event}
+          setSelectedObj={setSelectedEvent}          
+          setShowModal={setShowModal}
+          deleteItem={showDeleteAlert}
+        />
       </CardConsulta>
     ))
   }

@@ -4,11 +4,10 @@ import { Form, Row, Col, CardColumns } from 'react-bootstrap';
 
 import SweetAlert from 'react-bootstrap-sweetalert';
 
-import Button from '@material-ui/core/Button';
-
 import CardConsulta from '../CardConsulta';
 import EditorDeNoticia from "./EditarNoticia";
 import Snackbar from '../Snackbars';
+import OpcoesConsulta from '../OpcoesConsulta'
 
 import { getNoticias, deleteNoticia } from '../../services';
 
@@ -103,30 +102,12 @@ export default function ConsultarNoticias(){
         firstFooter={`Criado em ${news.data}`}
         lastFooter={`${news.tag}`}
       >
-        <Button as={Col} variant="outlined" color="primary"> Visualizar </Button>
-        <Button 
-          as={Col} 
-          variant="outlined" 
-          color="primary"
-          onClick={() => {
-            setSelectedNews(news);
-            setShowModal(true);
-          }}
-        > 
-          Editar 
-        </Button>
-        <Button 
-          as={Col} 
-          variant="outlined" 
-          color="primary"
-          className="btn-card-consulta"
-          onClick={() => {  
-              setSelectedNews(news);
-              showDeleteAlert();
-          }}
-        > 
-          Excluir 
-        </Button>
+        <OpcoesConsulta 
+          obj={news}
+          setSelectedObj={setSelectedNews}          
+          setShowModal={setShowModal}
+          deleteItem={showDeleteAlert}
+        />
     </CardConsulta>
     ))
   }

@@ -39,6 +39,8 @@
   &-row{
     margin: 0;
     flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
   }
 
   @media screen and (max-width: 800px) {
