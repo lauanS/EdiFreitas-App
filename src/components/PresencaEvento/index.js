@@ -124,7 +124,8 @@ export default function PresencaEvento(){
           variant="outlined" 
           color="primary"
           onClick={() => {
-            setSelectedEvent(obj)
+            setSelectedEvent(obj);
+            setShowModal(false);
           }}
         >
           Selecionar
