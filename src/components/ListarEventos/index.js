@@ -12,6 +12,9 @@ import OpcoesConsulta from '../OpcoesConsulta'
 import { getEventos, deleteEvento } from '../../services';
 
 import { notFind, deleteError, deleteSucess } from "../../assist/feedback";
+
+import urlImg from '../../assets/ong_logo.jpg'
+
 import './styles.scss';
 
 export default function ConsultarEventos(){
@@ -27,8 +30,6 @@ export default function ConsultarEventos(){
 
 
   const [selectedEvent, setSelectedEvent ] = useState({id: undefined, nome: ""});
-
-  const urlImg = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSGSchNBJSYBWUARzgM2YisE5S9_Ew8LSyblcHTg_sCRf38-ApP"
 
   let filteredEvents = [];
 
