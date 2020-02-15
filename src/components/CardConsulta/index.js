@@ -1,25 +1,12 @@
 import React from 'react';
 
-import {Row, Col, Card, Button} from 'react-bootstrap'
+import {Row, Col, Card} from 'react-bootstrap'
 
 import './styles.scss';
 
 
 export default function CardConsulta(props){
-  const { obj, title, description, urlImg, firstFooter, lastFooter } = props;
-  const { deleteThisCard, setSelectedObj } = props;
-
-  const { setShowModal } = props;
-
-  function handleClick(){
-    setSelectedObj(obj);
-    setShowModal(true);
-  }
-
-  function handleDelete(){
-    setSelectedObj(obj);
-    deleteThisCard();
-  }
+  const { title, description, urlImg, firstFooter, lastFooter } = props;
 
   function formattedDescription(){
     if(description.length > 130){
@@ -37,25 +24,24 @@ export default function CardConsulta(props){
         {title}
       </Card.Header>
 
-      <Card.Body className="card-body">    
+      <Card.Body className="cardConsulta-body">    
         
         <Card.Img           
           src={urlImg} 
+          className="cardConsulta-img"
         />
         <Col>
           <Row>
-            <Card.Subtitle className="card-description">
+            <Card.Subtitle className="cardConsulta-description">
               {formattedDescription()}
             </Card.Subtitle>
           </Row>
-          <Row>      
-              <Button as={Col} variant="link"> Visualizar </Button>
-              <Button as={Col} variant="link" onClick={handleClick}> Editar </Button>
-              <Button as={Col} variant="link" onClick={handleDelete}> Excluir </Button>        
+          <Row className="cardConsulta-row">      
+              {props.children}              
           </Row>
         </Col>    
 
-        <footer className="card-footer ">
+        <footer className="cardConsulta-footer">
           <p>{firstFooter}</p>
           <p>{lastFooter}</p>
         </footer>
