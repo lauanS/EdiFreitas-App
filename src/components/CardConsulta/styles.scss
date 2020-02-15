@@ -28,7 +28,9 @@
     padding-left: 5px;
     max-height: 60px;
     background-color: transparent;
-
+    border-top-width: 1px !important; 
+    border-top-style: solid !important;
+    border-top: #dfdfdf;
     p{
       font-size: 13px;
       color: #666;
