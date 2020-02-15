@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-import {Form, Row, Col, Jumbotron, Image} from 'react-bootstrap';
+import {Form, Row, Col, Jumbotron} from 'react-bootstrap';
 import Button from '@material-ui/core/Button';
 
 import { getCriancas } from '../../services';
 import CardPerson from "../CardPerson";
 
 import SeletorDeEventos from './SeletorDeEventos'
-import { idade } from '../../assist';
 
 import './styles.scss';
 
@@ -77,9 +76,9 @@ export default function PresencaEvento(){
     <Row>
       <Col>
         <Jumbotron className="jumbotron-event">
-          <h2>Titulo do evento</h2>
-          <p>Local: Rua do Três, 33, Jd. Terço</p>
-          <p>10/10/2020</p>
+          <h2>{selectedEvent ? selectedEvent.nome : "Titulo do evento"}</h2>
+          <p>{selectedEvent ? "Local: " + selectedEvent.local : "Local: Indefinido"}</p>
+          <p>{selectedEvent ? selectedEvent.dataEvento : "DD/MM/AAAA"}</p>
           <Button 
             type="submit" 
             variant="contained" 
@@ -117,17 +116,23 @@ export default function PresencaEvento(){
     <SeletorDeEventos 
       show={showModal}
       setShow={setShowModal}
-    >
-      <Button 
-        size="small"
-        as={Col} 
-        variant="outlined" 
-        color="primary"
-        onClick={() => {console.log(">.<")}}
-      >
-        Selecionar
-      </Button>
-    </SeletorDeEventos>
+      action={(obj) => {
+        return <>
+        <Button 
+          size="small"
+          as={Col} 
+          variant="outlined" 
+          color="primary"
+          onClick={() => {
+            setSelectedEvent(obj)
+          }}
+        >
+          Selecionar
+        </Button>
+        </>
+      }}
+    />
+    
     </>
   );
       

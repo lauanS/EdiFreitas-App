@@ -102,14 +102,14 @@ export default function ConsultarEventos({selectEvent, action}){
         lastFooter={`Local: ${event.local}`}
       >
         {selectEvent === true ?
-          action
+          action(event)
           :
           <OpcoesConsulta 
-          obj={event}
-          setSelectedObj={setSelectedEvent}          
-          setShowModal={setShowModal}
-          deleteItem={showDeleteAlert}
-        />
+            obj={event}
+            setSelectedObj={setSelectedEvent}          
+            setShowModal={setShowModal}
+            deleteItem={showDeleteAlert}
+          />
           
         }
       </CardConsulta>

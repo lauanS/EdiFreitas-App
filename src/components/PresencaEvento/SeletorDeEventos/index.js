@@ -6,7 +6,7 @@ import ListarEventos from "../../ListarEventos";
 import './styles.scss';
 
 export default function SeletorDeEventos(props){
-  const {obj, show, setShow} = props;
+  const {show, setShow, action} = props;
   const handleClose = () => {setShow(false)}
 
   return (
@@ -24,7 +24,7 @@ export default function SeletorDeEventos(props){
       <Modal.Body>
         <ListarEventos 
           selectEvent={true}  
-          action={props.children}
+          action={action}
         />
       </Modal.Body>
     </Modal>
