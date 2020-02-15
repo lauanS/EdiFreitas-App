@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
+
 import {Form, Row, Col, CardColumns} from 'react-bootstrap';
+
 import SweetAlert from 'react-bootstrap-sweetalert';
+
+import Button from '@material-ui/core/Button';
 
 import CardConsulta from '../CardConsulta';
 import EditorDeEventos from "./EditarEventos";
@@ -71,6 +75,11 @@ export default function ConsultarEventos(){
     setShowAlert(true);
   }
 
+  function handleClick(obj){
+    setSelectedEvent(obj);
+    setShowModal(true);
+  }
+
   /* Carregando as notícias */
   useEffect(() => {   
     loadEvents();      
@@ -91,17 +100,37 @@ export default function ConsultarEventos(){
     return filteredEvents.map((card, key) => (
       <CardConsulta
         key={key}
-        obj={card}
         title={card.nome}
         description={card.descricao}
         urlImg={urlImg}
         firstFooter={`Dia: ${card.dataEvento}`}
         lastFooter={`Local: ${card.local}`}
-        deleteThisCard={showDeleteAlert}
-        showModal={showModal}
-        setShowModal={setShowModal}
-        setSelectedObj={setSelectedEvent}
-      />
+      >
+        <Button as={Col} variant="outlined" color="primary"> Visualizar </Button>
+        <Button 
+          as={Col} 
+          variant="outlined" 
+          color="primary"
+          onClick={() => {
+            setSelectedEvent(card);
+            setShowModal(true);
+          }}
+        > 
+          Editar 
+        </Button>
+        <Button 
+          as={Col} 
+          variant="outlined" 
+          color="primary"
+          className="btn-card-consulta"
+          onClick={() => {  
+            setSelectedEvent(card);
+            showDeleteAlert();
+          }}
+        > 
+          Excluir 
+        </Button>
+      </CardConsulta>
     ))
   }
 
