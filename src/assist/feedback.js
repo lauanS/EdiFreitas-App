@@ -6,10 +6,10 @@ export function notFind(type, value){
 }
 
 export function deleteError(){
-  return `Ocorreu um erro ao deletar`;
+  return `Ocorreu um erro ao excluir`;
 }
 
-export function deleteSucess(type=""){
+export function deleteSuccess(type=""){
   if(type) {
     if(type.endsWith('a')){
       return `${type} excluída com sucesso`;
@@ -17,4 +17,18 @@ export function deleteSucess(type=""){
     return `${type} excluído com sucesso`;;
   }
   return `Excluído com sucesso`;
+}
+
+export function saveError(){
+  return `Ocorreu um erro ao salvar`;
+}
+
+export function saveSuccess(type=""){
+  if(type) {
+    if(type.endsWith('a')){
+      return `${type} salva com sucesso`;
+    }
+    return `${type} salvo com sucesso`;;
+  }
+  return `Salvo com sucesso`;
 }
