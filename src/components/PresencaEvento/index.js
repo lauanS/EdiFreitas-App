@@ -16,6 +16,7 @@ export default function PresencaEvento(){
   const [personSearch, setPersonSearch] = useState("");
 
   const [selectedPerson, setSelectedPerson] = useState(null);
+  const [selectedPeople, setSelectedPeople] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
 
   const [showModal, setShowModal] = useState(false);
@@ -47,26 +48,33 @@ export default function PresencaEvento(){
     loadPeople();
   }, [])
 
+  /* Carrega todas as pessoas após renderizar o componente */
+  useEffect(() => {
+    loadPeople();
+  }, [selectedEvent])
+
+
+
 
   function renderCards(){
     const filteredPeople = people.filter(filterPeople);
     return filteredPeople.map((dados, key) => (
       <CardPerson 
         key={key}
-        setSelect={setSelectedEvent} 
+        action={() => {}} 
         person={dados} 
         isChild={true} 
-        extraFields={
+      >
         <Button 
           type="submit" 
           size="small" 
           variant="contained" 
           color="primary"
+          onClick={}
         >
-          {personSearch}
+          Vincular
         </Button>
-        }
-      />
+      </CardPerson>
     ));
 
   }

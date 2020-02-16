@@ -5,11 +5,11 @@ import './styles.scss';
 import { idade as convertDateToAge, cpfFormat } from '../../assist';
 
 export default function cardPerson(props) {
-  const { setSelect, person, isChild, extraFields} = props;
+  const { action, person, isChild} = props;
   let idade = convertDateToAge(person.dataNascimento);;
 
   const handleClick = () => {
-    setSelect(person.id);
+    action();
   }
 
   return (
@@ -30,7 +30,7 @@ export default function cardPerson(props) {
           :
             <p className="cardPerson__dados">Endereço: {person.responsavel.endereco.logradouro}, {person.responsavel.endereco.bairro}, {person.responsavel.endereco.cidade}</p>
           }
-          {extraFields}
+          {props.children}
         </div>
       :
         <div className="cardPerson__divInfo">
@@ -44,7 +44,7 @@ export default function cardPerson(props) {
           :
             <p className="cardPerson__dados">Endereço: {person.endereco.logradouro}, {person.endereco.bairro}, {person.endereco.cidade}</p>
           }
-          {extraFields}
+          {props.children}
         </div>
       }
     </div>  
