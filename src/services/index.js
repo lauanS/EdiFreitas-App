@@ -107,9 +107,9 @@ export async function getEventoParticipante(id){
 }
 
 export async function postEventoParticipante(idEvento, idCrianca){
-  return await api.post('/eventos/participantes', {idEvento, idCrianca});
+  return await api.post(`/eventos/participantes?idEvento=${idEvento}&idCrianca=${idCrianca}`);
 }
 
 export async function deleteEventoParticipante(idEvento, idCrianca){
-  return await api.delete('/eventos/participantes', {idEvento, idCrianca});
+  return await api.delete(`/eventos/participantes?idEvento=${idEvento}&idCrianca=${idCrianca}`);
 }
