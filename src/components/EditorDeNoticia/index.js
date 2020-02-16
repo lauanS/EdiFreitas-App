@@ -15,6 +15,9 @@ export default function EditorDeNoticia(props){
   const { initialTitle="", initialSubtitle="", initialText="", initialTags="" } = props;
   const { isUpdate, updateList, id } = props;
 
+  const { setOpenAlertError, setOpenAlertSuccess } = props;
+  const [openFieldError, setOpenFieldError] = useState(false);
+
   const [title, setTitle] = useState(initialTitle);
   const [invalidatedTitle, setInvalidatedTitle] = useState(false);
 
@@ -28,9 +31,7 @@ export default function EditorDeNoticia(props){
 
   const [open, setOpen] = useState(true);
 
-  const [openAlertSuccess, setOpenAlertSuccess] = useState(false);
-  const [openAlertError, setOpenAlertError] = useState(false);
-  const [openFieldError, setOpenFieldError] = useState(false);
+
   
 
   const urlImg = "https://cutetheworld.files.wordpress.com/2008/11/cutebug.png";
@@ -124,11 +125,6 @@ export default function EditorDeNoticia(props){
 
   return (
     <>
-
-    <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} 
-      msg="Notícia salva!" type="success"/>
-    <Snackbar open={openAlertError} setOpen={setOpenAlertError} 
-      msg={"Ocorreu um erro ao salvar a notícia"} type="error"/>
 
     <Snackbar open={openFieldError} setOpen={setOpenFieldError} 
       msg="Insira o conteúdo da notícia" type="error"/>
