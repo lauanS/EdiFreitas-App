@@ -275,7 +275,7 @@ export default function CadastroResponsavel(){
 
     <label className="CadastroResponsavel__descricao">É obrigatório o preenchimento de campos com * (Asterisco) no título, é opcional quando não possuem o asterisco</label>
 
-    <Form autoComplete="off" onSubmit={handleSubmit} noValidate>
+    <Form autoComplete="off" noValidate>
       <CamposPessoa 
         nome={nomeCompleto} 
         onChangeNome={onChangeNome} 
@@ -398,29 +398,19 @@ export default function CadastroResponsavel(){
         setComentario={setComentario}
       />
       
-      <Form.Group>
-        { 
-          telefones.map((_, index) => (
-              <Contato key={index} id={index} contacts={telefones} setContacts={setTelefones} type="telefone"/>
-            ))
-        }
-        <Button as={Row} variant="link" onClick={addNewPhone}>Novo telefone</Button>
-      </Form.Group>
+      {telefones.map((_, index) => (
+            <Contato key={index} id={index} contacts={telefones} setContacts={setTelefones} type="telefone"/>
+          ))
+      }
+      <Button as={Row} variant="link" onClick={addNewPhone}>Novo telefone</Button>
 
-      <Form.Group>
-        { 
-          emails.map((_, index) => (
-              <Contato key={index} id={index} contacts={emails} setContacts={setEmails} type="email"/>
-            ))
-        }
-        <Button as={Row} variant="link" onClick={addNewEmail}>Novo e-mail</Button>
-      </Form.Group>
+      {emails.map((_, index) => (
+            <Contato key={index} id={index} contacts={emails} setContacts={setEmails} type="email"/>
+          ))
+      }
+      <Button as={Row} variant="link" onClick={addNewEmail}>Novo e-mail</Button>
 
-      <Form.Group as={Row}>
-        <Col sm={{ span: 10, offset: 2 }}>
-          <Button type="submit" >Cadastrar</Button>
-        </Col>
-      </Form.Group>
+      <Button className="CadastroResponsavel__buttonSubmit" variant="success" onClick={handleSubmit}>Cadastrar responsável</Button>
     </Form>
     </>
   );
