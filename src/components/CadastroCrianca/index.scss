@@ -33,4 +33,16 @@
         width: 150px;
         max-width: 150px;
     }
+    &__buttonSubmit {
+        width: 200px;
+        font-weight: 700;
+        margin: 0;
+        display: block;
+    }
+}
+
+@media (min-width: 580px) {
+    .CadastroCrianca__buttonSubmit {
+        margin-left: 170px;
+    }
 }
