@@ -24,12 +24,19 @@ export default function cardPerson(props) {
             Idade: {idade} anos
           </p> :
           <p className="cardPerson__dados">Idade: {idade} ano</p>}
-          <p className="cardPerson__dados">Responsável: {person.responsavel.nome}</p>
-          {person.responsavel.endereco === null ?
-            <p className="cardPerson__dados">O responsavel não possui endereço cadastrado</p>
-          :
-            <p className="cardPerson__dados">Endereço: {person.responsavel.endereco.logradouro}, {person.responsavel.endereco.bairro}, {person.responsavel.endereco.cidade}</p>
+          { person.responsavel !== undefined ?
+            <>
+            <p className="cardPerson__dados">Responsável: {person.responsavel.nome}</p>
+            { person.responsavel.endereco === null ?
+              <p className="cardPerson__dados">O responsavel não possui endereço cadastrado</p>
+            :
+              <p className="cardPerson__dados">Endereço: {person.responsavel.endereco.logradouro}, {person.responsavel.endereco.bairro}, {person.responsavel.endereco.cidade}</p>
+            }
+            </>
+            :
+            <p></p>
           }
+          
           {props.children}
         </div>
       :
