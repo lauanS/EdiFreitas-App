@@ -10,8 +10,9 @@ import Snackbar from '../Snackbars';
 import OpcoesConsulta from '../OpcoesConsulta'
 
 import { getEventos, deleteEvento } from '../../services';
-
+import { desconverterData } from "../../assist/";
 import { notFind, deleteError, deleteSuccess } from "../../assist/feedback";
+
 
 import urlImg from '../../assets/ong_logo.jpg'
 
@@ -98,7 +99,7 @@ export default function ConsultarEventos({selectEvent, action}){
         title={event.nome}
         description={event.descricao}
         urlImg={urlImg}
-        firstFooter={`Dia: ${event.dataEvento}`}
+        firstFooter={`Dia: ${desconverterData(event.dataEvento)}`}
         lastFooter={`Local: ${event.local}`}
       >
         {selectEvent === true ?

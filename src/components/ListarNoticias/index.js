@@ -12,6 +12,7 @@ import OpcoesConsulta from '../OpcoesConsulta'
 import { getNoticias, deleteNoticia } from '../../services';
 
 import { notFind, deleteError, deleteSuccess} from "../../assist/feedback";
+import { desconverterData } from "../../assist/";
 import { saveSuccess, saveError } from "../../assist/feedback";
 
 import './styles.scss';
@@ -103,7 +104,7 @@ export default function ConsultarNoticias(){
         title={news.titulo}
         description={news.descricao}
         urlImg={(news.foto ? news.foto : urlImg)}
-        firstFooter={`Criado em ${news.data}`}
+        firstFooter={`Criado em ${desconverterData(news.data)}`}
         lastFooter={`${news.tag}`}
       >
         <OpcoesConsulta 
