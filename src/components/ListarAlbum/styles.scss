@@ -1,0 +1,55 @@
+.cardAlbum {
+    width: 100%;
+    max-width: 350px;
+    border: 1px solid rgba(#000, .2);
+    border-radius: 5px;
+    display: block;
+    background-color: #ffffff!important;
+    color: #30333C;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
+    &__body {
+        width: 100%;
+        max-width: 348px;
+        height: 348px;
+        padding: 0;
+        overflow-y: hidden;
+        overflow-x: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    &__img {
+        height: 100%;
+        width: 100%;
+        border-style: none;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        object-fit: cover;
+    }
+    &__dados {
+        margin: 0px;
+        padding-bottom: 5px;
+    }
+    &__footer {
+        flex-wrap: nowrap;
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 350px) {
+    .cardAlbum {
+        margin: 5px 0px 5px 0px;
+    }
+}
+
+@media (min-width: 351px) {
+    .cardAlbum {
+        margin: 5px 5px 5px 5px;
+    }
+}
+
+.listarAlbum {
+    display: flex;
+    flex-wrap: wrap;
+}
