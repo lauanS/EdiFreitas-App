@@ -64,8 +64,8 @@ export default class extends React.Component {
   searchPeople(list, search, idadeMax, idadeMin) {
     return Array.isArray(list) ? list.filter(person => 
       person.nome.toLowerCase().indexOf(search.toLowerCase()) !== -1 && 
-      idade(person.dataNascimento) < idadeMax  && 
-      idade(person.dataNascimento) > idadeMin)
+      idade(person.dataNascimento) <= idadeMax  && 
+      idade(person.dataNascimento) >= idadeMin)
       : [];
   }
 
