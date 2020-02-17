@@ -11,7 +11,9 @@ import OpcoesConsulta from '../OpcoesConsulta'
 
 import { getNoticias, deleteNoticia } from '../../services';
 
-import { notFind, deleteError, deleteSucess } from "../../assist/feedback";
+import { notFind, deleteError, deleteSuccess} from "../../assist/feedback";
+import { saveSuccess, saveError } from "../../assist/feedback";
+
 import './styles.scss';
 
 export default function ConsultarNoticias(){
@@ -21,6 +23,8 @@ export default function ConsultarNoticias(){
 
   const [showAlert, setShowAlert] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [openAlertSuccess, setOpenAlertSuccess] = useState(false);
+  const [openAlertError, setOpenAlertError] = useState(false);
 
   const [selectedNews, setSelectedNews ] = useState({id: undefined, titulo: ""});
 
@@ -114,8 +118,13 @@ export default function ConsultarNoticias(){
 
   return (
     <>
-    <Snackbar open={alertDeleteSucess} setOpen={setAlertDeleteSucess} msg={deleteSucess("Notícia")}type="success"/>
+    <Snackbar open={alertDeleteSucess} setOpen={setAlertDeleteSucess} msg={deleteSuccess("Notícia")}type="success"/>
     <Snackbar open={alertDeleteError} setOpen={setAlertDeleteError} msg={deleteError()} type="error"/>
+
+    <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} 
+      msg={saveSuccess("Notícia")} type="success"/>
+    <Snackbar open={openAlertError} setOpen={setOpenAlertError} 
+      msg={saveError()} type="error"/>
 
 
     <Form autoComplete="off">
@@ -168,6 +177,8 @@ export default function ConsultarNoticias(){
       show={showModal}
       setShow={setShowModal}
       updateList={loadNews}
+      setOpenAlertError={setOpenAlertError}
+      setOpenAlertSuccess={setOpenAlertSuccess}
     />
 
     </>

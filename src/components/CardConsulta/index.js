@@ -11,7 +11,6 @@ export default function CardConsulta(props){
   function formattedDescription(){
     if(description.length > 130){
       let d = description.substring(0, 130) + " [ ... ]";
-      console.log("D: ", d);
       return d;
     }
     return description;    
