@@ -11,7 +11,7 @@ import OpcoesConsulta from '../OpcoesConsulta'
 
 import { getEventos, deleteEvento } from '../../services';
 
-import { notFind, deleteError, deleteSucess } from "../../assist/feedback";
+import { notFind, deleteError, deleteSuccess } from "../../assist/feedback";
 
 import urlImg from '../../assets/ong_logo.jpg'
 
@@ -118,7 +118,7 @@ export default function ConsultarEventos({selectEvent, action}){
 
   return (
     <>
-    <Snackbar open={alertDeleteSucess} setOpen={setAlertDeleteSucess} msg={deleteSucess("Evento")}type="success"/>
+    <Snackbar open={alertDeleteSucess} setOpen={setAlertDeleteSucess} msg={deleteSuccess("Evento")}type="success"/>
     <Snackbar open={alertDeleteError} setOpen={setAlertDeleteError} msg={deleteError()} type="error"/>
 
     <Form autoComplete="off">

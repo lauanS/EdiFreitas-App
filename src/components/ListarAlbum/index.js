@@ -6,7 +6,7 @@ import VisualizarImagens from '../VisualizarImagens';
 import EditarImagens from '../EditarImagens';
 import SweetAlert from 'react-bootstrap-sweetalert';
 
-import {deleteSucess, deleteError, updateSuccess, updateError} from '../../assist/feedback'
+import {deleteSuccess, deleteError, updateSuccess, updateError} from '../../assist/feedback'
 import {getAlbum, deleteAlbum, getImagem} from '../../services';
 
 export default function ListarAlbum(){
@@ -98,7 +98,7 @@ export default function ListarAlbum(){
 
   return(
     <>
-    <Snackbar open={openAlertSuccessDelete} setOpen={setOpenAlertSuccessDelete} msg={deleteSucess("Álbum")} type="success"/>
+    <Snackbar open={openAlertSuccessDelete} setOpen={setOpenAlertSuccessDelete} msg={deleteSuccess("Álbum")} type="success"/>
     <Snackbar open={openAlertErrorDelete} setOpen={setOpenAlertErrorDelete} msg={deleteError} type="error"/>
 
     <Snackbar open={openAlertSuccessUpdate} setOpen={setOpenAlertSuccessUpdate} msg={updateSuccess} type="success"/>

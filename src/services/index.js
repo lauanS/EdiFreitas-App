@@ -111,3 +111,17 @@ export async function getAlbum(){
 export async function deleteAlbum(id){
   return await api.delete('/album/' + id);
 }
+// ============== CONTROLE DE PRESENÇA ==============
+
+export async function getEventoParticipante(id){
+  return await api.get('/eventos/participantes/'+ id);
+}
+
+export async function postEventoParticipante(idEvento, idCrianca){
+  return await api.post(`/eventos/participantes?idEvento=${idEvento}&idCrianca=${idCrianca}`);
+}
+
+export async function deleteEventoParticipante(idEvento, idCrianca){
+  return await api.delete(`/eventos/participantes?idEvento=${idEvento}&idCrianca=${idCrianca}`);
+}
+

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-import {Form, Row, Col, Jumbotron} from 'react-bootstrap';
-import Button from '@material-ui/core/Button';
+import {Form, Row, Col, Jumbotron, Button as ButtonBootstrap} from 'react-bootstrap';
+ import Button from '@material-ui/core/Button';
 
-import { getCriancas } from '../../services';
+import { getEventoParticipante } from '../../services';
+import { postEventoParticipante, deleteEventoParticipante } from '../../services';
+
 import CardPerson from "../CardPerson";
 
 import SeletorDeEventos from './SeletorDeEventos'
@@ -11,19 +13,21 @@ import SeletorDeEventos from './SeletorDeEventos'
 import './styles.scss';
 
 export default function PresencaEvento(){
-
   const [people, setPeople] = useState([]);
   const [personSearch, setPersonSearch] = useState("");
 
-  const [selectedPerson, setSelectedPerson] = useState(null);
+  
   const [selectedEvent, setSelectedEvent] = useState(null);
 
   const [showModal, setShowModal] = useState(false);
   
 
   async function loadPeople(){
-    const response = await getCriancas();
-    setPeople(response.data);
+    if(selectedEvent){
+      const response = await getEventoParticipante(selectedEvent.id);
+      setPeople(response.data);
+    }
+
     return;
   }
 
@@ -42,33 +46,98 @@ export default function PresencaEvento(){
     return;
   }
 
-  /* Carrega todas as pessoas após renderizar o componente */
-  useEffect(() => {
-    loadPeople();
-  }, [])
+  async function addPerson(id){
+    try { 
+      const response = await postEventoParticipante(selectedEvent.id, id);
+      console.log(response);
+    } catch (error) {
+      console.log("<ERRO postEventoParticipante>");
+      console.log(error);
+    }
+  }
 
+  async function removePerson(id){
+    try { 
+      const response = await deleteEventoParticipante(selectedEvent.id, id);
+      console.log(response);
+    } catch (error) {
+      console.log("<ERRO deleteEventoParticipante>");
+      console.log(error);
+    }
+    
+  }
+
+  /* Atualiza a lista de pessoas que estão confirmadas no evento */
+  useEffect(() => {
+    async function load(){
+      await loadPeople();
+    }
+    if(selectedEvent){
+      load();
+    }     
+  }, [selectedEvent])
+
+  function onClickCardButton(isSelected, person){
+    if(isSelected){
+      removePerson(person.id);
+    }
+    else{
+      addPerson(person.id);
+    }
+    loadPeople(); 
+  }
+
+  function opcCardButton(data){
+    if(people.find(person => person.id === data.id)){
+      return "Remover Presença";
+    }
+    else{
+      return "Confirmar Presença";
+    }  
+  }
 
   function renderCards(){
-    const filteredPeople = people.filter(filterPeople);
-    return filteredPeople.map((dados, key) => (
-      <CardPerson 
-        key={key}
-        setSelect={setSelectedEvent} 
-        person={dados} 
-        isChild={true} 
-        extraFields={
-        <Button 
-          type="submit" 
-          size="small" 
-          variant="contained" 
-          color="primary"
-        >
-          {personSearch}
-        </Button>
-        }
-      />
-    ));
+    if(selectedEvent){
+      const filteredPeople = people.filter(filterPeople);
+      return filteredPeople.map((data, key) => 
+      {
+        console.log(data.idEvento);
+        return (
+          <CardPerson 
+            key={key}
+            action={() => {}} 
+            person={data} 
+            isChild={true} 
+          >
+            { data.idEvento ?
+            <ButtonBootstrap 
+              type="submit" 
+              size="small" 
+              variant="danger" 
+              onClick={() => {
+                onClickCardButton(data.idEvento, data)
+              }}
+            >
+              Remover Presença
+            </ButtonBootstrap>          
+            :
+            <ButtonBootstrap 
+              type="submit" 
+              size="small" 
+              variant="success" 
+              onClick={() => {
+                onClickCardButton(data.idEvento, data)
+              }}
+            >
+              Confirmar presença
+            </ButtonBootstrap>
+            }
+          </CardPerson>
+        )
+      });
 
+    }
+    
   }
 
   return (
