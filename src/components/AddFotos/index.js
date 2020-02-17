@@ -242,11 +242,7 @@ export default function AddFotos() {
         </div>
       </Form.Group>
 
-      <Form.Group as={Row}>
-        <Col sm={{ span: 10, offset: 2 }}>
-          <Button type="submit" >Cadastrar</Button>
-        </Col>
-      </Form.Group>
+      <Button className="CadastroCrianca__buttonSubmit" variant="success" onClick={handleSubmit}>Cadastrar album</Button>
     </Form>
     </>
   );
