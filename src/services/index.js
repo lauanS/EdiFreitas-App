@@ -91,6 +91,14 @@ export async function getImagem(id){
   return await api.get('/imagem/' + id);
 }
 
+export async function updateImagem(id, imagem){
+  return await api.put('/imagem/upload/' + id, imagem);
+}
+
+export async function deleteImagem(id){
+  return await api.delete('/imagem/' + id);
+}
+
 //===================== ALBUM =====================
 export async function postAlbum(album){
   return await api.post('/album', album);
@@ -98,4 +106,8 @@ export async function postAlbum(album){
 
 export async function getAlbum(){
   return await api.get('/album');
+}
+
+export async function deleteAlbum(id){
+  return await api.delete('/album/' + id);
 }
