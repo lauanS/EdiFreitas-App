@@ -1,0 +1,96 @@
+.visualizarImagem {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    &__header {
+        width: 100%;
+        max-width: 500px;
+        border: 1px solid rgba(#000, .2);
+        border-radius: 5px;
+        background-color: #ffffff!important;
+        color: #30333C;
+        padding: 10px;
+        h2 {
+            margin: 0;
+        }
+    }
+    &__options {
+        width: 100%;
+        max-width: 480px;
+        min-width: 200px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+    }
+    &__dados {
+        margin: 0px;
+        padding: 5px 10px;
+        margin-top: 2px;
+        margin-right: 5px;
+        cursor: pointer;
+        margin-bottom: 5px;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+    }
+    &__text {
+        color: #30333C!important;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 16px;
+        margin-top: 2px;
+    }
+    &__dados:hover {
+        border-radius: 18px;
+        background-color: #E8EAED;
+    }
+    &__itemListImage {
+        box-shadow: 3px 3px 4px #888888;
+        border: 1px solid #888888;
+        min-width: 300px;
+        width: 100%;
+        max-width: 400px;
+        height: 400px;
+        display: block;
+        margin: 10px 20px 10px 0px;
+    }
+    &__divImg {
+        width: 398px;
+        height: 400px;
+        overflow-y: hidden;
+        overflow-x: hidden;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    &__divFundo {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow-y: hidden;
+        overflow-x: hidden;
+        width: 100%;
+        height: 100%;
+    }
+    &__fundo {
+        transform: scale(11);
+        height: 10%;
+        width: 10%;
+    }
+    &__span {
+        -webkit-filter: blur(2px);
+    }
+    &__imgFundo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    &__img {
+        object-fit: contain;
+        width: 90%;
+        height: 90%;
+        position: absolute;
+    }
+}
