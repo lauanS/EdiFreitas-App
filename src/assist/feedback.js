@@ -18,3 +18,11 @@ export function deleteSucess(type=""){
   }
   return `Excluído com sucesso`;
 }
+
+export function updateSuccess(){
+  return `Informações atualizadas`;
+}
+
+export function updateError(){
+  return `Ocorreu um erro ao atualizar`;
+}
