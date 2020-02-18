@@ -14,8 +14,8 @@ export default function EditarEvento({obj, show, setShow, updateList}){
     <Modal 
       show={show} 
       onHide={handleClose}
-      className="modalCard"
-      dialogClassName="modalCard__dialog"
+      className="modalCardListEvent"
+      dialogClassName="modalCardListEvent-dialog"
       centered
     >
       <Modal.Header closeButton>

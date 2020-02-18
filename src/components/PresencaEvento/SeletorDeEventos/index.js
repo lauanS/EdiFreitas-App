@@ -14,8 +14,8 @@ export default function SeletorDeEventos(props){
     <Modal 
       show={show} 
       onHide={handleClose}
-      className="modalCard"
-      dialogClassName="modalCard__dialog"
+      className="modalCardSelectEvent"
+      dialogClassName="modalCardSelectEvent-dialog"
       centered
     >
       <Modal.Header closeButton>

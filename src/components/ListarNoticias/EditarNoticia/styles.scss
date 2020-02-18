@@ -1,9 +1,9 @@
 // MODAL
-.modalCard{
+.modalCardListNews{
   margin-top: 50px;
   height: calc(100vh - 30px);
 
-  &__dialog{
+  &-dialog{
     max-width: 100%;
     min-width: 70%;
     width: 70%;
@@ -11,13 +11,20 @@
     margin-right: auto;
   }
 
-  &__header{
+  &-header{
     padding: 5px 10px 0px 10px;
   }
 
   @media (min-width: 960px){
     max-width: calc(100vw - 180px);
     margin-left: 180px;
+  }
+
+  @media (max-width: 960px){
+    &-dialog{
+      max-width: 100%;
+      min-width: 95%;
+    }
   }
 }
 

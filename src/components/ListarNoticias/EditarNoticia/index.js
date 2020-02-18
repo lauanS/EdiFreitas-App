@@ -15,8 +15,8 @@ export default function EditarNoticia(props){
     <Modal 
       show={show} 
       onHide={handleClose}
-      className="modalCard"
-      dialogClassName="modalCard__dialog"
+      className="modalCardListNews"
+      dialogClassName="modalCardListNews-dialog"
       centered
     >
       <Modal.Header closeButton>
