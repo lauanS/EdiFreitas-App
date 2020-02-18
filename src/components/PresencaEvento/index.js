@@ -15,7 +15,6 @@ import './styles.scss';
 export default function PresencaEvento(){
   const [people, setPeople] = useState([]);
   const [personSearch, setPersonSearch] = useState("");
-
   
   const [selectedEvent, setSelectedEvent] = useState(null);
 
@@ -27,7 +26,6 @@ export default function PresencaEvento(){
       const response = await getEventoParticipante(selectedEvent.id);
       setPeople(response.data);
     }
-
     return;
   }
 
@@ -48,23 +46,18 @@ export default function PresencaEvento(){
 
   async function addPerson(id){
     try { 
-      const response = await postEventoParticipante(selectedEvent.id, id);
-      console.log(response);
+      await postEventoParticipante(selectedEvent.id, id);
     } catch (error) {
-      console.log("<ERRO postEventoParticipante>");
       console.log(error);
     }
   }
 
   async function removePerson(id){
     try { 
-      const response = await deleteEventoParticipante(selectedEvent.id, id);
-      console.log(response);
+      await deleteEventoParticipante(selectedEvent.id, id);
     } catch (error) {
-      console.log("<ERRO deleteEventoParticipante>");
       console.log(error);
-    }
-    
+    }    
   }
 
   /* Atualiza a lista de pessoas que estão confirmadas no evento */
@@ -77,11 +70,6 @@ export default function PresencaEvento(){
     }     
   }, [selectedEvent])
 
-  useEffect(() => {
-    console.log("People atualizado: ")
-    console.log(people)
-  }, [people])
-
   async function onClickCardButton(isSelected, person){
     if(isSelected){
       await removePerson(person.id);
@@ -92,20 +80,22 @@ export default function PresencaEvento(){
     loadPeople(); 
   }
 
-  function opcCardButton(data){
-    if(people.find(person => person.id === data.id)){
-      return "Remover Presença";
-    }
-    else{
-      return "Confirmar Presença";
-    }  
-  }
-
   function renderCards(){
     if(selectedEvent){
       const filteredPeople = people.filter(filterPeople);
       return filteredPeople.map((data, key) => 
       {
+        const isConfirmed = data.idEvento != undefined;
+        let variant;
+        let buttonText;
+        if(isConfirmed){
+          variant = "danger";
+          buttonText = "Remover presença";
+        }
+        else{
+          variant = "success";
+          buttonText = "Confirmar presença";
+        }
         return (
           <CardPerson 
             key={key}
@@ -113,33 +103,19 @@ export default function PresencaEvento(){
             person={data} 
             isChild={true} 
           >
-            { data.idEvento ?
             <ButtonBootstrap 
               type="submit" 
               size="small" 
-              variant="danger" 
+              variant={variant}
               onClick={() => {
                 onClickCardButton(data.idEvento, data)
               }}
             >
-              Remover Presença
+              {buttonText}
             </ButtonBootstrap>          
-            :
-            <ButtonBootstrap 
-              type="submit" 
-              size="small" 
-              variant="success" 
-              onClick={() => {
-                onClickCardButton(data.idEvento, data)
-              }}
-            >
-              Confirmar presença
-            </ButtonBootstrap>
-            }
           </CardPerson>
         )
       });
-
     }
     
   }
