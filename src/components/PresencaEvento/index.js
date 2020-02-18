@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import {Form, Row, Col, Jumbotron, Button as ButtonBootstrap} from 'react-bootstrap';
+import {Form, Row, Col, Button as ButtonBootstrap} from 'react-bootstrap';
  import Button from '@material-ui/core/Button';
 
 import { getEventoParticipante } from '../../services';
@@ -86,7 +86,7 @@ export default function PresencaEvento(){
       const filteredPeople = people.filter(filterPeople);
       return filteredPeople.map((data, key) => 
       {
-        const isConfirmed = data.idEvento != undefined;
+        const isConfirmed = data.idEvento !== undefined;
         let variant;
         let buttonText;
         if(isConfirmed){
