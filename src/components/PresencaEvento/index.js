@@ -9,6 +9,7 @@ import { postEventoParticipante, deleteEventoParticipante } from '../../services
 import CardPerson from "../CardPerson";
 
 import SeletorDeEventos from './SeletorDeEventos'
+import VisualizarEvento from './VisualizarEvento'
 
 import './styles.scss';
 
@@ -123,22 +124,26 @@ export default function PresencaEvento(){
   return (
     <>
     <Row>
-      <Col>
-        <Jumbotron className="jumbotron-event">
-          <h2>{selectedEvent ? selectedEvent.nome : "Titulo do evento"}</h2>
-          <p>{selectedEvent ? "Local: " + selectedEvent.local : "Local: Indefinido"}</p>
-          <p>{selectedEvent ? selectedEvent.dataEvento : "DD/MM/AAAA"}</p>
-          <Button 
-            type="submit" 
-            variant="contained" 
-            color="primary"
-            onClick={selectEvent}
-          >
-            Selecionar evento
-          </Button>      
-        </Jumbotron>  
-      </Col>
+      <VisualizarEvento 
+        nome={'texto'} 
+        voltar={() => {return}} 
+        editar={() => {return}} 
+        id={0}
+      >
+        <h2>{selectedEvent ? selectedEvent.nome : "Selecione o evento"}</h2>
+        <p>{selectedEvent ? "Local: " + selectedEvent.local : ""}</p>
+        <p>{selectedEvent ? selectedEvent.dataEvento : ""}</p>
+        <Button 
+          type="submit" 
+          variant="contained" 
+          color="primary"
+          onClick={selectEvent}
+        >
+          Selecionar evento
+        </Button>  
+      </VisualizarEvento>
     </Row>
+    
 
     <Form autoComplete="off">
       <Form.Group as={Row} controlId="formGroupName">
