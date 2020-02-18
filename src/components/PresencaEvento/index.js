@@ -77,12 +77,17 @@ export default function PresencaEvento(){
     }     
   }, [selectedEvent])
 
-  function onClickCardButton(isSelected, person){
+  useEffect(() => {
+    console.log("People atualizado: ")
+    console.log(people)
+  }, [people])
+
+  async function onClickCardButton(isSelected, person){
     if(isSelected){
-      removePerson(person.id);
+      await removePerson(person.id);
     }
     else{
-      addPerson(person.id);
+      await addPerson(person.id);
     }
     loadPeople(); 
   }
@@ -101,7 +106,6 @@ export default function PresencaEvento(){
       const filteredPeople = people.filter(filterPeople);
       return filteredPeople.map((data, key) => 
       {
-        console.log(data.idEvento);
         return (
           <CardPerson 
             key={key}
