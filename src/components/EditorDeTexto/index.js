@@ -2,7 +2,14 @@ import React from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 
 export default function EditorDeTexto(props){
- 
+  const screenWidth = window.innerWidth;
+  let editorWidth;
+  if(screenWidth <= 960){
+    editorWidth = screenWidth - 100;
+  }
+  else{
+    editorWidth = undefined;
+  }
   return (
     <Editor
       apiKey='j8acg42y8znry1o8lqvyi8m51wk1qnsawu2c5haxb2j98trm'
@@ -11,11 +18,14 @@ export default function EditorDeTexto(props){
       /* opções de inicialização do editor*/
       init = {{
         height: 300,
+        width: editorWidth,
+
+        menubar: "",
+
         /* Opções disponiveis na barra de ferramentas */
         toolbar: 'undo redo | formatselect | ' +
         ' bold italic backcolor | link image | alignleft aligncenter ' +
-        ' alignright alignjustify | bullist numlist outdent indent |' +
-        ' removeformat | help',
+        ' alignright alignjustify | bullist numlist outdent indent ',
         imagetools_toolbar: "rotateleft rotateright | flipv fliph | editimage imageoptions",
 
 
