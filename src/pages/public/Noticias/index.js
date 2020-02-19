@@ -16,7 +16,7 @@ export default function Noticia(){
         <Feed />
       </div>      
       <div className="footer">
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </div>
   );  
