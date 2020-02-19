@@ -11,7 +11,7 @@ export default class Footer extends React.Component{
         <Container>
           <Row className="justify-content-md-center">
             <a className="foot__link" href="http://facebook.com/ongedifreitas" target="_blank" rel="noopener noreferrer">
-              <Facebook className="foot__icons" fontSize="50px" /> Facebook
+              <Facebook className="foot__icons" /> Facebook
             </a>
             <a className="foot__link" href="http://instagram.com/ongedifreitas" target="_blank" rel="noopener noreferrer">
               <Instagram className="foot__icons" /> Instagram
