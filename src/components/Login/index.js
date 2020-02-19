@@ -7,13 +7,9 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import './styles.css';
 import ongLogo from '../../assets/ong_logo.jpg';
-import {login} from '../../services/auth'
-
+import {login, TOKEN_KEY, TOKENTIME_KEY} from '../../services/auth'
 
 export default function Login() {
-
-  const TOKEN_KEY = "@edifreitas-token";
-
   const [usuario, setUsuario] = useState("");
   const [senha, setSenha] = useState("");
 
@@ -41,29 +37,27 @@ export default function Login() {
     setUsuario(e.target.value);
   }
 
-  async function handleSubmit(event){
+  const handleSubmit = async (event) =>{
     event.preventDefault();
     event.stopPropagation();
 
     if(usuario.length > 0 && senha.length > 0){
-      var text = '{' +
-        '"username": "' + usuario + '",' +
-        '"password": "' + senha + '"' +  
-      '}';
-      var obj = JSON.parse(text);
+      const obj = {
+        username: usuario,
+        password: senha
+      };
 
-      await login(obj)
-      .then(res => {
+      try {
+        let res = await login(obj)
+        
         sessionStorage.setItem(TOKEN_KEY, res.data.token);
+        sessionStorage.setItem(TOKENTIME_KEY, Date.now());
         window.location.reload();
-        console.log("Bem vindo");
-      })
-      .catch(res => {
+      } catch(res){
         setErroLogin(true);
         setUsuario("");
         setSenha("");
-
-      });
+      }
     }
     else{
       if(usuario.length === 0){
