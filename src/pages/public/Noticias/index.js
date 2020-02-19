@@ -1,23 +1,23 @@
 import React from 'react';
 import MyNavbar from '../../../components/Navbar/index';
 import Footer from '../../../components/Footer/index';
-import './styles.css';
+import Feed from '../../../components/Noticias/Feed'
+import './styles.scss';
 
-export default class Noticia extends React.Component{
-  render(){
-    return (
-      <div>
-        <div className="nav">
-          <MyNavbar initActive={2}/>
-        </div>
-        <br />
-        <br />
+export default function Noticia(){
 
 
-        <div className="footer">
-          <Footer />
-        </div>
+  return (
+    <div>
+      <div className="nav">
+        <MyNavbar initActive={2}/>
       </div>
-    );
-  }
+      <div className="content">
+        <Feed />
+      </div>      
+      <div className="footer">
+        <Footer />
+      </div>
+    </div>
+  );  
 }
