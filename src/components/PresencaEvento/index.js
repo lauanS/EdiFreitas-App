@@ -89,7 +89,7 @@ export default function PresencaEvento(){
         const isConfirmed = data.idEvento !== null;
         let variant;
         let buttonText;
-        if(data.idEvento){
+        if(isConfirmed){
           variant = "danger";
           buttonText = "Remover presença";
         }
