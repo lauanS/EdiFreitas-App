@@ -1,0 +1,25 @@
+.Noticia{
+  &-card{
+    max-width: 900px;
+    margin-bottom: 20px;
+  }
+  &-content{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding-left: 20px;
+    height: max-content;
+  }
+
+  &-item{
+    flex: 1;
+    margin-left: 10px;
+    padding-left: 10px;
+  }
+  
+  &-img{
+    width: 200px,
+  }
+
+
+}

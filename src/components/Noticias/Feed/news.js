@@ -27,7 +27,7 @@ export default function getNews(){
   }
 
   const n4 = {  
-    titulo:"Lorem ipsum dolor",
+    titulo:"Novo site para ONG!!!",
     descricao:"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente minus id voluptatibus atque nam voluptatum illum temporibus repudiandae,",
     texto:"",
     foto:"https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSkYn64tYtWf04OeSY2Wnapanr_BzXLNtUbukVcbzEP7Ox04wls",
@@ -36,8 +36,8 @@ export default function getNews(){
   }
 
   const n5 = {  
-    titulo:"Lorem ipsum dolor",
-    descricao:"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente minus id voluptatibus atque nam voluptatum illum temporibus repudiandae,",
+    titulo:"Nozaki mentiu sobre sua atividade",
+    descricao:"O que era para ser uma atividade de extensão sobre UX e Designer patterns virou uma exploração de estudantes",
     texto:"",
     foto:"https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT0h6YYldvKZUH9MQu3WWhxpDGh9Uvu8mNafg-GGaQyvHcdK_ca",
     data:"2020-02-16T21:02:56",
@@ -45,8 +45,8 @@ export default function getNews(){
   }
 
   const n6 = { 
-    titulo:"Lorem ipsum dolor",
-    descricao:"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente minus id voluptatibus atque nam voluptatum illum temporibus repudiandae,",
+    titulo:"Dolor ipsum Lorem",
+    descricao:"Ssit consectetur d voluptatibus olor sit amet, consectetur adipisicing elit. Sapiente minus id voluptatibus atque nam voluptatum illum temporibus repudiandae,",
     texto:"",
     foto:"https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ9ZMs6-RUMHVgbRhRwZh8KhRZizU55MwhREo75SwFNSthHbGWC",
     data:"2020-02-16T21:02:56",
