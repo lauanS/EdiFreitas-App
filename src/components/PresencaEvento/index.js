@@ -25,7 +25,6 @@ export default function PresencaEvento(){
   async function loadPeople(){
     if(selectedEvent){
       const response = await getEventoParticipante(selectedEvent.id);
-      console.log(response.data)
       setPeople(response.data);
     }
     return;
@@ -90,7 +89,6 @@ export default function PresencaEvento(){
         const isConfirmed = data.idEvento !== null;
         let variant;
         let buttonText;
-        console.log(isConfirmed);
         if(data.idEvento){
           variant = "danger";
           buttonText = "Remover presença";
