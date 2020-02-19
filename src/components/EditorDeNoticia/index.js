@@ -163,14 +163,14 @@ export default function EditorDeNoticia(props){
 
 
         <div className='news-editor'>
-          <TextEditor text={text} handleChange={handleChildChange}/>      
+          <TextEditor text={text} handleChange={handleChildChange} />      
         </div>
 
         <Button 
           type="submit" 
           variant="contained" 
           color="primary"
-          className="btn-save"
+          className="center-button"
         >
           Salvar
         </Button>
