@@ -4,7 +4,7 @@ export const TOKEN_KEY = "@edifreitas-token";
 export const TOKENTIME_KEY = "@edifreitas-tokentime"
 
 export const isAuth = () => {
-  let tokenLife = 3000000 + 3600000 * 5;
+  let tokenLife = 3000000 + 3600000 * 5; //50 minutos + 60minutos * 5 horas === 5h50min
   if(sessionStorage.getItem(TOKEN_KEY) !== null && sessionStorage.getItem(TOKENTIME_KEY) !== null){
     if(Date.now() - sessionStorage.getItem(TOKENTIME_KEY) < tokenLife){
       return true;
