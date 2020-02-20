@@ -13,7 +13,6 @@ import { getNoticias, deleteNoticia } from '../../services';
 
 import { notFind, deleteError, deleteSuccess} from "../../assist/feedback";
 import { desconverterData } from "../../assist/";
-import { saveSuccess, saveError } from "../../assist/feedback";
 
 import './styles.scss';
 
