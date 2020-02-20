@@ -76,8 +76,7 @@ export default function Telefone(props){
   }
 
   return(
-    <Form.Group as={Row} controlId="formGroupEmail">
-      
+    <Form.Group as={Row} controlId={"formGroupEmail" + id}>
       <Form.Label column sm={2} className="contato__label">
         {labelText()}
       </Form.Label>

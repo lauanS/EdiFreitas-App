@@ -397,18 +397,18 @@ export default function CadastroResponsavel(){
         comentario={comentario} 
         setComentario={setComentario}
       />
-      
+
       {telefones.map((_, index) => (
-            <Contato key={index} id={index} contacts={telefones} setContacts={setTelefones} type="telefone"/>
-          ))
+          <Contato key={index} id={index} contacts={telefones} setContacts={setTelefones} type="telefone" />
+        ))
       }
-      <Button as={Row} variant="link" onClick={addNewPhone}>Novo telefone</Button>
+      <Button as={Row} variant="link" onClick={addNewPhone} className="CadastroResponsavel__buttonAdd">Novo telefone</Button>
 
       {emails.map((_, index) => (
-            <Contato key={index} id={index} contacts={emails} setContacts={setEmails} type="email"/>
-          ))
+          <Contato key={index} id={index} contacts={emails} setContacts={setEmails} type="email"/>
+        ))
       }
-      <Button as={Row} variant="link" onClick={addNewEmail}>Novo e-mail</Button>
+      <Button as={Row} variant="link" onClick={addNewEmail} className="CadastroResponsavel__buttonAdd">Novo e-mail</Button>
 
       <Button className="CadastroResponsavel__buttonSubmit" variant="success" onClick={handleSubmit}>Cadastrar responsável</Button>
     </Form>
