@@ -39,6 +39,9 @@
         margin: 0;
         display: block;
     }
+    &__buttonAdd {
+        padding: 0px 10px 15px 15px;
+    }
 }
 
 @media (min-width: 580px) {

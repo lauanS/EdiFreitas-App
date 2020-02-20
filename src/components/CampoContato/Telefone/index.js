@@ -66,7 +66,7 @@ export default function Telefone(props){
   }
 
   return(
-    <Form.Group as={Row} controlId="formGroupTelefone">
+    <Form.Group as={Row} controlId={"formGroupTelefone" + id}>
       
       <Form.Label column sm={2} className="contato__label">
       { labelText() }
@@ -76,7 +76,7 @@ export default function Telefone(props){
           <Form.Control 
             required
             type="text" 
-            placeholder="DDD + número, Ex: 15988884444"
+            placeholder="DDD + número"
             onChange={e => handleChangeContact(e.target, contacts, setContacts)}
             value={contacts[id]}
             isValid={validatedContact}
