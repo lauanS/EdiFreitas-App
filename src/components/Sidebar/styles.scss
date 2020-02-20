@@ -85,3 +85,11 @@
         display: none!important;
     }
 }
+
+.MuiAppBar-root {
+    z-index: 1000!important;
+}
+
+.MuiDrawer-paper {
+    z-index: 1000!important;
+}
