@@ -55,6 +55,15 @@
     &__inputText {
         max-width: 400px;
     }
+    &__colForm1 {
+        min-width: 110px;
+        padding: 0px 15px!important;
+        max-width: 120px;
+    }
+    &__colForm2 {
+        min-width: 210px;
+        max-width: 250px;
+    }
 }
 
 @media (max-width: 500px) {

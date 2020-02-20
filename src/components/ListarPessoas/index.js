@@ -161,10 +161,10 @@ export default class extends React.Component {
             </Col>
           </Form.Group>
           
-          <Col sm="1">
+          <Col sm="1" className="listarPessoas__colForm1">
             <Form.Group controlId="formGroupIdadeMin">
               <Form.Label >
-                Idade min:
+                Idade mín.:
               </Form.Label> 
               <Form.Control
                 type="number" 
@@ -174,10 +174,10 @@ export default class extends React.Component {
             </Form.Group>
           </Col>
 
-          <Col sm="1">
+          <Col sm="1" className="listarPessoas__colForm1">
             <Form.Group controlId="formGroupIdadeMax">
               <Form.Label>
-                Idade max:
+                Idade máx.:
               </Form.Label>
               <Form.Control
                 type="number" 
@@ -187,7 +187,7 @@ export default class extends React.Component {
             </Form.Group>
           </Col>
 
-          <Col sm="2">
+          <Col sm="2" className="listarPessoas__colForm2">
             <Form.Group controlId="formGroupExibir">
               <Form.Label>
                 Exibir:
