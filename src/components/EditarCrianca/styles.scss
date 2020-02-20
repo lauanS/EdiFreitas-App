@@ -38,23 +38,11 @@
     }
 }
 
-@media (min-width: 960px) {
-    .modalEditarCrianca {
-        margin-left: 100px;
-    }
-}
-
-@media (min-width: 960px) {
-    .modalEditarCriancaBusca {
-        margin-left: 100px;
-    }
-}
-
 .modalEditarCriancaBusca {
     margin-top: 50px;
     height: calc(100vh - 30px);
     &__dialog {
-        max-width: 500px;
+        max-width: 720px;
         min-width: 320px;
         width: 100%;
         margin-left: auto;

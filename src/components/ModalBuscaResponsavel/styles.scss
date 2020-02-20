@@ -1,14 +1,8 @@
-@media (min-width: 960px) {
-    .modalBusca {
-        margin-left: 100px;
-    }
-}
-
 .modalBusca {
     margin-top: 50px;
     height: calc(100vh - 30px);
     &__dialog {
-        max-width: 500px;
+        max-width: 720px;
         min-width: 320px;
         width: 100%;
         margin-left: auto;
