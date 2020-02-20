@@ -1,27 +1,35 @@
 import React, { useState, useEffect } from 'react';
 
+import Pagination from 'react-bootstrap/Pagination'
+import PageItem from 'react-bootstrap/PageItem'
+
 import Post from '../Post'
 
-// import { getNoticias } from "../../../services";
-import getNews from "./news";
+import { getNoticias } from "../../../services";
+
 import './styles.scss';
 
 
 export default function Feed(props){
   const [news, setNews] = useState([]);
-  
+  const [items, setItems] = useState([]);
+
   async function loadNews(){
-    // const response = await getNoticias();
-    // setNews(response.data)
-    console.log(getNews());
-    setNews(getNews());
+    const response = await getNoticias();
+    setNews(response.data)
+
     return;
   }
 
   /* Carregando as notícias */
-  useEffect(() => {   
-    loadNews();      
+  useEffect(() => {
+    async function load(){
+      await loadNews();       
+    }   
+    load();
+       
   }, []);
+
 
   return (
     <>  
