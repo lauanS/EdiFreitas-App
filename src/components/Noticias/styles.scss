@@ -2,7 +2,9 @@
   &-card{
     max-width: 900px;
     margin-bottom: 20px;
+    padding-bottom: 10px;
   }
+  
   &-content{
     display: flex;
     flex-wrap: wrap;
@@ -18,7 +20,17 @@
   }
   
   &-img{
-    width: 200px,
+    width: 120px;
+    height: 120px;
+  }
+
+  &-tag{
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 14px;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.00938em;
   }
 
 

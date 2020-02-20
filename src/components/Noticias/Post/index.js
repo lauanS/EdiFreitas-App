@@ -8,6 +8,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 
 import logo from "../../../assets/ong_logo.jpg";
+import { desconverterData } from "../../../assist";
 import '../styles.scss';
 
 export default function Post(props){
@@ -17,16 +18,16 @@ export default function Post(props){
     <Card className="Noticia-card">
       <CardHeader 
         title={news.titulo}  
-        subheader="September 14, 2016"
+        subheader={desconverterData(news.data)}
       />
       <div className="Noticia-content">
         <div>
-          <img src={logo} alt="some text" width={120} height={120}/>
+          <img src={logo} alt="some text" className="Noticia-img" />
         </div>  
         <div className="Noticia-item">
           <CardContent>
             <p>{news.descricao}</p>
-            <p>{news.tag}</p>
+            <p className="Noticia-tag">{news.tag}</p>
           </CardContent>
         </div>      
 
