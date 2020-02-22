@@ -12,8 +12,8 @@ export default function Noticia(){
       <div className="nav">
         <MyNavbar initActive={2}/>
       </div>
-      <div className="content">
-        <Feed />
+      <div className="pagNoticia">
+        <Feed />        
       </div>      
       <div className="footer">
         {/* <Footer /> */}

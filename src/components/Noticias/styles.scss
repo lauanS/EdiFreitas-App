@@ -1,4 +1,12 @@
 .Noticia{
+  &-feed{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    flex-direction: column;
+    height: max-content;
+  }
+
   &-card{
     max-width: 900px;
     margin-bottom: 20px;
@@ -8,9 +16,11 @@
   &-content{
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     flex-direction: row;
     padding-left: 20px;
     height: max-content;
+    
   }
 
   &-item{
