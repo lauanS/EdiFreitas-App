@@ -12,10 +12,15 @@ import { desconverterData } from "../../../assist";
 import '../styles.scss';
 
 export default function Post(props){
-  const {news} = props;
+  const {news, action} = props;
+
+  const handleClick = () => {
+    action(news);
+  }
+
   return (
     <>  
-    <Card className="Noticia-card">
+    <Card className="Noticia-card" onClick={handleClick}>
       <CardHeader 
         title={news.titulo}  
         subheader={desconverterData(news.data)}
