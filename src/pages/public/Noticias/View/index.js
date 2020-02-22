@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 
 import MyNavbar from '../../../../components/Navbar/index';
-import Footer from '../../../../components/Footer/index';
+// import Footer from '../../../../components/Footer/index';
 import View from '../../../../components/Noticias/View'
 
 import {getNoticias} from '../../../../services'
@@ -33,7 +33,7 @@ export default function ViewNews(){
         <View obj={obj}/>
       </div>      
       <div className="footer">
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </div>
 
