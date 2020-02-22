@@ -9,7 +9,7 @@ import Contato from "./pages/public/Contato/index";
 import Eventos from "./pages/public/Eventos/index";
 import Galeria from "./pages/public/Galeria/index";
 import Noticias from "./pages/public/Noticias/index";
-import View from "./pages/public/Noticias/View/index";
+import ViewNews from "./pages/public/Noticias/View/index";
 
 import LoginAdmin from "./pages/private/LoginAdmin/index";
 import Administrar from "./pages/private/Administrar/index";
@@ -33,7 +33,7 @@ const Routes = () => (
       <Route key={"pub4"} path="/eventos" component={Eventos} />
       <Route key={"pub5"} path="/galeria" component={Galeria} />
       <Route key={"pub6"} exact path="/noticias" component={Noticias} />
-      <Route key={"pub7"} path="/noticias/view/:id" component={View} />
+      <Route key={"pub7"} path="/noticias/view/:id" component={ViewNews} />
 
       <RestrictedRoute key={"res1"} exact path="/login" component={LoginAdmin} />
 
