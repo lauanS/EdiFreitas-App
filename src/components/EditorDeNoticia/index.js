@@ -8,6 +8,7 @@ import Snackbar from '../Snackbars';
 import Button from '@material-ui/core/Button';
 
 import { postNoticia, putNoticia } from '../../services';
+import { saveSuccess, saveError } from "../../assist/feedback";
 
 import './styles.scss';
 
@@ -15,7 +16,8 @@ export default function EditorDeNoticia(props){
   const { initialTitle="", initialSubtitle="", initialText="", initialTags="" } = props;
   const { isUpdate, updateList, id } = props;
 
-  const { setOpenAlertError, setOpenAlertSuccess } = props;
+  const [openAlertSuccess, setOpenAlertSuccess] = useState(false);
+  const [openAlertError, setOpenAlertError] = useState(false);
   const [openFieldError, setOpenFieldError] = useState(false);
 
   const [title, setTitle] = useState(initialTitle);
@@ -125,7 +127,10 @@ export default function EditorDeNoticia(props){
 
   return (
     <>
-
+    <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} 
+      msg={saveSuccess("Notícia")} type="success" />
+    <Snackbar open={openAlertError} setOpen={setOpenAlertError} 
+      msg={saveError()} type="error" />
     <Snackbar open={openFieldError} setOpen={setOpenFieldError} 
       msg="Insira o conteúdo da notícia" type="error"/>
 

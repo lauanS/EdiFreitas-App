@@ -1,0 +1,32 @@
+.View{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: max-content;  
+  
+  &-img{
+    margin-top: 50px;
+    width: calc(((100% - 442px) / 12) * 10 + 306px);
+    max-width: 900px;
+  }
+  
+  &-header{
+    text-align: center;
+  
+    h1{
+      font-size: 5rem;
+      line-height: 6rem;
+      font-weight: bold;
+    }  
+    h2{
+      font-size: 2.4rem;
+      line-height: 4rem;
+      color: #15171a;
+    }
+  }
+  
+  &-text{
+    text-align: center;
+  }
+
+}

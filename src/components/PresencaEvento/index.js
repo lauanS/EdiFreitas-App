@@ -64,8 +64,13 @@ export default function PresencaEvento(){
   /* Atualiza a lista de pessoas que estão confirmadas no evento */
   useEffect(() => {
     async function load(){
-      await loadPeople();
+      if(selectedEvent){
+        const response = await getEventoParticipante(selectedEvent.id);
+        setPeople(response.data);
+      }
+      return;
     }
+
     if(selectedEvent){
       load();
     }     

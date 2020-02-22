@@ -1,12 +1,12 @@
 import React from 'react';
 import {Modal} from 'react-bootstrap';
 
-import './styles.scss';
 import TextEditor from "../../EditorDeNoticia";
+
+import './styles.scss';
 
 export default function EditarNoticia(props){
   const {id, title, subtitle, text, tags, show, setShow, updateList} = props;
-  const { setOpenAlertError, setOpenAlertSuccess } = props;
   const handleClose = () => {setShow(false)}
 
   return (
@@ -31,8 +31,6 @@ export default function EditarNoticia(props){
           isUpdate={true}
           updateList={updateList}
           id={id}
-          setOpenAlertError={setOpenAlertError}
-          setOpenAlertSuccess={setOpenAlertSuccess}
         />
       </Modal.Body>
     </Modal>
