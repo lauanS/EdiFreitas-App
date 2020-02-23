@@ -228,8 +228,8 @@ export default function AddFotos() {
         {imgBase64.length > 0 ? imgBase64.map((img, index) => 
           <div className="addFotos__itemListImage" key={index}>
             <div className="addFotos__headerImg">
-              <p className="addFotos__link" onClick={(e) => {handleEditar(e, index)}}><CropIcon/> Editar</p>
-              <p className="addFotos__link" onClick={(e) => {handleExcluir(e, index)}}><CloseIcon/> Excluir</p>
+              <div className="addFotos__link" onClick={(e) => {handleEditar(e, index)}}><CropIcon/><span>Cortar foto</span></div>
+              <div className="addFotos__link" onClick={(e) => {handleExcluir(e, index)}}><CloseIcon/><span>Retirar foto</span></div>
             </div>
             <div className="addFotos__divImg">
               <div className="addFotos__divFundo">

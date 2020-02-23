@@ -187,7 +187,7 @@ export default function AdicionarFotos(props){
         {imgBase64.length > 0 ? imgBase64.map((img, index) => 
           <div className="visualizarAlbum__itemListImage" key={index}>
             <div className="visualizarAlbum__headerImg">
-              <div className="visualizarAlbum__link" onClick={(e) => {handleEditar(e, index)}}><CropIcon/><span>Editar foto</span></div>
+              <div className="visualizarAlbum__link" onClick={(e) => {handleEditar(e, index)}}><CropIcon/><span>Cortar foto</span></div>
               <div className="visualizarAlbum__link" onClick={(e) => {handleExcluir(e, index)}}><CloseIcon/><span>Retirar foto</span></div>
             </div>
                         

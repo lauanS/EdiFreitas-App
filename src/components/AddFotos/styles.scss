@@ -59,18 +59,18 @@
     }
     &__link {
         color: #30333C!important;
-        text-decoration: none;
-        padding: 4px 8px;
         cursor: pointer;
-        display: block;
-        margin: 0;
-        height: 29px;
+        padding: 3px 4px 1px 4px;
         font-weight: 700;
         font-size: 15px;
-        margin-bottom: 5px;
+        svg {
+            margin-bottom: 3px;
+        }
+        border-radius: 18px;
+        border: 1px solid #C6CDD4;
     }
     &__link:hover {
-        border-radius: 18px;
+        border: 1px solid #7F8F9F;
         background-color: #E8EAED;
     }
     &__itemListImage {
@@ -91,5 +91,6 @@
         width: 100%;
         display: flex;
         justify-content: space-between;
+        align-items: center;
     }
 }
