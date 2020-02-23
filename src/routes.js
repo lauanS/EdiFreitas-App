@@ -44,7 +44,7 @@ const Routes = () => (
       <PrivateRoute key={"pri7"} exact path="/controlePresenca" component={ControlePresenca} />
       <PrivateRoute key={"pri8"} exact path="/criarNoticia" component={CriarNoticia} />
       <PrivateRoute key={"pri9"} exact path="/consultarNoticias" component={ConsultarNoticias} />
-      <PrivateRoute key={"pri10"} exact path="/adicionarFotos" component={AdicionarFotos} />
+      <PrivateRoute key={"pri10"} exact path="/cadastrarAlbum" component={AdicionarFotos} />
       <PrivateRoute key={"pri11"} exact path="/consultarGaleria" component={ConsultarGaleria} />           ,
 
       <Route key={"RDefault"} path="*" component={() => <h1>Page not found</h1>} />

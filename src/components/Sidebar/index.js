@@ -61,7 +61,7 @@ function ResponsiveDrawer(props) {
                   '/controlePresenca',
                   '/criarNoticia',
                   '/consultarNoticias',
-                  '/adicionarFotos',
+                  '/cadastrarAlbum',
                   '/consultarGaleria'
                 ];
 
@@ -111,7 +111,7 @@ function ResponsiveDrawer(props) {
           <PhotoLibraryIcon className="sidebar__icons"/> 
           <h6 className="sidebar__sectionTitulo">Galeria</h6>
         </div>
-        {['Adicionar fotos', 'Consultar galeria'].map((text, index) => (
+        {['Cadastrar álbum', 'Consultar galeria'].map((text, index) => (
           <Link key={text} to={arrayLink[index+8]} className={index+8 === ativo ? "sidebar__activeItem" : "sidebar__item"}>{text}</Link>
         ))}
       </List>

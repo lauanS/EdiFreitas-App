@@ -7,7 +7,7 @@ import AddFotos from '../../../components/AddFotos';
 export default class AdicionarFotos extends React.Component{
     render(){
         return (
-          <Sidebar titulo="Adicionar fotos" ativo={8}>
+          <Sidebar titulo="Cadastrar álbum" ativo={8}>
             <AddFotos />
           </Sidebar>
         );
