@@ -31,7 +31,6 @@ export default class extends React.Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
       axios.all([
       getResponsaveis(),
       getCriancas()
@@ -41,7 +40,6 @@ export default class extends React.Component {
       .catch(() => {
         this.setState({ ...this.state, errors: true, isLoading: false })
       });
-    }, 2000);
   }
 
   updateList() {
