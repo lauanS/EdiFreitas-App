@@ -10,19 +10,19 @@ const useStyles = makeStyles({
     color: '#fff!important',
     backgroundColor: '#4caf50!important',
     borderRadius: '4px',
-    maxWidth: '260px',
+    maxWidth: '290px',
   },
   error: {
     color: '#fff!important',
     backgroundColor: '#f44336!important',
     borderRadius: '4px',
-    maxWidth: '260px',
+    maxWidth: '290px',
   },
   delete: {
     color: '#fff!important',
     backgroundColor: '#2196f3!important',
     borderRadius: '4px',
-    maxWidth: '260px',
+    maxWidth: '290px',
   }
 });
 
