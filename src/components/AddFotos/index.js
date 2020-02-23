@@ -25,6 +25,8 @@ export default function AddFotos() {
   const [index, setIndex] = useState(null);
   const [invalidatedFotos, setInvalidatedFotos] = useState(false);
 
+  const [submit, setSubmit] = useState(false);
+
   const onSelectImg = async (e) => {
     e.persist();
     let queUrl = [];
@@ -62,8 +64,8 @@ export default function AddFotos() {
     e.preventDefault();
     e.stopPropagation();
     setIndex(indice);
-    setOpenCrop(true);
     setSrc(imgOriginal[indice]);
+    setOpenCrop(true);
   }
 
   const handleExcluir = (e, indice) => {
@@ -71,8 +73,13 @@ export default function AddFotos() {
     e.stopPropagation();
 
     let imgArray = imgBase64.slice();
+    let originalArray = imgOriginal.slice();
+
     imgArray.splice(indice, 1);
+    originalArray.splice(indice, 1);
+
     setImgBase64(imgArray);
+    setImgOriginal(originalArray);
   }
 
   const handleClose = () => {
@@ -91,11 +98,18 @@ export default function AddFotos() {
     setOpenCrop(false);
     setIndex(null);
     setInvalidatedFotos(false);
+
+    setSubmit(false);
   }
 
   const handleSubmit = async e => {
     e.preventDefault();
     e.stopPropagation();
+
+    if(submit === true){
+      return;
+    }
+    setSubmit(true);
     
     let flag = false;
 
@@ -123,8 +137,6 @@ export default function AddFotos() {
             filename: titulo + "" + i + d.getDate() + d.getMonth() + d.getFullYear() + d.getHours() + d.getMinutes() + d.getSeconds() + d.getMilliseconds(),
             album: resAlbum.data.id
           }
-
-          console.log(img)
 
           await postImagem(img);
         }
@@ -162,7 +174,7 @@ export default function AddFotos() {
     <Form onSubmit={handleSubmit} noValidate autoComplete="off">
       <Form.Group as={Row} controlId="formGroupTitulo">
         <Form.Label column sm={2} className="addFotos__label">
-          Título do álbum*
+          Nome do álbum*
         </Form.Label>
         <Col sm={8} className="addFotos__inputText">
           <Form.Control 
@@ -205,7 +217,7 @@ export default function AddFotos() {
             index={index}
           />
           {invalidatedFotos ? 
-          <div className="CadastroCrianca__error">Campo obrigatório, selecione uma foto de perfil</div>
+          <div className="addFotos__error">Campo obrigatório, selecione pelo menos uma foto para o álbum</div>
           :
           ''}
         </Col>
