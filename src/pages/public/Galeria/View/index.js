@@ -61,7 +61,6 @@ export default function Photos() {
         {!isLoading && !errors && photos && photos.length > 0 && 
         <div className="galeria__header">
           <h4>Fotos do álbum: {photos[0].album.nome}</h4>
-          <p>{photos[0].album.totalFotos} {photos[0].album.totalFotos > 0 ? 'fotos' : 'foto'}</p>
           <p>Álbum criado em: {converterDataFormatISO(photos[0].album.dataCriacao)}</p>
           <p>Última edição em: {converterDataFormatISO(photos[0].album.dataCriacao)}</p>
         </div>}
