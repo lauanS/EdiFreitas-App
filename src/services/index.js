@@ -115,6 +115,7 @@ export async function updateAlbum(id, album){
 export async function deleteAlbum(id){
   return await api.delete('/album/' + id);
 }
+
 // ============== CONTROLE DE PRESENÇA ==============
 
 export async function getEventoParticipante(id){
@@ -129,3 +130,8 @@ export async function deleteEventoParticipante(idEvento, idCrianca){
   return await api.delete(`/eventos/participantes?idEvento=${idEvento}&idCrianca=${idCrianca}`);
 }
 
+// ============== PARTE PÚBLICA ==============
+
+export async function getPublicAlbum(){
+  return await api.get('/public/album');
+}
