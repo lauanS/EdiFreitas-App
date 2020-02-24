@@ -73,3 +73,36 @@ export function converterData(data){
   let conv = ano + "-" + mes + "-" + dia;
   return conv;
 }
+
+export function converterDataFormatISO(data){
+  let contador = 0;
+  let aux = '';
+  let ano, mes, dia;
+
+  for(let i = 0; i < data.length; i++){
+    let char = data.charAt(i);
+    if(char === '-'){
+      if(contador === 0){
+        ano = aux;
+        aux = '';
+      }
+      else if(contador === 1){
+        mes = aux;
+        aux = '';
+      }
+      contador++;
+    }
+    else if(char === 'T'){
+      dia = aux;
+      mes = + parseInt(mes);
+      let meses = ["janeiro", "fevereiro", "março", "abril",	"maio", "junho", 	
+        "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
+
+      let dataFormatada = dia + " de " + meses[mes-1] + " de " + ano;
+      return dataFormatada
+    }
+    else{
+      aux = aux + char;
+    }
+  }
+}
