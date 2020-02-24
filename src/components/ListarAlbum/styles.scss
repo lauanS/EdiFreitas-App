@@ -8,9 +8,10 @@
     color: #30333C;
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
     &__body {
-        width: 100%;
+        width: 100vw;
+        height: 100vw;
         max-width: 348px;
-        height: 348px;
+        max-height: 348px;
         padding: 0;
         overflow-y: hidden;
         overflow-x: hidden;

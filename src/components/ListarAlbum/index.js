@@ -150,7 +150,7 @@ export default function ListarAlbum(){
     {!errors && visualizar && !adicionarFotos && <VisualizarAlbum src={fotos} title={nomeAlbum} voltar={updatePage} idAlbum={idAlbum}/>}
     {!errors && adicionarFotos && !visualizar && <AdicionarFotos voltar={updatePage} title={nomeAlbum} idAlbum={idAlbum} />}
     {!errors && <ModalEditTitle title={nomeAlbum} open={editarNome} setOpen={setEditarNome} salvar={handleSalvarEditTitle} idAlbum={idAlbum}/>}
-    {!errors && !visualizar && !adicionarFotos && albuns.length > 0 &&
+    {!errors && !visualizar && !adicionarFotos && albuns && albuns.length > 0 &&
       <p>Total de {albuns.length} álbuns encontrados</p> &&
       <div className="listarAlbum">
         {albuns.map((album, index) => 
