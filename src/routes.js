@@ -10,6 +10,7 @@ import Eventos from "./pages/public/Eventos/index";
 import Galeria from "./pages/public/Galeria/index";
 import Noticias from "./pages/public/Noticias/index";
 import ViewNews from "./pages/public/Noticias/View/index";
+import ViewPhotos from "./pages/public/Galeria/View/index";
 
 import LoginAdmin from "./pages/private/LoginAdmin/index";
 import Administrar from "./pages/private/Administrar/index";
@@ -28,12 +29,13 @@ const Routes = () => (
   <BrowserRouter key={"browserRouter"}>
     <Switch key={"SwitcherRouter"}>
       <Route key={"pub1"} exact path="/" component={Inicio} />
-      <Route key={"pub2"} path="/sobre" component={Sobre} />
-      <Route key={"pub3"} path="/contato" component={Contato} />
-      <Route key={"pub4"} path="/eventos" component={Eventos} />
-      <Route key={"pub5"} path="/galeria" component={Galeria} />
+      <Route key={"pub2"} exact path="/sobre" component={Sobre} />
+      <Route key={"pub3"} exact path="/contato" component={Contato} />
+      <Route key={"pub4"} exact path="/eventos" component={Eventos} />
+      <Route key={"pub5"} exact path="/galeria" component={Galeria} />
       <Route key={"pub6"} exact path="/noticias" component={Noticias} />
       <Route key={"pub7"} path="/noticias/view/:id" component={ViewNews} />
+      <Route key={"pub8"} exact path="/galeria/:id" component={ViewPhotos} />
 
       <RestrictedRoute key={"res1"} exact path="/login" component={LoginAdmin} />
 
