@@ -9,7 +9,7 @@ export default function CriarNoticia(){
 
   return (
     <>
-    <Sidebar titulo="Criar notícia" ativo={6} key={"sidebar"}>
+    <Sidebar titulo="Cadastrar notícia" ativo={6} key={"sidebar"}>
       <EditorDeNoticia />
     </Sidebar>   
     </>
