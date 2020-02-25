@@ -461,15 +461,36 @@ export function checkTelefone(e, setValidated, setInvalidated){
 
 // Função genérica para verificar inputs de texto
 export function checkTextField(e, setText, setValidatedText, setInvalidatedText){
-  
-    setText(e.value);
-    if(e.value.length > 0){
-      setValidatedText(true);
-      setInvalidatedText(false);
-    }
-    else{
-      setInvalidatedText(true);
-      setValidatedText(false);
-    }
+  setText(e.value);
+  if(e.value.length > 0){
+    setValidatedText(true);
+    setInvalidatedText(false);
+  }
+  else{
+    setInvalidatedText(true);
+    setValidatedText(false);
+  }
 }
 
+export function checkMinCharacters(text, setText, setValidatedText, setInvalidatedText, min){
+  setText(text);
+  if(text.length >= min){
+    setValidatedText(true);
+    setInvalidatedText(false);
+    return true;
+  }
+  else{
+    setInvalidatedText(true);
+    setValidatedText(false);
+    return false;
+  }
+}
+
+export function checkSenha(senha1, senha2, setDiferente){
+  if(senha1 === senha2){
+    setDiferente(false);
+  }
+  else{
+    setDiferente(true);
+  }
+}
