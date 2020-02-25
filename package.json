@@ -21,6 +21,7 @@
     "react-bootstrap-sweetalert": "^5.1.8",
     "react-dom": "^16.10.2",
     "react-image-crop": "^8.5.0",
+    "react-image-lightbox": "^5.1.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
     "tinymce": "^5.1.2"
