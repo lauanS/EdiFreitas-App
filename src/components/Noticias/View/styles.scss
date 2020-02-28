@@ -14,8 +14,8 @@
     text-align: center;
   
     h1{
-      font-size: 5rem;
-      line-height: 6rem;
+      font-size: 4rem;
+      line-height: 5rem;
       font-weight: bold;
     }  
     h2{
@@ -23,10 +23,23 @@
       line-height: 4rem;
       color: #15171a;
     }
+
+    // Ajustando o tamanho da font para telas menores, para palavras grandes caberem 
+    @media screen and (max-width: 600px) {
+      h1{
+        font-size: 2rem;
+        line-height: 2.5rem;
+      }  
+      h2{
+        font-size: 1.2rem;
+        line-height: 1.6rem;        
+      }
+    }
   }
   
   &-text{
-    text-align: center;
+    text-align: left;
+    text-align: justify;
   }
 
 }
