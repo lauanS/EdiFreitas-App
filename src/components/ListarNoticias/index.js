@@ -12,7 +12,7 @@ import OpcoesConsulta from '../OpcoesConsulta'
 import { getNoticias, deleteNoticia } from '../../services';
 
 import { notFind, deleteError, deleteSuccess} from "../../assist/feedback";
-import { desconverterData } from "../../assist/";
+import { desconverterData, getUrlBase } from "../../assist/";
 
 import './styles.scss';
 
@@ -28,7 +28,7 @@ export default function ConsultarNoticias(){
 
   const urlImg = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT0h6YYldvKZUH9MQu3WWhxpDGh9Uvu8mNafg-GGaQyvHcdK_ca";
 
-  let filteredNews = [];  
+  let filteredNews = []; 
 
   const [alertDeleteSucess, setAlertDeleteSucess] = useState(false);
   const [alertDeleteError, setAlertDeleteError] = useState(false);
@@ -109,6 +109,7 @@ export default function ConsultarNoticias(){
           setSelectedObj={setSelectedNews}          
           setShowModal={setShowModal}
           deleteItem={showDeleteAlert}
+          viewCard={`${getUrlBase()}/noticias/view/${news.id}`}
         />
     </CardConsulta>
     ))
