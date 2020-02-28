@@ -2,13 +2,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: max-content;  
   
   &-img{
     margin-top: 50px;
     margin-bottom: 20px;
+    height: 337.5px;
     width: 100%;
     max-width: 700px;
+    object-fit: cover;
   }
   
   &-header{
