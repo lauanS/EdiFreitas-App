@@ -14,6 +14,7 @@ import './styles.scss';
 
 export default function EditorDeNoticia(props){
   const { initialTitle="", initialSubtitle="", initialText="", initialTags="" } = props;
+  const { initialImg } = props;
   const { isUpdate, updateList, id } = props;
 
   const [openAlertSuccess, setOpenAlertSuccess] = useState(false);
@@ -69,8 +70,15 @@ export default function EditorDeNoticia(props){
         filename: createFilename("imgCapaDeNotícia", fullDate)
       }
       try {
-        const responseImg = await postImagem(img);
-        const urlImg = responseImg.data.url;
+        let urlImg;
+        if(isUpdate){
+          urlImg = initialImg;          
+        }
+        else{
+          const responseImg = await postImagem(img);
+          urlImg = responseImg.data.url;
+        }
+
         const obj = {
           titulo:title,
           descricao:subtitle,
@@ -156,6 +164,7 @@ export default function EditorDeNoticia(props){
                 setImgBase64={setImgBase64}
                 imgWidth={500}
                 imgHeight={500}
+                initialImg={initialImg}
               />
             </div>
 

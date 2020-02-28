@@ -166,6 +166,7 @@ export default function ConsultarNoticias(){
       subtitle={selectedNews.descricao}
       text={selectedNews.texto}
       tags={selectedNews.tag}
+      urlImg={selectedNews.foto}
       show={showModal}
       setShow={setShowModal}
       updateList={loadNews}

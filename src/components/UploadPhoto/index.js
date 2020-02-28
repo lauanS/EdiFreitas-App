@@ -5,13 +5,13 @@ import './styles.scss';
 
 export default function UploadPhoto(props) {
 
+  const {initialImg} = props;
   const {imgBase64, setImgBase64} = props;
   const {imgWidth=320, imgHeight=180} = props;
   const [invalidatedImgBase64, setInvalidatedImgBase64] = useState(false);
   const [imgOriginal, setImgOriginal] = useState("");
   const [src, setSrc] = useState(null);
   const [openCrop, setOpenCrop] = useState(false);
-
 
   const onSelectImg = (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -42,10 +42,11 @@ export default function UploadPhoto(props) {
     setOpenCrop(false);
   }
 
-  return (
-    <>
-    {imgBase64 && (
-      <div style={{ marginBottom: '5px'}}>
+  const showImg = () => {
+    let srcImg = imgBase64? imgBase64 : initialImg;
+    if(imgBase64 || initialImg){
+      return (      
+        <div style={{ marginBottom: '5px'}}>
         <img 
           alt="Crop" 
           style={{  width: "100%",
@@ -54,10 +55,15 @@ export default function UploadPhoto(props) {
                     borderRadius: '4px', 
                     border: '1px solid black', 
                     marginTop: '1px' }} 
-          src={imgBase64} 
+          src={srcImg} 
         />
-      </div>
-    )}
+        </div>
+      );
+    }
+  }
+  return (
+    <>
+    {showImg()}
     <CampoImagem
       onSelectFile={onSelectImg}
       text={imgBase64 ? "Selecionar outra foto" : "Selecionar a foto"}
