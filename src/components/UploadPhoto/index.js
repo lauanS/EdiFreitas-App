@@ -4,14 +4,16 @@ import CropFotos from '../CropFotos';
 import './styles.scss';
 
 export default function UploadPhoto(props) {
+  const {required} = props;
+  
+  const {crop} = props;
+  const {imgWidth=320, imgHeight=180} = props;
 
   const {initialImg} = props;
   const {imgBase64, setImgBase64} = props;
-  const {imgWidth=320, imgHeight=180} = props;
   const {invalidatedImgBase64, setInvalidatedImgBase64} = props;
-  const {required} = props;
 
-  const [imgOriginal, setImgOriginal] = useState("");
+
   const [src, setSrc] = useState(null);
   const [openCrop, setOpenCrop] = useState(false);
 
@@ -29,15 +31,9 @@ export default function UploadPhoto(props) {
 
   const handleImg = (base64) => {
     setImgBase64(base64);
-    setImgOriginal(src);
     setInvalidatedImgBase64(false);
   }
 
-  const handleOpen = (e) => {
-    e.preventDefault();
-    setOpenCrop(true);
-    setSrc(imgOriginal);
-  }
 
   const handleClose = () => {
     setSrc(null);
@@ -72,19 +68,22 @@ export default function UploadPhoto(props) {
       multiple={false}
     />
 
-    <CropFotos
-      cropping={{unit: 'px', aspect: 16/9, width: 320, height: 180, x: 0, y: 0}}
-      open={openCrop}
-      closed={handleClose}
-      setNewImage={handleImg}
-      minWidth={256}
-      minHeight={144}
-      maxWidth={600}
-      maxHeight={600}
-      maxWidthImg={"100%"}
-      src={src}
-      textButton={"Concluir edição da foto de perfil"}
-    />
+    {crop && 
+      <CropFotos
+        cropping={{unit: 'px', aspect: 16/9, width: 320, height: 180, x: 0, y: 0}}
+        open={openCrop}
+        closed={handleClose}
+        setNewImage={handleImg}
+        minWidth={256}
+        minHeight={144}
+        maxWidth={1920}
+        maxHeight={1080}
+        maxWidthImg={1080}
+        src={src}
+        textButton={"Concluir edição da foto de perfil"}
+      />
+    }
+    
 
     {(invalidatedImgBase64 && required) ? 
       <div className="CadastroCrianca__error">
