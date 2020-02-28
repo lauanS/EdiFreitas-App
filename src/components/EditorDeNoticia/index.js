@@ -69,12 +69,13 @@ export default function EditorDeNoticia(props){
         filename: createFilename("imgCapaDeNotícia", fullDate)
       }
       try {
-        const urlImg = await postImagem(img);
+        const responseImg = await postImagem(img);
+        const urlImg = responseImg.data.url;
         const obj = {
           titulo:title,
           descricao:subtitle,
           texto:text,
-          foto:urlImg.url,
+          foto:urlImg,
           data,
           tag:tags
         }
