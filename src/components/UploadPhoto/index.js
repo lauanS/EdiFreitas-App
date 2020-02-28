@@ -8,7 +8,9 @@ export default function UploadPhoto(props) {
   const {initialImg} = props;
   const {imgBase64, setImgBase64} = props;
   const {imgWidth=320, imgHeight=180} = props;
-  const [invalidatedImgBase64, setInvalidatedImgBase64] = useState(false);
+  const {invalidatedImgBase64, setInvalidatedImgBase64} = props;
+  const {required} = props;
+
   const [imgOriginal, setImgOriginal] = useState("");
   const [src, setSrc] = useState(null);
   const [openCrop, setOpenCrop] = useState(false);
@@ -84,9 +86,9 @@ export default function UploadPhoto(props) {
       textButton={"Concluir edição da foto de perfil"}
     />
 
-    {invalidatedImgBase64 ? 
+    {(invalidatedImgBase64 && required) ? 
       <div className="CadastroCrianca__error">
-        Campo obrigatório, selecione uma foto de perfil
+        Campo obrigatório, selecione uma foto
       </div>
     :
     ''

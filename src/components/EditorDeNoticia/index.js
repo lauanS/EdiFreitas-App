@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-
 import { Form, Collapse } from 'react-bootstrap';
 import TextEditor from '../EditorDeTexto/index'
 import DadosNoticia from '../DadosNoticia/index'
 import Snackbar from '../Snackbars';
 import UploadPhoto from '../UploadPhoto';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { postNoticia, putNoticia, postImagem } from '../../services';
 import { saveSuccess, saveError } from "../../assist/feedback";
@@ -33,7 +33,9 @@ export default function EditorDeNoticia(props){
   const [invalidatedText, setInvalidatedText] = useState(false);
 
   const [imgBase64, setImgBase64] = useState("");
+  const [invalidatedImgBase64, setInvalidatedImgBase64] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(true);
 
   /* Verifica se o texto é válido ou inválido */
@@ -49,6 +51,11 @@ export default function EditorDeNoticia(props){
   }
 
   function checkFields(){
+    if(!imgBase64){
+      setInvalidatedImgBase64(true);
+      return false;
+    }
+
     if(invalidatedTitle || invalidatedSubtitle || invalidatedText){
       return false;
     }
@@ -56,7 +63,7 @@ export default function EditorDeNoticia(props){
   }
 
   async function handleSubmit(e){   
-     
+    setIsLoading(true);
     e.persist();
     e.preventDefault();
     e.stopPropagation();
@@ -104,6 +111,7 @@ export default function EditorDeNoticia(props){
       setOpenAlertError(false);
       setOpenFieldError(true);
     }
+    setIsLoading(false);
   }
 
   async function save(obj){
@@ -138,6 +146,17 @@ export default function EditorDeNoticia(props){
 
   }
 
+  function FieldErrorMsg(){
+    if(text.length === 0){
+      return "Insira o conteúdo da notícia";
+    }
+    if(invalidatedImgBase64){
+      return "Selecione uma imagem de capa para a notícia";
+    }
+
+    return "Preencha todos os campos obrigatórios"
+    
+  }
   const handleChildChange = e => {
     const content = e.target.getContent();
     setText(content);
@@ -150,7 +169,7 @@ export default function EditorDeNoticia(props){
     <Snackbar open={openAlertError} setOpen={setOpenAlertError} 
       msg={saveError()} type="error" />
     <Snackbar open={openFieldError} setOpen={setOpenFieldError} 
-      msg="Insira o conteúdo da notícia" type="error"/>
+      msg={FieldErrorMsg()} type="error"/>
 
 
 
@@ -162,6 +181,8 @@ export default function EditorDeNoticia(props){
               <UploadPhoto
                 imgBase64={imgBase64}
                 setImgBase64={setImgBase64}
+                invalidatedImgBase64={invalidatedImgBase64}
+                setInvalidatedImgBase64={setInvalidatedImgBase64}
                 imgWidth={500}
                 imgHeight={500}
                 initialImg={initialImg}
@@ -199,14 +220,19 @@ export default function EditorDeNoticia(props){
           <TextEditor text={text} handleChange={handleChildChange} isUpdate={isUpdate}/>      
         </div>
 
-        <Button 
-          type="submit" 
-          variant="contained" 
-          color="primary"
-          className="center-button"
-        >
-          Salvar
-        </Button>
+        <div className="feedback">
+          <Button 
+            type="submit" 
+            variant="contained" 
+            color="primary"
+            className="center-button"
+            disabled={isLoading}
+          >
+            Salvar
+          </Button>
+          {isLoading && <CircularProgress size={24} color="inherit" className="progress"/>}
+        </div>
+
 
       </Form>
 
