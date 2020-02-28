@@ -114,3 +114,7 @@ export function createFilename(base, date){
     date.getMilliseconds();
   return base + dateAsString;
 }
+
+export function getUrlBase(){
+  return window.location.origin;
+}
