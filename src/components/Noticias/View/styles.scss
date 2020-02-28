@@ -12,16 +12,14 @@
   
   &-header{
     text-align: center;
-  
+    max-width: 900px;
     h1{
-      font-size: 4rem;
-      line-height: 5rem;
+      font-size: 3.2rem;
       font-weight: bold;
     }  
     h2{
-      font-size: 2.4rem;
-      line-height: 4rem;
-      color: #15171a;
+      font-size: 1.2rem;
+      color: #485460;
     }
 
     // Ajustando o tamanho da font para telas menores, para palavras grandes caberem 
@@ -38,8 +36,8 @@
   }
   
   &-text{
-    text-align: left;
     text-align: justify;
+    max-width: 900px;
   }
 
 }
