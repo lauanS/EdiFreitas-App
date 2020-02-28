@@ -10,7 +10,7 @@ export default function View(props){
     <div className="View">
       {obj?
       <>
-      {/* <img className="View-img" src={obj.foto} /> */}
+      <img className="View-img" src={obj.foto} />
       <div className="View-header">
         <h1>{obj.titulo}</h1>
         <h2>{obj.descricao}</h2>
