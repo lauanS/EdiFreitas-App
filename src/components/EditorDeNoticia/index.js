@@ -4,12 +4,12 @@ import { Form, Collapse } from 'react-bootstrap';
 import TextEditor from '../EditorDeTexto/index'
 import DadosNoticia from '../DadosNoticia/index'
 import Snackbar from '../Snackbars';
-
+import UploadPhoto from '../UploadPhoto';
 import Button from '@material-ui/core/Button';
 
-import { postNoticia, putNoticia } from '../../services';
+import { postNoticia, putNoticia, postImagem } from '../../services';
 import { saveSuccess, saveError } from "../../assist/feedback";
-
+import { createFilename } from "../../assist";
 import './styles.scss';
 
 export default function EditorDeNoticia(props){
@@ -31,12 +31,9 @@ export default function EditorDeNoticia(props){
   const [text, setText] = useState(initialText);
   const [invalidatedText, setInvalidatedText] = useState(false);
 
+  const [imgBase64, setImgBase64] = useState("");
+
   const [open, setOpen] = useState(true);
-
-
-  
-
-  const urlImg = "https://cutetheworld.files.wordpress.com/2008/11/cutebug.png";
 
   /* Verifica se o texto é válido ou inválido */
   useEffect(() => {   
@@ -67,22 +64,31 @@ export default function EditorDeNoticia(props){
       const fullDate = new Date();
       const data = fullDate.toISOString().substr(0, 19);
   
-      const obj = {
-        titulo:title,
-        descricao:subtitle,
-        texto:text,
-        foto:urlImg,
-        data,
-        tag:tags
+      const img = {
+        iBase: imgBase64,
+        filename: createFilename("imgCapaDeNotícia", fullDate)
       }
-
-      if(isUpdate){
-        await update(obj, id);
-      }
-      else{
-        await save(obj);
-      }
-      
+      try {
+        const urlImg = await postImagem(img);
+        const obj = {
+          titulo:title,
+          descricao:subtitle,
+          texto:text,
+          foto:urlImg.url,
+          data,
+          tag:tags
+        }
+  
+        if(isUpdate){
+          await update(obj, id);
+        }
+        else{
+          await save(obj);
+        }
+      } catch (error) {
+        console.log("Erro no upload da img");
+        console.log(error);
+      }      
     }
     else{
       setOpenAlertSuccess(false);
@@ -92,6 +98,7 @@ export default function EditorDeNoticia(props){
   }
 
   async function save(obj){
+    console.log(obj.texto);
     try {
       await postNoticia(obj);
       setOpenAlertSuccess(true);
@@ -102,6 +109,7 @@ export default function EditorDeNoticia(props){
       setOpenAlertSuccess(false);
       setOpenAlertError(true);
       setOpenFieldError(false);
+      console.log(error);
     }
   }
 
@@ -116,6 +124,7 @@ export default function EditorDeNoticia(props){
       setOpenAlertSuccess(false);
       setOpenAlertError(true);
       setOpenFieldError(false);
+      console.log(error);
     }
 
   }
@@ -140,6 +149,15 @@ export default function EditorDeNoticia(props){
       <Form onSubmit={handleSubmit} >
         <Collapse in={open}>
           <div id="fade-fields">
+            <div className="news-uploadPhoto">
+              <UploadPhoto
+                imgBase64={imgBase64}
+                setImgBase64={setImgBase64}
+                imgWidth={500}
+                imgHeight={500}
+              />
+            </div>
+
             <DadosNoticia 
               title={title}
               setTitle={setTitle}
