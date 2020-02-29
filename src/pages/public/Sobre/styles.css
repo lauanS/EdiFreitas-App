@@ -8,3 +8,15 @@
 body{
   height: 100%;
 }
+
+
+.imagem{
+  width: 300px;
+  float: left;
+  margin: 5px 10px;
+}
+
+.imagem100{
+  width: 100%;
+  margin: 5px 10px;
+}
