@@ -2,19 +2,18 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.scss';
 
-import {Form, Row, Col} from 'react-bootstrap';
-import Button from '@material-ui/core/Button';
+import { Form, Row, Col, Button } from 'react-bootstrap';
 import Snackbar from '../Snackbars';
 import UploadPhoto from '../UploadPhoto';
 
 import { checkFormatData, checkTextField } from '../../validated';
-import {converterData, desconverterData} from '../../assist';
+import { converterData, desconverterData } from '../../assist';
 import { createFilename } from "../../assist";
-import {postEvento, putEvento, postImagem } from '../../services';
+import { postEvento, putEvento, putImagemUrl, postImagem } from '../../services';
 
 export default function EditorDeEventos(props){
   const { isUpdate, obj, updateList } = props;
-  const initialImg = obj.capa;
+  const { initialImg } = props;
 
   const [openAlertSuccess, setOpenAlertSuccess] = useState(false);
   const [openAlertError, setOpenAlertError] = useState(false);
@@ -37,6 +36,8 @@ export default function EditorDeEventos(props){
 
   const [imgBase64, setImgBase64] = useState("");
   const [invalidatedImgBase64, setInvalidatedImgBase64] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   /* Setup inicial do componente */
   useEffect(() => {   
@@ -71,6 +72,11 @@ export default function EditorDeEventos(props){
   }
 
   function checkFields(){
+    if(!imgBase64 && !initialImg){
+      setInvalidatedImgBase64(true);
+      return false;
+    }
+
     let isValid = true;
     if(validatedNomeEvento === false){
       setInvalidatedNomeEvento(true);
@@ -94,6 +100,7 @@ export default function EditorDeEventos(props){
   }
 
   async function handleSubmit(e){
+    setIsLoading(true);
     e.persist();
     e.preventDefault();
     e.stopPropagation();
@@ -107,16 +114,34 @@ export default function EditorDeEventos(props){
       const fullDate = new Date();
       const data = converterData(dataEvento);
 
-      const img = {
-        iBase: imgBase64,
-        filename: createFilename("imgCapaDeEvento", fullDate)
-      }
       try {
         let urlImg;
         if(isUpdate){
-          urlImg = initialImg;          
+          console.log("initialImg.", initialImg)
+          // 1. Verifico se vou usar a initialImg com a url da imagem
+          // 2. Se for a initial img, ja monto o obj e nao chamo o putImagem
+          // 3. Se nao, chamo o putImagem com a nova imagem
+
+          if(!imgBase64){
+            urlImg = initialImg;  
+          }else{
+            const img = {
+              iBase: imgBase64,
+              filename: createFilename("imgCapaDeEvento", fullDate),
+              album: null,
+              url: initialImg
+            }
+
+            const responseImg = await putImagemUrl(img);
+            console.log(responseImg.data);
+            urlImg = responseImg.data;      
+          }
         }
         else{
+          const img = {
+            iBase: imgBase64,
+            filename: createFilename("imgCapaDeEvento", fullDate)
+          }
           const responseImg = await postImagem(img);
           urlImg = responseImg.data.url;
         }
@@ -140,6 +165,7 @@ export default function EditorDeEventos(props){
         console.log(error);
       }  
     }
+    setIsLoading(false);
   }
 
   async function save(obj){
@@ -282,9 +308,9 @@ export default function EditorDeEventos(props){
         <Col sm={{ span: 10, offset: 2 }}>
           <Button 
             type="submit" 
-            variant="contained" 
-            color="primary"
-            className="btn-save-event"
+            variant="success" 
+            className="EditorDeEventos__buttonSubmit"
+            disabled={isLoading}
           >
             Salvar
           </Button>

@@ -91,8 +91,12 @@ export async function getImagem(idAlbum){
   return await api.get('/imagem/' + idAlbum);
 }
 
-export async function updateImagem(id, imagem){
+export async function putImagem(id, imagem){
   return await api.put('/imagem/upload/' + id, imagem);
+}
+
+export async function putImagemUrl(imagem){
+  return await api.put('/imagem/upload', imagem);
 }
 
 export async function deleteImagem(id){

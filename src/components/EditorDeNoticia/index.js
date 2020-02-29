@@ -7,7 +7,7 @@ import UploadPhoto from '../UploadPhoto';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { postNoticia, putNoticia, postImagem } from '../../services';
+import { postNoticia, putNoticia, putImagemUrl, postImagem } from '../../services';
 import { saveSuccess, saveError } from "../../assist/feedback";
 import { createFilename } from "../../assist";
 import './styles.scss';
@@ -51,7 +51,7 @@ export default function EditorDeNoticia(props){
   }
 
   function checkFields(){
-    if(!imgBase64){
+    if(!imgBase64 && !initialImg){
       setInvalidatedImgBase64(true);
       return false;
     }
@@ -72,16 +72,37 @@ export default function EditorDeNoticia(props){
       const fullDate = new Date();
       const data = fullDate.toISOString().substr(0, 19);
   
-      const img = {
-        iBase: imgBase64,
-        filename: createFilename("imgCapaDeNotícia", fullDate)
-      }
       try {
         let urlImg;
+        
         if(isUpdate){
-          urlImg = initialImg;          
+          // 1. Verifico se vou usar a initialImg com a url da imagem
+          // 2. Se for a initial img, ja monto o obj e nao chamo o putImagem
+          // 3. Se nao, chamo o putImagem com a nova imagem
+
+          if(!imgBase64){
+            urlImg = initialImg;  
+          }else{
+            const img = {
+              iBase: imgBase64,
+              filename: createFilename("imgCapaDeNotícia", fullDate),
+              album: null,
+              url: initialImg
+            }
+
+            const responseImg = await putImagemUrl(img);
+            console.log(responseImg.data);
+            urlImg = responseImg.data;      
+          }
+
+  
         }
         else{
+          const img = {
+            iBase: imgBase64,
+            filename: createFilename("imgCapaDeNotícia", fullDate)
+          }
+
           const responseImg = await postImagem(img);
           urlImg = responseImg.data.url;
         }
