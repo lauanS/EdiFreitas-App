@@ -5,6 +5,10 @@ const api = axios.create({
   baseURL: 'https://edi-freitas.herokuapp.com/api'
 });
 
+const apiPublic = axios.create({
+  baseURL: 'https://edi-freitas.herokuapp.com/api'
+});
+
 api.interceptors.request.use(async config => {
   const token = getToken();
   if(token){
@@ -134,4 +138,9 @@ export async function deleteEventoParticipante(idEvento, idCrianca){
 
 export async function getPublicAlbum(){
   return await api.get('/public/album');
+}
+
+// ============= Disparo de email ================
+export async function sendEmailService(email){
+  return await apiPublic.post('/email', email);
 }
