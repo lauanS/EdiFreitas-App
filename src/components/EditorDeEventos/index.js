@@ -5,12 +5,16 @@ import './styles.scss';
 import {Form, Row, Col} from 'react-bootstrap';
 import Button from '@material-ui/core/Button';
 import Snackbar from '../Snackbars';
+import UploadPhoto from '../UploadPhoto';
 
 import { checkFormatData, checkTextField } from '../../validated';
 import {converterData, desconverterData} from '../../assist';
 import {postEvento, putEvento} from '../../services';
 
-export default function EditorDeEventos({isUpdate, obj, updateList}){
+export default function EditorDeEventos(props){
+  const { isUpdate, obj, updateList } = props;
+  const { initialImg } = props;
+
   const [openAlertSuccess, setOpenAlertSuccess] = useState(false);
   const [openAlertError, setOpenAlertError] = useState(false);
 
@@ -29,6 +33,9 @@ export default function EditorDeEventos({isUpdate, obj, updateList}){
   const [localEvento, setLocalEvento] = useState("");
   const [validatedLocalEvento, setValidatedLocalEvento] = useState(false);
   const [invalidatedLocalEvento, setInvalidatedLocalEvento] = useState(false);
+
+  const [imgBase64, setImgBase64] = useState("");
+  const [invalidatedImgBase64, setInvalidatedImgBase64] = useState(false);
 
   /* Setup inicial do componente */
   useEffect(() => {   
@@ -150,6 +157,28 @@ export default function EditorDeEventos({isUpdate, obj, updateList}){
     <label className="EditorDeEventos__descricao">É obrigatório o preenchimento de todos os campos com * (Asterisco) no título</label>
     
     <Form onSubmit={handleSubmit} noValidate autoComplete="off">
+      <Form.Group as={Row} controlId="formGroupFoto">
+        <Form.Label column sm={2} className="EditorDeEventos__label">
+          Foto de capa*
+        </Form.Label>
+        <Col sm={8} className="EditorDeEventos__inputText">
+          <div className="EditorDeEventos__uploadPhoto">
+            <UploadPhoto
+              imgBase64={imgBase64}
+              setImgBase64={setImgBase64}
+              invalidatedImgBase64={invalidatedImgBase64}
+              setInvalidatedImgBase64={setInvalidatedImgBase64}
+              imgWidth={500}
+              imgHeight={500}
+              initialImg={initialImg}
+            />
+          </div>
+          <Form.Control.Feedback type="invalid">
+            Campo obrigatório, adicione a capa do evento.
+          </Form.Control.Feedback>
+        </Col>
+      </Form.Group>
+
       <Form.Group as={Row} controlId="formGroupNome">
         <Form.Label column sm={2} className="EditorDeEventos__label">
           Nome do evento*
