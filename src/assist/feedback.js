@@ -40,3 +40,24 @@ export function saveSuccess(type=""){
   }
   return `Salvo com sucesso`;
 }
+
+export function onSave(type=""){
+  if(type){
+    return `Salvando ${type}!`;
+  }
+  return `Salvando!`;
+}
+
+export function onLoad(type=""){
+  if(type){
+    return `Carregando ${type}!`;
+  }
+  return `Carregando!`;
+}
+
+export function onSearch(type=""){
+  if(type){
+    return `Buscando ${type}!`;
+  }
+  return `Buscando!`;
+}
