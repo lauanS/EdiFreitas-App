@@ -117,7 +117,7 @@ export default function EditorDeNoticia(props){
   async function save(obj){
     console.log(obj.texto);
     try {
-      await postNoticia(obj);
+      // await postNoticia(obj);
       setOpenAlertSuccess(true);
       setOpenAlertError(false);
       setOpenFieldError(false);
@@ -132,7 +132,7 @@ export default function EditorDeNoticia(props){
 
   async function update(obj, id){
     try {
-      await putNoticia(obj, id);
+      // await putNoticia(obj, id);
       setOpenAlertSuccess(true);
       setOpenAlertError(false);
       setOpenFieldError(false);
