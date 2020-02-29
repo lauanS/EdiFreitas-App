@@ -1,0 +1,25 @@
+.CadastroLogin {
+    &__descricao {
+        margin-bottom: 20px;
+    }
+    &__label {
+        min-width: 170px;
+        padding-right: 0px;
+        max-width: 170px;
+    }
+    &__inputText {
+        max-width: 300px;
+    }
+    &__buttonSubmit {
+        width: 200px;
+        font-weight: 700;
+        margin: 0;
+        display: block;
+    }
+}
+
+@media (min-width: 580px) {
+    .CadastroLogin__buttonSubmit {
+        margin-left: 170px;
+    }
+}

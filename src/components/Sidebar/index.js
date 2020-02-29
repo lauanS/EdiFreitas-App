@@ -19,6 +19,7 @@ import EventIcon from '@material-ui/icons/Event';
 import PeopleIcon from '@material-ui/icons/People';
 import NewsIcon from '@material-ui/icons/ImportContacts';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 import {logout} from '../../services/auth';
 
@@ -56,13 +57,14 @@ function ResponsiveDrawer(props) {
   var arrayLink = ['/cadastrarResponsavel',
                   '/cadastrarCriança',
                   '/consultarPessoas',
-                  '/criarEvento',
+                  '/cadastrarEvento',
                   '/consultarEventos',
                   '/controlePresenca',
-                  '/criarNoticia',
+                  '/cadastrarNoticia',
                   '/consultarNoticias',
                   '/cadastrarAlbum',
-                  '/consultarGaleria'
+                  '/consultarGaleria',
+                  '/cadastrarLogin'
                 ];
 
   const drawer = (
@@ -87,7 +89,7 @@ function ResponsiveDrawer(props) {
           <EventIcon className="sidebar__icons"/>
           <h6 className="sidebar__sectionTitulo">Eventos</h6>  
         </div>
-        {['Criar evento', 'Consultar eventos', 'Controle de presença'].map((text, index) => (
+        {['Cadastrar evento', 'Consultar eventos', 'Controle de presença'].map((text, index) => (
           <Link key={text} to={arrayLink[index+3]} className={index+3 === ativo ? "sidebar__activeItem" : "sidebar__item"}>{text}</Link>
         ))}
       </List>
@@ -99,7 +101,7 @@ function ResponsiveDrawer(props) {
           <NewsIcon className="sidebar__icons"/>
           <h6 className="sidebar__sectionTitulo">Notícias</h6>  
         </div>
-        {['Criar notícia', 'Consultar notícias'].map((text, index) => (
+        {['Cadastrar notícia', 'Consultar notícias'].map((text, index) => (
           <Link key={text} to={arrayLink[index+6]} className={index+6 === ativo ? "sidebar__activeItem" : "sidebar__item"}>{text}</Link>
         ))}
       </List>
@@ -117,10 +119,14 @@ function ResponsiveDrawer(props) {
       </List>
 
       <Divider className="sidebar__divider" key={"d5"}/>
- 
-      <button onClick={handleExit} className="sidebar__exit"><ExitToAppIcon className="sidebar__iconExit"/>  Sair</button>
 
+      <Link key="cadastrarAdmin" to={arrayLink[10]} className={10 === ativo ? "sidebar__activeAdmin" : "sidebar__admin"}><PersonAddIcon className={10 === ativo ? "sidebar__activeIconAdmin" : "sidebar__iconAdmin"}/>Cadastrar login</Link>
+ 
       <Divider className="sidebar__divider" key={"d6"}/>
+
+      <button onClick={handleExit} className="sidebar__exit"><ExitToAppIcon className="sidebar__iconExit"/>Sair</button>
+
+      <Divider className="sidebar__divider" key={"d7"}/>
 
     </>
   );

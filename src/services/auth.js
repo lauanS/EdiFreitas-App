@@ -30,3 +30,7 @@ export const logout = () => {
   sessionStorage.removeItem(TOKEN_KEY);
   sessionStorage.removeItem(TOKENTIME_KEY);
 };
+
+export function postLogin(dados) {
+  return axios.post('https://edi-freitas.herokuapp.com/authenticate/new', dados);
+}
