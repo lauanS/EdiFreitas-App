@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.scss';
 
-import { Form, Row, Col, Button } from 'react-bootstrap';
+import { Form, Row, Col } from 'react-bootstrap';
 import Snackbar from '../Snackbars';
 import UploadPhoto from '../UploadPhoto';
+import ButtonSave from '../ButtonSave';
 
 import { checkFormatData, checkTextField } from '../../validated';
 import { converterData, desconverterData } from '../../assist';
@@ -306,14 +307,11 @@ export default function EditorDeEventos(props){
 
       <Form.Group as={Row}>
         <Col sm={{ span: 10, offset: 2 }}>
-          <Button 
-            type="submit" 
-            variant="success" 
-            className="EditorDeEventos__buttonSubmit"
-            disabled={isLoading}
+          <ButtonSave 
+            isLoading={isLoading}
           >
             Salvar
-          </Button>
+          </ButtonSave>
         </Col>
       </Form.Group>
     </Form>

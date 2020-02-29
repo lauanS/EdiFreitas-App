@@ -10,6 +10,7 @@
     width: auto; 
     height: auto; 
     margin-bottom: 10px;
+    margin-top: 10px;
   }
 
   &-uploadPhoto{
@@ -28,23 +29,10 @@
       margin-right: 0px;
     }
   }
-}
 
-.feedback{
-  position: relative;
-  width: 100%;
-  height: 37px;
-}
-
-.progress{
-  color: #4caf50;
-  background-color: transparent;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  // Como o tamanho do cirular progress é 24px, removemos 12px para alinhar no centro
-  margin-left: -12px;
-  margin-top: -12px
+  &-save-button{
+    display: block;
+  }
 }
 
 .div-button-hide{
@@ -54,4 +42,5 @@
 .center-button{
   display: inline-block;
   width: 100%;
+  margin-left: 0px;
 }

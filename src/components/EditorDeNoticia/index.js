@@ -5,7 +5,7 @@ import DadosNoticia from '../DadosNoticia/index'
 import Snackbar from '../Snackbars';
 import UploadPhoto from '../UploadPhoto';
 import Button from '@material-ui/core/Button';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import ButtonSave from '../ButtonSave';
 
 import { postNoticia, putNoticia, putImagemUrl, postImagem } from '../../services';
 import { saveSuccess, saveError } from "../../assist/feedback";
@@ -241,18 +241,12 @@ export default function EditorDeNoticia(props){
           <TextEditor text={text} handleChange={handleChildChange} isUpdate={isUpdate}/>      
         </div>
 
-        <div className="feedback">
-          <Button 
-            type="submit" 
-            variant="contained" 
-            color="primary"
-            className="center-button"
-            disabled={isLoading}
-          >
-            Salvar
-          </Button>
-          {isLoading && <CircularProgress size={24} color="inherit" className="progress"/>}
-        </div>
+        <ButtonSave 
+          isLoading={isLoading}
+          className='center-button'
+        >
+          Salvar
+        </ButtonSave>
 
 
       </Form>
