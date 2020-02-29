@@ -9,11 +9,12 @@ import UploadPhoto from '../UploadPhoto';
 
 import { checkFormatData, checkTextField } from '../../validated';
 import {converterData, desconverterData} from '../../assist';
-import {postEvento, putEvento} from '../../services';
+import { createFilename } from "../../assist";
+import {postEvento, putEvento, postImagem } from '../../services';
 
 export default function EditorDeEventos(props){
   const { isUpdate, obj, updateList } = props;
-  const { initialImg } = props;
+  const initialImg = obj.capa;
 
   const [openAlertSuccess, setOpenAlertSuccess] = useState(false);
   const [openAlertError, setOpenAlertError] = useState(false);
@@ -103,21 +104,41 @@ export default function EditorDeEventos(props){
     }
 
     if(checkFields()){
+      const fullDate = new Date();
       const data = converterData(dataEvento);
-      let obj = {
-        nome: nomeEvento,
-        dataEvento: data,
-        descricao: descricaoEvento,
-        local: localEvento
-      }
 
-      if(isUpdate){
-        
-        await update(obj, id);      
+      const img = {
+        iBase: imgBase64,
+        filename: createFilename("imgCapaDeEvento", fullDate)
       }
-      else{
-        await save(obj);
-      }
+      try {
+        let urlImg;
+        if(isUpdate){
+          urlImg = initialImg;          
+        }
+        else{
+          const responseImg = await postImagem(img);
+          urlImg = responseImg.data.url;
+        }
+
+        let obj = {
+          nome: nomeEvento,
+          dataEvento: data,
+          descricao: descricaoEvento,
+          local: localEvento,
+          capa: urlImg
+        }
+
+        if(isUpdate){
+          await update(obj, id);      
+        }
+        else{
+          await save(obj);
+        }
+      } catch (error) {
+        console.log("Erro no upload da img");
+        console.log(error);
+      }  
     }
   }
 
