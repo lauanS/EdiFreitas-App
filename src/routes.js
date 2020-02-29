@@ -31,7 +31,7 @@ const Routes = () => (
     <Switch key={"SwitcherRouter"}>
       <Route key={"pub1"} exact path="/" component={Inicio} />
       <Route key={"pub2"} exact path="/sobre" component={Sobre} />
-      <Route key={"pub3"} exact path="/contato" component={Contato} />
+      <Route key={"pub3"} exact path="/fale-conosco" component={Contato} />
       <Route key={"pub4"} exact path="/eventos" component={Eventos} />
       <Route key={"pub5"} exact path="/galeria" component={Galeria} />
       <Route key={"pub6"} exact path="/noticias" component={Noticias} />
