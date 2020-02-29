@@ -13,7 +13,6 @@ export default function UploadPhoto(props) {
   const {imgBase64, setImgBase64} = props;
   const {invalidatedImgBase64, setInvalidatedImgBase64} = props;
 
-
   const [src, setSrc] = useState(null);
   const [openCrop, setOpenCrop] = useState(false);
 
@@ -21,7 +20,11 @@ export default function UploadPhoto(props) {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
       reader.addEventListener('load', () => {
-        setSrc(reader.result);
+        if(crop){
+          setSrc(reader.result);
+        } else {
+          setImgBase64(reader.result)
+        }
       });
       reader.readAsDataURL(e.target.files[0]);
       setOpenCrop(true);
@@ -45,26 +48,26 @@ export default function UploadPhoto(props) {
     if(imgBase64 || initialImg){
       return (      
         <div style={{ marginBottom: '5px'}}>
-        <img 
-          alt="Crop" 
-          style={{  width: "100%",
-                    maxWidth: imgWidth, 
-                    maxHeight: imgHeight, 
-                    borderRadius: '4px', 
-                    border: '1px solid black', 
-                    marginTop: '1px' }} 
-          src={srcImg} 
-        />
+          <img 
+            alt="Crop" 
+            style={{  width: "100%",
+                      maxWidth: imgWidth, 
+                      maxHeight: imgHeight, 
+                      borderRadius: '4px', 
+                      border: '1px solid black', 
+                      marginTop: '1px' }} 
+            src={srcImg} 
+          />
         </div>
       );
     }
   }
   return (
     <>
-    {showImg()}
+    { showImg() }
     <CampoImagem
       onSelectFile={onSelectImg}
-      text={imgBase64 ? "Selecionar outra foto" : "Selecionar a foto"}
+      text={(imgBase64 || initialImg) ? "Selecionar outra foto" : "Selecionar a foto"}
       multiple={false}
     />
 
