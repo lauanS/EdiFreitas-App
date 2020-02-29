@@ -15,8 +15,8 @@ export default function View(props){
         <h1>{obj.titulo}</h1>
         <h2>{obj.descricao}</h2>
       </div>
-      <div className="View-text">
-        <Interweave content={obj.texto} />
+      <div className="View-text Content">
+        <Interweave content={obj.texto.replace(/&quot;/g, '"')} className="Content"/>
       </div>
       </>
       :
