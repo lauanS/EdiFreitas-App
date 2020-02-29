@@ -33,7 +33,7 @@ export default function Galeria() {
   return (
     <div className="galeria">
       <MyNavbar initActive={3}/>
-      <main className="galeria__main">
+      <main className={isLoading || errors ? "galeria__mainVH" : "galeria__main"}>
         <section className="galeria__content">
         {isLoading && !errors && 
         <>
@@ -41,7 +41,12 @@ export default function Galeria() {
           <p style={{textAlign: 'center'}}>Aguarde enquanto os álbuns de fotos são carregados</p>
         </>
         }
-        {!isLoading && errors && <p style={{textAlign: 'center'}}>Houve algum problema</p>}
+        {!isLoading && errors && <p style={{textAlign: 'center', color: '#bc2018'}}>Desculpe, houve algum problema</p>}
+
+        {!isLoading && !errors && albuns && albuns.length === 0 && 
+        <div className="galeria__header">
+          <h4>Nenhum álbum de fotos encontrado no momento</h4>
+        </div>}
 
         {!isLoading && !errors && albuns && albuns.length > 0 && 
         <div className="galeria__header">
