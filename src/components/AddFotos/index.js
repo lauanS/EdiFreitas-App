@@ -7,8 +7,10 @@ import Snackbar from '../Snackbars';
 import {Form, Row, Col, Button} from 'react-bootstrap';
 import CropIcon from '@material-ui/icons/Crop';
 import CloseIcon from '@material-ui/icons/Close';
+import OverlayLoading from '../OverlayLoading';
 
-import {postAlbum, postImagem} from '../../services'
+import {postAlbum, postImagem} from '../../services';
+import {saveSuccess, saveError, onSave, onLoad} from '../../assist/feedback';
 
 export default function AddFotos() {
   const [openAlertSuccess, setOpenAlertSuccess] = useState(false);
@@ -26,18 +28,22 @@ export default function AddFotos() {
   const [invalidatedFotos, setInvalidatedFotos] = useState(false);
 
   const [submit, setSubmit] = useState(false);
+  const [loadingImage, setLoadingImage] = useState(false);
 
   const onSelectImg = async (e) => {
     e.persist();
     let queUrl = [];
     if (e.target.files && e.target.files.length > 0) {
+      setLoadingImage(true);
       for(let i = 0; i < e.target.files.length; i++){
         let url = await loadImg(e.target.files[i]);
         queUrl.push(url);
       }
       setImgOriginal(imgOriginal.concat(queUrl));
       setImgBase64(imgBase64.concat(queUrl));
+      setInvalidatedFotos(false);
       e.target.value = '';
+      setLoadingImage(false);
     }
   }
 
@@ -78,6 +84,9 @@ export default function AddFotos() {
     imgArray.splice(indice, 1);
     originalArray.splice(indice, 1);
 
+    if(imgArray.length === 0){
+      setInvalidatedFotos(true);
+    }
     setImgBase64(imgArray);
     setImgOriginal(originalArray);
   }
@@ -100,6 +109,7 @@ export default function AddFotos() {
     setInvalidatedFotos(false);
 
     setSubmit(false);
+    setLoadingImage(false);
   }
 
   const handleSubmit = async e => {
@@ -117,11 +127,14 @@ export default function AddFotos() {
       setInvalidatedTitulo(true);
       flag = true;
     }
-    if(!(imgBase64.length > 0)){
+    if(!imgBase64 || imgBase64.length <= 0){
       setInvalidatedFotos(true);
       flag = true;
     }
 
+    if(flag === true){
+      setSubmit(false);
+    }
     if(flag === false){
       try{
         const album = {
@@ -148,6 +161,7 @@ export default function AddFotos() {
       catch(res){
         setOpenAlertSuccess(false);
         setOpenAlertError(true);
+        setSubmit(false);
       }
     }
   };
@@ -166,8 +180,10 @@ export default function AddFotos() {
 
   return (
     <>
-    <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} msg="Álbum cadastrado" type="success"/>
-    <Snackbar open={openAlertError} setOpen={setOpenAlertError} msg="Ocorreu um erro ao cadastrar" type="error"/>
+    <OverlayLoading showOverlay={submit} msg={onSave("álbum")}/>
+    <OverlayLoading showOverlay={loadingImage} msg={onLoad("imagens")}/>
+    <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} msg={saveSuccess("Álbum")} type="success"/>
+    <Snackbar open={openAlertError} setOpen={setOpenAlertError} msg={saveError()} type="error"/>
 
     <label className="addFotos__descricao">É obrigatório o preenchimento de campos com * (Asterisco) no título, é opcional quando não possuem o asterisco</label>
     
@@ -254,7 +270,7 @@ export default function AddFotos() {
         </div>
       </Form.Group>
 
-      <Button className="CadastroCrianca__buttonSubmit" variant="success" onClick={handleSubmit}>Cadastrar album</Button>
+      <Button className="addFotos__buttonSubmit" variant="success" onClick={handleSubmit}>Cadastrar album</Button>
     </Form>
     </>
   );
