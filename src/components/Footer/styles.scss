@@ -1,15 +1,28 @@
 .foot {
-    padding: 10px 0px 20px 0px;
+    padding: 15px 30px 15px 30px;
     background: linear-gradient(to right, #0085CF 40%, #54A0FF);
+    max-width: 100vw;
     &__row {
         display: flex;
         flex-wrap: wrap;
-        justify-content: center!important;
+        justify-content: space-between!important;
+        align-items: center;
+        max-width: 100vw;
+    }
+    &__ong {
+        color: #E8EAED;
+        text-align: center;
+        margin: 0!important;
+        font-size: 1.2rem;
+    }
+    &__divIcons {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
     }
     &__link {
         color: #E8EAED;
-        padding-left: 20px;
-        padding-right: 20px;
+        margin-right: 20px;
         outline: 0;
         display: flex;
         flex-direction: column;
@@ -22,14 +35,18 @@
         text-decoration: none;
     }
     &__icons {
-        font-size: 2.5rem!important;
-    }
-    p {
-        color: #E8EAED;
-        text-align: center;
-        margin: 0!important;
+        font-size: 2rem!important;
     }
     a:focus {
         outline: 0;
+    }
+}
+
+@media (max-width: 800px) {
+    .foot__row {
+        display: block;
+    }
+    .foot {
+        padding: 15px 10px 15px 10px;
     }
 }
