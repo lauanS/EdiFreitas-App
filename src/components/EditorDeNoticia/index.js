@@ -178,8 +178,7 @@ export default function EditorDeNoticia(props){
     return "Preencha todos os campos obrigatórios"
     
   }
-  const handleChildChange = e => {
-    const content = e.target.getContent();
+  const handleChildChange = (content, _) => {
     setText(content);
   }
 
