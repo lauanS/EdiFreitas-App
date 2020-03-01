@@ -22,16 +22,14 @@
         text-decoration: none;
     }
     &__icons {
-        font-size: 3rem!important;
+        font-size: 2.5rem!important;
     }
-}
-
-p {
-    color: #E8EAED;
-    text-align: center;
-    margin: 0!important;
-}
-
-a:focus {
-    outline: 0;
+    p {
+        color: #E8EAED;
+        text-align: center;
+        margin: 0!important;
+    }
+    a:focus {
+        outline: 0;
+    }
 }
