@@ -8,6 +8,7 @@ import CardConsulta from '../CardConsulta';
 import EditorDeEventos from "./EditarEventos";
 import Snackbar from '../Snackbars';
 import OpcoesConsulta from '../OpcoesConsulta'
+import Loader from '../Loader';
 
 import { getEventos, deleteEvento } from '../../services';
 import { desconverterData } from "../../assist/";
@@ -29,14 +30,17 @@ export default function ConsultarEventos({selectEvent, action}){
   const [alertDeleteSucess, setAlertDeleteSucess] = useState(false);
   const [alertDeleteError, setAlertDeleteError] = useState(false);
 
-
   const [selectedEvent, setSelectedEvent ] = useState({id: undefined, nome: ""});
+
+  const [isLoading, setIsLoading] = useState(true);
 
   let filteredEvents = [];
 
   async function loadEvents(){
+    setIsLoading(true);
     const response = await getEventos();
     setEvents(response.data);
+    setIsLoading(false);
     return;
   }
 
@@ -84,16 +88,20 @@ export default function ConsultarEventos({selectEvent, action}){
   /* Mensagens de feedback */
   useEffect(() => {   
     if(!filteredEvents.length && search.length){
-      setFeedback(notFind('notícia', search));
+      setFeedback(notFind('evento', search));
+    }
+    else if (!filteredEvents.length && !isLoading){
+      setFeedback(notFind('evento'));
     }
     else{
-      setFeedback("");
+      //setFeedback("");
     }      
   }, [filteredEvents, search]);
 
   function renderCards(){
     filteredEvents = events.filter(filterEvents)
-    return filteredEvents.map((event, key) => (
+
+    return (filteredEvents.map((event, key) => (
       <CardConsulta
         key={key}
         title={event.nome}
@@ -114,7 +122,7 @@ export default function ConsultarEventos({selectEvent, action}){
           
         }
       </CardConsulta>
-    ))
+    )));
   }
 
   return (
