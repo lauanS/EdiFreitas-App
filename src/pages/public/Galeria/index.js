@@ -2,9 +2,10 @@ import React, {useState, useEffect} from 'react';
 import './styles.scss';
 
 import MyNavbar from '../../../components/Navbar/index';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import {Col} from 'react-bootstrap';
 import Loader from '../../../components/Loader';
+import Footer from '../../../components/Footer';
 
 import {getPublicAlbum} from '../../../services';
 
@@ -33,20 +34,18 @@ export default function Galeria() {
   return (
     <div className="galeria">
       <MyNavbar initActive={3}/>
-      <main className={isLoading || errors ? "galeria__mainVH" : "galeria__main"}>
+      <main className="galeria__main">
         <section className="galeria__content">
         {isLoading && !errors && 
         <>
           <Loader type="dots" /> 
-          <p style={{textAlign: 'center'}}>Aguarde enquanto os álbuns de fotos são carregados</p>
+          <p className="galeria__load">Carregando os álbuns de fotos</p>
         </>
         }
-        {!isLoading && errors && <p style={{textAlign: 'center', color: '#bc2018'}}>Desculpe, houve algum problema</p>}
+        {!isLoading && errors && <p className="galeria__error">Desculpe, houve algum problema</p>}
 
         {!isLoading && !errors && albuns && albuns.length === 0 && 
-        <div className="galeria__header">
-          <h4>Nenhum álbum de fotos encontrado no momento</h4>
-        </div>}
+          <p className="galeria__notFound">Nenhum álbum de fotos encontrado no momento</p>}
 
         {!isLoading && !errors && albuns && albuns.length > 0 && 
         <div className="galeria__header">
@@ -74,6 +73,8 @@ export default function Galeria() {
         )}</div> }
         </section>
       </main>
+      
+      <Footer />
     </div>
   );
 }
