@@ -8,6 +8,7 @@ import CardConsulta from '../CardConsulta';
 import EditorDeNoticia from "./EditarNoticia";
 import Snackbar from '../Snackbars';
 import OpcoesConsulta from '../OpcoesConsulta'
+import Loader from '../Loader';
 
 import { getNoticias, deleteNoticia } from '../../services';
 
@@ -33,9 +34,13 @@ export default function ConsultarNoticias(){
   const [alertDeleteSucess, setAlertDeleteSucess] = useState(false);
   const [alertDeleteError, setAlertDeleteError] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(true);
+
   async function loadNews(){
+    setIsLoading(true);
     const response = await getNoticias();
-    setNews(response.data)
+    setNews(response.data);
+    setIsLoading(false);
     return;
   }
 
@@ -79,7 +84,14 @@ export default function ConsultarNoticias(){
 
   /* Carregando as notícias */
   useEffect(() => {   
-    loadNews();      
+    async function load(){
+      setIsLoading(true);
+      const response = await getNoticias();
+      setNews(response.data);
+      setIsLoading(false);
+      return;
+    }
+    load();      
   }, []);
 
   /* Mensagens de feedback */
@@ -87,10 +99,13 @@ export default function ConsultarNoticias(){
     if(!filteredNews.length && title.length){
       setFeedback(notFind('notícia', title));
     }
+    else if (!filteredNews.length && !isLoading){
+      setFeedback(notFind('notícia'));
+    }
     else{
       setFeedback("");
     }      
-  }, [filteredNews, title]);
+  }, [filteredNews, title, isLoading]);
 
   function renderCards(){
     filteredNews = news.filter(filterNews)
@@ -116,64 +131,67 @@ export default function ConsultarNoticias(){
   }
 
   return (
-    <>
-    <Snackbar open={alertDeleteSucess} setOpen={setAlertDeleteSucess} msg={deleteSuccess("Notícia")}type="success"/>
-    <Snackbar open={alertDeleteError} setOpen={setAlertDeleteError} msg={deleteError()} type="error"/>
+    isLoading? 
+      < Loader type="dots" />
+    :
+      <>
+      <Snackbar open={alertDeleteSucess} setOpen={setAlertDeleteSucess} msg={deleteSuccess("Notícia")}type="success"/>
+      <Snackbar open={alertDeleteError} setOpen={setAlertDeleteError} msg={deleteError()} type="error"/>
 
-    <Form autoComplete="off">
-      <Form.Group as={Row} controlId="formGroupName">
-        <Form.Label column sm={2} className="listarPessoas__label">
-          Título
-        </Form.Label>
-        <Col sm={8} className="listarPessoas__inputText">
-          <Form.Control 
-            type="text" 
-            placeholder="Ex: Especial de Natal na EdiFreitas" 
-            value={title}
-            onChange={updateTitle}
-          />
-        </Col>
-      </Form.Group>
-    </Form>
+      <Form autoComplete="off">
+        <Form.Group as={Row} controlId="formGroupName">
+          <Form.Label column sm={2} className="listarPessoas__label">
+            Título
+          </Form.Label>
+          <Col sm={8} className="listarPessoas__inputText">
+            <Form.Control 
+              type="text" 
+              placeholder="Ex: Especial de Natal na EdiFreitas" 
+              value={title}
+              onChange={updateTitle}
+            />
+          </Col>
+        </Form.Group>
+      </Form>
 
-    <p>{feedback}</p>
-    
-    <CardColumns>
-      {
-        renderCards()  
-      }
-    </CardColumns>
+      <p>{feedback}</p>
+      
+      <CardColumns>
+        {
+          renderCards()  
+        }
+      </CardColumns>
 
-    <SweetAlert 
-      customClass="sweetAlert"
-      title={`Deseja mesmo deletar à notícia "${selectedNews.titulo}" ?`} 
-      show={showAlert}
-      type='warning' 
-      onConfirm={handleConfirm}
-      onCancel={handleCancel}
-      btnSize='sm' 
-      confirmBtnText="Deletar"
-      confirmBtnBsStyle="danger"
-      cancelBtnText="Cancelar"
-      cancelBtnBsStyle="secondary"
-      showCancel={true}
-      focusConfirmBtn={false}
-      showCloseButton={true}
-    />
+      <SweetAlert 
+        customClass="sweetAlert"
+        title={`Deseja mesmo deletar à notícia "${selectedNews.titulo}" ?`} 
+        show={showAlert}
+        type='warning' 
+        onConfirm={handleConfirm}
+        onCancel={handleCancel}
+        btnSize='sm' 
+        confirmBtnText="Deletar"
+        confirmBtnBsStyle="danger"
+        cancelBtnText="Cancelar"
+        cancelBtnBsStyle="secondary"
+        showCancel={true}
+        focusConfirmBtn={false}
+        showCloseButton={true}
+      />
 
-    <EditorDeNoticia
-      id={selectedNews.id} 
-      title={selectedNews.titulo}
-      subtitle={selectedNews.descricao}
-      text={selectedNews.texto}
-      tags={selectedNews.tag}
-      urlImg={selectedNews.foto}
-      show={showModal}
-      setShow={setShowModal}
-      updateList={loadNews}
-    />
+      <EditorDeNoticia
+        id={selectedNews.id} 
+        title={selectedNews.titulo}
+        subtitle={selectedNews.descricao}
+        text={selectedNews.texto}
+        tags={selectedNews.tag}
+        urlImg={selectedNews.foto}
+        show={showModal}
+        setShow={setShowModal}
+        updateList={loadNews}
+      />
 
-    </>
+      </>
   );
       
 }

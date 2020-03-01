@@ -80,9 +80,16 @@ export default function ConsultarEventos({selectEvent, action}){
     setShowAlert(true);
   }
 
-  /* Carregando as notícias */
+  /* Carregando os eventos */
   useEffect(() => {   
-    loadEvents();      
+    async function load(){
+      setIsLoading(true);
+      const response = await getEventos();
+      setEvents(response.data);
+      setIsLoading(false);
+      return;
+    }
+    load();      
   }, []);
 
   /* Mensagens de feedback */
@@ -94,9 +101,9 @@ export default function ConsultarEventos({selectEvent, action}){
       setFeedback(notFind('evento'));
     }
     else{
-      //setFeedback("");
+      setFeedback("");
     }      
-  }, [filteredEvents, search]);
+  }, [filteredEvents, search, isLoading]);
 
   function renderCards(){
     filteredEvents = events.filter(filterEvents)
@@ -126,58 +133,62 @@ export default function ConsultarEventos({selectEvent, action}){
   }
 
   return (
-    <>
-    <Snackbar open={alertDeleteSucess} setOpen={setAlertDeleteSucess} msg={deleteSuccess("Evento")}type="success"/>
-    <Snackbar open={alertDeleteError} setOpen={setAlertDeleteError} msg={deleteError()} type="error"/>
+    isLoading? 
+      < Loader type="dots" />
+    :
+      <>
+      <Snackbar open={alertDeleteSucess} setOpen={setAlertDeleteSucess} msg={deleteSuccess("Evento")}type="success"/>
+      <Snackbar open={alertDeleteError} setOpen={setAlertDeleteError} msg={deleteError()} type="error"/>
 
-    <Form autoComplete="off">
-      <Form.Group as={Row} controlId="formGroupName">
-        <Form.Label column sm={2} className="listarPessoas__label">
-          Evento
-        </Form.Label>
-        <Col sm={8} className="listarPessoas__inputText">
-          <Form.Control 
-            type="text" 
-            placeholder="Ex: Dia das Crianças" 
-            value={search}
-            onChange={updateSearch}
-          />
-        </Col>
-      </Form.Group>
-    </Form>
+      <Form autoComplete="off">
+        <Form.Group as={Row} controlId="formGroupName">
+          <Form.Label column sm={2} className="listarPessoas__label">
+            Evento
+          </Form.Label>
+          <Col sm={8} className="listarPessoas__inputText">
+            <Form.Control 
+              type="text" 
+              placeholder="Ex: Dia das Crianças" 
+              value={search}
+              onChange={updateSearch}
+            />
+          </Col>
+        </Form.Group>
+      </Form>
 
-    <p>{feedback}</p>
+      <p>{feedback}</p>
+      
+      <CardColumns>
+        {
+          renderCards()  
+        }
+      </CardColumns>
+
+      <SweetAlert 
+        customClass="sweetAlert"
+        title={`Deseja mesmo deletar o evento "${selectedEvent.nome}" ?`} 
+        show={showAlert}
+        type='warning' 
+        onConfirm={handleConfirm}
+        onCancel={handleCancel}
+        btnSize='sm' 
+        confirmBtnText="Deletar"
+        confirmBtnBsStyle="danger"
+        cancelBtnText="Cancelar"
+        cancelBtnBsStyle="secondary"
+        showCancel={true}
+        focusConfirmBtn={false}
+        showCloseButton={true}
+      />
+
+      <EditorDeEventos 
+        obj={selectedEvent}
+        updateList={loadEvents}
+        show={showModal}
+        setShow={setShowModal}
+      />
+      </>
     
-    <CardColumns>
-      {
-        renderCards()  
-      }
-    </CardColumns>
-
-    <SweetAlert 
-      customClass="sweetAlert"
-      title={`Deseja mesmo deletar o evento "${selectedEvent.nome}" ?`} 
-      show={showAlert}
-      type='warning' 
-      onConfirm={handleConfirm}
-      onCancel={handleCancel}
-      btnSize='sm' 
-      confirmBtnText="Deletar"
-      confirmBtnBsStyle="danger"
-      cancelBtnText="Cancelar"
-      cancelBtnBsStyle="secondary"
-      showCancel={true}
-      focusConfirmBtn={false}
-      showCloseButton={true}
-    />
-
-    <EditorDeEventos 
-      obj={selectedEvent}
-      updateList={loadEvents}
-      show={showModal}
-      setShow={setShowModal}
-    />
-    </>
   );
       
 }
