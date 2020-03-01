@@ -5,11 +5,10 @@ import MyNavbar from '../../../../components/Navbar/index';
 import { Redirect, useParams } from "react-router-dom";
 import {Col} from 'react-bootstrap';
 import Loader from '../../../../components/Loader';
-
-import Photo from '../PhotoLightbox';
+import Photo from '../../../../components/PhotoLightbox';
 
 import {getImagem} from '../../../../services';
-import {converterDataFormatISO} from '../../../../assist';
+import {desconverterDataFormatISO} from '../../../../assist';
 
 export default function Photos() {
   const { id } = useParams();
@@ -66,7 +65,7 @@ export default function Photos() {
         </>
         }
 
-        {!isLoading && errors && <p style={{textAlign: 'center'}}>Houve algum problema</p>}
+        {!isLoading && errors && <p style={{textAlign: 'center'}}>Desculpe, houve algum problema</p>}
 
         {!isLoading && !errors && photos && photos.length > 0 && 
         <Photo images={photos} index={index} isOpen={openModal} setOpen={setOpenModal}/>
@@ -75,8 +74,8 @@ export default function Photos() {
         {!isLoading && !errors && photos && photos.length > 0 && 
         <div className="galeria__header">
           <h4>Fotos do álbum: {photos[0].album.nome}</h4>
-          <p>Álbum criado em: {converterDataFormatISO(photos[0].album.dataCriacao)}</p>
-          <p>Última edição em: {converterDataFormatISO(photos[0].album.dataCriacao)}</p>
+          <p>Álbum criado em: {desconverterDataFormatISO(photos[0].album.dataCriacao)}</p>
+          <p>Última edição em: {desconverterDataFormatISO(photos[0].album.dataCriacao)}</p>
         </div>}
         
         {!isLoading && !errors && photos && photos.length > 0 && <div className="galeria__row">{photos.map((photo, index) => 

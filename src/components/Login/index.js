@@ -1,11 +1,22 @@
+//Refatorada por Leonardo Nozaki 
+//Data: 27/02/2020
+//Imports - OK
+//ClassName - OK
+//OnSubmit, handleSubmit, type="submit" - OK
+//OverlayLoading - OK
+//State submit - OK
+
 import React, { useState } from "react";
+import './styles.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-import './styles.css';
+import OverlayLoading from '../OverlayLoading';
+
 import ongLogo from '../../assets/ong_logo.jpg';
 import {login, TOKEN_KEY, TOKENTIME_KEY} from '../../services/auth'
 
@@ -16,6 +27,8 @@ export default function Login() {
   const [erroLogin, setErroLogin] = useState(false);
   const [invalitedSenha, setInvalitedSenha] = useState(false);
   const [invalitedUsuario, setInvalitedUsuario] = useState(false);
+
+  const [submit, setSubmit] = useState(false);
 
   const changeSenha = e =>{
     if(e.target.value.length > 0){
@@ -41,7 +54,12 @@ export default function Login() {
     event.preventDefault();
     event.stopPropagation();
 
+    if(submit === true){
+      return;
+    }
+    
     if(usuario.length > 0 && senha.length > 0){
+      setSubmit(true);
       const obj = {
         username: usuario,
         password: senha
@@ -50,6 +68,7 @@ export default function Login() {
       try {
         let res = await login(obj)
         
+        setSubmit(false);
         sessionStorage.setItem(TOKEN_KEY, res.data.token);
         sessionStorage.setItem(TOKENTIME_KEY, Date.now());
         window.location.reload();
@@ -57,9 +76,11 @@ export default function Login() {
         setErroLogin(true);
         setUsuario("");
         setSenha("");
+        setSubmit(false);
       }
     }
     else{
+      setSubmit(false);
       if(usuario.length === 0){
         setInvalitedUsuario(true);
       }
@@ -69,34 +90,33 @@ export default function Login() {
     }
   };
 
-
   return (
     <>
-    <Container className="formsContainer">
-      <Row className="justify-center">
-        <Col className="forms">
+    <OverlayLoading showOverlay={submit} msg="Verificando informações!"/>
+
+    <Container className="login__container">
+      <Row className="login__row">
+        <Col className="login__col">
           <Form  noValidate onSubmit={handleSubmit}>
             <Container>
-              <Row className="justify-center">
-                <img src={ongLogo} alt="First slide" width="100" height="100"/>
+              <Row className="login__row">
+                <img src={ongLogo} alt="Logo ONG Edi Freitas" width="100" height="100"/>
               </Row>
-              <Row className="justify-center">
-                <span className="titulo justify-center">Login do Administrador</span>
+              <Row className="login__row">
+                <span className="login__title">Login do Administrador</span>
               </Row>
-              <Row className="justify-center">
-                <span className="desc justify-center">Parte reservada para o administrador do sistema.</span>
+              <Row className="login__row">
+                <span className="login__subtitle">Parte reservada para o administrador do sistema.</span>
               </Row>
-              {erroLogin === true ?
-              <Row className="justify-center">
-                <span className="desc justify-center error">Usuário ou senha inválida!</span>
-                <span className="desc justify-center error">Corrija e tente novamente</span>
-              </Row>
-              :
-              ''
-              }
+              {erroLogin &&
+              <Row className="login__row">
+                <span className="login__error">Usuário ou senha inválida!</span>
+              </Row>}
             </Container>
+
             <br/>
-            <Form.Group md="4" controlId="validationCustom01">
+
+            <Form.Group md="4" controlId="formGroupUsuario">
               <Form.Label>Usuário</Form.Label>
               <Form.Control 
                 type="text" 
@@ -108,7 +128,7 @@ export default function Login() {
               />
             </Form.Group>
 
-            <Form.Group md="4" controlId="validationCustom02">
+            <Form.Group md="4" controlId="formGroupSenha">
               <Form.Label>Senha</Form.Label>
               <Form.Control 
                 type="password" 
@@ -119,15 +139,13 @@ export default function Login() {
                 isInvalid={invalitedSenha}
               />
             </Form.Group>
+
             <br/>
             
-            <Button type="submit" className="botao">Entrar</Button>
-           
-
+            <Button type="submit" className="login__button">Entrar</Button>
           </Form>
         </Col>
       </Row>
     </Container>
-</>
-  );
+  </>);
 }

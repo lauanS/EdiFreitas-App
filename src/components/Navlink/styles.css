@@ -1,30 +1,32 @@
-.link-active{
-    color: #bc2018;
+.link-active {
+    color: #FFF;
     font-weight: bold;
-    padding-right: .5rem;
-    padding-left: .5rem;
     display: block;
-    padding: .5rem 1rem;
+    padding: 0rem 0.7rem 0.2rem 0.7rem;
+    margin: 0.5rem 0.5rem;
     font-size: 20px;
+    background-color: rgba(171, 210, 239, 0.45);
+    border-radius: 20px;
 }
 
 .link-active:hover {
-    color: #bc2018;
+    color: #FFF;
     text-decoration: none;
     font-size: 20px;
 }
 
 .link {
-    color: black;
-    padding-right: .5rem;
-    padding-left: .5rem;
+    color: #C6CDD4;
     display: block;
-    padding: .5rem 1rem;
+    padding: 0rem 1rem 0.2rem 1rem;
+    margin: 0.5rem 0rem;
     font-size: 20px;
 }
 
 .link:hover {
-    color: black;
+    color: #F8F9FA;
     text-decoration: none;
     font-size: 20px;
+    border-radius: 20px;
+    background-color: rgba(248, 249, 250, 0.2);
 }

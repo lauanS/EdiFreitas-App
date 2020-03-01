@@ -275,7 +275,7 @@ export default function CadastroResponsavel(){
 
     <label className="CadastroResponsavel__descricao">É obrigatório o preenchimento de campos com * (Asterisco) no título, é opcional quando não possuem o asterisco</label>
 
-    <Form autoComplete="off" noValidate>
+    <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
       <CamposPessoa 
         nome={nomeCompleto} 
         onChangeNome={onChangeNome} 
@@ -410,7 +410,7 @@ export default function CadastroResponsavel(){
       }
       <Button as={Row} variant="link" onClick={addNewEmail} className="CadastroResponsavel__buttonAdd">Novo e-mail</Button>
 
-      <Button className="CadastroResponsavel__buttonSubmit" variant="success" onClick={handleSubmit}>Cadastrar responsável</Button>
+      <Button className="CadastroResponsavel__buttonSubmit" variant="success" type="submit">Salvar</Button>
     </Form>
     </>
   );

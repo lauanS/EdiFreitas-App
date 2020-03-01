@@ -305,15 +305,10 @@ export default function EditorDeEventos(props){
         </Col>
       </Form.Group>
 
-      <Form.Group as={Row}>
-        <Col sm={{ span: 10, offset: 2 }}>
-          <ButtonSave 
-            isLoading={isLoading}
-          >
-            Salvar
-          </ButtonSave>
-        </Col>
-      </Form.Group>
+      <ButtonSave 
+        isLoading={isLoading}
+      >Salvar
+      </ButtonSave>
     </Form>
     </>
   );

@@ -58,10 +58,11 @@ export async function getEventos(){
 }
 
 export async function getEventosHome(){
-  return await api.get('/eventos/home');
+  let date = new Date().toISOString();
+  return await api.get(`/eventos/home?data=${date}`);
 }
 
-export async function findByIdEventos(id){
+export async function findByIdEvento(id){
   return await api.get('/eventos/' + id);
 }
 
@@ -86,7 +87,7 @@ export async function getNoticiasHome(){
   return await api.get('/noticias/home');
 }
 
-export async function findByIdNoticias(id){
+export async function findByIdNoticia(id){
   return await api.get('/noticias/' + id);
 }
 

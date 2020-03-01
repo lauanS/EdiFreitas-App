@@ -1,3 +1,6 @@
+//Calcula a idade
+//Entrada: aaaa/mm/dd
+//Saida: a idade
 export function idade(niver){
   if(niver === undefined){
     return 0;
@@ -20,6 +23,9 @@ export function idade(niver){
   return quantos_anos < 0 ? 0 : quantos_anos;
 }
 
+//Converte a data em uma string
+//Entrada: aaaa/mm/dd
+//Saida: 'dia' de 'mes' de 'ano'
 export function nascimento(data){
   let ano_aniversario = + parseInt(data.substring(0,4)),
     mes_aniversario = + parseInt(data.substring(5,7)),
@@ -32,6 +38,9 @@ export function nascimento(data){
   return dataBR;
 }
 
+//Formatar cpf
+//Entrada: 40510036805
+//Saida: 405.100.368-05
 export function cpfFormat(cpf){
   if(cpf === undefined){
     return "";
@@ -41,6 +50,7 @@ export function cpfFormat(cpf){
   return newCpf;
 };
 
+//Formatar dado da criança
 export function formatDadosCrianca(crianca){
   let retorno = crianca.nome + "; ";
   if(crianca.sexo === "F"){
@@ -58,6 +68,8 @@ export function formatDadosCrianca(crianca){
   return retorno;
 }
 
+//Entrada: aaaa/mm/dd
+//Saida: dd/mm/aaaa
 export function desconverterData(data){
   let ano = data.substring(0,4);
   let mes = data.substring(5,7);
@@ -66,6 +78,8 @@ export function desconverterData(data){
   return conv;
 }
 
+//Entrada: dd/mm/aaaa
+//Saida: aaaa/mm/dd
 export function converterData(data){
   let dia = data.substring(0,2);
   let mes = data.substring(3,5);
@@ -74,7 +88,9 @@ export function converterData(data){
   return conv;
 }
 
-export function converterDataFormatISO(data){
+//Entrada: 2017-09-08T15:25:53Z
+//Saida: 08 de setembro de 2017
+export function desconverterDataFormatISO(data){
   let contador = 0;
   let aux = '';
   let ano, mes, dia;
@@ -105,6 +121,25 @@ export function converterDataFormatISO(data){
       aux = aux + char;
     }
   }
+}
+
+//Entrada: aaaa/mm/dd
+//Saida: Sab, 29 de fev. de 2020
+export function dateFullFormat(data){
+  let ano = + parseInt(data.substring(0,4)),
+    mes = + parseInt(data.substring(5,7)),
+    dia = + parseInt(data.substring(8,10));
+  
+  let diaSemana = new Date(`${mes} ${dia}, ${ano} 15:15:30`).getDay();
+
+  let meses = ["jan.", "fev.", "mar.", "abr.",	"maio", "jun.", 	
+    "jul.", "ago.", "set.", "out.", "nov.", "dez."];
+
+  let semana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+
+  let dataString = semana[diaSemana] + ", " + dia + " de " + meses[mes-1] + " de " + ano;
+
+  return dataString;
 }
 
 export function createFilename(base, date){

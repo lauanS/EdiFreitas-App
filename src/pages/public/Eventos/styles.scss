@@ -1,4 +1,4 @@
-.galeria {
+.eventos {
     width: 100%;
     height: 100%;
     background-color: #E8EAED;
@@ -33,10 +33,20 @@
     &__content {
         background-color: #F8F9FA;
         min-width: 290px;
-        max-width: 1000px;
+        max-width: 900px;
         width: 90%;
         height: 100%;
         padding: 16px 8px 0px 8px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    &__contentEvent {
+        background-color: #F8F9FA;
+        width: 90%;
+        max-width: 700px;
+        height: 100%;
+        padding: 0px 0px 0px 0px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -57,40 +67,50 @@
             font-size: .9375rem;
         }
     }
+    &__marginTop16 {
+        margin-top: 16px;
+    }
     &__row {
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
+        justify-content: center;
     }
     &__col {
-        margin: 0px 0px 16px 0px!important;
-        padding: 0px 8px 0px 8px!important;
+        margin: 0px 0px 20px 0px!important;
+        padding: 0px 10px 0px 10px!important;
     }
     &__link {
         display: block;
         width: 100%;
-        max-width: 328px;
         flex-direction: column;
         color: #485460;
+        box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.35);
         img {
             transition: all 0.5s ease;
         }
     }
     &__link:hover {
-        text-decoration: underline;
+        text-decoration: none;
         color: #485460;
         img {
-            transform: scale(1.2);
+            transform: scale(1.1);
         }
     }
     &__divImg {
         padding: 0;
         overflow: hidden;
-        max-height: 328px;
-        max-width: 328px;
         width: 100%;
-        height: 0;
-        padding-bottom: 100%;
+        height: 250px;
+        position: relative;
+    }
+    &__divImgEvento {
+        cursor: pointer;
+        padding: 0;
+        overflow: hidden;
+        width: 100%;
+        max-width: 700px;
+        height: 393.75px;
         position: relative;
     }
     &__img {
@@ -99,10 +119,21 @@
         width: 100%;
         border-style: none;
         object-fit: cover;
-        border-radius: 4px;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+    }
+    &__divInfo {
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        padding: 5px 8px;
+    }
+    &__divInfoEvento {
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        padding: 10px 15px;
     }
     &__albumTitle {
-        font-size: .9375rem;
+        font-size: 1.3rem;
         margin: 0;
         color: #30333C;
         width: 100%;
@@ -110,7 +141,19 @@
         display: block;
     }
     &__albumText {
-        font-size: .8125rem;
+        font-size: .9rem;
+        margin: 0;
+        color: #485460;
+        width: 100%;
+        font-weight: normal;
+        display: block;
+        line-height: 1.3333;
+        overflow-x: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    &__albumTextEvento {
+        font-size: 1rem;
         margin: 0;
         color: #485460;
         width: 100%;
@@ -118,15 +161,13 @@
         display: block;
         line-height: 1.3333;
     }
-    &__zoom {
-        cursor: pointer;
-        img {
-            transition: all 0.5s ease;
-        }
-    }
-    &__zoom:hover {
-        img {
-            transform: scale(1.2);
-        }
+    &__albumData {
+        color: #30333C;
+        font-size: 1.2rem;
+        margin: 0;
+        width: 100%;
+        font-weight: normal;
+        display: block;
+        line-height: 1.3333;
     }
 }
