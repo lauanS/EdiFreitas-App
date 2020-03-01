@@ -192,7 +192,7 @@ export default function CadastroCrianca(){
 
     <label className="CadastroCrianca__descricao">É obrigatório o preenchimento de campos com * (Asterisco) no título, é opcional quando não possuem o asterisco</label>
     
-    <Form noValidate autoComplete="off">
+    <Form noValidate autoComplete="off" onSubmit={handleSubmit}>
       <CamposPessoa nome={nomeCompleto} onChangeNome={onChangeNome} valNome={validatedNomeCompleto} invNome={invalidatedNomeCompleto}
           data={dataNascimento} onChangeData={onChangeData} valData={validatedDataNascimento} invData={invalidatedDataNascimento}
           sexo={sexoPessoa} onChangeSexo={onChangeSexo}
@@ -306,7 +306,7 @@ export default function CadastroCrianca(){
 
       <Comentario validatedComentario={validatedComentario} setValidatedComentario={setValidatedComentario} comentario={comentario} setComentario={setComentario}/>
 
-      <Button className="CadastroCrianca__buttonSubmit" variant="success" onClick={handleSubmit}>Cadastrar criança</Button>
+      <Button className="CadastroCrianca__buttonSubmit" variant="success" type="submit">Salvar</Button>
     </Form>
     </>
   );
