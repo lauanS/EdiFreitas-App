@@ -53,6 +53,14 @@ export async function getEventos(){
   return await api.get('/eventos');
 }
 
+export async function getEventosHome(){
+  return await api.get('/eventos/home');
+}
+
+export async function findByIdEventos(id){
+  return await api.get('/eventos/' + id);
+}
+
 export function postEvento(evento){
   return api.post('/eventos', evento);
 }
@@ -70,9 +78,18 @@ export async function getNoticias(){
   return await api.get('/noticias');
 }
 
+export async function getNoticiasHome(){
+  return await api.get('/noticias/home');
+}
+
+export async function findByIdNoticias(id){
+  return await api.get('/noticias/' + id);
+}
+
 export async function postNoticia(noticia){
   return await api.post('/noticias', noticia);
 }
+
 
 export async function deleteNoticia(id){
   return await api.delete('/noticias/' + id);
