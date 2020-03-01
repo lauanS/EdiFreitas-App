@@ -7,7 +7,8 @@ import {Modal, Button} from 'react-bootstrap';
 import CloseIcon from '@material-ui/icons/Close';
 
 export default function CropFotos(props) {
-  const {cropping, open, src, minWidth, minHeight, maxWidth, maxHeight, maxWidthImg, textButton, closed, setNewImage} = props;
+  const {cropping, open, src, textButton, closed, setNewImage} = props;
+  const {minWidth=200, minHeight=200, maxWidth=500, maxHeight=500, maxWidthImg=500} = props
   const [crop, setCrop] = useState(cropping);
   const [imageRef, setImageRef] = useState("");
   const [fileUrl, setFileUrl] = useState("");

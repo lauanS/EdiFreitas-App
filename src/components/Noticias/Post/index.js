@@ -24,7 +24,7 @@ export default function Post(props){
       />
       <div className="Noticia-content">
         <div>
-          <img src={logo} alt="some text" className="Noticia-img" />
+          <img src={news.foto? news.foto : logo} alt="some text" className="Noticia-img" />
         </div>  
         <div className="Noticia-item">
           <CardContent>

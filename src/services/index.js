@@ -5,6 +5,10 @@ const api = axios.create({
   baseURL: 'https://edi-freitas.herokuapp.com/api'
 });
 
+const apiPublic = axios.create({
+  baseURL: 'https://edi-freitas.herokuapp.com/api'
+});
+
 api.interceptors.request.use(async config => {
   const token = getToken();
   if(token){
@@ -53,6 +57,14 @@ export async function getEventos(){
   return await api.get('/eventos');
 }
 
+export async function getEventosHome(){
+  return await api.get('/eventos/home');
+}
+
+export async function findByIdEventos(id){
+  return await api.get('/eventos/' + id);
+}
+
 export function postEvento(evento){
   return api.post('/eventos', evento);
 }
@@ -70,9 +82,18 @@ export async function getNoticias(){
   return await api.get('/noticias');
 }
 
+export async function getNoticiasHome(){
+  return await api.get('/noticias/home');
+}
+
+export async function findByIdNoticias(id){
+  return await api.get('/noticias/' + id);
+}
+
 export async function postNoticia(noticia){
   return await api.post('/noticias', noticia);
 }
+
 
 export async function deleteNoticia(id){
   return await api.delete('/noticias/' + id);
@@ -91,8 +112,12 @@ export async function getImagem(idAlbum){
   return await api.get('/imagem/' + idAlbum);
 }
 
-export async function updateImagem(id, imagem){
+export async function putImagem(id, imagem){
   return await api.put('/imagem/upload/' + id, imagem);
+}
+
+export async function putImagemUrl(imagem){
+  return await api.put('/imagem/upload', imagem);
 }
 
 export async function deleteImagem(id){
@@ -106,6 +131,10 @@ export async function postAlbum(album){
 
 export async function getAlbum(){
   return await api.get('/album');
+}
+
+export async function getAlbumHome(){
+  return await api.get('/album/home');
 }
 
 export async function updateAlbum(id, album){
@@ -134,4 +163,9 @@ export async function deleteEventoParticipante(idEvento, idCrianca){
 
 export async function getPublicAlbum(){
   return await api.get('/public/album');
+}
+
+// ============= Disparo de email ================
+export async function sendEmailService(email){
+  return await apiPublic.post('/email', email);
 }

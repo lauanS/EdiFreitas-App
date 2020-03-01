@@ -6,7 +6,7 @@ import TextEditor from "../../EditorDeNoticia";
 import './styles.scss';
 
 export default function EditarNoticia(props){
-  const {id, title, subtitle, text, tags, show, setShow, updateList} = props;
+  const {id, title, subtitle, text, urlImg, tags, show, setShow, updateList} = props;
   const handleClose = () => {setShow(false)}
 
   return (
@@ -28,6 +28,7 @@ export default function EditarNoticia(props){
           initialSubtitle={subtitle}
           initialText={text}        
           initialTags={tags}
+          initialImg={urlImg}
           isUpdate={true}
           updateList={updateList}
           id={id}

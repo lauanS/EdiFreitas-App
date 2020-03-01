@@ -7,11 +7,20 @@ import Button from '@material-ui/core/Button';
 import './styles.scss';
 
 export default function OpcoesConsulta(props){
-  const {setSelectedObj, obj, setShowModal, deleteItem} = props;
+  const {setSelectedObj, obj, setShowModal, deleteItem, viewCard} = props;
 
   return (
     <>
-    <Button size="small" as={Col} variant="outlined" color="primary"> Visualizar </Button>
+    <Button 
+      size="small" 
+      as={Col} 
+      variant="outlined" 
+      color="primary"
+      href={viewCard}
+      target="_blank"
+    > 
+      Visualizar 
+    </Button>
     <Button 
       size="small"
       as={Col} 

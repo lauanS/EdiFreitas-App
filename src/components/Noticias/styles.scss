@@ -31,8 +31,9 @@
   }
   
   &-img{
-    width: 120px;
-    height: 120px;
+    width: 256px;
+    height: 144px;
+    object-fit: cover;
   }
 
   &-tag{

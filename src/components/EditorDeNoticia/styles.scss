@@ -10,6 +10,12 @@
     width: auto; 
     height: auto; 
     margin-bottom: 10px;
+    margin-top: 10px;
+  }
+
+  &-uploadPhoto{
+    text-align: center;
+    margin-bottom: 20px;
   }
 
   @media (max-width: 600px) {
@@ -17,6 +23,15 @@
       margin-left: 0px;
       margin-right: 0px;
     }
+
+    &-uploadPhoto{
+      margin-left: 0px;
+      margin-right: 0px;
+    }
+  }
+
+  &-save-button{
+    display: block;
   }
 }
 
@@ -27,4 +42,5 @@
 .center-button{
   display: inline-block;
   width: 100%;
+  margin-left: 0px;
 }
