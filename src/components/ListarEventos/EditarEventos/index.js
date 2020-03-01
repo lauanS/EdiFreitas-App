@@ -25,6 +25,7 @@ export default function EditarEvento({obj, show, setShow, updateList}){
         <EditorDeEventos 
           obj={obj}
           isUpdate={true}  
+          initialImg={obj.capa}
           updateList={updateList}
         />
       </Modal.Body>

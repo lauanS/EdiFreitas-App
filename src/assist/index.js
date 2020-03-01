@@ -106,3 +106,15 @@ export function converterDataFormatISO(data){
     }
   }
 }
+
+export function createFilename(base, date){
+  const dateAsString = "" + date.getDate() + date.getMonth() + 
+    date.getFullYear() + date.getHours() + 
+    date.getMinutes() + date.getSeconds() + 
+    date.getMilliseconds();
+  return base + dateAsString;
+}
+
+export function getUrlBase(){
+  return window.location.origin;
+}

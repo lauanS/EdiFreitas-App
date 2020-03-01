@@ -2,15 +2,20 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.scss';
 
-import {Form, Row, Col} from 'react-bootstrap';
-import Button from '@material-ui/core/Button';
+import { Form, Row, Col } from 'react-bootstrap';
 import Snackbar from '../Snackbars';
+import UploadPhoto from '../UploadPhoto';
+import ButtonSave from '../ButtonSave';
 
 import { checkFormatData, checkTextField } from '../../validated';
-import {converterData, desconverterData} from '../../assist';
-import {postEvento, putEvento} from '../../services';
+import { converterData, desconverterData } from '../../assist';
+import { createFilename } from "../../assist";
+import { postEvento, putEvento, putImagemUrl, postImagem } from '../../services';
 
-export default function EditorDeEventos({isUpdate, obj, updateList}){
+export default function EditorDeEventos(props){
+  const { isUpdate, obj, updateList } = props;
+  const { initialImg } = props;
+
   const [openAlertSuccess, setOpenAlertSuccess] = useState(false);
   const [openAlertError, setOpenAlertError] = useState(false);
 
@@ -29,6 +34,11 @@ export default function EditorDeEventos({isUpdate, obj, updateList}){
   const [localEvento, setLocalEvento] = useState("");
   const [validatedLocalEvento, setValidatedLocalEvento] = useState(false);
   const [invalidatedLocalEvento, setInvalidatedLocalEvento] = useState(false);
+
+  const [imgBase64, setImgBase64] = useState("");
+  const [invalidatedImgBase64, setInvalidatedImgBase64] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   /* Setup inicial do componente */
   useEffect(() => {   
@@ -63,6 +73,11 @@ export default function EditorDeEventos({isUpdate, obj, updateList}){
   }
 
   function checkFields(){
+    if(!imgBase64 && !initialImg){
+      setInvalidatedImgBase64(true);
+      return false;
+    }
+
     let isValid = true;
     if(validatedNomeEvento === false){
       setInvalidatedNomeEvento(true);
@@ -86,6 +101,7 @@ export default function EditorDeEventos({isUpdate, obj, updateList}){
   }
 
   async function handleSubmit(e){
+    setIsLoading(true);
     e.persist();
     e.preventDefault();
     e.stopPropagation();
@@ -96,22 +112,61 @@ export default function EditorDeEventos({isUpdate, obj, updateList}){
     }
 
     if(checkFields()){
+      const fullDate = new Date();
       const data = converterData(dataEvento);
-      let obj = {
-        nome: nomeEvento,
-        dataEvento: data,
-        descricao: descricaoEvento,
-        local: localEvento
-      }
 
-      if(isUpdate){
-        
-        await update(obj, id);      
-      }
-      else{
-        await save(obj);
-      }
+      try {
+        let urlImg;
+        if(isUpdate){
+          console.log("initialImg.", initialImg)
+          // 1. Verifico se vou usar a initialImg com a url da imagem
+          // 2. Se for a initial img, ja monto o obj e nao chamo o putImagem
+          // 3. Se nao, chamo o putImagem com a nova imagem
+
+          if(!imgBase64){
+            urlImg = initialImg;  
+          }else{
+            const img = {
+              iBase: imgBase64,
+              filename: createFilename("imgCapaDeEvento", fullDate),
+              album: null,
+              url: initialImg
+            }
+
+            const responseImg = await putImagemUrl(img);
+            console.log(responseImg.data);
+            urlImg = responseImg.data;      
+          }
+        }
+        else{
+          const img = {
+            iBase: imgBase64,
+            filename: createFilename("imgCapaDeEvento", fullDate)
+          }
+          const responseImg = await postImagem(img);
+          urlImg = responseImg.data.url;
+        }
+
+        let obj = {
+          nome: nomeEvento,
+          dataEvento: data,
+          descricao: descricaoEvento,
+          local: localEvento,
+          capa: urlImg
+        }
+
+        if(isUpdate){
+          await update(obj, id);      
+        }
+        else{
+          await save(obj);
+        }
+      } catch (error) {
+        console.log("Erro no upload da img");
+        console.log(error);
+      }  
     }
+    setIsLoading(false);
   }
 
   async function save(obj){
@@ -150,6 +205,28 @@ export default function EditorDeEventos({isUpdate, obj, updateList}){
     <label className="EditorDeEventos__descricao">É obrigatório o preenchimento de todos os campos com * (Asterisco) no título</label>
     
     <Form onSubmit={handleSubmit} noValidate autoComplete="off">
+      <Form.Group as={Row} controlId="formGroupFoto">
+        <Form.Label column sm={2} className="EditorDeEventos__label">
+          Foto de capa*
+        </Form.Label>
+        <Col sm={8} className="EditorDeEventos__inputText">
+          <div className="EditorDeEventos__uploadPhoto">
+            <UploadPhoto
+              imgBase64={imgBase64}
+              setImgBase64={setImgBase64}
+              invalidatedImgBase64={invalidatedImgBase64}
+              setInvalidatedImgBase64={setInvalidatedImgBase64}
+              imgWidth={500}
+              imgHeight={500}
+              initialImg={initialImg}
+            />
+          </div>
+          <Form.Control.Feedback type="invalid">
+            Campo obrigatório, adicione a capa do evento.
+          </Form.Control.Feedback>
+        </Col>
+      </Form.Group>
+
       <Form.Group as={Row} controlId="formGroupNome">
         <Form.Label column sm={2} className="EditorDeEventos__label">
           Nome do evento*
@@ -230,14 +307,11 @@ export default function EditorDeEventos({isUpdate, obj, updateList}){
 
       <Form.Group as={Row}>
         <Col sm={{ span: 10, offset: 2 }}>
-          <Button 
-            type="submit" 
-            variant="contained" 
-            color="primary"
-            className="btn-save-event"
+          <ButtonSave 
+            isLoading={isLoading}
           >
             Salvar
-          </Button>
+          </ButtonSave>
         </Col>
       </Form.Group>
     </Form>

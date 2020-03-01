@@ -14,4 +14,34 @@
         width: 150px;
         max-width: 150px;
     }
+
+    &__uploadPhoto{
+        text-align: left;
+        margin-bottom: 20px;
+    }
+
+    &__buttonSubmit {
+        width: 200px;
+        font-weight: 700;
+        margin: 0;
+        display: block;
+    }
 }
+
+@media (min-width: 580px) {
+    .EditorDeEventos__buttonSubmit {
+        margin-left: 170px;
+    }
+    
+}
+
+.Progress{
+    color: #4caf50;
+    background-color: transparent;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    // Como o tamanho do cirular progress é 24px, removemos 12px para alinhar no centro
+    margin-left: -12px;
+    margin-top: -12px
+  }

@@ -98,7 +98,7 @@ export default function ConsultarEventos({selectEvent, action}){
         key={key}
         title={event.nome}
         description={event.descricao}
-        urlImg={urlImg}
+        urlImg={event.capa? event.capa : urlImg}
         firstFooter={`Dia: ${desconverterData(event.dataEvento)}`}
         lastFooter={`Local: ${event.local}`}
       >

@@ -2,31 +2,54 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: max-content;  
   
   &-img{
     margin-top: 50px;
-    width: calc(((100% - 442px) / 12) * 10 + 306px);
-    max-width: 900px;
+    margin-bottom: 20px;
+    height: 337.5px;
+    width: 100%;
+    max-width: 700px;
+    object-fit: cover;
   }
   
   &-header{
     text-align: center;
-  
+    max-width: 900px;
     h1{
-      font-size: 5rem;
-      line-height: 6rem;
+      font-size: 3.2rem;
       font-weight: bold;
     }  
     h2{
-      font-size: 2.4rem;
-      line-height: 4rem;
-      color: #15171a;
+      font-size: 1.2rem;
+      color: #485460;
+    }
+
+    // Ajustando o tamanho da font para telas menores, para palavras grandes caberem 
+    @media screen and (max-width: 600px) {
+      h1{
+        font-size: 2rem;
+        line-height: 2.5rem;
+      }  
+      h2{
+        font-size: 1.2rem;
+        line-height: 1.6rem;        
+      }
     }
   }
   
   &-text{
-    text-align: center;
+    text-align: justify;
+    max-width: 900px;
   }
 
+}
+
+.Content{
+
+  img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 90%;
+  }
 }

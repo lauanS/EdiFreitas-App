@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
-
 import { Form, Collapse } from 'react-bootstrap';
 import TextEditor from '../EditorDeTexto/index'
 import DadosNoticia from '../DadosNoticia/index'
 import Snackbar from '../Snackbars';
-
+import UploadPhoto from '../UploadPhoto';
 import Button from '@material-ui/core/Button';
+import ButtonSave from '../ButtonSave';
 
-import { postNoticia, putNoticia } from '../../services';
+import { postNoticia, putNoticia, putImagemUrl, postImagem } from '../../services';
 import { saveSuccess, saveError } from "../../assist/feedback";
-
+import { createFilename } from "../../assist";
 import './styles.scss';
 
 export default function EditorDeNoticia(props){
   const { initialTitle="", initialSubtitle="", initialText="", initialTags="" } = props;
+  const { initialImg } = props;
   const { isUpdate, updateList, id } = props;
 
   const [openAlertSuccess, setOpenAlertSuccess] = useState(false);
@@ -31,12 +32,11 @@ export default function EditorDeNoticia(props){
   const [text, setText] = useState(initialText);
   const [invalidatedText, setInvalidatedText] = useState(false);
 
+  const [imgBase64, setImgBase64] = useState("");
+  const [invalidatedImgBase64, setInvalidatedImgBase64] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(true);
-
-
-  
-
-  const urlImg = "https://cutetheworld.files.wordpress.com/2008/11/cutebug.png";
 
   /* Verifica se o texto é válido ou inválido */
   useEffect(() => {   
@@ -51,6 +51,11 @@ export default function EditorDeNoticia(props){
   }
 
   function checkFields(){
+    if(!imgBase64 && !initialImg){
+      setInvalidatedImgBase64(true);
+      return false;
+    }
+
     if(invalidatedTitle || invalidatedSubtitle || invalidatedText){
       return false;
     }
@@ -58,7 +63,7 @@ export default function EditorDeNoticia(props){
   }
 
   async function handleSubmit(e){   
-     
+    setIsLoading(true);
     e.persist();
     e.preventDefault();
     e.stopPropagation();
@@ -67,28 +72,68 @@ export default function EditorDeNoticia(props){
       const fullDate = new Date();
       const data = fullDate.toISOString().substr(0, 19);
   
-      const obj = {
-        titulo:title,
-        descricao:subtitle,
-        texto:text,
-        foto:urlImg,
-        data,
-        tag:tags
-      }
+      try {
+        let urlImg;
+        
+        if(isUpdate){
+          // 1. Verifico se vou usar a initialImg com a url da imagem
+          // 2. Se for a initial img, ja monto o obj e nao chamo o putImagem
+          // 3. Se nao, chamo o putImagem com a nova imagem
 
-      if(isUpdate){
-        await update(obj, id);
-      }
-      else{
-        await save(obj);
-      }
-      
+          if(!imgBase64){
+            urlImg = initialImg;  
+          }else{
+            const img = {
+              iBase: imgBase64,
+              filename: createFilename("imgCapaDeNotícia", fullDate),
+              album: null,
+              url: initialImg
+            }
+
+            const responseImg = await putImagemUrl(img);
+            console.log(responseImg.data);
+            urlImg = responseImg.data;      
+          }
+
+  
+        }
+        else{
+          const img = {
+            iBase: imgBase64,
+            filename: createFilename("imgCapaDeNotícia", fullDate)
+          }
+
+          const responseImg = await postImagem(img);
+          urlImg = responseImg.data.url;
+        }
+
+        
+        const obj = {
+          titulo:title,
+          descricao:subtitle,
+          texto:text.replace(/"/g, '&quot;'),
+          foto:urlImg,
+          data,
+          tag:tags
+        }
+  
+        if(isUpdate){
+          await update(obj, id);
+        }
+        else{
+          await save(obj);
+        }
+      } catch (error) {
+        console.log("Erro no upload da img");
+        console.log(error);
+      }      
     }
     else{
       setOpenAlertSuccess(false);
       setOpenAlertError(false);
       setOpenFieldError(true);
     }
+    setIsLoading(false);
   }
 
   async function save(obj){
@@ -102,6 +147,7 @@ export default function EditorDeNoticia(props){
       setOpenAlertSuccess(false);
       setOpenAlertError(true);
       setOpenFieldError(false);
+      console.log(error);
     }
   }
 
@@ -116,10 +162,22 @@ export default function EditorDeNoticia(props){
       setOpenAlertSuccess(false);
       setOpenAlertError(true);
       setOpenFieldError(false);
+      console.log(error);
     }
 
   }
 
+  function FieldErrorMsg(){
+    if(text.length === 0){
+      return "Insira o conteúdo da notícia";
+    }
+    if(invalidatedImgBase64){
+      return "Selecione uma imagem de capa para a notícia";
+    }
+
+    return "Preencha todos os campos obrigatórios"
+    
+  }
   const handleChildChange = e => {
     const content = e.target.getContent();
     setText(content);
@@ -132,7 +190,7 @@ export default function EditorDeNoticia(props){
     <Snackbar open={openAlertError} setOpen={setOpenAlertError} 
       msg={saveError()} type="error" />
     <Snackbar open={openFieldError} setOpen={setOpenFieldError} 
-      msg="Insira o conteúdo da notícia" type="error"/>
+      msg={FieldErrorMsg()} type="error"/>
 
 
 
@@ -140,6 +198,18 @@ export default function EditorDeNoticia(props){
       <Form onSubmit={handleSubmit} >
         <Collapse in={open}>
           <div id="fade-fields">
+            <div className="news-uploadPhoto">
+              <UploadPhoto
+                imgBase64={imgBase64}
+                setImgBase64={setImgBase64}
+                invalidatedImgBase64={invalidatedImgBase64}
+                setInvalidatedImgBase64={setInvalidatedImgBase64}
+                imgWidth={500}
+                imgHeight={500}
+                initialImg={initialImg}
+              />
+            </div>
+
             <DadosNoticia 
               title={title}
               setTitle={setTitle}
@@ -171,14 +241,13 @@ export default function EditorDeNoticia(props){
           <TextEditor text={text} handleChange={handleChildChange} isUpdate={isUpdate}/>      
         </div>
 
-        <Button 
-          type="submit" 
-          variant="contained" 
-          color="primary"
-          className="center-button"
+        <ButtonSave 
+          isLoading={isLoading}
+          className='center-button'
         >
           Salvar
-        </Button>
+        </ButtonSave>
+
 
       </Form>
 
