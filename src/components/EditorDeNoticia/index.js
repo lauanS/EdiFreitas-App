@@ -6,8 +6,8 @@ import Snackbar from '../Snackbars';
 import UploadPhoto from '../UploadPhoto';
 import Button from '@material-ui/core/Button';
 import ButtonSave from '../ButtonSave';
-
 import { postNoticia, putNoticia, putImagemUrl, postImagem } from '../../services';
+import { checkMinCharacters } from '../../validated';
 import { saveSuccess, saveError } from "../../assist/feedback";
 import { createFilename } from "../../assist";
 import './styles.scss';
@@ -51,15 +51,26 @@ export default function EditorDeNoticia(props){
   }
 
   function checkFields(){
+    let isValid = true;
+
     if(!imgBase64 && !initialImg){
       setInvalidatedImgBase64(true);
-      return false;
+      isValid = false;
+    }
+    if(!checkMinCharacters(title, setTitle, (_) => {}, setInvalidatedTitle)){
+      setInvalidatedTitle(true);
+      isValid =  false;
+    }
+    if(!checkMinCharacters(subtitle, setSubtitle, (_) => {}, setInvalidatedSubtitle)){
+      setInvalidatedSubtitle(true);
+      isValid = false;
+    }
+    if(!checkMinCharacters(text, setText, (_) => {}, setInvalidatedText)){
+      setInvalidatedText(true);
+      isValid = false;
     }
 
-    if(invalidatedTitle || invalidatedSubtitle || invalidatedText){
-      return false;
-    }
-    return true;
+    return isValid;
   }
 
   async function handleSubmit(e){   

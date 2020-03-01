@@ -22,13 +22,13 @@ export default function DadosNoticia(props){
   const handleTitleChange = e => {
     const content = e.target.value;
     setTitle(content);
-    checkField(content, setInvalidatedTitle)
+    checkField(content, setInvalidatedTitle);
   }
 
   const handleSubtitleChange = e => {
     const content = e.target.value;
     setSubtitle(content);
-    checkField(content, setInvalidatedSubtitle)
+    checkField(content, setInvalidatedSubtitle);
   }
 
   const handleTagsChange = e => {
@@ -44,7 +44,6 @@ export default function DadosNoticia(props){
         </Form.Label>
         <Col>
           <Form.Control 
-            required
             value={title}
             onChange={handleTitleChange} 
             isInvalid={invalidatedTitle}
@@ -62,7 +61,6 @@ export default function DadosNoticia(props){
         </Form.Label>
         <Col>
           <Form.Control 
-            required
             as="textarea" 
             rows="2" 
             value={subtitle}
