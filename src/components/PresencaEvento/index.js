@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import {Form, Row, Col, Button as ButtonBootstrap} from 'react-bootstrap';
+import {Form, Row, Col} from 'react-bootstrap';
 import Button from '@material-ui/core/Button';
 
 import { getEventoParticipante } from '../../services';

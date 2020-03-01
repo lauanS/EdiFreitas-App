@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Form, Collapse } from 'react-bootstrap';
 import TextEditor from '../EditorDeTexto/index'
 import DadosNoticia from '../DadosNoticia/index'
@@ -30,18 +30,12 @@ export default function EditorDeNoticia(props){
   const [tags, setTags] = useState(initialTags);
 
   const [text, setText] = useState(initialText);
-  const [invalidatedText, setInvalidatedText] = useState(false);
 
   const [imgBase64, setImgBase64] = useState("");
   const [invalidatedImgBase64, setInvalidatedImgBase64] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(true);
-
-  /* Verifica se o texto é válido ou inválido */
-  useEffect(() => {   
-    setInvalidatedText(text.length === 0);  
-  }, [text]);
 
   function resetFields(){
     setTitle("");
@@ -58,15 +52,9 @@ export default function EditorDeNoticia(props){
       isValid = false;
     }
     if(!checkMinCharacters(title, setTitle, (_) => {}, setInvalidatedTitle)){
-      setInvalidatedTitle(true);
       isValid =  false;
     }
     if(!checkMinCharacters(subtitle, setSubtitle, (_) => {}, setInvalidatedSubtitle)){
-      setInvalidatedSubtitle(true);
-      isValid = false;
-    }
-    if(!checkMinCharacters(text, setText, (_) => {}, setInvalidatedText)){
-      setInvalidatedText(true);
       isValid = false;
     }
 
