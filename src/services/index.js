@@ -133,6 +133,10 @@ export async function getAlbum(){
   return await api.get('/album');
 }
 
+export async function getAlbumHome(){
+  return await api.get('/album/home');
+}
+
 export async function updateAlbum(id, album){
   return await api.put('/album/' + id, album);
 }
