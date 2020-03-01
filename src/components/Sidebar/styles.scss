@@ -70,57 +70,6 @@
         padding-right: 5px;
         font-size: 1.9em !important;
     }
-    &__iconAdmin {
-        color: #30333C;
-        padding-right: 5px;
-        font-size: 1.9em !important;
-    }
-    &__admin {
-        color: #30333C;
-        margin: 0px!important;
-        display: flex;
-        width: 100%;
-        outline: 0;
-        padding: 5px 5px;
-        text-align: left;
-        background-color: #ffffff;
-        border: 0;
-        font-weight: 700!important;
-        align-items: center;
-        font-size: 1rem;
-        text-decoration: none;
-    }
-    &__admin:hover {
-        color: #30333C;
-        outline: 0;
-        background-color: #E8EAED;
-        text-decoration: none;
-    }
-    &__activeAdmin {
-        color: #Bc2018!important;
-        font-weight: 700!important;
-        margin: 0px!important;
-        padding: 5px 5px;
-        text-align: left;
-        align-items: center;
-        font-size: 1rem;
-        text-decoration: none;
-        display: flex;
-        width: 100%;
-        outline: 0;
-        border: 0;
-    }
-    &__activeAdmin:hover {
-        text-decoration: none;
-        color: #Bc2018!important;
-        background-color: #E8EAED;
-        outline: 0;
-    }
-    &__activeIconAdmin {
-        color: #Bc2018!important;
-        padding-right: 5px;
-        font-size: 1.9em !important;
-    }
 }
 
 @media (min-width: 960px) {

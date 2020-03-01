@@ -1,0 +1,15 @@
+.exportarDados {
+    &__descricao {
+        margin-bottom: 20px;
+        display: block;
+    }
+    &__button {
+        text-transform: none!important;
+        display: block;
+    }
+    &__divButton {
+        display: block;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}

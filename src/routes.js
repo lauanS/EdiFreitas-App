@@ -26,6 +26,7 @@ import ConsultarNoticias from "./pages/private/ConsultarNoticias/index";
 import AdicionarFotos from "./pages/private/AdicionarFotos/index";
 import ConsultarGaleria from "./pages/private/ConsultarGaleria/index";
 import CadastrarAdministrador from "./pages/private/CadastrarAdministrador";
+import ExportarDados from "./pages/private/ExportarDados";
 
 const Routes = () => (
   <BrowserRouter key={"browserRouter"}>
@@ -54,6 +55,7 @@ const Routes = () => (
       <PrivateRoute key={"pri10"} exact path="/cadastrarAlbum" component={AdicionarFotos} />
       <PrivateRoute key={"pri11"} exact path="/consultarGaleria" component={ConsultarGaleria} />
       <PrivateRoute key={"pri12"} exact path="/cadastrarLogin" component={CadastrarAdministrador} />
+      <PrivateRoute key={"pri13"} exact path="/exportarDados" component={ExportarDados} />
 
       <Route key={"RDefault"} path="*" component={() => <h1>Page not found</h1>} />
     </Switch>
