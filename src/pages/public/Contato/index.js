@@ -3,33 +3,24 @@ import MyNavbar from '../../../components/Navbar/index';
 import Footer from '../../../components/Footer/index';
 import ContatoEmail from '../../../components/ContatoEmail/index'
 import ContatoOng from '../../../components/ContatoOng/index'
-import './styles.css';
+import './styles.scss';
+import {Col} from 'react-bootstrap';
 
-export default class Contato extends React.Component{
-  render(){
-    return (
-      <div>
-        <div className="nav">
-          <MyNavbar initActive={5}/>
-        </div>
-        <br />
-        <br />
+export default function Contato(){
 
+  return (
+    <div className="faleConosco">
+      <MyNavbar initActive={5}/>
+      <main className="faleConosco__main">
+        <Col xs={12} sm={12} md={4} className="faleConosco__colInfo">
+          <ContatoOng/>
+        </Col>
+        <Col xs={12} sm={12} md={8} className="faleConosco__colEmail">
+          <ContatoEmail/>
+        </Col>
+      </main>
+      <Footer />
+    </div>
+  );
 
-        <div className="row">
-          <div className="col-12 col-sm-4">
-            <ContatoOng/>
-          </div>
-          <div className="col-12 col-sm-8">
-            <ContatoEmail/>
-          </div>
-        </div>  
-
-
-        <div className="footer">
-          <Footer />
-        </div>
-      </div>
-    );
-  }
 }
