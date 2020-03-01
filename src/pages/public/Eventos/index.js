@@ -37,7 +37,7 @@ export default function Eventos(){
             proximoEventos.push(e);
           }
           else{
-            anteriorEventos.push(e);
+            anteriorEventos.unshift(e);
           }
         }
         
@@ -59,27 +59,28 @@ export default function Eventos(){
     <div className="eventos">
       <MyNavbar initActive={1}/>
       <main className="eventos__main">
-        <section className="eventos__content">
         {isLoading && !errors && 
-        <>
+        <div>
           <Loader type="dots" /> 
           <p className="eventos__load">Carregando os eventos</p>
-        </>
+        </div>
         }
+
         {!isLoading && errors && <p className="eventos__error">Desculpe, houve algum problema</p>}
         
         {!isLoading && !errors && proximosEventos && anterioresEventos && proximosEventos.length === 0 && anterioresEventos.length === 0 &&
           <p className="eventos__notFound">Nenhum evento encontrado no momento</p>}
 
         {!isLoading && !errors && proximosEventos && anterioresEventos && (proximosEventos.length > 0 || anterioresEventos.length > 0) &&
+        <section className="eventos__content">
         <div className="eventos__header">
           <h4>Próximos eventos</h4>
-        </div>}
+        </div>
 
         {!isLoading && !errors && proximosEventos && proximosEventos.length === 0 && anterioresEventos.length > 0 &&
           <p className="eventos__error">Sem próximos eventos no momento</p>}
 
-        {!isLoading && !errors && proximosEventos && proximosEventos.length > 0 && 
+        {!isLoading && !errors && proximosEventos && proximosEventos.length > 0 &&
         <div className="eventos__row">{proximosEventos.map((evento, index) => 
           <Col xs={12} md={6} className="eventos__col" key={index}>
             <Link className="eventos__link" to={`/eventos/${evento.id}`}>
@@ -92,6 +93,8 @@ export default function Eventos(){
                 <span className="eventos__albumTitle">{evento.nome}</span>
 
                 <span className="eventos__albumText">{evento.local}</span>
+
+                <span className="eventos__albumText">{evento.descricao}</span>
               </div>
             </Link>
           </Col>
@@ -123,7 +126,7 @@ export default function Eventos(){
             </Link>
           </Col>
         )}</div> }
-        </section>
+        </section>}
       </main>
       <Footer />
     </div>

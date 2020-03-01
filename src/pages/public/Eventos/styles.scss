@@ -33,10 +33,20 @@
     &__content {
         background-color: #F8F9FA;
         min-width: 290px;
-        max-width: 800px;
+        max-width: 900px;
         width: 90%;
         height: 100%;
         padding: 16px 8px 0px 8px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    &__contentEvent {
+        background-color: #F8F9FA;
+        width: 90%;
+        max-width: 700px;
+        height: 100%;
+        padding: 0px 0px 0px 0px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -67,14 +77,15 @@
         justify-content: center;
     }
     &__col {
-        margin: 0px 0px 16px 0px!important;
-        padding: 0px 8px 0px 8px!important;
+        margin: 0px 0px 20px 0px!important;
+        padding: 0px 10px 0px 10px!important;
     }
     &__link {
         display: block;
         width: 100%;
         flex-direction: column;
         color: #485460;
+        box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.35);
         img {
             transition: all 0.5s ease;
         }
@@ -94,6 +105,7 @@
         position: relative;
     }
     &__divImgEvento {
+        cursor: pointer;
         padding: 0;
         overflow: hidden;
         width: 100%;
@@ -113,8 +125,12 @@
     &__divInfo {
         border-bottom-left-radius: 4px;
         border-bottom-right-radius: 4px;
-        border: 1px solid #C6CDD4;
         padding: 5px 8px;
+    }
+    &__divInfoEvento {
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        padding: 10px 15px;
     }
     &__albumTitle {
         font-size: 1.3rem;
@@ -135,6 +151,15 @@
         overflow-x: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+    }
+    &__albumTextEvento {
+        font-size: 1rem;
+        margin: 0;
+        color: #485460;
+        width: 100%;
+        font-weight: normal;
+        display: block;
+        line-height: 1.3333;
     }
     &__albumData {
         color: #30333C;

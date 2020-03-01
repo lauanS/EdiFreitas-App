@@ -3,17 +3,17 @@ import '../styles.scss';
 
 import MyNavbar from '../../../../components/Navbar/index';
 import { Redirect, useParams } from "react-router-dom";
-import {Col} from 'react-bootstrap';
 import Loader from '../../../../components/Loader';
 import Photo from '../../../../components/PhotoLightbox';
 import Footer from '../../../../components/Footer';
 
 import {findByIdEvento} from '../../../../services';
+import {dateFullFormat} from '../../../../assist';
 
 export default function Photos() {
   const { id } = useParams();
 
-  const [evento, setEvento] = useState([]);
+  const [evento, setEvento] = useState(null);
   const [errors, setErros] = useState(false);
   const [notFound, setNotFound] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -23,22 +23,22 @@ export default function Photos() {
     async function load(){
       setIsLoading(true);
       try{
-        const response = await findByIdEvento();
+        const response = await findByIdEvento(id);
 
-        setEvento(response.data);
         if(response.data){
+          setEvento(response.data);
           setErros(false);
           setIsLoading(false);
           setNotFound(false);
         }
         else{
+          setEvento(null);
           setErros(true);
           setIsLoading(false);
           setNotFound(true);
         }
       } catch(res) {
-        setPhoto([]);
-        setEvento([]);
+        setEvento(null);
         setNotFound(false);
         setErros(true);
         setIsLoading(false);
@@ -58,24 +58,31 @@ export default function Photos() {
     <div className="eventos">
       <MyNavbar initActive={1}/>
       <main className="eventos__main">
-        <section className="eventos__content">
-          {isLoading && !errors && 
-          <>
-            <Loader type="dots" /> 
-            <p className="eventos__load">Carregando o evento</p>
-          </>
-          }
-          {!isLoading && errors && <p className="eventos__error">Desculpe, houve algum problema</p>}
+        {isLoading && !errors && 
+        <div>
+          <Loader type="dots" /> 
+          <p className="eventos__load">Carregando o evento</p>
+        </div>
+        }
+        {!isLoading && errors && <p className="eventos__error">Desculpe, houve algum problema</p>}
 
-          {!isLoading && !errors && evento && evento.length > 0 && 
-            <Photo images={evento.capa} index={0} isOpen={openModal} setOpen={setOpenModal}/>
-          }
+        {!isLoading && !errors && evento &&
+        <section className="eventos__contentEvent">          
+          <Photo images={[{url: evento.capa}]} index={0} isOpen={openModal} setOpen={setOpenModal}/>
 
-          {!isLoading && !errors && evento && evento.length > 0 && 
-          <div className="eventos__divImgEvento">
+          <div className="eventos__divImgEvento" onClick={handleImage}>
             <img className="eventos__img" src={evento.capa} alt="foto de capa do evento"/>
-          </div>}
-        </section>
+          </div>
+          <div className="eventos__divInfoEvento">
+            <span className="eventos__albumData">{dateFullFormat(evento.dataEvento)}</span>
+
+            <span className="eventos__albumTitle">{evento.nome}</span>
+
+            <span className="eventos__albumTextEvento" style={{marginBottom: '5px'}}>Local: {evento.local}</span>
+            
+            <span className="eventos__albumTextEvento">{evento.descricao}</span>
+          </div>
+        </section>}
       </main>
       <Footer />
     </div>}
