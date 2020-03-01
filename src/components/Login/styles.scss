@@ -51,8 +51,22 @@
 }
 
 .form-control:focus {
-    border-width: 2px!important;
-    border-style: solid!important;
+    border-width: 2px;
+    border-style: solid;
     border-color: #1a73e8!important;
     box-shadow: 0 0 0 0!important;
+}
+
+.form-control {
+    border-radius: 4px;
+    color: #202124;
+    font-size: 16px;
+}
+
+.form-control.is-valid {
+    border-color: #28a745!important;
+}
+
+.form-control.is-invalid {
+    border-color: #dc3545!important;
 }
