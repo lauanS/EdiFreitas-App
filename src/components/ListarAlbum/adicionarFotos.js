@@ -4,9 +4,9 @@ import './styles.scss';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import Snackbar from '../Snackbars';
 import CampoImagem from '../CampoImagem';
-import CropFotos from '../CropFotos';
+//import CropFotos from '../CropFotos';
 import {Form, Row, Col, Button} from 'react-bootstrap';
-import CropIcon from '@material-ui/icons/Crop';
+//import CropIcon from '@material-ui/icons/Crop';
 import CloseIcon from '@material-ui/icons/Close';
 
 import {postImagem} from '../../services'
@@ -19,9 +19,9 @@ export default function AdicionarFotos(props){
 
   const [imgBase64, setImgBase64] = useState([]);
   const [imgOriginal, setImgOriginal] = useState([]);
-  const [src, setSrc] = useState(null);
-  const [openCrop, setOpenCrop] = useState(false);
-  const [index, setIndex] = useState(null);
+  //const [src, setSrc] = useState(null);
+  //const [openCrop, setOpenCrop] = useState(false);
+  //const [index, setIndex] = useState(null);
   const [invalidatedFotos, setInvalidatedFotos] = useState(false);
 
   const [multiple, setMultiple] = useState(false);
@@ -54,19 +54,19 @@ export default function AdicionarFotos(props){
     });
   }
 
-  const handleImg = (base64, index) => {
+  /*const handleImg = (base64, index) => {
     let newBase64 = imgBase64.slice();
     newBase64[index] = base64;
     setImgBase64(newBase64);
-  }
+  }*/
 
-  const handleEditar = (e, indice) => {
+  /*const handleEditar = (e, indice) => {
     e.preventDefault();
     e.stopPropagation();
     setIndex(indice);
     setSrc(imgOriginal[indice]);
     setOpenCrop(true);
-  }
+  }*/
 
   const handleExcluir = (e, indice) => {
     e.preventDefault();
@@ -82,17 +82,17 @@ export default function AdicionarFotos(props){
     setImgOriginal(originalArray);
   }
 
-  const handleClose = () => {
+  /*const handleClose = () => {
     setSrc(null);
     setOpenCrop(false);
-  }
+  }*/
 
   const resetFields = () => {
     setImgBase64([]);
     setImgOriginal([]);
-    setSrc(null);
-    setOpenCrop(false);
-    setIndex(null);
+    //setSrc(null);
+    //setOpenCrop(false);
+    //setIndex(null);
     setInvalidatedFotos(false);
     setSubmit(false);
   }
@@ -164,7 +164,7 @@ export default function AdicionarFotos(props){
             text={"Adicionar fotos"}
             multiple={true}
           />
-          <CropFotos
+          {/*<CropFotos
             cropping={{unit: 'px', aspect: null, width: 200, height: 200, x: 0, y: 0}}
             open={openCrop}
             closed={handleClose}
@@ -177,7 +177,7 @@ export default function AdicionarFotos(props){
             maxWidthImg={500}
             textButton={"Concluir edição da foto"}
             index={index}
-          />
+          />*/}
           {invalidatedFotos && <div className="adicionarFotos__error">Campo obrigatório, selecione pelo menos uma foto para o álbum</div>}
         </Col>
       </Form.Group>
@@ -187,7 +187,7 @@ export default function AdicionarFotos(props){
         {imgBase64.length > 0 ? imgBase64.map((img, index) => 
           <div className="visualizarAlbum__itemListImage" key={index}>
             <div className="visualizarAlbum__headerImg">
-              <div className="visualizarAlbum__link" onClick={(e) => {handleEditar(e, index)}}><CropIcon/><span>Cortar foto</span></div>
+              {/*<div className="visualizarAlbum__link" onClick={(e) => {handleEditar(e, index)}}><CropIcon/><span>Cortar foto</span></div>*/}
               <div className="visualizarAlbum__link" onClick={(e) => {handleExcluir(e, index)}}><CloseIcon/><span>Retirar foto</span></div>
             </div>
                         
@@ -214,7 +214,7 @@ export default function AdicionarFotos(props){
       </div>
     </Form.Group>
 
-    <Button className="CadastroCrianca__buttonSubmit" variant="success" onClick={handleSubmit}>Adicionar fotos</Button>
+    <Button className="CadastroCrianca__buttonSubmit" variant="success" onClick={handleSubmit}>Salvar</Button>
     </Form>
   </>
   );
