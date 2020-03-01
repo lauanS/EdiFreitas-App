@@ -19,7 +19,7 @@ import EventIcon from '@material-ui/icons/Event';
 import PeopleIcon from '@material-ui/icons/People';
 import NewsIcon from '@material-ui/icons/ImportContacts';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 import {logout} from '../../services/auth';
 
@@ -64,7 +64,8 @@ function ResponsiveDrawer(props) {
                   '/consultarNoticias',
                   '/cadastrarAlbum',
                   '/consultarGaleria',
-                  '/cadastrarLogin'
+                  '/cadastrarLogin',
+                  '/exportarDados'
                 ];
 
   const drawer = (
@@ -120,8 +121,16 @@ function ResponsiveDrawer(props) {
 
       <Divider className="sidebar__divider" key={"d5"}/>
 
-      <Link key="cadastrarAdmin" to={arrayLink[10]} className={10 === ativo ? "sidebar__activeAdmin" : "sidebar__admin"}><PersonAddIcon className={10 === ativo ? "sidebar__activeIconAdmin" : "sidebar__iconAdmin"}/>Cadastrar login</Link>
- 
+      <List key={"list5"}>
+        <div className="sidebar__sectionDiv">
+          <SettingsIcon className="sidebar__icons"/> 
+          <h6 className="sidebar__sectionTitulo">Administrar</h6>
+        </div>
+        {['Cadastrar login', 'Exportar dados'].map((text, index) => (
+          <Link key={text} to={arrayLink[index+10]} className={index+10 === ativo ? "sidebar__activeItem" : "sidebar__item"}>{text}</Link>
+        ))}
+      </List>
+
       <Divider className="sidebar__divider" key={"d6"}/>
 
       <button onClick={handleExit} className="sidebar__exit"><ExitToAppIcon className="sidebar__iconExit"/>Sair</button>

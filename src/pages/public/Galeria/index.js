@@ -35,12 +35,11 @@ export default function Galeria() {
     <div className="galeria">
       <MyNavbar initActive={3}/>
       <main className="galeria__main">
-        <section className="galeria__content">
         {isLoading && !errors && 
-        <>
+        <div>
           <Loader type="dots" /> 
           <p className="galeria__load">Carregando os álbuns de fotos</p>
-        </>
+        </div>
         }
         {!isLoading && errors && <p className="galeria__error">Desculpe, houve algum problema</p>}
 
@@ -48,11 +47,11 @@ export default function Galeria() {
           <p className="galeria__notFound">Nenhum álbum de fotos encontrado no momento</p>}
 
         {!isLoading && !errors && albuns && albuns.length > 0 && 
+        <section className="galeria__content">
         <div className="galeria__header">
           <h4>Galeria de fotos da ONG Edi Freitas</h4>
-        </div>}
+        </div>
 
-        {!isLoading && !errors && albuns && albuns.length > 0 && 
         <div className="galeria__row">{albuns.map((album, index) => 
           <Col xs={6} md={4} className="galeria__col" key={index}>
             <Link className="galeria__link" to={`/galeria/${album.id}`}>
@@ -70,8 +69,8 @@ export default function Galeria() {
               </div>
             </Link>
           </Col>
-        )}</div> }
-        </section>
+        )}</div> 
+        </section>}
       </main>
       
       <Footer />

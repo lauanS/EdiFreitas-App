@@ -1,0 +1,30 @@
+.faleConosco {
+    width: 100%;
+    height: 100%;
+    background-color: #E8EAED;
+    &__main {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 80px 20px 15px 20px;
+    }
+    @media (max-width: 800px) {
+        &__main {
+            min-height: calc(100vh - 90px);
+        }
+    }
+    @media (min-width: 801px) {
+        &__main {
+            min-height: calc(100vh - 62px);
+        }
+    }
+    &__colInfo {
+        background-color: #30333C;
+        padding: 0px!important;
+    }
+    &__colEmail {
+        background-color: #F8F9FA;
+        padding-bottom: 15px;
+    }
+}
