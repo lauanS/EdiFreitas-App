@@ -61,7 +61,7 @@ export default function Feed(props){
     {(isLoading || loadError || news.length === 0) ? 
       renderFeedback()
     :
-    <div className="Noticia-feed">
+    <div className="NoticiaFeed">
     {news.map((obj, key) => (
       <Post key={key} news={obj} action={loadView}/>
     ))}
