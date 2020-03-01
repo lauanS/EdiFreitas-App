@@ -73,12 +73,12 @@ export default function EditorDeEventos(props){
   }
 
   function checkFields(){
+    let isValid = true;
+
     if(!imgBase64 && !initialImg){
       setInvalidatedImgBase64(true);
-      return false;
+      isValid =  false;
     }
-
-    let isValid = true;
     if(validatedNomeEvento === false){
       setInvalidatedNomeEvento(true);
       isValid = false;
