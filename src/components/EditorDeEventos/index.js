@@ -118,7 +118,6 @@ export default function EditorDeEventos(props){
       try {
         let urlImg;
         if(isUpdate){
-          console.log("initialImg.", initialImg)
           // 1. Verifico se vou usar a initialImg com a url da imagem
           // 2. Se for a initial img, ja monto o obj e nao chamo o putImagem
           // 3. Se nao, chamo o putImagem com a nova imagem
@@ -134,7 +133,6 @@ export default function EditorDeEventos(props){
             }
 
             const responseImg = await putImagemUrl(img);
-            console.log(responseImg.data);
             urlImg = responseImg.data;      
           }
         }

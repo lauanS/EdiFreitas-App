@@ -37,10 +37,8 @@ export default function ConsultarEventos({selectEvent, action}){
   let filteredEvents = [];
 
   async function loadEvents(){
-    setIsLoading(true);
     const response = await getEventos();
     setEvents(response.data);
-    setIsLoading(false);
     return;
   }
 
@@ -68,7 +66,7 @@ export default function ConsultarEventos({selectEvent, action}){
   async function handleConfirm(){
     setShowAlert(false);
     await deleteEvent(selectedEvent.id);    
-    loadEvents();
+    await loadEvents();
   }
 
   function handleCancel(){

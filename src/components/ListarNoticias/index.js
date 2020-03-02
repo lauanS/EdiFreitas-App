@@ -37,10 +37,8 @@ export default function ConsultarNoticias(){
   const [isLoading, setIsLoading] = useState(true);
 
   async function loadNews(){
-    setIsLoading(true);
     const response = await getNoticias();
     setNews(response.data);
-    setIsLoading(false);
     return;
   }
 
@@ -70,7 +68,7 @@ export default function ConsultarNoticias(){
   async function handleConfirm(){
     setShowAlert(false);
     await deleteNews(selectedNews.id);    
-    loadNews();
+    await loadNews();
   }
 
   function handleCancel(){
