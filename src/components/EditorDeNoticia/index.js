@@ -204,6 +204,7 @@ export default function EditorDeNoticia(props){
                 setInvalidatedImgBase64={setInvalidatedImgBase64}
                 imgWidth={500}
                 imgHeight={500}
+                required={true}
                 initialImg={initialImg}
               />
             </div>
