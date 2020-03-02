@@ -28,6 +28,7 @@ export default function UploadPhoto(props) {
       });
       reader.readAsDataURL(e.target.files[0]);
       setOpenCrop(true);
+      setInvalidatedImgBase64(false);
       e.target.value = '';
     }
   }

@@ -5,9 +5,10 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import Snackbar from '../Snackbars';
 import CampoImagem from '../CampoImagem';
 //import CropFotos from '../CropFotos';
-import {Form, Row, Col, Button} from 'react-bootstrap';
+import {Form, Row, Col} from 'react-bootstrap';
 //import CropIcon from '@material-ui/icons/Crop';
 import CloseIcon from '@material-ui/icons/Close';
+import ButtonSave from '../ButtonSave';
 
 import {postImagem} from '../../services'
 
@@ -140,6 +141,7 @@ export default function AdicionarFotos(props){
         setOpenAlertError(true);
       }
     }
+    setSubmit(false);
   }
 
 
@@ -214,7 +216,10 @@ export default function AdicionarFotos(props){
       </div>
     </Form.Group>
 
-    <Button className="CadastroCrianca__buttonSubmit" variant="success" onClick={handleSubmit}>Salvar</Button>
+    <ButtonSave 
+        isLoading={submit}
+      >Salvar
+      </ButtonSave>
     </Form>
   </>
   );

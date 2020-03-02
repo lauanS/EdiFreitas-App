@@ -4,7 +4,8 @@ import './styles.scss';
 import { Link } from 'react-router-dom';
 import Loader from '../Loader';
 
-import {getCarousel} from '../../services';
+import axios from "axios";
+import {getEventosHome, getNoticiasHome, getPublicAlbum} from '../../services';
 
 export default function MyCarousel(){
   const [src, setSrc] = useState([]);
@@ -13,51 +14,47 @@ export default function MyCarousel(){
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    async function load(){
-      try{
-        setIsLoading(true);
-        let response = await getCarousel();
-        let arraySrc = [], obj;
-        if(response.data.evento){
-          obj = {
-            url: `/eventos/${response.data.evento.id}`,
-            title: 'Evento ' + response.data.evento.nome,
-            photo: response.data.evento.capa
+    function load(){
+      setIsLoading(true);
+      axios.all([
+        getEventosHome(),
+        getNoticiasHome(),
+        getPublicAlbum()
+        ]).then(axios.spread((eventos, noticias, albuns) => {
+          let arraySrc = [], obj;
+          if(eventos.data && eventos.data.length > 0){
+            obj = {
+              id: eventos.data[0].id,
+              title: 'Evento ' + eventos.data[0].nome,
+              photo: eventos.data[0].capa
+            }
+            arraySrc.push(obj)
           }
-          arraySrc.push(obj)
-        }
-        if(response.data.noticia){
-          obj = {
-            url: `/noticias/view/${response.data.noticia.id}`,
-            title: 'Notícia ' + response.data.noticia.titulo,
-            photo: response.data.noticia.foto
+          if(noticias.data && noticias.data.length > 0){
+            obj = {
+              id: noticias.data[0].id,
+              title: 'Notícia ' + noticias.data[0].titulo,
+              photo: noticias.data[0].foto
+            }
+            arraySrc.push(obj)
           }
-          arraySrc.push(obj)
-        }
-        if(response.data.album){
-          obj = {
-            url: `/galeria/${response.data.album.id}`,
-            title: 'Álbum ' + response.data.album.nome,
-            photo: response.data.album.capa.url
+          if(albuns.data && albuns.data.length > 0){
+            obj = {
+              id: albuns.data[0].id,
+              title: 'Álbum ' + albuns.data[0].nome,
+              photo: albuns.data[0].capa.url
+            }
+            arraySrc.push(obj)
           }
-          arraySrc.push(obj)
-        }
-        if(arraySrc.length > 0){
           setSrc(arraySrc);
           setErrors(false);
           setIsLoading(false);
-        }
-        else{
+        }))
+        .catch(() => {
           setSrc([]);
           setErrors(true);
           setIsLoading(false);
-        }
-      }
-      catch(res) {
-        setSrc([]);
-        setErrors(true);
-        setIsLoading(false);
-      };
+        });
     }
     load();
   }, [])

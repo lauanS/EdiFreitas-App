@@ -70,6 +70,11 @@ export default function EditorDeEventos(props){
     setLocalEvento("");
     setValidatedLocalEvento(false);
     setInvalidatedLocalEvento(false);
+
+    setImgBase64("");
+    setInvalidatedImgBase64(false);
+
+    setIsLoading(false);
   }
 
   function checkFields(){
@@ -78,6 +83,9 @@ export default function EditorDeEventos(props){
     if(!imgBase64 && !initialImg){
       setInvalidatedImgBase64(true);
       isValid =  false;
+    }
+    if(imgBase64 && initialImg){
+      setInvalidatedImgBase64(false);
     }
     if(validatedNomeEvento === false){
       setInvalidatedNomeEvento(true);
@@ -217,11 +225,9 @@ export default function EditorDeEventos(props){
               imgWidth={500}
               imgHeight={500}
               initialImg={initialImg}
+              required={true}
             />
           </div>
-          <Form.Control.Feedback type="invalid">
-            Campo obrigatório, adicione a capa do evento.
-          </Form.Control.Feedback>
         </Col>
       </Form.Group>
 
