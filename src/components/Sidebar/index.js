@@ -36,6 +36,9 @@ const useStyles = makeStyles(theme => ({
   content: {
     flexGrow: 1,
     padding: '26px 50px',
+    ['@media (max-width:600px)']: { // eslint-disable-line no-useless-computed-key
+      padding: '26px 15px',
+    }
   },
 }));
 
