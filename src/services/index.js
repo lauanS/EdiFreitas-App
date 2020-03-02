@@ -167,6 +167,10 @@ export async function getPublicAlbum(){
   return await api.get('/public/album');
 }
 
+export async function getCarousel(){
+  return await api.get('/carousel');
+}
+
 // ============= Disparo de email ================
 export async function sendEmailService(email){
   return await apiPublic.post('/email', email);

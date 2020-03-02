@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import './styles.scss';
 
-import axios from "axios";
-import {getEventosHome, getNoticiasHome, getPublicAlbum} from '../../services';
+import { Link } from 'react-router-dom';
+import Loader from '../Loader';
+
+import {getCarousel} from '../../services';
 
 export default function MyCarousel(){
   const [src, setSrc] = useState([]);
@@ -11,63 +13,73 @@ export default function MyCarousel(){
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    function load(){
-      setIsLoading(true);
-      axios.all([
-        getEventosHome(),
-        getNoticiasHome(),
-        getPublicAlbum()
-        ]).then(axios.spread((eventos, noticias, albuns) => {
-          let arraySrc = [], obj;
-          if(eventos.data && eventos.data.length > 0){
-            obj = {
-              id: eventos.data[0].id,
-              title: 'Evento ' + eventos.data[0].nome,
-              photo: eventos.data[0].capa
-            }
-            arraySrc.push(obj)
+    async function load(){
+      try{
+        setIsLoading(true);
+        let response = await getCarousel();
+        let arraySrc = [], obj;
+        if(response.data.evento){
+          obj = {
+            url: `/eventos/${response.data.evento.id}`,
+            title: 'Evento ' + response.data.evento.nome,
+            photo: response.data.evento.capa
           }
-          if(noticias.data && noticias.data.length > 0){
-            obj = {
-              id: noticias.data[0].id,
-              title: 'Notícia ' + noticias.data[0].titulo,
-              photo: noticias.data[0].foto
-            }
-            arraySrc.push(obj)
+          arraySrc.push(obj)
+        }
+        if(response.data.noticia){
+          obj = {
+            url: `/noticias/view/${response.data.noticia.id}`,
+            title: 'Notícia ' + response.data.noticia.titulo,
+            photo: response.data.noticia.foto
           }
-          if(albuns.data && albuns.data.length > 0){
-            obj = {
-              id: albuns.data[0].id,
-              title: 'Álbum ' + albuns.data[0].nome,
-              photo: albuns.data[0].capa.url
-            }
-            arraySrc.push(obj)
+          arraySrc.push(obj)
+        }
+        if(response.data.album){
+          obj = {
+            url: `/galeria/${response.data.album.id}`,
+            title: 'Álbum ' + response.data.album.nome,
+            photo: response.data.album.capa.url
           }
+          arraySrc.push(obj)
+        }
+        if(arraySrc.length > 0){
           setSrc(arraySrc);
           setErrors(false);
           setIsLoading(false);
-        }))
-        .catch(() => {
+        }
+        else{
           setSrc([]);
           setErrors(true);
           setIsLoading(false);
-        });
+        }
+      }
+      catch(res) {
+        setSrc([]);
+        setErrors(true);
+        setIsLoading(false);
+      };
     }
     load();
   }, [])
 
   const handlePrev = () => {
-    setActive((active - 1) % src.length)
+    setActive((active + src.length - 1) % src.length);
   }
 
   const handleNext = () => {
-    setActive((active + 1) % src.length)
+    setActive((active + 1) % src.length);
   }
 
   return (
     <>
-    {isLoading || errors ? '' :
+    {isLoading && 
+      <Loader type="dots" />
+    }
+    {errors && <p style={{textAlign: 'center'}}>Ocorreu um erro ao carregar</p> }
+    
+    {!isLoading && !errors &&
     <div className="carousel__divImg">
+      <Link className="carousel__divImg" to={src[active].url}>
       <div className="carousel__divFundo">
         <div className="carousel__fundo">
           <span className="carousel__span">
@@ -80,15 +92,17 @@ export default function MyCarousel(){
         </div>
         
       </div>
+      
       <img 
         className="carousel__img"
         alt="Crop" 
         src={src[active].photo} 
-      />
+      /></Link>
       <div className="carousel__text"><h5>{src[active].title}</h5></div>
       {src.length > 1 && <p className="carousel__prev" onClick={handlePrev}>&#10094;</p>}
       {src.length > 1 && <p className="carousel__next" onClick={handleNext}>&#10095;</p>}
-    </div>}
+    </div>
+    }
     </>
   );
 }

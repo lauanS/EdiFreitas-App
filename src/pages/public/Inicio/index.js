@@ -17,9 +17,7 @@ export default function Inicio(){
       <main className="Home__main">
         <section className="Home__content">
           <Carousel />
-          
           <div className="Home__contentPadding">
-
             <SectionTitle value={"Últimas notícias"}/>
             <div>
               <LastestNews />
@@ -32,11 +30,9 @@ export default function Inicio(){
             <div>
               <GaleriaHome />
             </div>
-          </div>       
-
+          </div>
         </section>
       </main>
-      
       <Footer />
     </div>
   );
