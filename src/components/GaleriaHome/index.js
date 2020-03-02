@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
-import { Link } from 'react-router-dom';
-import {Col} from 'react-bootstrap';
+import {Row} from 'react-bootstrap';
 import Loader from '../Loader';
-
+import CardAlbum from '../CardAlbum';
 // import { notFind, deleteError, deleteSuccess} from "../../assist/feedback";
 // import { desconverterData, getUrlBase } from "../../assist/";
 
@@ -35,24 +34,13 @@ export default function GaleriaHome(props){
     isLoading?
       <Loader type="dots" />
     :
-    albuns.map((album, key) => (
-      <Col xs={6} md={4} className="galeria__col" key={key}>
-        <Link className="galeria__link" to={`/galeria/${album.id}`}>
-          <div className="galeria__divImg">
-            <img alt="capa do álbum" className="galeria__img" src={album.capa.url}/>
-          </div>
-          
-          <div >
-            <span className="galeria__albumTitle">{album.nome}</span>
-            {album.totalFotos > 1 ?
-              <span className="galeria__albumText">Álbum com {album.totalFotos} fotos</span>
-              :
-              <span className="galeria__albumText">Álbum com 1 foto</span>
-            }
-          </div>
-        </Link>
-      </Col>
-    ))
+    <>
+    <div className="GaleriaHome__row">
+      {albuns.map((album, key) => (
+        <CardAlbum album={album} key={key} />
+      ))}
+    </div>
+    </>
 
   );
 }
