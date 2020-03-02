@@ -31,7 +31,14 @@
   }
 
   p{
-    font-size: 1rem;
+    font-size: 0.9rem;
+  }
+
+  // Ajustando o tamanho da font para telas menores
+  @media screen and (max-width: 600px) {
+    h2{
+      font-size: 1.15rem;     
+    }
   }
 }
 
