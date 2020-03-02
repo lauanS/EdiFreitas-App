@@ -1,12 +1,14 @@
 import React from 'react';
 
-import {Row, Col, Card} from 'react-bootstrap'
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
 
 import './styles.scss';
 
-
 export default function CardHome(props){
-  const { title, description, urlImg, firstFooter, lastFooter } = props;
+  const { title='', description='', footer='', urlImg='' } = props.obj;
 
   function formattedDescription(){
     if(description.length > 130){
@@ -18,35 +20,22 @@ export default function CardHome(props){
 
   return (
     <>
-    <Card>
-      <Card.Header as="h5">
-        {title}
-      </Card.Header>
-
-      <Card.Body className="CardHome-body">    
+    <Card className="CardHome">
+      <CardActionArea>
+        <div className="CardHome-card">
+          <CardMedia
+            className="CardHome-media"
+            image={urlImg}
+            title="Contemplative Reptile"
+          />
+          <CardContent className="CardHome-content">
+            <h2>{title}</h2>
+            <p>{formattedDescription()}</p>
+            <small className="text-muted">{footer}</small>
+          </CardContent>
+        </div>
         
-        <Card.Img           
-          src={urlImg} 
-          className="CardHome-img"
-        />
-        <Col>
-          <Row>
-            <Card.Subtitle className="CardHome-description">
-              {formattedDescription()}
-            </Card.Subtitle>
-          </Row>
-          <Row className="CardHome-row">      
-              {props.children}              
-          </Row>
-        </Col>    
-
-        <footer className="CardHome-footer">
-          <p>{firstFooter}</p>
-          <p>{lastFooter}</p>
-        </footer>
-      </Card.Body>
-
-    
+      </CardActionArea>
     </Card>
     </>
   );
