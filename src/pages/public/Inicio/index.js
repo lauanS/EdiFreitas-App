@@ -16,24 +16,23 @@ export default function Inicio(){
       <MyNavbar initActive={0}/>
       <main className="Home__main">
         <section className="Home__content">
-        <Carousel />
-        
-        <div className="Home__contentPadding">
+          <Carousel />
+          
+          <div className="Home__contentPadding">
 
-          <SectionTitle value={"Últimas notícias"}/>
-          <div>
-            <LastestNews className="Home__divCards" />
-          </div>
-          <SectionTitle value={"Próximos eventos"}/>
-          <div>
-            <LastestEvents className="Home__divCards" />
-          </div>
-          <SectionTitle value={"Últimas fotos"}/>
-          <div>
-            <GaleriaHome className="Home__divCards" />
-          </div>
-        </div>
-        
+            <SectionTitle value={"Últimas notícias"}/>
+            <div>
+              <LastestNews />
+            </div>
+            <SectionTitle value={"Próximos eventos"}/>
+            <div>
+              <LastestEvents />
+            </div>
+            <SectionTitle value={"Últimos álbuns"}/>
+            <div>
+              <GaleriaHome />
+            </div>
+          </div>       
 
         </section>
       </main>
