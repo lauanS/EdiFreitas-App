@@ -44,6 +44,7 @@ export default function ContatoOng(){
   }
 
   const sendEmail = async (event) => {
+    console.log('oi')
     event.preventDefault();
     event.stopPropagation();
 
@@ -67,7 +68,7 @@ export default function ContatoOng(){
       flag = true;
     }
 
-    if(flag === true){
+    if(flag === false){
       var obj = {
         email,
         nome,
