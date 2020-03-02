@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
-import {Row} from 'react-bootstrap';
 import Loader from '../Loader';
 import CardAlbum from '../CardAlbum';
-// import { notFind, deleteError, deleteSuccess} from "../../assist/feedback";
-// import { desconverterData, getUrlBase } from "../../assist/";
 
-import './styles.scss';
 import { getAlbumHome } from '../../services';
 
+import './styles.scss';
+
 export default function GaleriaHome(props){
-  const { data, isLoading, action } = props;
+  const { isLoading } = props;
   const [albuns, setAlbuns] = useState([]);
 
   useEffect(() => {

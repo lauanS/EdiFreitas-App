@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
+
 import LastestContainer from "../LastestContainer";
+
 import { getNoticiasHome } from "../../services";
-// import { notFind, deleteError, deleteSuccess} from "../../assist/feedback";
 import { desconverterDataFormatISO } from "../../assist";
 
 import './styles.scss';

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import './styles.scss';
-
 
 export default function Feed(props){
   const { value } = props;

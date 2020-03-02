@@ -25,7 +25,6 @@ export default function LastestEvents(){
       let newData = [];
       if(responseData){
         responseData.forEach((obj) => {
-          console.log(obj.dataEvento);
           newData.push({
             id: obj.id,
             title: obj.nome,

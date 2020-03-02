@@ -3,9 +3,6 @@ import React from 'react';
 import CardHome from '../CardHome';
 import Loader from '../Loader';
 
-// import { notFind, deleteError, deleteSuccess} from "../../assist/feedback";
-// import { desconverterData, getUrlBase } from "../../assist/";
-
 import './styles.scss';
 
 export default function LastestContainer(props){
