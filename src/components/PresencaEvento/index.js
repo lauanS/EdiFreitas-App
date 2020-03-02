@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
-import {Form, Row, Col, Button as ButtonBootstrap} from 'react-bootstrap';
- import Button from '@material-ui/core/Button';
+import {Form, Row, Col} from 'react-bootstrap';
+import Button from '@material-ui/core/Button';
 
 import { getEventoParticipante } from '../../services';
 import { postEventoParticipante, deleteEventoParticipante } from '../../services';
 
-import CardPerson from "../CardPerson";
+import CardPerson from '../CardPerson';
+import LoadButton from '../LoadButton';
 
-import SeletorDeEventos from './SeletorDeEventos'
-import VisualizarEvento from './VisualizarEvento'
+import SeletorDeEventos from './SeletorDeEventos';
+import VisualizarEvento from './VisualizarEvento';
 
 import './styles.scss';
 
@@ -20,8 +21,9 @@ export default function PresencaEvento(){
   const [selectedEvent, setSelectedEvent] = useState(null);
 
   const [showModal, setShowModal] = useState(false);
+  const [isLoadingButton, setIsLoadingButton] = useState(false);
   
-
+  
   async function loadPeople(){
     if(selectedEvent){
       const response = await getEventoParticipante(selectedEvent.id);
@@ -77,12 +79,14 @@ export default function PresencaEvento(){
   }, [selectedEvent])
 
   async function onClickCardButton(isSelected, person){
+    setIsLoadingButton(true)
     if(isSelected){
       await removePerson(person.id);
     }
     else{
       await addPerson(person.id);
     }
+    setIsLoadingButton(false);
     loadPeople(); 
   }
 
@@ -109,16 +113,18 @@ export default function PresencaEvento(){
             person={data} 
             isChild={true} 
           >
-            <ButtonBootstrap 
+            <LoadButton 
               type="submit" 
               size="small" 
               variant={variant}
+              isLoading={isLoadingButton}
+              className="loadButton"
               onClick={() => {
                 onClickCardButton(data.idEvento, data)
               }}
             >
               {buttonText}
-            </ButtonBootstrap>          
+            </LoadButton>          
           </CardPerson>
         )
       });

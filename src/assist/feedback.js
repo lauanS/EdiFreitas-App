@@ -1,8 +1,9 @@
 export function notFind(type, value){
+  const endMsg = value? ` buscando por: "${value}"` : '';
   if(type.endsWith('a')){
-    return `Nenhuma ${type} encontrada buscando por: "${value}"`;
+    return `Nenhuma ${type} encontrada${endMsg}`;
   }
-  return `Nenhum ${type} encontrada buscando por: "${value}"`;
+  return `Nenhum ${type} encontrado${endMsg}`;
 }
 
 export function deleteError(){

@@ -8,6 +8,7 @@ import CardConsulta from '../CardConsulta';
 import EditorDeEventos from "./EditarEventos";
 import Snackbar from '../Snackbars';
 import OpcoesConsulta from '../OpcoesConsulta'
+import Loader from '../Loader';
 
 import { getEventos, deleteEvento } from '../../services';
 import { desconverterData } from "../../assist/";
@@ -29,14 +30,17 @@ export default function ConsultarEventos({selectEvent, action}){
   const [alertDeleteSucess, setAlertDeleteSucess] = useState(false);
   const [alertDeleteError, setAlertDeleteError] = useState(false);
 
-
   const [selectedEvent, setSelectedEvent ] = useState({id: undefined, nome: ""});
+
+  const [isLoading, setIsLoading] = useState(true);
 
   let filteredEvents = [];
 
   async function loadEvents(){
+    setIsLoading(true);
     const response = await getEventos();
     setEvents(response.data);
+    setIsLoading(false);
     return;
   }
 
@@ -76,24 +80,35 @@ export default function ConsultarEventos({selectEvent, action}){
     setShowAlert(true);
   }
 
-  /* Carregando as notícias */
+  /* Carregando os eventos */
   useEffect(() => {   
-    loadEvents();      
+    async function load(){
+      setIsLoading(true);
+      const response = await getEventos();
+      setEvents(response.data);
+      setIsLoading(false);
+      return;
+    }
+    load();      
   }, []);
 
   /* Mensagens de feedback */
   useEffect(() => {   
     if(!filteredEvents.length && search.length){
-      setFeedback(notFind('notícia', search));
+      setFeedback(notFind('evento', search));
+    }
+    else if (!filteredEvents.length && !isLoading){
+      setFeedback(notFind('evento'));
     }
     else{
       setFeedback("");
     }      
-  }, [filteredEvents, search]);
+  }, [filteredEvents, search, isLoading]);
 
   function renderCards(){
     filteredEvents = events.filter(filterEvents)
-    return filteredEvents.map((event, key) => (
+
+    return (filteredEvents.map((event, key) => (
       <CardConsulta
         key={key}
         title={event.nome}
@@ -114,62 +129,66 @@ export default function ConsultarEventos({selectEvent, action}){
           
         }
       </CardConsulta>
-    ))
+    )));
   }
 
   return (
-    <>
-    <Snackbar open={alertDeleteSucess} setOpen={setAlertDeleteSucess} msg={deleteSuccess("Evento")}type="success"/>
-    <Snackbar open={alertDeleteError} setOpen={setAlertDeleteError} msg={deleteError()} type="error"/>
+    isLoading? 
+      < Loader type="dots" />
+    :
+      <>
+      <Snackbar open={alertDeleteSucess} setOpen={setAlertDeleteSucess} msg={deleteSuccess("Evento")}type="success"/>
+      <Snackbar open={alertDeleteError} setOpen={setAlertDeleteError} msg={deleteError()} type="error"/>
 
-    <Form autoComplete="off">
-      <Form.Group as={Row} controlId="formGroupName">
-        <Form.Label column sm={2} className="listarPessoas__label">
-          Evento
-        </Form.Label>
-        <Col sm={8} className="listarPessoas__inputText">
-          <Form.Control 
-            type="text" 
-            placeholder="Ex: Dia das Crianças" 
-            value={search}
-            onChange={updateSearch}
-          />
-        </Col>
-      </Form.Group>
-    </Form>
+      <Form autoComplete="off">
+        <Form.Group as={Row} controlId="formGroupName">
+          <Form.Label column sm={2} className="listarPessoas__label">
+            Evento
+          </Form.Label>
+          <Col sm={8} className="listarPessoas__inputText">
+            <Form.Control 
+              type="text" 
+              placeholder="Ex: Dia das Crianças" 
+              value={search}
+              onChange={updateSearch}
+            />
+          </Col>
+        </Form.Group>
+      </Form>
 
-    <p>{feedback}</p>
+      <p>{feedback}</p>
+      
+      <CardColumns>
+        {
+          renderCards()  
+        }
+      </CardColumns>
+
+      <SweetAlert 
+        customClass="sweetAlert"
+        title={`Deseja mesmo deletar o evento "${selectedEvent.nome}" ?`} 
+        show={showAlert}
+        type='warning' 
+        onConfirm={handleConfirm}
+        onCancel={handleCancel}
+        btnSize='sm' 
+        confirmBtnText="Deletar"
+        confirmBtnBsStyle="danger"
+        cancelBtnText="Cancelar"
+        cancelBtnBsStyle="secondary"
+        showCancel={true}
+        focusConfirmBtn={false}
+        showCloseButton={true}
+      />
+
+      <EditorDeEventos 
+        obj={selectedEvent}
+        updateList={loadEvents}
+        show={showModal}
+        setShow={setShowModal}
+      />
+      </>
     
-    <CardColumns>
-      {
-        renderCards()  
-      }
-    </CardColumns>
-
-    <SweetAlert 
-      customClass="sweetAlert"
-      title={`Deseja mesmo deletar o evento "${selectedEvent.nome}" ?`} 
-      show={showAlert}
-      type='warning' 
-      onConfirm={handleConfirm}
-      onCancel={handleCancel}
-      btnSize='sm' 
-      confirmBtnText="Deletar"
-      confirmBtnBsStyle="danger"
-      cancelBtnText="Cancelar"
-      cancelBtnBsStyle="secondary"
-      showCancel={true}
-      focusConfirmBtn={false}
-      showCloseButton={true}
-    />
-
-    <EditorDeEventos 
-      obj={selectedEvent}
-      updateList={loadEvents}
-      show={showModal}
-      setShow={setShowModal}
-    />
-    </>
   );
       
 }

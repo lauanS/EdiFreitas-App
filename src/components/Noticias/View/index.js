@@ -1,5 +1,6 @@
 import React from 'react';
 import Interweave  from 'interweave';
+import { desconverterDataFormatISO } from "../../../assist";
 import './styles.scss';
 
 export default function View(props){
@@ -14,7 +15,10 @@ export default function View(props){
       <div className="View-header">
         <h1>{obj.titulo}</h1>
         <h2>{obj.descricao}</h2>
+        <p>{desconverterDataFormatISO(obj.data)}</p>
+        <hr />
       </div>
+     
       <div className="View-text Content">
         <Interweave content={obj.texto.replace(/&quot;/g, '"')} className="Content"/>
       </div>

@@ -5,8 +5,8 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 
 import logo from "../../../assets/ong_logo.jpg";
-import { desconverterData } from "../../../assist";
-import '../styles.scss';
+import { desconverterDataFormatISO } from "../../../assist";
+import './styles.scss';
 
 export default function Post(props){
   const {news, action} = props;
@@ -17,19 +17,19 @@ export default function Post(props){
 
   return (
     <>  
-    <Card className="Noticia-card" onClick={handleClick}>
+    <Card className="NoticiaPost-card" onClick={handleClick}>
       <CardHeader 
         title={news.titulo}  
-        subheader={desconverterData(news.data)}
+        subheader={desconverterDataFormatISO(news.data)}
       />
-      <div className="Noticia-content">
+      <div className="NoticiaPost-content">
         <div>
-          <img src={news.foto? news.foto : logo} alt="some text" className="Noticia-img" />
+          <img src={news.foto? news.foto : logo} alt="some text" className="NoticiaPost-img" />
         </div>  
-        <div className="Noticia-item">
+        <div className="NoticiaPost-item">
           <CardContent>
             <p>{news.descricao}</p>
-            <p className="Noticia-tag">{news.tag}</p>
+            <p className="NoticiaPost-tag">{news.tag}</p>
           </CardContent>
         </div>      
 

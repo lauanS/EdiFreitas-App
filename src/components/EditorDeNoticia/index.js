@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Form, Collapse } from 'react-bootstrap';
 import TextEditor from '../EditorDeTexto/index'
 import DadosNoticia from '../DadosNoticia/index'
@@ -6,8 +6,8 @@ import Snackbar from '../Snackbars';
 import UploadPhoto from '../UploadPhoto';
 import Button from '@material-ui/core/Button';
 import ButtonSave from '../ButtonSave';
-
 import { postNoticia, putNoticia, putImagemUrl, postImagem } from '../../services';
+import { checkMinCharacters } from '../../validated';
 import { saveSuccess, saveError } from "../../assist/feedback";
 import { createFilename } from "../../assist";
 import './styles.scss';
@@ -30,18 +30,12 @@ export default function EditorDeNoticia(props){
   const [tags, setTags] = useState(initialTags);
 
   const [text, setText] = useState(initialText);
-  const [invalidatedText, setInvalidatedText] = useState(false);
 
   const [imgBase64, setImgBase64] = useState("");
   const [invalidatedImgBase64, setInvalidatedImgBase64] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(true);
-
-  /* Verifica se o texto é válido ou inválido */
-  useEffect(() => {   
-    setInvalidatedText(text.length === 0);  
-  }, [text]);
 
   function resetFields(){
     setTitle("");
@@ -51,15 +45,20 @@ export default function EditorDeNoticia(props){
   }
 
   function checkFields(){
+    let isValid = true;
+
     if(!imgBase64 && !initialImg){
       setInvalidatedImgBase64(true);
-      return false;
+      isValid = false;
+    }
+    if(!checkMinCharacters(title, setTitle, (_) => {}, setInvalidatedTitle)){
+      isValid =  false;
+    }
+    if(!checkMinCharacters(subtitle, setSubtitle, (_) => {}, setInvalidatedSubtitle)){
+      isValid = false;
     }
 
-    if(invalidatedTitle || invalidatedSubtitle || invalidatedText){
-      return false;
-    }
-    return true;
+    return isValid;
   }
 
   async function handleSubmit(e){   
@@ -178,8 +177,7 @@ export default function EditorDeNoticia(props){
     return "Preencha todos os campos obrigatórios"
     
   }
-  const handleChildChange = e => {
-    const content = e.target.getContent();
+  const handleChildChange = (content, _) => {
     setText(content);
   }
 

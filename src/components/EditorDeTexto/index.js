@@ -82,7 +82,7 @@ export default function EditorDeTexto(props){
         }
       }}
       value={props.text}
-      onChange={props.handleChange}
+      onEditorChange={props.handleChange}
       />
   );
   

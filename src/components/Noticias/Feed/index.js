@@ -13,9 +13,29 @@ export default function Feed(props){
   const history = useHistory();
   const [news, setNews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
 
   function loadView(obj){
     history.push(`/noticias/view/${obj.id}`);
+  }
+
+  function renderFeedback(){
+    if(loadError){
+      return (
+        <p style={{textAlign: 'center'}}>Houve algum problema</p>
+      );
+    }
+    else if(isLoading){
+      return( <>
+        <Loader type="dots" />
+        <p style={{textAlign: 'center'}}>Carregando as notícias</p>
+      </>);
+    } else if (news.length === 0){
+      return(
+        <p style={{textAlign: 'center'}}>Nenhum resultado encontrado</p>
+      )
+    }
+
   }
 
   /* Carregando as notícias */
@@ -25,7 +45,8 @@ export default function Feed(props){
         const response = await getNoticias();
         setNews(response.data);
       } catch (error) {
-        console.log(`<ERRO>: ${error}`);
+        console.log(error);
+        setLoadError(true);
       }
       setIsLoading(false);
     } 
@@ -37,12 +58,10 @@ export default function Feed(props){
 
   return (
     <>  
-    {isLoading ? 
-    <>
-    <Loader type="dots" />
-    </>
+    {(isLoading || loadError || news.length === 0) ? 
+      renderFeedback()
     :
-    <div className="Noticia-feed">
+    <div className="NoticiaFeed">
     {news.map((obj, key) => (
       <Post key={key} news={obj} action={loadView}/>
     ))}
