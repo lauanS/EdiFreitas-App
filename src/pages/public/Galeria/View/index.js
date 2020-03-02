@@ -6,6 +6,7 @@ import { Redirect, useParams } from "react-router-dom";
 import {Col} from 'react-bootstrap';
 import Loader from '../../../../components/Loader';
 import Photo from '../../../../components/PhotoLightbox';
+import Footer from '../../../../components/Footer';
 
 import {getImagem} from '../../../../services';
 import {desconverterDataFormatISO} from '../../../../assist';
@@ -87,6 +88,7 @@ export default function Photos() {
         )}</div> }
         </section>
       </main>
+      <Footer />
     </div>}
     </>
   );
