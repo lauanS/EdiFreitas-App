@@ -11,7 +11,10 @@ export default class MyNavbar extends React.Component{
     this.state = {
       isActive: Array(6).fill(false),
     };
-    this.state.isActive[this.props.initActive] = true;
+    if(this.props.initActive >= 0){
+      this.state.isActive[this.props.initActive] = true;
+    }
+    
   }
 
   render(){

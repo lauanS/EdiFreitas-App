@@ -12,6 +12,7 @@ import Noticias from "./pages/public/Noticias/index";
 import ViewNews from "./pages/public/Noticias/View/index";
 import ViewPhotos from "./pages/public/Galeria/View/index";
 import ViewEvents from "./pages/public/Eventos/View/index";
+import NotFound from "./pages/public/NotFound/index";
 
 import LoginAdmin from "./pages/private/LoginAdmin/index";
 import Administrar from "./pages/private/Administrar/index";
@@ -57,7 +58,7 @@ const Routes = () => (
       <PrivateRoute key={"pri12"} exact path="/cadastrarLogin" component={CadastrarAdministrador} />
       <PrivateRoute key={"pri13"} exact path="/exportarDados" component={ExportarDados} />
 
-      <Route key={"RDefault"} path="*" component={() => <h1>Page not found</h1>} />
+      <Route key={"RDefault"} path="*" component={NotFound} />
     </Switch>
   </BrowserRouter>
 );
