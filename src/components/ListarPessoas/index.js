@@ -196,7 +196,7 @@ export default class extends React.Component {
               >
                 <option value="0">Todas as pessoas</option>
                 <option value="1">Apenas crianças</option>
-                <option value="2">Apenas responsaveis</option>
+                <option value="2">Apenas responsáveis</option>
               </Form.Control>
             </Form.Group>
           </Col>

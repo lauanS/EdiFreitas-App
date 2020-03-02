@@ -13,7 +13,7 @@ import CampoImagem from '../CampoImagem';
 import CropFotos from '../CropFotos';
 
 import { checkText, checkNumber, checkCamiseta, checkData } from '../../validated';
-import {putCrianca, postImagem} from '../../services';
+import {putCrianca, putImagemUrl} from '../../services';
 import {desconverterData, converterData} from '../../assist';
 
 export default function EditarCrianca(props){
@@ -31,7 +31,7 @@ export default function EditarCrianca(props){
 
   const [dadosResponsavel, setDadosResponsavel] = useState(dados.responsavel);
 
-  const [imgBase64, setImgBase64] = useState("");
+  const [imgBase64, setImgBase64] = useState(dados.foto);
   const [invalidatedImgBase64, setInvalidatedImgBase64] = useState(false);
   const [imgOriginal, setImgOriginal] = useState("");
   const [src, setSrc] = useState(null);
@@ -96,14 +96,21 @@ export default function EditarCrianca(props){
       let dtNascimento = converterData(dataNascimento);
 
       try{
-        let d = new Date();
+        let url = dados.foto;
 
-        const img = {
-          iBase: imgBase64,
-          filename: nomeCompleto + "" + d.getDate() + d.getMonth() + d.getFullYear() + d.getHours() + d.getMinutes() + d.getSeconds() + d.getMilliseconds()
+        if(dados.foto !== imgBase64){
+          let d = new Date();
+
+          const img = {
+            iBase: imgBase64,
+            filename: nomeCompleto + "" + d.getDate() + d.getMonth() + d.getFullYear() + d.getHours() + d.getMinutes() + d.getSeconds() + d.getMilliseconds(),
+            album: null,
+            url: dados.foto
+          }
+
+          const resImg = await putImagemUrl(img);
+          url = resImg.data
         }
-
-        const resImg = await postImagem(img);
 
         const obj = {
           nome: nomeCompleto,
@@ -113,7 +120,7 @@ export default function EditarCrianca(props){
           nCalcado: numCalcado,
           tamRoupa: tamCamiseta, 
           comentario: comentario,
-          foto: resImg.data.url
+          foto: url
         };
       
         await putCrianca(obj, dados.id)
@@ -265,10 +272,10 @@ export default function EditarCrianca(props){
             <div style={{display: 'flex'}}>
               <CampoImagem
                 onSelectFile={onSelectImg}
-                text={imgBase64 ? "Selecionar outra foto" : "Selecionar a foto"}
+                text="Selecionar outra foto"
                 multiple={false}
               />
-              {imgBase64 && (<button className="EditarCrianca__buttonEdit" style={{marginLeft: '10px'}} onClick={handleOpen}>Editar foto</button>)}
+              {imgBase64 && imgOriginal && (<button className="EditarCrianca__buttonEdit" style={{marginLeft: '10px'}} onClick={handleOpen}>Editar foto</button>)}
             </div>
             {invalidatedImgBase64 ? 
             <div className="EditarCrianca__error">Campo obrigatório, selecione uma foto de perfil</div>

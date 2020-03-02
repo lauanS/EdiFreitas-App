@@ -10,6 +10,7 @@ import Endereco from '../Endereco/index';
 import Contato from '../CampoContato/index'
 import CampoImagem from '../CampoImagem';
 import CropFotos from '../CropFotos';
+import ButtonSave from '../ButtonSave';
 
 import { checkText, checkData, checkCpf, checkTextField } from '../../validated';
 import {converterData} from '../../assist';
@@ -65,6 +66,8 @@ export default function CadastroResponsavel(){
   const [telefones, setTelefones] = useState(['']);
   const [emails, setEmails] = useState(['']);
 
+  const [submit, setSubmit] = useState(false);
+
   const resetFields = () => {
     setNomeCompleto("");
     setValidatedNomeCompleto(false);
@@ -109,12 +112,19 @@ export default function CadastroResponsavel(){
 
     setTelefones(['']);
     setEmails(['']);
+
+    setSubmit(false);
   }
 
   const handleSubmit = async e => {
     e.preventDefault();
     e.stopPropagation();
     
+    if(submit === true){
+      return;
+    }
+    setSubmit(true);
+
     let flag = false;
 
     if(validatedNomeCompleto === false){
@@ -212,6 +222,7 @@ export default function CadastroResponsavel(){
         setOpenAlertError(true);
       }
     }
+    setSubmit(false);
   };
 
   const onSelectImg = (e) => {
@@ -410,7 +421,10 @@ export default function CadastroResponsavel(){
       }
       <Button as={Row} variant="link" onClick={addNewEmail} className="CadastroResponsavel__buttonAdd">Novo e-mail</Button>
 
-      <Button className="CadastroResponsavel__buttonSubmit" variant="success" type="submit">Salvar</Button>
+      <ButtonSave 
+        isLoading={submit}
+      >Salvar
+      </ButtonSave>
     </Form>
     </>
   );

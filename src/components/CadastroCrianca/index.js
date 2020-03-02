@@ -2,7 +2,7 @@ import React,  { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.scss';
 
-import {Form, Row, Col, Button} from 'react-bootstrap';
+import {Form, Row, Col} from 'react-bootstrap';
 import CamposPessoa from '../CamposPessoa/index';
 import Comentario from '../CampoComentario/index';
 import ModalBusca from '../ModalBuscaResponsavel';
@@ -10,6 +10,7 @@ import Card from '../CardResponsavel';
 import Snackbar from '../Snackbars';
 import CampoImagem from '../CampoImagem';
 import CropFotos from '../CropFotos';
+import ButtonSave from '../ButtonSave';
 
 import { checkText, checkNumber, checkCamiseta, checkData } from '../../validated';
 import {postCrianca, postImagem} from '../../services'
@@ -49,6 +50,8 @@ export default function CadastroCrianca(){
   const [comentario, setComentario] = useState("");
   const [validatedComentario, setValidatedComentario] = useState(false);
 
+  const [submit, setSubmit] = useState(false);
+
   const resetFields = () => {
     setNomeCompleto("");
     setValidatedNomeCompleto(false);
@@ -77,12 +80,19 @@ export default function CadastroCrianca(){
 
     setComentario("");
     setValidatedComentario(false);
+
+    setSubmit(false);
   }
 
   const handleSubmit = async e => {
     e.preventDefault();
     e.stopPropagation();
     
+    if(submit === true){
+      return;
+    }
+    setSubmit(true);
+
     let flag = false;
 
     if(validatedNomeCompleto === false){
@@ -142,6 +152,7 @@ export default function CadastroCrianca(){
         setOpenAlertError(true);
       }
     }
+    setSubmit(false);
   };
 
   const onSelectImg = (e) => {
@@ -306,7 +317,10 @@ export default function CadastroCrianca(){
 
       <Comentario validatedComentario={validatedComentario} setValidatedComentario={setValidatedComentario} comentario={comentario} setComentario={setComentario}/>
 
-      <Button className="CadastroCrianca__buttonSubmit" variant="success" type="submit">Salvar</Button>
+      <ButtonSave 
+        isLoading={submit}
+      >Salvar
+      </ButtonSave>
     </Form>
     </>
   );

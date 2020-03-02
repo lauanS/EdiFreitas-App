@@ -14,7 +14,7 @@ import CropFotos from '../CropFotos';
 
 import { checkText, checkData, checkCpf, checkTextField } from '../../validated';
 import {desconverterData, converterData} from '../../assist';
-import {putResponsavel, postImagem} from '../../services';
+import {putResponsavel, putImagemUrl} from '../../services';
 
 export default function CadastroResponsavel(props){
   const {erroUpdate, update, updateList, setEdit, dados} = props;
@@ -33,7 +33,7 @@ export default function CadastroResponsavel(props){
   const [validatedCpf, setValidatedCpf] = useState(true);
   const [invalidatedCpf, setInvalidatedCpf] = useState(false);
 
-  const [imgBase64, setImgBase64] = useState("");
+  const [imgBase64, setImgBase64] = useState(dados.foto);
   const [invalidatedImgBase64, setInvalidatedImgBase64] = useState(false);
   const [imgOriginal, setImgOriginal] = useState("");
   const [src, setSrc] = useState(null);
@@ -108,7 +108,6 @@ export default function CadastroResponsavel(props){
   const [openModal, setOpenModal] = useState(true);
 
   const handleSubmit = async () => {
-    console.log(imgBase64)
     let flag = false;
 
     if(validatedNomeCompleto === false){
@@ -169,22 +168,29 @@ export default function CadastroResponsavel(props){
       });
       
       try{
-        let d = new Date();
+        let url = dados.foto;
 
-        const img = {
-          iBase: imgBase64,
-          filename: nomeCompleto + "" + d.getDate() + d.getMonth() + d.getFullYear() + d.getHours() + d.getMinutes() + d.getSeconds() + d.getMilliseconds()
+        if(dados.foto !== imgBase64){
+          let d = new Date();
+
+          const img = {
+            iBase: imgBase64,
+            filename: nomeCompleto + "" + d.getDate() + d.getMonth() + d.getFullYear() + d.getHours() + d.getMinutes() + d.getSeconds() + d.getMilliseconds(),
+            album: null,
+            url: dados.foto
+          }
+
+          const resImg = await putImagemUrl(img);
+          url = resImg.data
         }
-
-        const resImg = await postImagem(img);
-
+        
         const obj = {
           nome: nomeCompleto,
           dataNascimento: dtNascimento,
           sexo: sexoPessoa,
           cpf,
           comentario,
-          foto: resImg.data.url,
+          foto: url,
           endereco: {
             logradouro,
             bairro,
@@ -348,10 +354,10 @@ export default function CadastroResponsavel(props){
               <div style={{display: 'flex'}}>
                 <CampoImagem
                   onSelectFile={onSelectImg}
-                  text={imgBase64 ? "Selecionar outra foto" : "Selecionar a foto"}
+                  text="Selecionar outra foto"
                   multiple={false}
                 />
-                {imgBase64 && (<button className="EditarResponsavel__buttonEdit" style={{marginLeft: '10px'}} onClick={handleOpen}>Editar foto</button>)}
+                {imgBase64 && imgOriginal && (<button className="EditarResponsavel__buttonEdit" style={{marginLeft: '10px'}} onClick={handleOpen}>Editar foto</button>)}
               </div>
               {invalidatedImgBase64 ? 
               <div className="EditarResponsavel__error">Campo obrigatório, selecione uma foto de perfil</div>
