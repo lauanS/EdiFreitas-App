@@ -13,6 +13,7 @@ export default function OpcoesConsulta(props){
     <>
     <Button 
       size="small" 
+      style={{width: "33%"}}
       as={Col} 
       variant="outlined" 
       color="primary"
@@ -23,6 +24,7 @@ export default function OpcoesConsulta(props){
     </Button>
     <Button 
       size="small"
+      style={{width: "33%"}}
       as={Col} 
       variant="outlined" 
       color="primary"
@@ -35,6 +37,7 @@ export default function OpcoesConsulta(props){
     </Button>
     <Button 
       size="small"
+      style={{width: "33%"}}
       as={Col} 
       variant="outlined" 
       color="primary"
