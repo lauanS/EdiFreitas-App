@@ -24,7 +24,7 @@ export default function MyCarousel(){
           let arraySrc = [], obj;
           if(eventos.data && eventos.data.length > 0){
             obj = {
-              id: eventos.data[0].id,
+              url: `/eventos/${eventos.data[0].id}`,
               title: 'Evento ' + eventos.data[0].nome,
               photo: eventos.data[0].capa
             }
@@ -32,7 +32,7 @@ export default function MyCarousel(){
           }
           if(noticias.data && noticias.data.length > 0){
             obj = {
-              id: noticias.data[0].id,
+              url: `/noticias/view/${noticias.data[0].id}`,
               title: 'Notícia ' + noticias.data[0].titulo,
               photo: noticias.data[0].foto
             }
@@ -40,7 +40,7 @@ export default function MyCarousel(){
           }
           if(albuns.data && albuns.data.length > 0){
             obj = {
-              id: albuns.data[0].id,
+              url: `/galeria/${albuns.data[0].id}`,
               title: 'Álbum ' + albuns.data[0].nome,
               photo: albuns.data[0].capa.url
             }
