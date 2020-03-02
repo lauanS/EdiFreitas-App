@@ -7,8 +7,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 
 import './styles.scss';
 
-export default function CardHome({obj}){
-  const { title='', description='', footer='', urlImg='' } = obj;
+export default function CardHome(props){
+  const { title='', description='', footer='', urlImg='' } = props.obj;
 
   function formattedDescription(){
     if(description.length > 130){

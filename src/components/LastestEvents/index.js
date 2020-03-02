@@ -19,11 +19,11 @@ export default function LastestEvents(){
 
       let newData = [];
       if(responseData){
-        responseData.forEach((obj, i) => {
+        responseData.forEach((obj) => {
           newData.push({
             title: obj.nome,
             description: obj.descricao,
-            footer: desconverterDataFormatISO(obj.Evento),
+            footer: desconverterDataFormatISO(obj.dataEvento),
             urlImg: obj.capa
           })
         })

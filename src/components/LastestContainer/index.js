@@ -8,7 +8,7 @@ import Loader from '../Loader';
 
 import './styles.scss';
 
-export default function LastestNews(props){
+export default function LastestContainer(props){
   const { data, isLoading } = props;
 
   return(
@@ -16,7 +16,7 @@ export default function LastestNews(props){
       <Loader type="dots" />
     :
     data.map((obj, key) => (
-      <CardHome obj={obj} />
+      <CardHome obj={obj} key={key} />
     ))
 
   );
