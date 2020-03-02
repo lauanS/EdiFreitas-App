@@ -26,10 +26,10 @@ export default function Feed(props){
       );
     }
     else if(isLoading){
-      return( <>
+      return( <div>
         <Loader type="dots" />
         <p style={{textAlign: 'center'}}>Carregando as notícias</p>
-      </>);
+      </div>);
     } else if (news.length === 0){
       return(
         <p style={{textAlign: 'center'}}>Nenhum resultado encontrado</p>

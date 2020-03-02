@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 
 import MyNavbar from '../../../../components/Navbar/index';
-// import Footer from '../../../../components/Footer/index';
+import Footer from '../../../../components/Footer/index';
 import View from '../../../../components/Noticias/View'
 import Loader from '../../../../components/Loader';
 import {getNoticias} from '../../../../services'
@@ -24,26 +24,22 @@ export default function ViewNews(){
     load();
   }, [id]);
 
-  return (
-    <>  
-    <div>
-      <div className="nav">
-        <MyNavbar initActive={2}/>
-      </div>
-      <div className="pagNoticia">
+  return (  
+    <div className="noticiasView">
+      <MyNavbar initActive={2}/>
+
+      <main className="noticias__main">
       {isLoading ? 
-      <>
+      <div>
         <Loader type="dots" />
-      </>
+        <p className="noticias__load">Carregando a notícia</p>
+      </div>
       :
         <View obj={obj}/>
       }
-      </div>      
-      <div className="footer">
-        {/* <Footer /> */}
-      </div>
-    </div>
+      </main>
 
-    </>
+      <Footer />
+    </div>
   );
 }
