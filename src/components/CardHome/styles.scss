@@ -1,55 +1,37 @@
-.cardConsulta{
-  &-body{
-    padding: 10px;
+.CardHome{
+  max-width: 900px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.35)!important;
+  
+  &-card{
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     flex-direction: row;
     height: max-content;
-    justify-content: center;
   }
 
-  &-description {
-    padding: 10px;
-    min-width: 200px;
-    float: left;
+  &-media{
+    height: 180px;
+    width: 100%;
+    max-width: 320px;
   }
 
-  &-img {
-    max-width: 200px;
-    max-height: 200px;
-    min-width: 200px;
-    min-height: 200px;
-    object-fit: cover;
+  &-content{
+    flex: 1;
   }
 
-  &-footer{
-    margin: 10px;
-    padding: 0px;
-    padding-top: 5px;
-    padding-left: 5px;
-    max-height: 60px;
-    background-color: transparent;
-    border-top-width: 1px !important; 
-    border-top-style: solid !important;
-    border-top: #dfdfdf;
-    p{
-      font-size: 13px;
-      color: #666;
-      margin-top: 2px;
-    }
-  }
-
-  &-row{
+  h2{
+    font-size: 1.25rem;
     margin: 0;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
+    color: #30333C;
+    width: 100%;
+    font-weight: 600;
+    display: block;
   }
 
-  @media screen and (max-width: 800px) {
-    .card {
-      width: 240px;
-    }
+  p{
+    font-size: 1rem;
   }
 }
 

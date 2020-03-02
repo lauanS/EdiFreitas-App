@@ -1,29 +1,37 @@
 import React from 'react';
 import MyNavbar from '../../../components/Navbar/index';
 import Footer from '../../../components/Footer/index'
-import MyCarousel from '../../../components/MyCarrousel/index';
-import './styles.css';
+
+import LastestNews from '../../../components/LastestNews'
+import LastestEvents from '../../../components/LastestEvents';
+
+import './styles.scss';
+
 
 export default function Inicio(){
   return (
-    <div>
-      <div className="nav">
-        <MyNavbar initActive={0}/>
-      </div>
+    <div className="Home">
+      <MyNavbar initActive={0}/>
+      <main className="Home__main">
+        <section className="Home__content">
+        <div className="Home__header">
+          <h4>Certamente não é a Galeria</h4>
+        </div>
 
-      <br />
-      <br />
+        <div>
+          <LastestNews className="Home__divCards" />
+        </div>
 
-      <div className="carousel">
-        <MyCarousel />
-      </div>
+        <div>
+          <LastestEvents className="Home__divCards" />
+        </div>
 
-      <br/>
+        
 
-      <div>
-        <Footer />
-      </div>
+        </section>
+      </main>
       
+      <Footer />
     </div>
   );
 
