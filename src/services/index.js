@@ -1,5 +1,6 @@
 import axios from "axios";
 import {getToken} from './auth'
+import {simplifiedISO} from '../assist';
 
 const api = axios.create({
   baseURL: 'https://edi-freitas.herokuapp.com/api'
@@ -59,7 +60,7 @@ export async function getEventos(){
 
 export async function getEventosHome(){
   let date = new Date().toISOString();
-  return await api.get(`/eventos/home?data=${date}`);
+  return await api.get(`/eventos/home?data=${simplifiedISO(date)}`);
 }
 
 export async function findByIdEvento(id){

@@ -142,6 +142,15 @@ export function dateFullFormat(data){
   return dataString;
 }
 
+//Entrada: 2017-09-08T15:25:53Z
+//Saida: 2017-09-08
+export function simplifiedISO(data){
+  if(data.charAt(10) === 'T'){
+    return data.substring(0, 10)
+  }
+  return data.substring(0, 9)
+}
+
 export function createFilename(base, date){
   const dateAsString = "" + date.getDate() + date.getMonth() + 
     date.getFullYear() + date.getHours() + 
