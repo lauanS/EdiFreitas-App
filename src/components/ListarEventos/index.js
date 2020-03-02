@@ -11,7 +11,7 @@ import OpcoesConsulta from '../OpcoesConsulta'
 import Loader from '../Loader';
 
 import { getEventos, deleteEvento } from '../../services';
-import { desconverterData } from "../../assist/";
+import { desconverterData, getUrlBase } from "../../assist/";
 import { notFind, deleteError, deleteSuccess } from "../../assist/feedback";
 
 
@@ -125,6 +125,7 @@ export default function ConsultarEventos({selectEvent, action}){
             setSelectedObj={setSelectedEvent}          
             setShowModal={setShowModal}
             deleteItem={showDeleteAlert}
+            viewCard={`${getUrlBase()}/eventos/${event.id}`}
           />
           
         }
