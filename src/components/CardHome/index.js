@@ -9,7 +9,7 @@ import './styles.scss';
 
 export default function CardHome(props){
   const { title='', description='', footer='', urlImg='' } = props.obj;
-
+  const { action } = props;
   function formattedDescription(){
     if(description.length > 130){
       let d = description.substring(0, 130) + " [ ... ]";
@@ -21,7 +21,7 @@ export default function CardHome(props){
   return (
     <>
     <Card className="CardHome">
-      <CardActionArea>
+      <CardActionArea onClick={action}>
         <div className="CardHome-card">
           <CardMedia
             className="CardHome-media"
