@@ -8,12 +8,12 @@ import './styles.scss';
 
 export default function OpcoesConsulta(props){
   const {setSelectedObj, obj, setShowModal, deleteItem, viewCard} = props;
-
+  const style = {width: "33%", fontSize: "0.6rem", fontWeight: "bold"}
   return (
     <>
     <Button 
       size="small" 
-      style={{width: "33%"}}
+      style={style}
       as={Col} 
       variant="outlined" 
       color="primary"
@@ -24,7 +24,7 @@ export default function OpcoesConsulta(props){
     </Button>
     <Button 
       size="small"
-      style={{width: "33%"}}
+      style={style}
       as={Col} 
       variant="outlined" 
       color="primary"
@@ -37,7 +37,7 @@ export default function OpcoesConsulta(props){
     </Button>
     <Button 
       size="small"
-      style={{width: "33%"}}
+      style={style}
       as={Col} 
       variant="outlined" 
       color="primary"

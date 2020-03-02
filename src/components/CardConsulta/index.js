@@ -18,7 +18,7 @@ export default function CardConsulta(props){
 
   return (
     <>
-    <Card>
+    <Card className="cardConsulta">
       <Card.Header as="h5">
         {title}
       </Card.Header>
