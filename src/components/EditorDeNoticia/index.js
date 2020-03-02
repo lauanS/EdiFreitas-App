@@ -156,7 +156,7 @@ export default function EditorDeNoticia(props){
       setOpenAlertSuccess(true);
       setOpenAlertError(false);
       setOpenFieldError(false);
-      updateList();
+      await updateList();
     } catch (error) {
       setOpenAlertSuccess(false);
       setOpenAlertError(true);
