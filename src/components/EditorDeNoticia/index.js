@@ -51,6 +51,9 @@ export default function EditorDeNoticia(props){
       setInvalidatedImgBase64(true);
       isValid = false;
     }
+    if(imgBase64 && initialImg){
+      setInvalidatedImgBase64(false);
+    }
     if(!checkMinCharacters(title, setTitle, (_) => {}, setInvalidatedTitle)){
       isValid =  false;
     }

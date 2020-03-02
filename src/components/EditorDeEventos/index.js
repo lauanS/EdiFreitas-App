@@ -70,6 +70,11 @@ export default function EditorDeEventos(props){
     setLocalEvento("");
     setValidatedLocalEvento(false);
     setInvalidatedLocalEvento(false);
+
+    setImgBase64("");
+    setInvalidatedImgBase64(false);
+
+    setIsLoading(false);
   }
 
   function checkFields(){
@@ -78,6 +83,9 @@ export default function EditorDeEventos(props){
     if(!imgBase64 && !initialImg){
       setInvalidatedImgBase64(true);
       isValid =  false;
+    }
+    if(imgBase64 && initialImg){
+      setInvalidatedImgBase64(false);
     }
     if(validatedNomeEvento === false){
       setInvalidatedNomeEvento(true);
