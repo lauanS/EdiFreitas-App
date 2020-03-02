@@ -3,8 +3,7 @@ import { useHistory } from "react-router-dom";
 
 import LastestContainer from "../LastestContainer";
 import { getEventosHome } from "../../services";
-// import { notFind, deleteError, deleteSuccess} from "../../assist/feedback";
-import { desconverterDataFormatISO } from "../../assist";
+import { dateFullFormat } from "../../assist";
 
 import './styles.scss';
 
@@ -26,10 +25,12 @@ export default function LastestEvents(){
       let newData = [];
       if(responseData){
         responseData.forEach((obj) => {
+          console.log(obj.dataEvento);
           newData.push({
+            id: obj.id,
             title: obj.nome,
             description: obj.descricao,
-            footer: desconverterDataFormatISO(obj.dataEvento),
+            footer: dateFullFormat(obj.dataEvento),
             urlImg: obj.capa
           })
         })
