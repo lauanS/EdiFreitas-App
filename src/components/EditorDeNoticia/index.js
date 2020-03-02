@@ -60,6 +60,9 @@ export default function EditorDeNoticia(props){
     if(!checkMinCharacters(subtitle, setSubtitle, (_) => {}, setInvalidatedSubtitle)){
       isValid = false;
     }
+    if(text.length === 0){
+      isValid = false;
+    }
 
     return isValid;
   }
