@@ -7,6 +7,8 @@ import SectionTitle from '../../../components/SectionTitle/';
 import Carousel from '../../../components/MyCarrousel';
 import LastestNews from '../../../components/LastestNews';
 import LastestEvents from '../../../components/LastestEvents';
+import GaleriaHome from '../../../components/GaleriaHome';
+
 
 export default function Inicio(){
   return (
@@ -18,19 +20,18 @@ export default function Inicio(){
         
         <div className="Home__contentPadding">
 
-        
-        <div className="Home__header">
-          <h4>Certamente não é a Galeria</h4>
-        </div>
-
-        <SectionTitle value={"Últimas notícias"}/>
-        <div>
-          <LastestNews className="Home__divCards" />
-        </div>
-        <SectionTitle value={"últimos eventos"}/>
-        <div>
-          <LastestEvents className="Home__divCards" />
-        </div>
+          <SectionTitle value={"Últimas notícias"}/>
+          <div>
+            <LastestNews className="Home__divCards" />
+          </div>
+          <SectionTitle value={"Próximos eventos"}/>
+          <div>
+            <LastestEvents className="Home__divCards" />
+          </div>
+          <SectionTitle value={"Últimas fotos"}/>
+          <div>
+            <GaleriaHome className="Home__divCards" />
+          </div>
         </div>
         
 
