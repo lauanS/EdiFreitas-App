@@ -1,30 +1,30 @@
 import React, { useState, useEffect } from 'react';
 
 import LastestContainer from "../LastestContainer";
-import { getNoticiasHome } from "../../services";
+import { getEventosHome } from "../../services";
 // import { notFind, deleteError, deleteSuccess} from "../../assist/feedback";
 import { desconverterDataFormatISO } from "../../assist";
 
 import './styles.scss';
 
-export default function LastestNews(){
+export default function LastestEvents(){
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   
   useEffect(() => {
     async function load(){
       setIsLoading(true);
-      const response = await getNoticiasHome();
+      const response = await getEventosHome();
       const responseData = response.data;
 
       let newData = [];
       if(responseData){
         responseData.forEach((obj, i) => {
           newData.push({
-            title: obj.titulo,
+            title: obj.nome,
             description: obj.descricao,
-            footer: desconverterDataFormatISO(obj.data),
-            urlImg: obj.foto
+            footer: desconverterDataFormatISO(obj.Evento),
+            urlImg: obj.capa
           })
         })
       }
