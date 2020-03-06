@@ -9,7 +9,7 @@ import { getNoticias } from "../../../services";
 import './styles.scss';
 
 
-export default function Feed(props){
+export default function Feed(){
   const history = useHistory();
   const [news, setNews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);

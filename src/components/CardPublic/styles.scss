@@ -19,6 +19,7 @@
 
   &-content{
     flex: 1;
+    min-width: 280px;
   }
 
   h2{
@@ -35,9 +36,15 @@
   }
 
   // Ajustando o tamanho da font para telas menores
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 640px) {
     h2{
       font-size: 1.15rem;     
+    }
+
+    &-media{ 
+      height: 200px;
+      width: 100%;
+      max-width: 100%;
     }
   }
 }

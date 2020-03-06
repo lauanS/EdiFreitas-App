@@ -1,8 +1,12 @@
 .NoticiaFeed{
-  
+  min-width: 290px;
+  max-width: 900px;
+  width: 100%;
+  height: 100%;
+  padding: 0px 0px 0px 0px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: center;
   height: max-content;
 
 }

@@ -7,7 +7,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 
 import './styles.scss';
 
-export default function CardHome(props){
+export default function CardPublic(props){
   const { title='', description='', footer='', urlImg='' } = props.obj;
   const { action } = props;
   function formattedDescription(){

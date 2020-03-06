@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CardHome from '../CardHome';
+import CardPublic from '../CardPublic';
 import Loader from '../Loader';
 
 import './styles.scss';
@@ -13,7 +13,7 @@ export default function LastestContainer(props){
       <Loader type="dots" />
     :
     data.map((obj, key) => (
-      <CardHome obj={obj} action={() => {action(obj)}} key={key} />
+      <CardPublic obj={obj} action={() => {action(obj)}} key={key} />
     ))
 
   );
