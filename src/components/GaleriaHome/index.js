@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 import Loader from '../Loader';
 import CardAlbum from '../CardAlbum';
@@ -11,11 +11,13 @@ export default function GaleriaHome(props){
   const { isLoading } = props;
   const [albuns, setAlbuns] = useState([]);
 
+  const mounted = useRef(true);
+
   useEffect(() => {
     async function load(){
       try {
         const response = await getAlbumHome();
-        if(response.data){
+        if(response.data && mounted.current){
           setAlbuns(response.data);
         }        
       } catch (error) {
@@ -24,6 +26,8 @@ export default function GaleriaHome(props){
       
     }
     load();
+
+    return () => {mounted.current = false}
   }, []);
 
   

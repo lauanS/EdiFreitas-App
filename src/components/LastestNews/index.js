@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from "react-router-dom";
 
 import LastestContainer from "../LastestContainer";
@@ -13,6 +13,8 @@ export default function LastestNews(){
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   
+  const mounted = useRef(true);
+
   function loadView(obj){
     history.push(`/noticias/view/${obj.id}`);
   }
@@ -35,14 +37,17 @@ export default function LastestNews(){
           })
         })
       }
-
-      setData(newData);
-      setIsLoading(false);
+      if(mounted.current){
+        setData(newData);
+        setIsLoading(false);
+      }
       return;
 
     }
 
     load()
+
+    return () => {mounted.current = false}
   }, []);
 
   return(

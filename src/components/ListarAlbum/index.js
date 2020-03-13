@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef } from 'react';
 import './styles.scss';
 
 import CardAlbum from './cardAlbum';
@@ -31,15 +31,21 @@ export default function ListarAlbum(){
 
   const [errors, setErros] = useState(false);
 
+  const mounted = useRef(true);
+
   useEffect(() => {
     getAlbum()
     .then(res => {
-      setAlbuns(res.data);
-      setErros(false);
+      if(mounted.current){
+        setAlbuns(res.data);
+        setErros(false);
+      }
     })
     .catch(() => {
       setErros(true);
     });
+
+    return () => {mounted.current = false}
   }, []);
 
   const handleExcluir = (id, nome) => {
@@ -57,31 +63,40 @@ export default function ListarAlbum(){
       setOpenAlertErrorDelete(false);
 
       let albuns = await getAlbum();
-      setAlbuns(albuns.data);
-      setErros(false);
+
+      if(mounted.current){
+        setAlbuns(albuns.data);
+        setErros(false);
+      }
     }
     catch(res){
-      setShowAlert(false);
-      setOpenAlertSuccessDelete(false);
-      setOpenAlertErrorDelete(true);
-      setErros(true);
+      if(mounted.current){
+        setShowAlert(false);
+        setOpenAlertSuccessDelete(false);
+        setOpenAlertErrorDelete(true);
+        setErros(true);
+      }
     }
   }
 
   const handleVisualizar = (idAlbum, nomeAlbum) => {
     getImagem(idAlbum)
     .then(res => {
-      setIdAlbum(idAlbum);
-      setFotos(res.data);
-      setNomeAlbum(nomeAlbum);
-      setEditarNome(false);
-      setAdicionarFotos(false);
-      setVisualizar(true);
+      if(mounted.current){
+        setIdAlbum(idAlbum);
+        setFotos(res.data);
+        setNomeAlbum(nomeAlbum);
+        setEditarNome(false);
+        setAdicionarFotos(false);
+        setVisualizar(true);
+      }
     })
     .catch(res => {
-      setEditarNome(false);
-      setVisualizar(false);
-      setAdicionarFotos(false);
+      if(mounted.current){
+        setEditarNome(false);
+        setVisualizar(false);
+        setAdicionarFotos(false);
+      }
     });
   }
 
@@ -113,11 +128,15 @@ export default function ListarAlbum(){
     setAdicionarFotos(false);
     getAlbum()
     .then(res => {
-      setAlbuns(res.data);
-      setErros(false);
+      if(mounted.current){
+        setAlbuns(res.data);
+        setErros(false);
+      }
     })
     .catch(() => {
-      setErros(true);
+      if(mounted.current){
+        setErros(true);
+      }
     });
   }
 

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import './styles.scss';
 
 import MyNavbar from '../../../components/Navbar/index';
@@ -17,6 +17,8 @@ export default function Eventos(){
 
   const [errors, setErros] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const mounted = useRef(true);
 
   useEffect( () => {
     async function load(){
@@ -40,19 +42,25 @@ export default function Eventos(){
             anteriorEventos.unshift(e);
           }
         }
-        
-        setProximosEventos(proximoEventos);
-        setAnterioresEventos(anteriorEventos);
-        setErros(false);
-        setIsLoading(false);
+        if(mounted.current){
+          setProximosEventos(proximoEventos);
+          setAnterioresEventos(anteriorEventos);
+          setErros(false);
+          setIsLoading(false);
+        }
+
       } catch(res) {
-        setProximosEventos([]);
-        setAnterioresEventos([]);
-        setErros(true);
-        setIsLoading(false);
+        if(mounted.current){
+          setProximosEventos([]);
+          setAnterioresEventos([]);
+          setErros(true);
+          setIsLoading(false);
+        }
       }
     }
     load();
+
+    return () => {mounted.current = false}
   }, []);
   
   return (

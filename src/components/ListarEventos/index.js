@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import {Form, Row, Col, CardColumns} from 'react-bootstrap';
 
@@ -33,12 +33,16 @@ export default function ConsultarEventos({selectEvent, action}){
   const [selectedEvent, setSelectedEvent ] = useState({id: undefined, nome: ""});
 
   const [isLoading, setIsLoading] = useState(true);
+  
+  const mounted = useRef(true);
 
   let filteredEvents = [];
 
   async function loadEvents(){
     const response = await getEventos();
-    setEvents(response.data);
+    if(mounted.current){
+      setEvents(response.data);
+    }
     return;
   }
 
@@ -83,11 +87,15 @@ export default function ConsultarEventos({selectEvent, action}){
     async function load(){
       setIsLoading(true);
       const response = await getEventos();
-      setEvents(response.data);
-      setIsLoading(false);
+      if(mounted.current){
+        setEvents(response.data);
+        setIsLoading(false);  
+      }
       return;
     }
-    load();      
+    load(); 
+    
+    return () => {mounted.current = false} 
   }, []);
 
   /* Mensagens de feedback */

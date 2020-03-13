@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import './styles.scss';
 
 import { Link } from 'react-router-dom';
@@ -12,6 +12,8 @@ export default function MyCarousel(){
   const [active, setActive] = useState(0);
   const [errors, setErrors] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const mounted = useRef(true);
 
   useEffect(() => {
     function load(){
@@ -46,17 +48,23 @@ export default function MyCarousel(){
             }
             arraySrc.push(obj)
           }
-          setSrc(arraySrc);
-          setErrors(false);
-          setIsLoading(false);
+          if(mounted.current){
+            setSrc(arraySrc);
+            setErrors(false);
+            setIsLoading(false);
+          }
         }))
         .catch(() => {
-          setSrc([]);
-          setErrors(true);
-          setIsLoading(false);
+          if(mounted.current){
+            setSrc([]);
+            setErrors(true);
+            setIsLoading(false);
+          }
         });
     }
     load();
+
+    return () => {mounted.current = false}
   }, [])
 
   const handlePrev = () => {

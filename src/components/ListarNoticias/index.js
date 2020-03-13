@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import { Form, Row, Col, CardColumns } from 'react-bootstrap';
 
@@ -36,9 +36,13 @@ export default function ConsultarNoticias(){
 
   const [isLoading, setIsLoading] = useState(true);
 
+  const mounted = useRef(true);
+
   async function loadNews(){
     const response = await getNoticias();
-    setNews(response.data);
+    if(mounted.current){
+      setNews(response.data);
+    }
     return;
   }
 
@@ -81,15 +85,21 @@ export default function ConsultarNoticias(){
   }
 
   /* Carregando as notícias */
-  useEffect(() => {   
+  useEffect(() => {  
     async function load(){
       setIsLoading(true);
       const response = await getNoticias();
-      setNews(response.data);
-      setIsLoading(false);
+      // Apenas troca o estado caso o componente esteja montado
+      if(mounted.current){
+        setNews(response.data);
+        setIsLoading(false);
+      }
       return;
     }
-    load();      
+    load();  
+    
+    // A função do return de um userEffect é chamado quando o componente irá ser desmontado
+    return () => {mounted.current = false}
   }, []);
 
   /* Mensagens de feedback */

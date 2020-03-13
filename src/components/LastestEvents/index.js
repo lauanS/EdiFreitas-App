@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from "react-router-dom";
 
 import LastestContainer from "../LastestContainer";
@@ -12,6 +12,8 @@ export default function LastestEvents(){
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   
+  const mounted = useRef(true);
+
   function loadView(obj){
     history.push(`/eventos/${obj.id}`);
   }
@@ -19,29 +21,40 @@ export default function LastestEvents(){
   useEffect(() => {
     async function load(){
       setIsLoading(true);
-      const response = await getEventosHome();
-      const responseData = response.data;
 
-      let newData = [];
-      if(responseData){
-        responseData.forEach((obj) => {
-          newData.push({
-            id: obj.id,
-            title: obj.nome,
-            description: obj.descricao,
-            footer: dateFullFormat(obj.dataEvento),
-            urlImg: obj.capa
+      try {
+        const response = await getEventosHome();
+        const responseData = response.data;
+
+        let newData = [];
+        if(responseData){
+          responseData.forEach((obj) => {
+            newData.push({
+              id: obj.id,
+              title: obj.nome,
+              description: obj.descricao,
+              footer: dateFullFormat(obj.dataEvento),
+              urlImg: obj.capa
+            })
           })
-        })
-      }
+        }
 
-      setData(newData);
-      setIsLoading(false);
+        if(mounted.current){
+          setData(newData);
+          setIsLoading(false);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      
+
       return;
 
     }
 
     load()
+
+    return () => {mounted.current = false}
   }, []);
 
   return(

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from "react-router-dom";
 
 import MyNavbar from '../../../../components/Navbar/index';
@@ -13,15 +13,20 @@ export default function ViewNews(){
   const { id } = useParams();
   const [obj, setObj] = useState();
   const [isLoading, setIsLoading] = useState(true);
-
+  const mounted = useRef(true);
+  
   useEffect( () => {
     async function load(){
       const response = await getNoticias();
       const objTemp = response.data.find(data => data.id === parseInt(id));
-      setObj(objTemp);
-      setIsLoading(false);
+      if(mounted.current){
+        setObj(objTemp);
+        setIsLoading(false);
+      }
     }
     load();
+
+    return () => {mounted.current = false} 
   }, [id]);
 
   return (  

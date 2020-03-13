@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from "react-router-dom";
 
 import Post from '../Post'
@@ -14,6 +14,8 @@ export default function Feed(){
   const [news, setNews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
+
+  const mounted = useRef(true);
 
   function loadView(obj){
     history.push(`/noticias/view/${obj.id}`);
@@ -43,16 +45,23 @@ export default function Feed(){
     async function load(){
       try {
         const response = await getNoticias();
-        setNews(response.data);
+        if(mounted.current){
+          setNews(response.data);
+          setIsLoading(false);
+        }
       } catch (error) {
         console.log(error);
-        setLoadError(true);
+        if(mounted.current){
+          setLoadError(true);
+          setIsLoading(false);
+        }
       }
-      setIsLoading(false);
+      
     } 
     
     load();
-    
+
+    return () => {mounted.current = false}
   }, [setNews, setIsLoading]);
 
 
