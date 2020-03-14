@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect, useRef} from 'react';
 import './styles.scss';
 
 import ModalCard from './modalCard';
@@ -10,240 +10,219 @@ import axios from "axios";
 import {getResponsaveis, getCriancas} from '../../services';
 import { idade } from "../../assist";
 
-export default class extends React.Component {
-  constructor(props) {
-    super(props);
+export default function ListarPessoas() {
+  const [search, setSearch] = useState('');
+  const [responsaveis, setResponsaveis] = useState([]);
+  const [criancas, setCriancas] = useState([]);
+  const [idadeMin, setIdadeMin] = useState('');
+  const [idadeMax, setIdadeMax] = useState('');
+  const [exibir, setExibir] = useState(0);
 
-    this.state = {
-      search: '',
-      isLoading: true,
-      errors: false,
-      alertSuccessDeletar: false,
-      alertErrorDeletar: false,
-      alertSuccessUpdate: false,
-      alertErrorUpdate: false, 
-      responsaveis: [],
-      criancas: [],
-      idadeMax: 200,
-      idadeMin: 0,
-      exibir: 0
-    };
-  }
+  const [isLoading, setIsLoading] = useState(true);
+  const [errors, setErrors] = useState(false);
+  const [alertSuccessDeletar, setAlertSuccessDeletar] = useState(false);
+  const [alertErrorDeletar, setAlertErrorDeletar] = useState(false);
+  const [alertSuccessUpdate, setAlertSuccessUpdate] = useState(false);
+  const [alertErrorUpdate, setAlertErrorUpdate] = useState(false);
+  
+  const mounted = useRef(true);
+  const [filteredResponsaveis, setFilteredResponsaveis] = useState([]);
+  const [filteredCriancas, setFilteredCriancas] = useState([]);
 
-  componentDidMount() {
+  useEffect(() => {
+    function load(){
       axios.all([
-      getResponsaveis(),
-      getCriancas()
-      ]).then(axios.spread((responsavelRes, criancaRes) => {
-        this.setState({ ...this.state, responsaveis: responsavelRes.data, criancas: criancaRes.data, isLoading: false});
-      }))
-      .catch(() => {
-        this.setState({ ...this.state, errors: true, isLoading: false })
-      });
+        getResponsaveis(),
+        getCriancas()
+        ]).then(axios.spread((responsavelRes, criancaRes) => {
+          if(responsavelRes.data && criancaRes.data && mounted.current){
+            setResponsaveis(responsavelRes.data);
+            setCriancas(criancaRes.data);
+            setIsLoading(false);
+          }
+        }))
+        .catch((error) => {
+          if(mounted.current){
+            setErrors(true);
+            setIsLoading(false);
+          }
+        });
+    }
+    load();
+
+    return () => {mounted.current = false}
+  }, [])
+
+  useEffect(() => {
+    function searchPeople (list) {
+      return Array.isArray(list) ? list.filter(person => 
+        person.nome.toLowerCase().indexOf(search.toLowerCase()) !== -1 && 
+        ( idadeMax === '' || idade(person.dataNascimento) <= idadeMax) && 
+        ( idadeMin === '' || idade(person.dataNascimento) >= idadeMin))
+        : [];
+    }
+
+    if(mounted.current){
+      setFilteredResponsaveis(exibir === 0 || exibir === 2 ? searchPeople(responsaveis) || [] : []);
+      setFilteredCriancas(exibir === 0 || exibir === 1 ? searchPeople(criancas) || [] : []);
+    }
+    
+  }, [responsaveis, criancas, search, exibir, idadeMax, idadeMin])
+
+  const remover = () => {
+    setAlertSuccessDeletar(true);
+    setAlertErrorDeletar(false);
   }
 
-  updateList() {
+  const erroRemover = () => {
+    setAlertSuccessDeletar(false);
+    setAlertErrorDeletar(true); 
+  }
+
+  const update = () => {
+    setAlertSuccessUpdate(true);
+    setAlertErrorUpdate(false);
+  }
+
+  const erroUpdate = () => {
+    setAlertSuccessUpdate(false);
+    setAlertErrorUpdate(true); 
+  }
+
+  const updateList = () => {
     axios.all([
       getResponsaveis(),
       getCriancas()
       ]).then(axios.spread((responsavelRes, criancaRes) => {
-        this.setState({ ...this.state, responsaveis: responsavelRes.data, criancas: criancaRes.data, isLoading: false});
-      }))
-      .catch(() => {
-        this.setState({ ...this.state, errors: true, isLoading: false })
-    });
-  }
-
-  updateSearch(e) {
-    this.setState({ ...this.state, search: e.target.value});
-    e.preventDefault();
-  }
-
-  searchPeople(list, search, idadeMax, idadeMin) {
-    return Array.isArray(list) ? list.filter(person => 
-      person.nome.toLowerCase().indexOf(search.toLowerCase()) !== -1 && 
-      idade(person.dataNascimento) <= idadeMax  && 
-      idade(person.dataNascimento) >= idadeMin)
-      : [];
-  }
-
-  remover(id){
-    this.setState({ ...this.state, alertSuccessDeletar: true,
-      alertErrorDeletar: false});
-  }
-
-  erroRemover(){
-    this.setState({ ...this.state, alertSuccessDeletar: false,
-      alertErrorDeletar: true }); 
-  }
-
-  update(){
-    this.setState({ ...this.state, alertSuccessUpdate: true,
-      alertErrorUpdate: false});
-  }
-
-  erroUpdate(){
-    this.setState({ ...this.state, alertSuccessUpdate: false,
-      alertErrorUpdate: true }); 
-  }
-
-  setAlertSuccessDeletar(b){
-    this.setState({ ...this.state, alertSuccessDeletar: b }); 
-  }
-
-  setAlertErrorDeletar(b){
-    this.setState({ ...this.state, alertErrorDeletar: b }); 
-  }
-
-  setAlertSuccessUpdate(b){
-    this.setState({ ...this.state, alertSuccessUpdate: b }); 
-  }
-
-  setAlertErrorUpdate(b){
-    this.setState({ ...this.state, alertErrorUpdate: b }); 
-  }
-
-
-  updateIdadeMax(){
-    let b = document.getElementById("formGroupIdadeMax")
-
-    if(b.value === '')
-      this.setState({ ...this.state, idadeMax: 200 });
-    else
-      this.setState({ ...this.state, idadeMax: b.value });
-  }
-
-  updateIdadeMin(){
-    let b = document.getElementById("formGroupIdadeMin")
-
-    if(b.value === '')
-      this.setState({ ...this.state, idadeMin: 0 });
-    else
-      this.setState({ ...this.state, idadeMin: b.value });
-  }
-
-  updateExibir(b){
-    this.setState({ ...this.state, exibir: Number(b.target.value) });
-    b.preventDefault();
-  }
-
-  render(){
-    const { responsaveis, criancas, isLoading, errors, search, idadeMax, idadeMin, exibir } = this.state;
-    const {alertSuccessDeletar, alertErrorDeletar, alertSuccessUpdate, alertErrorUpdate} = this.state;
-    const filteredResponsaveis = exibir === 0 || exibir === 2 ? this.searchPeople(responsaveis, search, idadeMax, idadeMin) || [] : [];
-    const filteredCriancas = exibir === 0 || exibir === 1 ? this.searchPeople(criancas, search, idadeMax, idadeMin) || [] : [];
-
-    return (
-      <>
-      <Snackbar open={alertSuccessDeletar} setOpen={this.setAlertSuccessDeletar.bind(this)} msg="Informações deletadas" type="delete"/>
-      <Snackbar open={alertErrorDeletar} setOpen={this.setAlertErrorDeletar.bind(this)} msg="Ocorreu um erro ao deletar" type="error"/>
-      
-      <Snackbar open={alertSuccessUpdate} setOpen={this.setAlertSuccessUpdate.bind(this)} msg="Informações atualizadas" type="delete"/>
-      <Snackbar open={alertErrorUpdate} setOpen={this.setAlertErrorUpdate.bind(this)} msg="Ocorreu um erro ao atualizar" type="error"/>
-
-      {isLoading ? <Loader type="dots" /> : errors ? "Houve algum problema" :
-      <>
-      <Form autoComplete="off">
-        <Row>
-          <Form.Group controlId="formGroupName">
-            <Form.Label className="listarPessoas__label">
-              Nome da pessoa:
-            </Form.Label>
-            <Col sm={8} className="listarPessoas__inputText">
-              <Form.Control 
-                type="text" 
-                placeholder="Ex: Leonardo dos Santos Sampaio" 
-                onChange={this.updateSearch.bind(this)}
-                value={this.state.search}
-              />
-            </Col>
-          </Form.Group>
-          
-          <Col sm="1" className="listarPessoas__colForm1">
-            <Form.Group controlId="formGroupIdadeMin">
-              <Form.Label >
-                Idade mín.:
-              </Form.Label> 
-              <Form.Control
-                type="number" 
-                placeholder= "2"
-                onChange = {() => this.updateIdadeMin()}
-              />
-            </Form.Group>
-          </Col>
-
-          <Col sm="1" className="listarPessoas__colForm1">
-            <Form.Group controlId="formGroupIdadeMax">
-              <Form.Label>
-                Idade máx.:
-              </Form.Label>
-              <Form.Control
-                type="number" 
-                placeholder= "2"
-                onChange = {() => this.updateIdadeMax()}
-              />
-            </Form.Group>
-          </Col>
-
-          <Col sm="2" className="listarPessoas__colForm2">
-            <Form.Group controlId="formGroupExibir">
-              <Form.Label>
-                Exibir:
-              </Form.Label>
-              <Form.Control 
-                as="select"
-                onChange={this.updateExibir.bind(this)}
-              >
-                <option value="0">Todas as pessoas</option>
-                <option value="1">Apenas crianças</option>
-                <option value="2">Apenas responsáveis</option>
-              </Form.Control>
-            </Form.Group>
-          </Col>
-        </Row>
-      </Form>
-      
-      {filteredResponsaveis.length === 0 && filteredCriancas.length === 0 ? 
-        <p>Nenhuma pessoa encontrada com o nome: "{search}"</p> 
-        :
-        <>
-        {search === '' ?
-          <p>Total de {filteredResponsaveis.length + filteredCriancas.length} resultados</p>:
-          <p>Total de {filteredResponsaveis.length + filteredCriancas.length}  resultados para "{search}"</p>
+        if(responsavelRes.data && criancaRes.data && mounted.current){
+          setResponsaveis(responsavelRes.data);
+          setCriancas(criancaRes.data);
+          setIsLoading(false);
         }
-        
-        <div className="listarPessoas"> 
-          {filteredResponsaveis.length > 0 ? filteredResponsaveis.map(pessoa =>
-            <ModalCard 
-              updateList={this.updateList.bind(this)} 
-              dados={pessoa} 
-              key={"R" + pessoa.id} 
-              crianca={false} 
-              remover={this.remover.bind(this)} 
-              erroRemover={this.erroRemover.bind(this)}
-              update={this.update.bind(this)}
-              erroUpdate={this.erroUpdate.bind(this)}  
-            />
-          ) : ''}
-          {filteredCriancas.length > 0 ? filteredCriancas.map(pessoa =>
-            <ModalCard 
-              updateList={this.updateList.bind(this)} 
-              responsaveis={responsaveis} 
-              dados={pessoa} 
-              key={"C" + pessoa.id} 
-              crianca={true} 
-              remover={this.remover.bind(this)} 
-              erroRemover={this.erroRemover.bind(this)}
-              update={this.update.bind(this)}
-              erroUpdate={this.erroUpdate.bind(this)} 
-            />
-          ) : ''}
-        </div>
-        </>
-      }
-      </>
-      }
-      </>
-    );
+      }))
+      .catch((error) => {
+        if(mounted.current){
+          setErrors(true);
+          setIsLoading(false);
+        }
+      });
   }
+
+  return (
+    <>
+    <Snackbar open={alertSuccessDeletar} setOpen={setAlertSuccessDeletar} msg="Informações deletadas" type="delete"/>
+    <Snackbar open={alertErrorDeletar} setOpen={setAlertErrorDeletar} msg="Ocorreu um erro ao deletar" type="error"/>
+    
+    <Snackbar open={alertSuccessUpdate} setOpen={setAlertSuccessUpdate} msg="Informações atualizadas" type="delete"/>
+    <Snackbar open={alertErrorUpdate} setOpen={setAlertErrorUpdate} msg="Ocorreu um erro ao atualizar" type="error"/>
+
+    {isLoading && !errors && <Loader type="dots" />}
+    {!isLoading && errors && "Houve algum problema"}
+    {!isLoading && !errors &&
+    <>
+    <Form autoComplete="off">
+      <Row>
+        <Form.Group controlId="formGroupName">
+          <Form.Label className="listarPessoas__label">
+            Nome da pessoa:
+          </Form.Label>
+          <Col sm={8} className="listarPessoas__inputText">
+            <Form.Control 
+              type="text" 
+              placeholder="Ex: Leonardo dos Santos Sampaio" 
+              onChange={e => setSearch(e.target.value)}
+              value={search}
+            />
+          </Col>
+        </Form.Group>
+        
+        <Col sm="1" className="listarPessoas__colForm1">
+          <Form.Group controlId="formGroupIdadeMin">
+            <Form.Label >
+              Idade mín.:
+            </Form.Label> 
+            <Form.Control
+              type="number" 
+              placeholder="Ex: 2"
+              onChange={e => setIdadeMin(e.target.value)}
+              value={idadeMin}
+            />
+          </Form.Group>
+        </Col>
+
+        <Col sm="1" className="listarPessoas__colForm1">
+          <Form.Group controlId="formGroupIdadeMax">
+            <Form.Label>
+              Idade máx.:
+            </Form.Label>
+            <Form.Control
+              type="number" 
+              placeholder= "Ex: 30"
+              onChange={e => setIdadeMax(e.target.value)}
+              value={idadeMax}
+            />
+          </Form.Group>
+        </Col>
+
+        <Col sm="2" className="listarPessoas__colForm2">
+          <Form.Group controlId="formGroupExibir">
+            <Form.Label>
+              Exibir:
+            </Form.Label>
+            <Form.Control 
+              as="select"
+              onChange={e => setExibir(Number(e.target.value))}
+            >
+              <option value={0}>Todas as pessoas</option>
+              <option value={1}>Apenas crianças</option>
+              <option value={2}>Apenas responsáveis</option>
+            </Form.Control>
+          </Form.Group>
+        </Col>
+      </Row>
+    </Form>
+    
+    {filteredResponsaveis.length === 0 && filteredCriancas.length === 0 ? 
+      <p>Nenhuma pessoa encontrada</p> 
+      :
+      <>
+      {filteredResponsaveis.length + filteredCriancas.length > 1 ?
+        <p>Total de {filteredResponsaveis.length + filteredCriancas.length} resultados</p>
+        :
+        <p>Total de 1 resultado</p>
+      }
+      
+      <div className="listarPessoas"> 
+        {filteredResponsaveis.length > 0 && filteredResponsaveis.map(pessoa =>
+          <ModalCard 
+            updateList={updateList} 
+            dados={pessoa} 
+            key={"R" + pessoa.id} 
+            crianca={false} 
+            remover={remover} 
+            erroRemover={erroRemover}
+            update={update}
+            erroUpdate={erroUpdate}  
+          />
+        )}
+        {filteredCriancas.length > 0 && filteredCriancas.map(pessoa =>
+          <ModalCard 
+            updateList={updateList} 
+            responsaveis={responsaveis} 
+            dados={pessoa} 
+            key={"C" + pessoa.id} 
+            crianca={true} 
+            remover={remover} 
+            erroRemover={erroRemover}
+            update={update}
+            erroUpdate={erroUpdate} 
+          />
+        )}
+      </div>
+      </>
+    }
+    </>
+    }
+    </>
+  );
 }

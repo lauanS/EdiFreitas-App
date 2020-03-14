@@ -12,6 +12,7 @@ export default function LastestNews(){
   const history = useHistory();
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [errors, setErrors] = useState(false);
   
   const mounted = useRef(true);
 
@@ -21,28 +22,35 @@ export default function LastestNews(){
 
   useEffect(() => {
     async function load(){
-      setIsLoading(true);
-      const response = await getNoticiasHome();
-      const responseData = response.data;
+      try {
+        setIsLoading(true);
+        const response = await getNoticiasHome();
+        const responseData = response.data;
 
-      let newData = [];
-      if(responseData){
-        responseData.forEach((obj, i) => {
-          newData.push({
-            id: obj.id,
-            title: obj.titulo,
-            description: obj.descricao,
-            footer: desconverterDataFormatISO(obj.data),
-            urlImg: obj.foto
+        let newData = [];
+        if(responseData){
+          responseData.forEach((obj, i) => {
+            newData.push({
+              id: obj.id,
+              title: obj.titulo,
+              description: obj.descricao,
+              footer: desconverterDataFormatISO(obj.data),
+              urlImg: obj.foto
+            })
           })
-        })
+        }
+        if(mounted.current){
+          setData(newData);
+          setIsLoading(false);
+          setErrors(false);
+        }
+      } catch (error) {
+        if(mounted.current){
+          setData([]);
+          setIsLoading(false);
+          setErrors(true);
+        }
       }
-      if(mounted.current){
-        setData(newData);
-        setIsLoading(false);
-      }
-      return;
-
     }
 
     load()
@@ -52,7 +60,7 @@ export default function LastestNews(){
 
   return(
     <>
-      <LastestContainer data={data} isLoading={isLoading} action={loadView} />
+      <LastestContainer data={data} isLoading={isLoading} action={loadView} errors={errors}/>
     </>
   );
 }
