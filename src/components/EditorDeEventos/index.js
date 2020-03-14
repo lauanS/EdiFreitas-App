@@ -109,10 +109,14 @@ export default function EditorDeEventos(props){
   }
 
   async function handleSubmit(e){
-    setIsLoading(true);
     e.persist();
     e.preventDefault();
     e.stopPropagation();
+    
+    if(isLoading){
+      return;
+    }
+    setIsLoading(true);
 
     let id;
     if(isUpdate){
