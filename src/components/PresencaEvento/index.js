@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import {Form, Row, Col} from 'react-bootstrap';
 import Button from '@material-ui/core/Button';
@@ -23,11 +23,14 @@ export default function PresencaEvento(){
   const [showModal, setShowModal] = useState(false);
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   
-  
+  const mounted = useRef(true);
+
   async function loadPeople(){
     if(selectedEvent){
       const response = await getEventoParticipante(selectedEvent.id);
-      setPeople(response.data);
+      if(mounted.current){
+        setPeople(response.data);
+      }      
     }
     return;
   }
@@ -68,14 +71,18 @@ export default function PresencaEvento(){
     async function load(){
       if(selectedEvent){
         const response = await getEventoParticipante(selectedEvent.id);
-        setPeople(response.data);
+        if(mounted.current){
+          setPeople(response.data);
+        }        
       }
       return;
     }
 
     if(selectedEvent){
       load();
-    }     
+    }
+
+    return () => {mounted.current = false}     
   }, [selectedEvent])
 
   async function onClickCardButton(isSelected, person){
@@ -89,8 +96,10 @@ export default function PresencaEvento(){
     else{
       await addPerson(person.id);
     }
-    setIsLoadingButton(false);
-    loadPeople(); 
+    if(mounted.current){
+      setIsLoadingButton(false);
+      loadPeople(); 
+    }    
   }
 
   function renderCards(){
