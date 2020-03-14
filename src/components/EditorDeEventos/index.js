@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.scss';
 
@@ -40,6 +40,8 @@ export default function EditorDeEventos(props){
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const mounted = useRef(true);
+  
   /* Setup inicial do componente */
   useEffect(() => {   
     if(isUpdate){
@@ -52,6 +54,8 @@ export default function EditorDeEventos(props){
       setValidatedDataEvento(true);
       setValidatedLocalEvento(true);
     } 
+
+    return () => {mounted.current = false}
   }, [isUpdate, obj]);
 
   const resetFields = () => {
@@ -176,30 +180,40 @@ export default function EditorDeEventos(props){
         console.log(error);
       }  
     }
-    setIsLoading(false);
+    if(mounted.current){
+      setIsLoading(false);
+    }
   }
 
   async function save(obj){
     try {
       await postEvento(obj);
-      setOpenAlertSuccess(true);
-      setOpenAlertError(false);
-      resetFields();
+      if(mounted.current){
+        setOpenAlertSuccess(true);
+        setOpenAlertError(false);
+        resetFields();
+      }
     } catch (error) {
-      setOpenAlertSuccess(false);
-      setOpenAlertError(true);
+      if(mounted.current){
+        setOpenAlertSuccess(false);
+        setOpenAlertError(true);
+      }
     }
   }
 
   async function update(obj, id){
     try {
       await putEvento(obj, id);
-      setOpenAlertSuccess(true);
-      setOpenAlertError(false);
-      updateList();
+      if(mounted.current){
+        setOpenAlertSuccess(true);
+        setOpenAlertError(false);
+        updateList();
+      }
     } catch (error) {
-      setOpenAlertSuccess(false);
-      setOpenAlertError(true);
+      if(mounted.current){
+        setOpenAlertSuccess(false);
+        setOpenAlertError(true);
+      }
     }
 
   }

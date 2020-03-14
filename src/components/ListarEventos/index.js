@@ -49,11 +49,15 @@ export default function ConsultarEventos({selectEvent, action}){
   async function deleteEvent(id){
     try {
       await deleteEvento(id);
-      setAlertDeleteSucess(true);
-      setAlertDeleteError(false);
+      if(mounted.current){
+        setAlertDeleteSucess(true);
+        setAlertDeleteError(false);
+      }
     } catch (error) {
-      setAlertDeleteSucess(false);
-      setAlertDeleteError(true);
+      if(mounted.current){
+        setAlertDeleteSucess(false);
+        setAlertDeleteError(true);
+      }
     }    
   }
 

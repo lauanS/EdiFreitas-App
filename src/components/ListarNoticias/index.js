@@ -50,11 +50,15 @@ export default function ConsultarNoticias(){
   async function deleteNews(id){
     try {
       await deleteNoticia(id);
-      setAlertDeleteSucess(true);
-      setAlertDeleteError(false);
+      if(mounted.current){
+        setAlertDeleteSucess(true);
+        setAlertDeleteError(false);
+      }
     } catch (error) {
-      setAlertDeleteSucess(false);
-      setAlertDeleteError(true);
+      if(mounted.current){
+        setAlertDeleteSucess(false);
+        setAlertDeleteError(true);
+      }
     }    
   }
 

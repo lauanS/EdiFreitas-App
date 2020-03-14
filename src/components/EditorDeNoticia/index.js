@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Form, Collapse } from 'react-bootstrap';
 import TextEditor from '../EditorDeTexto/index'
 import DadosNoticia from '../DadosNoticia/index'
@@ -36,6 +36,8 @@ export default function EditorDeNoticia(props){
 
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(true);
+
+  const mounted = useRef(true);
 
   function resetFields(){
     setTitle("");
@@ -103,7 +105,6 @@ export default function EditorDeNoticia(props){
             }
 
             const responseImg = await putImagemUrl(img);
-            console.log(responseImg.data);
             urlImg = responseImg.data;      
           }
 
@@ -145,36 +146,46 @@ export default function EditorDeNoticia(props){
       setOpenAlertError(false);
       setOpenFieldError(true);
     }
-    setIsLoading(false);
+    if(mounted.current){
+      setIsLoading(false);
+    }    
   }
 
   async function save(obj){
     try {
       await postNoticia(obj);
-      setOpenAlertSuccess(true);
-      setOpenAlertError(false);
-      setOpenFieldError(false);
-      resetFields();
+      if(mounted.current){
+        setOpenAlertSuccess(true);
+        setOpenAlertError(false);
+        setOpenFieldError(false);
+        resetFields();
+      }
     } catch (error) {
-      setOpenAlertSuccess(false);
-      setOpenAlertError(true);
-      setOpenFieldError(false);
-      console.log(error);
+      if(mounted.current){
+        setOpenAlertSuccess(false);
+        setOpenAlertError(true);
+        setOpenFieldError(false);
+        console.log(error);
+      }
     }
   }
 
   async function update(obj, id){
     try {
-      await putNoticia(obj, id);
-      setOpenAlertSuccess(true);
-      setOpenAlertError(false);
-      setOpenFieldError(false);
-      await updateList();
+      if(mounted.current){
+        await putNoticia(obj, id);
+        setOpenAlertSuccess(true);
+        setOpenAlertError(false);
+        setOpenFieldError(false);
+        await updateList();
+      }
     } catch (error) {
-      setOpenAlertSuccess(false);
-      setOpenAlertError(true);
-      setOpenFieldError(false);
-      console.log(error);
+      if(mounted.current){
+        setOpenAlertSuccess(false);
+        setOpenAlertError(true);
+        setOpenFieldError(false);
+        console.log(error);
+      }
     }
 
   }
