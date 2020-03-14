@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import './styles.scss';
 
 import CampoImagem from '../CampoImagem';
@@ -30,6 +30,12 @@ export default function AddFotos() {
   const [submit, setSubmit] = useState(false);
   const [loadingImage, setLoadingImage] = useState(false);
 
+  const mounted = useRef(true);
+
+  useEffect(() => {
+    return () => { mounted.current = false; }
+  }, []);
+
   const onSelectImg = async (e) => {
     e.persist();
     let queUrl = [];
@@ -39,11 +45,13 @@ export default function AddFotos() {
         let url = await loadImg(e.target.files[i]);
         queUrl.push(url);
       }
-      setImgOriginal(imgOriginal.concat(queUrl));
-      setImgBase64(imgBase64.concat(queUrl));
-      setInvalidatedFotos(false);
+      if(mounted.current){
+        setImgOriginal(imgOriginal.concat(queUrl));
+        setImgBase64(imgBase64.concat(queUrl));
+        setInvalidatedFotos(false);
+        setLoadingImage(false);
+      }
       e.target.value = '';
-      setLoadingImage(false);
     }
   }
 
@@ -154,14 +162,18 @@ export default function AddFotos() {
           await postImagem(img);
         }
 
-        setOpenAlertSuccess(true);
-        setOpenAlertError(false);
-        resetFields();
+        if(mounted.current){
+          setOpenAlertSuccess(true);
+          setOpenAlertError(false);
+          resetFields();
+        }
       }
       catch(res){
-        setOpenAlertSuccess(false);
-        setOpenAlertError(true);
-        setSubmit(false);
+        if(mounted.current){
+          setOpenAlertSuccess(false);
+          setOpenAlertError(true);
+          setSubmit(false);
+        }
       }
     }
   };

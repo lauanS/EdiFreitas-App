@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import './styles.scss';
 
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -18,6 +18,12 @@ export default function VisualizarAlbum(props){
   const [openAlertSuccessDelete, setOpenAlertSuccessDelete] = useState(false);
   const [openAlertErrorDelete, setOpenAlertErrorDelete] = useState(false);
 
+  const mounted = useRef(true);
+
+  useEffect(() => {
+    return () => { mounted.current = false; }
+  }, []);
+
   const handleDelete = (e, idImagem) => {
     e.preventDefault();
     e.stopPropagation();
@@ -28,18 +34,21 @@ export default function VisualizarAlbum(props){
   const handleConfirm = async () => {
     try{
       await deleteImagem(idImg);
-
-      setShowAlert(false);
-      setOpenAlertSuccessDelete(true);
-      setOpenAlertErrorDelete(false);
-
       let imagens = await getImagem(idAlbum);
-      setImagemSrc(imagens.data);
+
+      if(mounted.current){
+        setShowAlert(false);
+        setOpenAlertSuccessDelete(true);
+        setOpenAlertErrorDelete(false);
+        setImagemSrc(imagens.data);
+      }
     }
     catch(res){
-      setShowAlert(false);
-      setOpenAlertSuccessDelete(false);
-      setOpenAlertErrorDelete(true);
+      if(mounted.current){
+        setShowAlert(false);
+        setOpenAlertSuccessDelete(false);
+        setOpenAlertErrorDelete(true);
+      }
     }
   }
 
