@@ -11,7 +11,7 @@ import './styles.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Form from 'react-bootstrap/Form'
-import ButtonSave from '../ButtonSave';
+import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
@@ -151,10 +151,7 @@ export default function Login() {
 
             <br/>
             
-            <ButtonSave 
-              isLoading={submit}
-            >Entrar
-            </ButtonSave>
+            <Button type="submit" className="login__button">Entrar</Button>
           </Form>
         </Col>
       </Row>

@@ -162,7 +162,7 @@ export default function ListarPessoas() {
             </Form.Label>
             <Form.Control
               type="number" 
-              placeholder= "Ex: 30"
+              placeholder= "Ex: 3"
               onChange={e => setIdadeMax(e.target.value)}
               value={idadeMax}
             />
