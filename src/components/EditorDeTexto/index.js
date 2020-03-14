@@ -1,11 +1,9 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Editor } from '@tinymce/tinymce-react';
-import { postImagem, postAlbum } from "../../services";
+import { postImagem } from "../../services";
 
 export default function EditorDeTexto(props){
   let editorWidth = undefined;
-
-  const album = useRef();
 
   if(!props.isUpdate){
     const screenWidth = window.innerWidth; 
@@ -34,21 +32,6 @@ export default function EditorDeTexto(props){
 
 
         images_upload_handler: async function (blobInfo, success, failure){
-          // Verifica se não temos nenhum album para as fotos
-          if(!album.current){
-            // Cria um novo álbum
-            try {
-              const responseAlbum = await postAlbum({nome: "albumParaNoticia"});
-
-              if(responseAlbum){
-                album.current = responseAlbum.data;
-              }
-            } catch (error) {
-              console.log("Erro na criação do álbum")
-              console.log(error);  
-              failure("Erro");  
-            }
-          }
           try {
             // Obtendo a img na base64
             let imgBase64;
@@ -57,14 +40,12 @@ export default function EditorDeTexto(props){
             reader.onload = async () => {
               imgBase64 = reader.result
 
-               // Criando o obj img para salvar no banco
+              // Criando o obj img para salvar no banco
               const img = {
                 iBase: imgBase64,
-                filename: blobInfo.filename(),
-                album: album.current.id
+                filename: blobInfo.filename()
               }
-    
-              console.log(img)
+
               const responseImg = await postImagem(img);
               const urlImg = responseImg.data.url;
               success(urlImg)
@@ -72,26 +53,17 @@ export default function EditorDeTexto(props){
             
             reader.readAsDataURL(blobInfo.blob());
 
-           
+          
           } catch (error) {
             console.log("Erro ao salvar a imagem");
             console.log(error);
-            failure("Erro");
+            failure("Erro ao salvar a imagem");
           }
-
-         
 
         },
 
-        // /* we override default upload handler to simulate successful upload*/
-        // images_upload_handler: function (blobInfo, success, failure) {
-        //   setTimeout(function () {
-        //     /* no matter what you upload, we will turn it into TinyMCE logo :)*/
-        //     success('http://moxiecode.cachefly.net/tinymce/v9/images/logo.png');
-        //   }, 2000);
-        // }
-
       }}
+      
       value={props.text}
       onEditorChange={props.handleChange}
       />
