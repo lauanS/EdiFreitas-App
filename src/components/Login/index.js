@@ -6,7 +6,7 @@
 //OverlayLoading - OK
 //State submit - OK
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import './styles.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -29,7 +29,12 @@ export default function Login() {
   const [invalitedUsuario, setInvalitedUsuario] = useState(false);
 
   const [submit, setSubmit] = useState(false);
+  const mounted = useRef(true);
 
+  useEffect(() => {
+    return () => {mounted.current = false}
+  }, []);
+  
   const changeSenha = e =>{
     if(e.target.value.length > 0){
       setInvalitedSenha(false);
@@ -66,17 +71,21 @@ export default function Login() {
       };
 
       try {
-        let res = await login(obj)
+        let res = await login(obj);
         
-        setSubmit(false);
-        sessionStorage.setItem(TOKEN_KEY, res.data.token);
-        sessionStorage.setItem(TOKENTIME_KEY, Date.now());
-        window.location.reload();
+        if(mounted.current){
+          setSubmit(false);
+          sessionStorage.setItem(TOKEN_KEY, res.data.token);
+          sessionStorage.setItem(TOKENTIME_KEY, Date.now());
+          window.location.reload();
+        }
       } catch(res){
-        setErroLogin(true);
-        setUsuario("");
-        setSenha("");
-        setSubmit(false);
+        if(mounted.current){
+          setErroLogin(true);
+          setUsuario("");
+          setSenha("");
+          setSubmit(false);
+        }
       }
     }
     else{

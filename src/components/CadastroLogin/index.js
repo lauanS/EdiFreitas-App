@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import './styles.scss';
 
 import {Form, Row, Col, Button} from 'react-bootstrap';
@@ -24,6 +24,12 @@ export default function CadastroLogin() {
   const [invalidatedConfirmarSenha, setInvalidatedConfirmarSenha] = useState(false);
 
   const [senhaDiferente, setSenhaDiferente] = useState(false);
+
+  const mounted = useRef(true);
+
+  useEffect(() => {
+    return () => {mounted.current = false}
+  }, []);
 
   const resetFields = () => {
     setUsuario("");
@@ -68,13 +74,17 @@ export default function CadastroLogin() {
         }
 
         await postLogin(obj);
-        setOpenAlertSuccess(true);
-        setOpenAlertError(false);
-        resetFields();
+        if(mounted.current){
+          setOpenAlertSuccess(true);
+          setOpenAlertError(false);
+          resetFields();
+        }
       }
       catch{
-        setOpenAlertSuccess(false);
-        setOpenAlertError(true);
+        if(mounted.current){
+          setOpenAlertSuccess(false);
+          setOpenAlertError(true);
+        }
       }
     }
   }
