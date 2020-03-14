@@ -1,4 +1,4 @@
-import React,  { useState } from 'react';
+import React,  { useState, useRef, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.scss';
 
@@ -67,6 +67,12 @@ export default function CadastroResponsavel(){
   const [emails, setEmails] = useState(['']);
 
   const [submit, setSubmit] = useState(false);
+
+  const mounted = useRef(true);
+
+  useEffect(() => {
+    return () => {mounted.current = false}
+  }, []);
 
   const resetFields = () => {
     setNomeCompleto("");
@@ -213,13 +219,17 @@ export default function CadastroResponsavel(){
 
         await postResponsavel(obj);
 
-        setOpenAlertSuccess(true);
-        setOpenAlertError(false);
-        resetFields();
+        if(mounted.current){
+          setOpenAlertSuccess(true);
+          setOpenAlertError(false);
+          resetFields();
+        }
       }
       catch(res){
-        setOpenAlertSuccess(false);
-        setOpenAlertError(true);
+        if(mounted.current){
+          setOpenAlertSuccess(false);
+          setOpenAlertError(true);
+        }
       }
     }
     setSubmit(false);

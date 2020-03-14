@@ -1,4 +1,4 @@
-import React,  { useState } from 'react';
+import React,  { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.scss';
 
@@ -107,6 +107,12 @@ export default function CadastroResponsavel(props){
 
   const [openModal, setOpenModal] = useState(true);
 
+  const mounted = useRef(true);
+
+  useEffect(() => {
+    return () => {mounted.current = false}
+  }, []);
+
   const handleSubmit = async () => {
     let flag = false;
 
@@ -203,12 +209,16 @@ export default function CadastroResponsavel(props){
 
         await putResponsavel(obj, dados.id)
 
-        setEdit(false);
-        update();
-        updateList();
+        if(mounted.current){
+          setEdit(false);
+          update();
+          updateList();
+        }
       }
       catch(res) {
-        erroUpdate();
+        if(mounted.current){
+          erroUpdate();
+        }
       }
     }
   };
@@ -269,7 +279,7 @@ export default function CadastroResponsavel(props){
 
   return (
     <>
-    {openCrop ? 
+     
       <CropFotos
         cropping={{unit: 'px', aspect: 1, width: 200, height: 200, x: 0, y: 0}}
         open={openCrop}
@@ -283,7 +293,7 @@ export default function CadastroResponsavel(props){
         maxWidthImg={500}
         textButton={"Concluir edição da foto de perfill"}
       />
-    :
+    {!openCrop &&
     <Modal
       className="modalEditarResp"
       show={openModal}

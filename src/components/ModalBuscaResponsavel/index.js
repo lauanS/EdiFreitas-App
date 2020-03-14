@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import './styles.scss';
 
 import {Modal} from 'react-bootstrap';
@@ -14,14 +14,23 @@ export default function ModalBusca(props) {
   const [open, setOpen] = useState(false);
   const [responsaveis, setResponsaveis] = useState([]);
 
-  useEffect(() => {
-    getResponsaveis()
-    .then(res => {
-      setResponsaveis(res.data);
-    })
-    .catch(() => {
+  const mounted = useRef(true);
 
-    });
+  useEffect(() => {
+    async function load() {
+      try {
+        const res = await getResponsaveis()
+
+        if(mounted.current){
+          setResponsaveis(res.data);
+        }
+      } catch(e) {
+
+      };
+    }
+    load();
+
+    return () => {mounted.current = false}
   }, []);
 
   const handleOpen = e => {

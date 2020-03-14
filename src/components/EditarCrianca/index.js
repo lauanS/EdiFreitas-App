@@ -213,7 +213,7 @@ export default function EditarCrianca(props){
     </Modal>
     :
     <>
-    {openCrop ? 
+
     <CropFotos
       cropping={{unit: 'px', aspect: 1, width: 200, height: 200, x: 0, y: 0}}
       open={openCrop}
@@ -227,7 +227,7 @@ export default function EditarCrianca(props){
       maxWidthImg={500}
       textButton={"Concluir edição da foto de perfil"}
     />
-    :
+    {!openCrop &&
     <Modal
       className="modalEditarCrianca"
       show={openModal}
