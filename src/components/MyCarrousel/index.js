@@ -41,8 +41,8 @@ export default function MyCarousel(){
         if(res.data && res.data.evento){
           const evento = res.data.evento;
           let obj = {
-            url: `/noticias/view/${evento.id}`,
-            title: 'Notícia ' + evento.nome,
+            url: `/eventos/${evento.id}`,
+            title: 'Evento ' + evento.nome,
             photo: evento.capa
           }
           arraySrc.push(obj);

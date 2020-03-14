@@ -50,7 +50,6 @@ export default function ContatoOng(){
   }
 
   const sendEmail = async (event) => {
-    console.log('oi')
     event.preventDefault();
     event.stopPropagation();
 
@@ -146,7 +145,7 @@ export default function ContatoOng(){
     <Form autoComplete="off" onSubmit={sendEmail} noValidate>
       <Form.Group controlId="formGroupNome">
         <Form.Label >
-          Nome*
+          Seu nome*
         </Form.Label> 
         <Form.Control
           type="text"
@@ -163,7 +162,7 @@ export default function ContatoOng(){
 
       <Form.Group controlId="formGroupEmail">
         <Form.Label >
-          Email*
+          Seu email*
         </Form.Label> 
         <Form.Control
           type="email"
@@ -180,7 +179,7 @@ export default function ContatoOng(){
 
       <Form.Group controlId="formGroupTexto">
       <Form.Label>
-        Mensagem*
+        Sua mensagem*
       </Form.Label>
         <Form.Control 
           rows="3" 

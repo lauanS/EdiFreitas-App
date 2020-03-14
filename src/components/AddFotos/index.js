@@ -4,10 +4,11 @@ import './styles.scss';
 import CampoImagem from '../CampoImagem';
 //import CropFotos from '../CropFotos';
 import Snackbar from '../Snackbars';
-import {Form, Row, Col, Button} from 'react-bootstrap';
+import {Form, Row, Col} from 'react-bootstrap';
 //import CropIcon from '@material-ui/icons/Crop';
 import CloseIcon from '@material-ui/icons/Close';
 import OverlayLoading from '../OverlayLoading';
+import ButtonSave from '../ButtonSave';
 
 import {postAlbum, postImagem} from '../../services';
 import {saveSuccess, saveError, onSave, onLoad} from '../../assist/feedback';
@@ -282,7 +283,10 @@ export default function AddFotos() {
         </div>
       </Form.Group>
 
-      <Button className="addFotos__buttonSubmit" variant="success" type="submit">Salvar</Button>
+      <ButtonSave 
+        isLoading={submit}
+      >Salvar
+      </ButtonSave>
     </Form>
     </>
   );

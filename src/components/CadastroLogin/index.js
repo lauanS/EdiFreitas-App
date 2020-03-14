@@ -1,8 +1,9 @@
 import React, {useState, useRef, useEffect} from 'react';
 import './styles.scss';
 
-import {Form, Row, Col, Button} from 'react-bootstrap';
+import {Form, Row, Col} from 'react-bootstrap';
 import Snackbar from '../Snackbars';
+import ButtonSave from '../ButtonSave';
 
 import {postLogin} from '../../services/auth';
 import {checkMinCharacters, checkSenha} from '../../validated';
@@ -25,6 +26,7 @@ export default function CadastroLogin() {
 
   const [senhaDiferente, setSenhaDiferente] = useState(false);
 
+  const [submit, setSubmit] = useState(false);
   const mounted = useRef(true);
 
   useEffect(() => {
@@ -45,12 +47,18 @@ export default function CadastroLogin() {
     setInvalidatedConfirmarSenha(false);
 
     setSenhaDiferente(false);
+    setSubmit(false);
   }
 
   const handleSubmit = async e => {
     e.preventDefault();
     e.stopPropagation();
     
+    if(submit === true){
+      return;
+    }
+    setSubmit(true);
+
     let flag = false;
 
     if(validatedUsuario === false){
@@ -87,6 +95,7 @@ export default function CadastroLogin() {
         }
       }
     }
+    setSubmit(false);
   }
 
   const onChangeUsuario = e => {
@@ -172,7 +181,10 @@ export default function CadastroLogin() {
         </Col>
       </Form.Group>
 
-      <Button className="CadastroLogin__buttonSubmit" variant="success" type="submit">Cadastrar login</Button>
+      <ButtonSave 
+        isLoading={submit}
+      >Salvar
+      </ButtonSave>
     </Form>
     </>
   );
