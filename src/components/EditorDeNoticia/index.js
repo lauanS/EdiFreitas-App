@@ -42,6 +42,8 @@ export default function EditorDeNoticia(props){
     setSubtitle("");
     setTags("");
     setText("");
+    setImgBase64("");
+    setIsLoading(false);
   }
 
   function checkFields(){
