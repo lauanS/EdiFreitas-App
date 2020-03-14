@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.scss';
 
@@ -26,6 +26,12 @@ export default function ContatoOng(){
   const [openAlertError, setOpenAlertError] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const mounted = useRef(true);
+
+  useEffect(() => {
+    return () => { mounted.current = false; }
+  }, []);
 
   const resetFields = () => {
     setNome("");
@@ -76,7 +82,11 @@ export default function ContatoOng(){
       }
       
       try{
-        let response = await sendEmailService(obj);
+        const response = await sendEmailService(obj);
+
+        if(!mounted.current){
+          return;
+        }
 
         if(response.data && response.data.length > 0){
           setOpenAlertSuccess(false);
@@ -88,8 +98,10 @@ export default function ContatoOng(){
           resetFields();
         }
       }catch(error){
-        setOpenAlertSuccess(false);
-        setOpenAlertError(true);
+        if(mounted.current){
+          setOpenAlertSuccess(false);
+          setOpenAlertError(true);
+        }
       }
     }
 
