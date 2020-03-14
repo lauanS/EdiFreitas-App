@@ -1,4 +1,4 @@
-import React,  { useState } from 'react';
+import React,  { useState, useRef, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.scss';
 
@@ -70,6 +70,12 @@ export default function EditarCrianca(props){
   const [openModal, setOpenModal] = useState(true);
   const [openBusca, setOpenBusca] = useState(false);
 
+  const mounted = useRef(true);
+
+  useEffect(() => {
+    return () => { mounted.current = false; }
+  }, []);
+
   const handleSubmit = async () => {
     let flag = false;
 
@@ -125,12 +131,16 @@ export default function EditarCrianca(props){
       
         await putCrianca(obj, dados.id)
 
-        setEdit(false);
-        update();
-        updateList();
+        if(mounted.current){
+          setEdit(false);
+          update();
+          updateList();
+        }
       }
       catch(res){
-        erroUpdate();
+        if(mounted.current){
+          erroUpdate();
+        }
       }
     }
   }

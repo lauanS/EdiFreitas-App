@@ -1,4 +1,4 @@
-import React,  { useState } from 'react';
+import React,  { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.scss';
 
@@ -51,6 +51,12 @@ export default function CadastroCrianca(){
   const [validatedComentario, setValidatedComentario] = useState(false);
 
   const [submit, setSubmit] = useState(false);
+
+  const mounted = useRef(true);
+
+  useEffect(() => {
+    return () => { mounted.current = false; }
+  }, []);
 
   const resetFields = () => {
     setNomeCompleto("");
@@ -143,13 +149,18 @@ export default function CadastroCrianca(){
         };
 
         await postCrianca(obj);
-        setOpenAlertSuccess(true);
-        setOpenAlertError(false);
-        resetFields();
+
+        if(mounted.current){
+          setOpenAlertSuccess(true);
+          setOpenAlertError(false);
+          resetFields();
+        }
       }
       catch(res){
-        setOpenAlertSuccess(false);
-        setOpenAlertError(true);
+        if(mounted.current){
+          setOpenAlertSuccess(false);
+          setOpenAlertError(true);
+        }
       }
     }
     setSubmit(false);

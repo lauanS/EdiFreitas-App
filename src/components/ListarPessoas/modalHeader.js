@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import './styles.scss';
 
 import SweetAlert from 'react-bootstrap-sweetalert';
@@ -11,39 +11,50 @@ import {deleteCrianca, deleteResponsavel} from '../../services'
 
 export default function ModalHeader(props) {
   const {updateList, error, remover, crianca, dados, showAlert, setShowAlert, setOpen, handleClose, edit, setEdit, setSubmitEdit} = props;
+  const mounted = useRef(true);
 
   const handleOpenDeletar = () => {
     setShowAlert(true);
   };
 
-  const handleConfirm = e => {
+  useEffect(() => {
+    return () => { mounted.current = false; }
+  }, []);
+
+  const handleConfirm = async e => {
     if(crianca === true){
-      deleteCrianca(dados.id)
-      .then(() => {
-        setShowAlert(false);
-        setOpen(false);
-        remover(dados.id);
-        updateList();
-      })
-      .catch(() => {
-        setShowAlert(false);
-        setOpen(false);
-        error();
-      });
+      try {
+        await deleteCrianca(dados.id)
+        if(mounted.current){
+          setShowAlert(false);
+          setOpen(false);
+          remover(dados.id);
+          updateList();
+        }
+      } catch(e) {
+        if(mounted.current){
+          setShowAlert(false);
+          setOpen(false);
+          error();
+        }
+      }
     }
     else{
-      deleteResponsavel(dados.id)
-      .then(() => {
-        setShowAlert(false);
-        setOpen(false);
-        remover(dados.id);
-        updateList();
-      })
-      .catch(() => {
-        setShowAlert(false);
-        setOpen(false);
-        error();
-      });
+      try {
+        await deleteResponsavel(dados.id);
+        if(mounted.current){
+          setShowAlert(false);
+          setOpen(false);
+          remover(dados.id);
+          updateList();
+        }
+      } catch(e) {
+        if(mounted.current){
+          setShowAlert(false);
+          setOpen(false);
+          error();
+        }
+      }
     }
 
   }
