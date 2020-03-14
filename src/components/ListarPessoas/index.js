@@ -108,6 +108,11 @@ export default function ListarPessoas() {
       });
   }
 
+  const fakeSubmit = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+  
   return (
     <>
     <Snackbar open={alertSuccessDeletar} setOpen={setAlertSuccessDeletar} msg="Informações deletadas" type="delete"/>
@@ -120,7 +125,7 @@ export default function ListarPessoas() {
     {!isLoading && errors && "Houve algum problema"}
     {!isLoading && !errors &&
     <>
-    <Form autoComplete="off">
+    <Form onSubmit={fakeSubmit} autoComplete="off">
       <Row>
         <Form.Group controlId="formGroupName">
           <Form.Label className="listarPessoas__label">
@@ -157,7 +162,7 @@ export default function ListarPessoas() {
             </Form.Label>
             <Form.Control
               type="number" 
-              placeholder= "Ex: 30"
+              placeholder= "Ex: 3"
               onChange={e => setIdadeMax(e.target.value)}
               value={idadeMax}
             />

@@ -34,17 +34,20 @@ export default function ListarAlbum(){
   const mounted = useRef(true);
 
   useEffect(() => {
-    getAlbum()
-    .then(res => {
-      if(mounted.current){
-        setAlbuns(res.data);
-        setErros(false);
+    async function load(){
+      try {
+        const res = await getAlbum();
+        if(mounted.current){
+          setAlbuns(res.data);
+          setErros(false);
+        }
+      } catch(res) {
+        if(mounted.current){
+          setErros(true);
+        }
       }
-    })
-    .catch(() => {
-      setErros(true);
-    });
-
+    }
+    load();
     return () => {mounted.current = false}
   }, []);
 
@@ -57,14 +60,12 @@ export default function ListarAlbum(){
   const handleConfirm = async () => {
     try{
       await deleteAlbum(idAlbum);
-
-      setShowAlert(false);
-      setOpenAlertSuccessDelete(true);
-      setOpenAlertErrorDelete(false);
-
       let albuns = await getAlbum();
 
       if(mounted.current){
+        setShowAlert(false);
+        setOpenAlertSuccessDelete(true);
+        setOpenAlertErrorDelete(false);
         setAlbuns(albuns.data);
         setErros(false);
       }
@@ -79,9 +80,10 @@ export default function ListarAlbum(){
     }
   }
 
-  const handleVisualizar = (idAlbum, nomeAlbum) => {
-    getImagem(idAlbum)
-    .then(res => {
+  const handleVisualizar = async (idAlbum, nomeAlbum) => {
+    try {
+      const res = await getImagem(idAlbum)
+
       if(mounted.current){
         setIdAlbum(idAlbum);
         setFotos(res.data);
@@ -90,14 +92,13 @@ export default function ListarAlbum(){
         setAdicionarFotos(false);
         setVisualizar(true);
       }
-    })
-    .catch(res => {
+    } catch(res) {
       if(mounted.current){
         setEditarNome(false);
         setVisualizar(false);
         setAdicionarFotos(false);
       }
-    });
+    }
   }
 
   const handleAdicionar = (idAlbum, nomeAlbum) => {
@@ -122,22 +123,26 @@ export default function ListarAlbum(){
     updatePage();
   }
 
-  const updatePage = () => {
+  const updatePage = async () => {
+    if(!mounted.current){
+      return;
+    }
+
     setVisualizar(false);
     setEditarNome(false);
     setAdicionarFotos(false);
-    getAlbum()
-    .then(res => {
+    try {
+      const res = await getAlbum();
+
       if(mounted.current){
         setAlbuns(res.data);
         setErros(false);
       }
-    })
-    .catch(() => {
+    } catch(res) {
       if(mounted.current){
         setErros(true);
       }
-    });
+    }
   }
 
   return(

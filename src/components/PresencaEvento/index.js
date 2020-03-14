@@ -79,6 +79,9 @@ export default function PresencaEvento(){
   }, [selectedEvent])
 
   async function onClickCardButton(isSelected, person){
+    if(isLoadingButton){
+      return;
+    }
     setIsLoadingButton(true)
     if(isSelected){
       await removePerson(person.id);
@@ -132,6 +135,11 @@ export default function PresencaEvento(){
     
   }
 
+  const fakeSubmit = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
   return (
     <>
     <Row>
@@ -156,7 +164,7 @@ export default function PresencaEvento(){
     </Row>
     
 
-    <Form autoComplete="off">
+    <Form onSubmit={fakeSubmit} autoComplete="off">
       <Form.Group as={Row} controlId="formGroupName">
         <Form.Label column sm={2} className="presenceControl-label">
           Nome da pessoa

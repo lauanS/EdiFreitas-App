@@ -106,7 +106,7 @@ export default function Login() {
     <Container className="login__container">
       <Row className="login__row">
         <Col className="login__col">
-          <Form  noValidate onSubmit={handleSubmit}>
+          <Form noValidate onSubmit={handleSubmit}>
             <Container>
               <Row className="login__row">
                 <img src={ongLogo} alt="Logo ONG Edi Freitas" width="100" height="100"/>

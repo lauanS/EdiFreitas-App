@@ -6,10 +6,6 @@ const api = axios.create({
   baseURL: 'https://edi-freitas.herokuapp.com/api'
 });
 
-const apiPublic = axios.create({
-  baseURL: 'https://edi-freitas.herokuapp.com/api'
-});
-
 api.interceptors.request.use(async config => {
   const token = getToken();
   if(token){
@@ -173,5 +169,5 @@ export async function getCarousel(){
 
 // ============= Disparo de email ================
 export async function sendEmailService(email){
-  return await apiPublic.post('/email', email);
+  return await api.post('/email', email);
 }

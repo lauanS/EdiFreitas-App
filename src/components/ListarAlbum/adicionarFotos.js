@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import './styles.scss';
 
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -9,6 +9,8 @@ import {Form, Row, Col} from 'react-bootstrap';
 //import CropIcon from '@material-ui/icons/Crop';
 import CloseIcon from '@material-ui/icons/Close';
 import ButtonSave from '../ButtonSave';
+import OverlayLoading from '../OverlayLoading';
+import {saveError, onSave, onLoad} from '../../assist/feedback';
 
 import {postImagem} from '../../services'
 
@@ -27,17 +29,28 @@ export default function AdicionarFotos(props){
 
   const [multiple, setMultiple] = useState(false);
   const [submit, setSubmit] = useState(false);
+  const [loadingImage, setLoadingImage] = useState(false);
+
+  const mounted = useRef(true);
+
+  useEffect(() => {
+    return () => { mounted.current = false; }
+  }, []);
 
   const onSelectImg = async (e) => {
     e.persist();
     let queUrl = [];
     if (e.target.files && e.target.files.length > 0) {
+      setLoadingImage(true);
       for(let i = 0; i < e.target.files.length; i++){
         let url = await loadImg(e.target.files[i]);
         queUrl.push(url);
       }
-      setImgOriginal(imgOriginal.concat(queUrl));
-      setImgBase64(imgBase64.concat(queUrl));
+      if(mounted.current){
+        setImgOriginal(imgOriginal.concat(queUrl));
+        setImgBase64(imgBase64.concat(queUrl));
+        setLoadingImage(false);
+      }
       e.target.value = '';
     }
   }
@@ -96,6 +109,7 @@ export default function AdicionarFotos(props){
     //setIndex(null);
     setInvalidatedFotos(false);
     setSubmit(false);
+    setLoadingImage(false);
   }
 
   const handleSubmit = async e => {
@@ -126,19 +140,23 @@ export default function AdicionarFotos(props){
           await postImagem(img);
         }
 
-        if(imgBase64.length > 0){
-          setMultiple(true);
+        if(mounted.current){
+          if(imgBase64.length > 0){
+            setMultiple(true);
+          }
+          else{
+            setMultiple(false);
+          }
+          setOpenAlertSuccess(true);
+          setOpenAlertError(false);
+          resetFields();
         }
-        else{
-          setMultiple(false);
-        }
-        setOpenAlertSuccess(true);
-        setOpenAlertError(false);
-        resetFields();
       }
       catch(res){
-        setOpenAlertSuccess(false);
-        setOpenAlertError(true);
+        if(mounted.current){
+          setOpenAlertSuccess(false);
+          setOpenAlertError(true);
+        }
       }
     }
     setSubmit(false);
@@ -147,8 +165,10 @@ export default function AdicionarFotos(props){
 
   return (
     <>
-    <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} msg={multiple ? "Imagens adicionadas" : "Imagem adicionada"} type="success"/>
-    <Snackbar open={openAlertError} setOpen={setOpenAlertError} msg="Ocorreu um erro ao adicionar" type="error"/>
+    <OverlayLoading showOverlay={submit} msg={onSave("álbum")}/>
+    <OverlayLoading showOverlay={loadingImage} msg={onLoad("imagens")}/>
+    <Snackbar open={openAlertSuccess} setOpen={setOpenAlertSuccess} msg={multiple ? "Imagens salvas" : "Imagem salva"} type="success"/>
+    <Snackbar open={openAlertError} setOpen={setOpenAlertError} msg={saveError()} type="error"/>
 
     <div className="visualizarAlbum__header" style={{marginBottom: '16px'}}>
       <p className="visualizarAlbum__dados" onClick={e => voltar()}><ArrowBackIosIcon /><span className="visualizarAlbum__text">Voltar</span></p>

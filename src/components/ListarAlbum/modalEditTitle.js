@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import './styles.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -14,6 +14,12 @@ export default function ModalEditTitle(props){
   const [newTitle, setNewTitle] = useState("");
   const [validatedTitle, setValidatedTitle] = useState(false);
   const [invalidatedTitle, setInvalidatedTitle] = useState(false);
+
+  const mounted = useRef(true);
+
+  useEffect(() => {
+    return () => { mounted.current = false; }
+  }, []);
 
   const onChangeTitulo = e => {
     setNewTitle(e.value);
@@ -45,12 +51,16 @@ export default function ModalEditTitle(props){
         }
         await updateAlbum(idAlbum, album);
 
-        onClose();
-        salvar(true);
+        if(mounted.current){
+          onClose();
+          salvar(true);
+        }
       }
       catch(res){
-        onClose();
-        salvar(false);
+        if(mounted.current){
+          onClose();
+          salvar(false);
+        }
       }
     }
   }
@@ -65,6 +75,9 @@ export default function ModalEditTitle(props){
   }
 
   const onClose = (e) => {
+    if(!mounted.current){
+      return;
+    }
     setNewTitle("");
     setValidatedTitle(false);
     setInvalidatedTitle(false);

@@ -61,6 +61,11 @@ export default function ConsultarEventos({selectEvent, action}){
     setSearch(e.target.value);  
   }
 
+  const fakeSubmit = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
   function filterEvents(value){  
     const searchLowerCase = search.toLowerCase()
     const valueLowerCase = value.nome.toLowerCase()
@@ -147,7 +152,7 @@ export default function ConsultarEventos({selectEvent, action}){
       <Snackbar open={alertDeleteSucess} setOpen={setAlertDeleteSucess} msg={deleteSuccess("Evento")}type="success"/>
       <Snackbar open={alertDeleteError} setOpen={setAlertDeleteError} msg={deleteError()} type="error"/>
 
-      <Form autoComplete="off">
+      <Form onSubmit={fakeSubmit} autoComplete="off">
         <Form.Group as={Row} controlId="formGroupName">
           <Form.Label column sm={2} className="listarPessoas__label">
             Evento

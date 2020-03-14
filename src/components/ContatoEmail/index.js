@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.scss';
 
@@ -27,6 +27,12 @@ export default function ContatoOng(){
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const mounted = useRef(true);
+
+  useEffect(() => {
+    return () => { mounted.current = false; }
+  }, []);
+
   const resetFields = () => {
     setNome("");
     setValidatedNome(false);
@@ -44,7 +50,6 @@ export default function ContatoOng(){
   }
 
   const sendEmail = async (event) => {
-    console.log('oi')
     event.preventDefault();
     event.stopPropagation();
 
@@ -76,7 +81,11 @@ export default function ContatoOng(){
       }
       
       try{
-        let response = await sendEmailService(obj);
+        const response = await sendEmailService(obj);
+
+        if(!mounted.current){
+          return;
+        }
 
         if(response.data && response.data.length > 0){
           setOpenAlertSuccess(false);
@@ -88,8 +97,10 @@ export default function ContatoOng(){
           resetFields();
         }
       }catch(error){
-        setOpenAlertSuccess(false);
-        setOpenAlertError(true);
+        if(mounted.current){
+          setOpenAlertSuccess(false);
+          setOpenAlertError(true);
+        }
       }
     }
 
@@ -134,7 +145,7 @@ export default function ContatoOng(){
     <Form autoComplete="off" onSubmit={sendEmail} noValidate>
       <Form.Group controlId="formGroupNome">
         <Form.Label >
-          Nome*
+          Seu nome*
         </Form.Label> 
         <Form.Control
           type="text"
@@ -151,7 +162,7 @@ export default function ContatoOng(){
 
       <Form.Group controlId="formGroupEmail">
         <Form.Label >
-          Email*
+          Seu email*
         </Form.Label> 
         <Form.Control
           type="email"
@@ -168,7 +179,7 @@ export default function ContatoOng(){
 
       <Form.Group controlId="formGroupTexto">
       <Form.Label>
-        Mensagem*
+        Sua mensagem*
       </Form.Label>
         <Form.Control 
           rows="3" 

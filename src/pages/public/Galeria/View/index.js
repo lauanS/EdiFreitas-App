@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import '../styles.scss';
 
 import MyNavbar from '../../../../components/Navbar/index';
@@ -21,28 +21,36 @@ export default function Photos() {
   const [openModal, setOpenModal] = useState(false);
   const [index, setIndex] = useState(null);
 
+  const mounted = useRef(true);
+
   useEffect( () => {
     async function load(){
       setIsLoading(true);
       try{
         const response = await getImagem(id);
-        setPhotos(response.data);
-        setErros(false);
-        setIsLoading(false);
-        if(response.data.length > 0){
-          setNotFound(false);
-        }
-        else{
-          setNotFound(true);
+
+        if(mounted.current){
+          setPhotos(response.data);
+          setErros(false);
+          setIsLoading(false);
+          if(response.data.length > 0){
+            setNotFound(false);
+          }
+          else{
+            setNotFound(true);
+          }
         }
       } catch(res) {
-        setPhotos([]);
-        setNotFound(false);
-        setErros(true);
-        setIsLoading(false);
+        if(mounted.current){
+          setPhotos([]);
+          setNotFound(false);
+          setErros(true);
+          setIsLoading(false);
+        }
       }
     }
     load();
+    return () => {mounted.current = false}
   }, [id]);
 
   const handleImage = (index) => {

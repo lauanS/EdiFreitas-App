@@ -42,6 +42,8 @@ export default function EditorDeNoticia(props){
     setSubtitle("");
     setTags("");
     setText("");
+    setImgBase64("");
+    setIsLoading(false);
   }
 
   function checkFields(){
@@ -68,10 +70,15 @@ export default function EditorDeNoticia(props){
   }
 
   async function handleSubmit(e){   
-    setIsLoading(true);
     e.persist();
     e.preventDefault();
     e.stopPropagation();
+
+    if(isLoading){
+      return;
+    }
+    setIsLoading(true);
+    
 
     if(checkFields()){
       const fullDate = new Date();

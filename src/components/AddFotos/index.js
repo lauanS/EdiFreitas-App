@@ -1,13 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import './styles.scss';
 
 import CampoImagem from '../CampoImagem';
 //import CropFotos from '../CropFotos';
 import Snackbar from '../Snackbars';
-import {Form, Row, Col, Button} from 'react-bootstrap';
+import {Form, Row, Col} from 'react-bootstrap';
 //import CropIcon from '@material-ui/icons/Crop';
 import CloseIcon from '@material-ui/icons/Close';
 import OverlayLoading from '../OverlayLoading';
+import ButtonSave from '../ButtonSave';
 
 import {postAlbum, postImagem} from '../../services';
 import {saveSuccess, saveError, onSave, onLoad} from '../../assist/feedback';
@@ -30,6 +31,12 @@ export default function AddFotos() {
   const [submit, setSubmit] = useState(false);
   const [loadingImage, setLoadingImage] = useState(false);
 
+  const mounted = useRef(true);
+
+  useEffect(() => {
+    return () => { mounted.current = false; }
+  }, []);
+
   const onSelectImg = async (e) => {
     e.persist();
     let queUrl = [];
@@ -39,11 +46,13 @@ export default function AddFotos() {
         let url = await loadImg(e.target.files[i]);
         queUrl.push(url);
       }
-      setImgOriginal(imgOriginal.concat(queUrl));
-      setImgBase64(imgBase64.concat(queUrl));
-      setInvalidatedFotos(false);
+      if(mounted.current){
+        setImgOriginal(imgOriginal.concat(queUrl));
+        setImgBase64(imgBase64.concat(queUrl));
+        setInvalidatedFotos(false);
+        setLoadingImage(false);
+      }
       e.target.value = '';
-      setLoadingImage(false);
     }
   }
 
@@ -154,14 +163,18 @@ export default function AddFotos() {
           await postImagem(img);
         }
 
-        setOpenAlertSuccess(true);
-        setOpenAlertError(false);
-        resetFields();
+        if(mounted.current){
+          setOpenAlertSuccess(true);
+          setOpenAlertError(false);
+          resetFields();
+        }
       }
       catch(res){
-        setOpenAlertSuccess(false);
-        setOpenAlertError(true);
-        setSubmit(false);
+        if(mounted.current){
+          setOpenAlertSuccess(false);
+          setOpenAlertError(true);
+          setSubmit(false);
+        }
       }
     }
   };
@@ -270,7 +283,10 @@ export default function AddFotos() {
         </div>
       </Form.Group>
 
-      <Button className="addFotos__buttonSubmit" variant="success" type="submit">Salvar</Button>
+      <ButtonSave 
+        isLoading={submit}
+      >Salvar
+      </ButtonSave>
     </Form>
     </>
   );

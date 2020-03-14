@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import './styles.scss';
 
 import MyNavbar from '../../../components/Navbar/index';
@@ -14,21 +14,29 @@ export default function Galeria() {
   const [errors, setErros] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  const mounted = useRef(true);
+
   useEffect( () => {
     async function load(){
       setIsLoading(true);
       try{
         const response = await getPublicAlbum();
-        setAlbuns(response.data);
-        setErros(false);
-        setIsLoading(false);
+
+        if(mounted.current){
+          setAlbuns(response.data);
+          setErros(false);
+          setIsLoading(false);
+        }
       } catch(res) {
-        setAlbuns([]);
-        setErros(true);
-        setIsLoading(false);
+        if(mounted.current){
+          setAlbuns([]);
+          setErros(true);
+          setIsLoading(false);
+        }
       }
     }
     load();
+    return () => {mounted.current = false}
   }, []);
 
   return (
