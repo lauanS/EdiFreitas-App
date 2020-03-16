@@ -197,7 +197,7 @@ export default function ContatoOng(){
       <ButtonSave 
         isLoading={isLoading}
         className="contatoEmail__buttonSubmit"
-      >Salvar
+      >Enviar mensagem
       </ButtonSave>
     </Form>
 
