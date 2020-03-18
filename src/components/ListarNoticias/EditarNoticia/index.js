@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal} from 'react-bootstrap';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 import TextEditor from "../../EditorDeNoticia";
 import { removeQuotationMarks } from "../../../assist";
@@ -11,30 +11,26 @@ export default function EditarNoticia(props){
 
   return (
     <>
+    {show &&
+    <>
+    <div className="newsEditor__header">
+      <p className="newsEditor__dados" onClick={handleClose}><ArrowBackIosIcon /><span className="newsEditor__text">Voltar</span></p>
+
+    </div>
+
+    <TextEditor 
+        initialTitle={title}
+        initialSubtitle={subtitle}
+        initialText={removeQuotationMarks(text)}        
+        initialTags={tags}
+        initialImg={urlImg}
+        isUpdate={true}
+        updateList={updateList}
+        id={id}
+    />
    
-    <Modal 
-      show={show} 
-      onHide={handleClose}
-      className="modalCardListNews"
-      dialogClassName="modalCardListNews-dialog"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title>Editor</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <TextEditor 
-          initialTitle={title}
-          initialSubtitle={subtitle}
-          initialText={removeQuotationMarks(text)}        
-          initialTags={tags}
-          initialImg={urlImg}
-          isUpdate={true}
-          updateList={updateList}
-          id={id}
-        />
-      </Modal.Body>
-    </Modal>
+    </>
+    }
     </>
   );
       

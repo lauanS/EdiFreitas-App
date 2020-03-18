@@ -1,15 +1,34 @@
-// MODAL
-.modalCardListNews {
-    margin-top: 50px;
-    height: calc(100vh - 30px);
-    &-dialog {
-        max-width: 900px;
-        min-width: 300px;
-        width: 90%;
-        margin-left: auto;
-        margin-right: auto;
+//Visualizar album css
+.newsEditor {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    &__header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin: 0px;
+        h2 {
+            margin: 0;
+        }
     }
-    &-header {
-        padding: 5px 10px 0px 10px;
+    &__dados {
+        margin: 0px;
+        padding: 0px 0px;
+        margin-top: 0px;
+        margin-right: 5px;
+        cursor: pointer;
+        margin-bottom: 5px;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+    }
+    &__text {
+        color: #30333C!important;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 16px;
+        margin-top: 0px;
     }
 }

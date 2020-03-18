@@ -172,7 +172,7 @@ export default function ConsultarNoticias(){
     <>
     {isLoading && !errors && <Loader type="dots" />}
     {!isLoading && errors && <p>{feedback}</p>  }
-    {!isLoading && !errors &&
+    {(!isLoading && !errors && !showModal) ?
       <>
       <Snackbar open={alertDeleteSucess} setOpen={setAlertDeleteSucess} msg={deleteSuccess("Notícia")}type="success"/>
       <Snackbar open={alertDeleteError} setOpen={setAlertDeleteError} msg={deleteError()} type="error"/>
@@ -217,7 +217,9 @@ export default function ConsultarNoticias(){
         focusConfirmBtn={false}
         showCloseButton={true}
       />
-
+      </>
+      :
+      <>
       <EditorDeNoticia
         id={selectedNews.id} 
         title={selectedNews.titulo}
