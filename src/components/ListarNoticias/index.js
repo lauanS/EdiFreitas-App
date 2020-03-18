@@ -12,8 +12,10 @@ import Loader from '../Loader';
 
 import { getNoticias, deleteNoticia } from '../../services';
 
-import { notFind, deleteError, deleteSuccess} from "../../assist/feedback";
+import { notFind, deleteError, deleteSuccess, loadingError } from "../../assist/feedback";
 import { desconverterData, getUrlBase } from "../../assist/";
+
+import urlImg from '../../assets/ong_logo.jpg'
 
 import './styles.scss';
 
@@ -25,9 +27,8 @@ export default function ConsultarNoticias(){
   const [showAlert, setShowAlert] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
+  const [errors, setErrors] = useState(false);
   const [selectedNews, setSelectedNews ] = useState({id: undefined, titulo: ""});
-
-  const urlImg = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT0h6YYldvKZUH9MQu3WWhxpDGh9Uvu8mNafg-GGaQyvHcdK_ca";
 
   let filteredNews = []; 
 
@@ -39,9 +40,17 @@ export default function ConsultarNoticias(){
   const mounted = useRef(true);
 
   async function loadNews(){
-    const response = await getNoticias();
-    if(mounted.current){
-      setNews(response.data);
+    try {
+      const response = await getNoticias();
+      if(mounted.current){
+        setNews(response.data);
+      }
+    } catch (error) {
+      if(mounted.current){
+        console.log(error);
+        setErrors(true);
+        setIsLoading(false);
+      }
     }
     return;
   }
@@ -92,13 +101,22 @@ export default function ConsultarNoticias(){
   useEffect(() => {  
     async function load(){
       setIsLoading(true);
-      const response = await getNoticias();
-      // Apenas troca o estado caso o componente esteja montado
-      if(mounted.current){
-        setNews(response.data);
-        setIsLoading(false);
+      try {
+        const response = await getNoticias();
+        // Apenas troca o estado caso o componente esteja montado
+        if(mounted.current){
+          setNews(response.data);
+          setIsLoading(false);
+        }
+        return;
+      } catch (error) {
+        if(mounted.current){
+          console.log(error);
+          setErrors(true);
+          setIsLoading(false);
+        }
       }
-      return;
+
     }
     load();  
     
@@ -108,7 +126,10 @@ export default function ConsultarNoticias(){
 
   /* Mensagens de feedback */
   useEffect(() => {   
-    if(!filteredNews.length && title.length){
+    if(errors){
+      setFeedback(loadingError());
+    }
+    else if(!filteredNews.length && title.length){
       setFeedback(notFind('notícia', title));
     }
     else if (!filteredNews.length && !isLoading){
@@ -117,7 +138,7 @@ export default function ConsultarNoticias(){
     else{
       setFeedback("");
     }      
-  }, [filteredNews, title, isLoading]);
+  }, [filteredNews, title, isLoading, errors]);
 
   function renderCards(){
     filteredNews = news.filter(filterNews)
@@ -148,9 +169,10 @@ export default function ConsultarNoticias(){
   }
 
   return (
-    isLoading? 
-      < Loader type="dots" />
-    :
+    <>
+    {isLoading && !errors && <Loader type="dots" />}
+    {!isLoading && errors && <p>{feedback}</p>  }
+    {!isLoading && !errors &&
       <>
       <Snackbar open={alertDeleteSucess} setOpen={setAlertDeleteSucess} msg={deleteSuccess("Notícia")}type="success"/>
       <Snackbar open={alertDeleteError} setOpen={setAlertDeleteError} msg={deleteError()} type="error"/>
@@ -208,7 +230,8 @@ export default function ConsultarNoticias(){
         updateList={loadNews}
       />
 
-      </>
+      </>}
+    </>
   );
       
 }

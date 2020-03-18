@@ -12,7 +12,7 @@ import Loader from '../Loader';
 
 import { getEventos, deleteEvento } from '../../services';
 import { desconverterData, getUrlBase } from "../../assist/";
-import { notFind, deleteError, deleteSuccess } from "../../assist/feedback";
+import { notFind, deleteError, deleteSuccess, loadingError } from "../../assist/feedback";
 
 
 import urlImg from '../../assets/ong_logo.jpg'
@@ -32,6 +32,7 @@ export default function ConsultarEventos({selectEvent, action}){
 
   const [selectedEvent, setSelectedEvent ] = useState({id: undefined, nome: ""});
 
+  const [errors, setErrors] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   
   const mounted = useRef(true);
@@ -39,10 +40,18 @@ export default function ConsultarEventos({selectEvent, action}){
   let filteredEvents = [];
 
   async function loadEvents(){
-    const response = await getEventos();
-    if(mounted.current){
-      setEvents(response.data);
+    try {
+      const response = await getEventos();
+      if(mounted.current){
+        setEvents(response.data);
+      }      
+    } catch (error) {
+      if(mounted.current){
+        setIsLoading(false);  
+        setErrors(true)
+      }
     }
+
     return;
   }
 
@@ -95,11 +104,20 @@ export default function ConsultarEventos({selectEvent, action}){
   useEffect(() => {   
     async function load(){
       setIsLoading(true);
-      const response = await getEventos();
-      if(mounted.current){
-        setEvents(response.data);
-        setIsLoading(false);  
+      try {
+        const response = await getEventos();
+        if(mounted.current){
+          setEvents(response.data);
+          setIsLoading(false);  
+        }
+      } catch (error) {
+        if(mounted.current){
+          console.log(error);
+          setIsLoading(false);  
+          setErrors(true);
+        }
       }
+
       return;
     }
     load(); 
@@ -109,7 +127,10 @@ export default function ConsultarEventos({selectEvent, action}){
 
   /* Mensagens de feedback */
   useEffect(() => {   
-    if(!filteredEvents.length && search.length){
+    if(errors){
+      setFeedback(loadingError());
+    }
+    else if(!filteredEvents.length && search.length){
       setFeedback(notFind('evento', search));
     }
     else if (!filteredEvents.length && !isLoading){
@@ -118,7 +139,7 @@ export default function ConsultarEventos({selectEvent, action}){
     else{
       setFeedback("");
     }      
-  }, [filteredEvents, search, isLoading]);
+  }, [filteredEvents, search, isLoading, errors]);
 
   function renderCards(){
     filteredEvents = events.filter(filterEvents)
@@ -149,9 +170,10 @@ export default function ConsultarEventos({selectEvent, action}){
   }
 
   return (
-    isLoading? 
-      < Loader type="dots" />
-    :
+    <>
+    {isLoading && !errors && <Loader type="dots" />}
+    {!isLoading && errors && <p>{feedback}</p>  }
+    {!isLoading && !errors &&
       <>
       <Snackbar open={alertDeleteSucess} setOpen={setAlertDeleteSucess} msg={deleteSuccess("Evento")}type="success"/>
       <Snackbar open={alertDeleteError} setOpen={setAlertDeleteError} msg={deleteError()} type="error"/>
@@ -203,8 +225,8 @@ export default function ConsultarEventos({selectEvent, action}){
         show={showModal}
         setShow={setShowModal}
       />
-      </>
-    
+      </>}
+    </>
   );
       
 }

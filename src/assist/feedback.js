@@ -6,6 +6,10 @@ export function notFind(type, value){
   return `Nenhum ${type} encontrado${endMsg}`;
 }
 
+export function loadingError(){
+  return `Ocorreu um erro durante o carregamento`;
+}
+
 export function deleteError(){
   return `Ocorreu um erro ao excluir`;
 }
