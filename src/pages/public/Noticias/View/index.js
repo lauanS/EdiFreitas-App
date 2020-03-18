@@ -6,6 +6,7 @@ import Footer from '../../../../components/Footer/index';
 import View from '../../../../components/Noticias/View'
 import Loader from '../../../../components/Loader';
 import {getNoticias} from '../../../../services'
+import { removeQuotationMarks } from "../../../../assist";
 
 import '../styles.scss';
 
@@ -19,6 +20,7 @@ export default function ViewNews(){
     async function load(){
       const response = await getNoticias();
       const objTemp = response.data.find(data => data.id === parseInt(id));
+      objTemp.texto = removeQuotationMarks(objTemp.texto)
       if(mounted.current){
         setObj(objTemp);
         setIsLoading(false);

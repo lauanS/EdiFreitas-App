@@ -20,7 +20,7 @@ export default function View(props){
       </div>
      
       <div className="View-text Content">
-        <Interweave content={obj.texto.replace(/&quot;/g, '"')} className="Content"/>
+        <Interweave content={obj.texto} className="Content"/>
       </div>
       </>
       :

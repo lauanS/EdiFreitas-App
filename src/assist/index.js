@@ -162,3 +162,13 @@ export function createFilename(base, date){
 export function getUrlBase(){
   return window.location.origin;
 }
+
+// Troca '&quot;' por aspas duplas - " -
+export function removeQuotationMarks(text){
+  return text.replace(/&quot;/g, '"')
+} 
+
+// Troca aspas duplas - " - por '&quot;'
+export function addQuotationMarks(text){
+  return text.replace(/"/g, '&quot;');
+}

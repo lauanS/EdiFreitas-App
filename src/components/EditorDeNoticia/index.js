@@ -9,7 +9,7 @@ import ButtonSave from '../ButtonSave';
 import { postNoticia, putNoticia, putImagemUrl, postImagem } from '../../services';
 import { checkMinCharacters } from '../../validated';
 import { saveSuccess, saveError } from "../../assist/feedback";
-import { createFilename } from "../../assist";
+import { createFilename, addQuotationMarks } from "../../assist";
 import './styles.scss';
 
 export default function EditorDeNoticia(props){
@@ -124,7 +124,7 @@ export default function EditorDeNoticia(props){
         const obj = {
           titulo:title,
           descricao:subtitle,
-          texto:text.replace(/"/g, '&quot;'),
+          texto:addQuotationMarks(text),
           foto:urlImg,
           data,
           tag:tags

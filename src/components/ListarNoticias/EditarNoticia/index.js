@@ -2,11 +2,11 @@ import React from 'react';
 import {Modal} from 'react-bootstrap';
 
 import TextEditor from "../../EditorDeNoticia";
-
+import { removeQuotationMarks } from "../../../assist";
 import './styles.scss';
 
 export default function EditarNoticia(props){
-  const {id, title, subtitle, text, urlImg, tags, show, setShow, updateList} = props;
+  const {id, title, subtitle, text="", urlImg, tags, show, setShow, updateList} = props;
   const handleClose = () => {setShow(false)}
 
   return (
@@ -26,7 +26,7 @@ export default function EditarNoticia(props){
         <TextEditor 
           initialTitle={title}
           initialSubtitle={subtitle}
-          initialText={text}        
+          initialText={removeQuotationMarks(text)}        
           initialTags={tags}
           initialImg={urlImg}
           isUpdate={true}
