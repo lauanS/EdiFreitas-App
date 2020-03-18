@@ -6,8 +6,11 @@ import Button from '@material-ui/core/Button';
 import { getEventoParticipante } from '../../services';
 import { postEventoParticipante, deleteEventoParticipante } from '../../services';
 
+import { notFind, loadingError } from "../../assist/feedback";
+
 import CardPerson from '../CardPerson';
 import LoadButton from '../LoadButton';
+import Loader from '../Loader';
 
 import SeletorDeEventos from './SeletorDeEventos';
 import VisualizarEvento from './VisualizarEvento';
@@ -23,15 +26,32 @@ export default function PresencaEvento(){
   const [showModal, setShowModal] = useState(false);
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   
+  const [feedback, setFeedback] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [errors, setErrors] = useState(false);
+  
   const mounted = useRef(true);
 
+  let filteredPeople = []; 
+
   async function loadPeople(){
-    if(selectedEvent){
-      const response = await getEventoParticipante(selectedEvent.id);
+    setIsLoadingButton(true);
+    try {
+      if(selectedEvent){
+        const response = await getEventoParticipante(selectedEvent.id);
+        if(mounted.current){
+          setPeople(response.data);
+          setIsLoadingButton(false);
+        }      
+      }
+    } catch (error) {
       if(mounted.current){
-        setPeople(response.data);
-      }      
+        console.log(error);
+        setErrors(true);
+        setIsLoadingButton(false);
+      }
     }
+    
     return;
   }
 
@@ -66,15 +86,31 @@ export default function PresencaEvento(){
     }    
   }
 
+  /* useEffect para controlar o mounted */
+  useEffect(() => {
+    return () => {mounted.current = false}   
+  }, []);
+
   /* Atualiza a lista de pessoas que estão confirmadas no evento */
   useEffect(() => {
     async function load(){
-      if(selectedEvent){
-        const response = await getEventoParticipante(selectedEvent.id);
+      setIsLoading(true);
+      try {
+        if(selectedEvent){
+          const response = await getEventoParticipante(selectedEvent.id);
+          if(mounted.current){
+            setPeople(response.data);
+            setIsLoading(false);
+          }        
+        }
+      } catch (error) {
         if(mounted.current){
-          setPeople(response.data);
-        }        
+          console.log(error);
+          setErrors(true);
+          setIsLoading(false);
+        }
       }
+
       return;
     }
 
@@ -82,8 +118,26 @@ export default function PresencaEvento(){
       load();
     }
 
-    return () => {mounted.current = false}     
-  }, [selectedEvent])
+      
+  }, [selectedEvent]);
+
+
+  /* Mensagens de feedback */
+  useEffect(() => {   
+    if(errors){
+      setFeedback(loadingError());
+    }
+    else if(!filteredPeople.length && personSearch.length){
+      setFeedback(notFind('pessoa', personSearch));
+    }
+    else if (!filteredPeople.length && !isLoading){
+      setFeedback(notFind('pessoa'));
+    }
+    else{
+      setFeedback("");
+    }      
+  }, [filteredPeople, personSearch, isLoading, errors]);
+
 
   async function onClickCardButton(isSelected, person){
     if(isLoadingButton){
@@ -104,7 +158,7 @@ export default function PresencaEvento(){
 
   function renderCards(){
     if(selectedEvent){
-      const filteredPeople = people.filter(filterPeople);
+      filteredPeople = people.filter(filterPeople);
       return filteredPeople.map((data, key) => 
       {
         const isConfirmed = data.idEvento !== null;
@@ -189,11 +243,18 @@ export default function PresencaEvento(){
       </Form.Group>
     </Form>
 
+    <p>{feedback}</p>
+
+    {isLoading && selectedEvent? 
+      <Loader type="dots"/>
+    :
     <div className="listPeople">
       {
         renderCards()  
       }
     </div>
+    }
+
     
     <SeletorDeEventos 
       show={showModal}
