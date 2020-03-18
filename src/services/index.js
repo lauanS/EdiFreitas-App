@@ -77,7 +77,7 @@ export function putEvento(evento, id){
 
 //===================== NOTÍCIAS =====================
 export async function getNoticias(){
-  return await api.get('/noticiads');
+  return await api.get('/noticias');
 }
 
 export async function getNoticiasHome(){
