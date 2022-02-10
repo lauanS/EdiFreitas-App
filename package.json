@@ -14,7 +14,7 @@
         "express": "^4.17.1",
         "express-favicon": "^2.0.1",
         "interweave": "^12.2.1",
-        "node-sass": "^4.13.0",
+        "node-sass": "^7.0.0",
         "path": "^0.12.7",
         "react": "^16.12.0",
         "react-bootstrap": "^1.0.0-beta.14",
