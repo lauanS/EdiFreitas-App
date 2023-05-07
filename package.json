@@ -24,7 +24,7 @@
         "react-image-lightbox": "^5.1.1",
         "react-router-dom": "^5.1.2",
         "react-scripts": "3.2.0",
-        "tinymce": "^5.1.2"
+        "tinymce": "^5.10.7"
     },
     "scripts": {
         "start": "node server.js",
