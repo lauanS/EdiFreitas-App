@@ -1,0 +1,45 @@
+{
+  "carousel": {
+    "album": {
+      "id": "a9b6f7d8-0f03-4a5f-b5f7-77d2f94cb201",
+      "nome": "Novo horário de funcionamento",
+      "capa": {
+        "url": "https://images.unsplash.com/photo-1524419986249-348e8fa6ad4a?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    },
+    "noticia": {
+      "id": "3001be1b-74f9-4156-b920-39e3e29b9cbe",
+      "titulo": "Edi Freitas recebe uma pintura nova",
+      "foto": "https://images.unsplash.com/photo-1525909002-1b05e0c869d8?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    "evento": {
+      "id": "ef0b9599-c5b6-4be2-a7bf-46bf8101cb79",
+      "nome": "Agora temos café na manhã aos domingo também!",
+      "capa": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    }
+  },
+  "noticias-home": [
+    {
+      "id": "eccf97e7-8cbe-4982-8125-ef2ba49a4225",
+      "titulo": "O Assunto #1.181: A operação dos EUA contra o golpe no Brasil",
+      "descricao": "Já sob a gestão Biden, altos oficiais do governo americano agiram no Brasil para mitigar as ações golpistas de Bolsonaro, acuar os comandantes militares que aderiram ao projeto antidemocrático e garantir eleições livres no país.",
+      "data": "2024-03-28T00:30:00",
+      "foto": "https://s2-g1.glbimg.com/Ms1BOEuGcCg1_l06C2RtRbG_F98=/0x483:5856x3777/1080x608/smart/filters:max_age(3600)/https://i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2022/g/I/Z9tlp0QA672CABCQLAwA/2022-06-09t232009z-1540735583-rc2jou9rxvn2-rtrmadp-3-americas-summit.jpg"
+    },
+    {
+      "id": "2f465f86-8d4c-4c51-b62c-426c946e1a47",
+      "titulo": "De onde vem o que eu como #82: Ovos de Páscoa",
+      "descricao": "Episódio conta a história dos ovos de Páscoa desde a nobreza até os queridos ovos de chocolate. ",
+      "data": "2024-03-28T00:30:00",
+      "foto": "https://s2-g1.glbimg.com/DafwvzrCcNv5c04r8U2ixwItSq8=/0x117:1125x750/1080x608/smart/filters:max_age(3600)/https://i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2024/j/Q/AHmzmmSHScJFByv21hGw/coelho-de-chocolate-pexels.jpg"
+    },
+    {
+      "id": "b89ac895-73ed-41a7-b09c-219f513d863a",
+      "titulo": "Previsão para o feriado prolongado da Páscoa 2024",
+      "descricao": "O mês de março de 2024 termina com um fim de semana prolongado por causa do feriado da Páscoa.",
+      "data": "2024-03-28T00:30:00",
+      "foto": "https://s2-g1.glbimg.com/ERLs_UBp9rBgmrtSKG7jdqz3cv8=/0x2288:4000x4538/1080x608/smart/filters:max_age(3600)/https://i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2024/a/G/sWn88MSEWxMhRv7e6vfQ/pexels-kaique-rocha-303393.jpg"
+    }
+  ]
+  
+}
