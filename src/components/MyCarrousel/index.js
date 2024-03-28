@@ -18,7 +18,7 @@ export default function MyCarousel() {
 
       return {
         url: `/galeria/${album.id}`,
-        title: 'Álbum ' + album.nome,
+        title: 'Álbum: ' + album.nome,
         photo: album.capa.url
       }
     }
@@ -30,7 +30,7 @@ export default function MyCarousel() {
 
       return {
         url: `/noticias/view/${noticia.id}`,
-        title: 'Notícia ' + noticia.titulo,
+        title: 'Notícia: ' + noticia.titulo,
         photo: noticia.foto
       }
     }
@@ -42,7 +42,7 @@ export default function MyCarousel() {
 
       return {
         url: `/eventos/${evento.id}`,
-        title: 'Evento ' + evento.nome,
+        title: 'Evento: ' + evento.nome,
         photo: evento.capa
       }
     }
