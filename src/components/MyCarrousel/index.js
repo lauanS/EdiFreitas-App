@@ -87,6 +87,25 @@ export default function MyCarousel() {
     setActive((active + 1) % src.length);
   }
 
+  const CarouselImg = (props) => {
+    return (
+      <>
+        <div className="carousel__divFundo">
+          <div className="carousel__fundo">
+            <span className="carousel__span">
+              <img
+                className="carousel__imgFundo"
+                alt="Crop"
+                src={props.photo}
+              />
+            </span>
+          </div>
+        </div>
+        <img className="carousel__img" alt="Crop" src={props.photo} />
+      </>
+    )
+  }
+
   return (
     <>
     {isLoading && 
@@ -99,22 +118,7 @@ export default function MyCarousel() {
     {!isLoading && !errors &&
       <div className="carousel__divImg">
         <Link className="carousel__divImg" to={src[active].url}>
-          <div className="carousel__divFundo">
-            <div className="carousel__fundo">
-              <span className="carousel__span">
-                <img
-                  className="carousel__imgFundo"
-                  alt="Crop"
-                  src={src[active].photo}
-                />
-              </span>
-            </div>
-          </div>
-          <img
-            className="carousel__img"
-            alt="Crop"
-            src={src[active].photo}
-          />
+          <CarouselImg photo={src[active].photo} />
         </Link>
 
         <div className="carousel__text">
