@@ -3,7 +3,8 @@ import {getToken} from './auth'
 import {simplifiedISO} from '../assist';
 
 const api = axios.create({
-  baseURL: 'https://edi-freitas.herokuapp.com/api'
+  // baseURL: 'https://edi-freitas.herokuapp.com/api'
+  baseURL: 'http://localhost:3030'
 });
 
 api.interceptors.request.use(async config => {
@@ -81,7 +82,7 @@ export async function getNoticias(){
 }
 
 export async function getNoticiasHome(){
-  return await api.get('/noticias/home');
+  return await api.get('/noticias-home');
 }
 
 export async function findByIdNoticia(id){
